@@ -1,0 +1,77 @@
+# Flutter/Dart 相关
+.dart_tool/
+.pub-cache/
+.pub/
+build/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
+.fvm/
+.puro/
+.sentrynative/
+.sentrynativeandroid/
+.sentrynativeios/
+lib/tk_app/tk_widgets/README/*.md
+
+# IDE 相关
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+.history/
+*.userprefs
+
+# Android 相关
+android/.gradle/
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/**/GeneratedPluginRegistrant.java
+android/key.properties
+*.jks
+
+# iOS 相关
+ios/.symlinks/
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/Runner.xcodeproj/project.xcworkspace/
+ios/Runner.xcodeproj/xcuserdata/
+ios/Runner.xcworkspace/xcuserdata/
+
+# macOS 相关
+macos/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Pods/
+
+# 测试相关
+coverage/
+test_results/
+integration_test/failures/
+
+# 日志
+*.log
+flutter_*.log
+
+# 依赖缓存
+.pub-preload-cache/
+
+# 临时文件
+*.tmp
+*.temp
+
+# 平台特定
+windows/flutter/ephemeral/
+windows/CMakeCache.txt
+windows/CMakeFiles/
+linux/flutter/ephemeral/
+linux/CMakeCache.txt
+linux/CMakeFiles/
+
+# Web 相关
+web/flutter_service_worker.js
