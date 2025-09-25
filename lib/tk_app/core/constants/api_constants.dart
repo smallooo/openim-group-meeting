@@ -47,6 +47,10 @@ class ApiConstants {
   // 交易员状态检查
   static const String traderStatus = '/api/strategy/trader/status';
 
+  // 我的关注列表
+  static const String myFollows = '/api/strategy/my-follows';
+
+
   /// 默认超时时间（秒）
   static const int defaultTimeout = 30;
   
