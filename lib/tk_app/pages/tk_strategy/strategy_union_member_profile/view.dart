@@ -101,7 +101,7 @@ class StrategyUnionMemberProfilePage extends StatelessWidget {
         children: [
           // 用户头像（3）- 叠加在白色背景上
           Transform.translate(
-            offset: const Offset(0, -40),
+            offset: const Offset(0, -30),
             child: Column(
               children: [
                 Row(
@@ -128,98 +128,98 @@ class StrategyUnionMemberProfilePage extends StatelessWidget {
                     const SizedBox(width: 20),
                   ],
                 ),
-                const SizedBox(height: 12),
-                // 用户信息（5）- 在头像下面，左对齐
-                Row(
-                  children: [
-                    const SizedBox(width: 20),
-                    Row(
-                      children: [
-                        Text(
-                          state.userName,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        if (state.isVerified)
-                          const Icon(
-                            Icons.verified,
-                            color: Colors.green,
-                            size: 20,
-                          ),
-                        const SizedBox(width: 6),
-                        Text(
-                          state.unionName,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.green,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    // 关注按钮（4）- 在白色区域里面
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: Colors.grey[300]!,
-                          width: 1,
-                        ),
-                      ),
-                      child: TextButton(
-                        onPressed: logic.toggleFollow,
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          minimumSize: Size.zero,
-                        ),
-                        child: Text(
-                          state.isFollowing ? '已关注' : '关注',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                  ],
-                ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          // 用户信息（5）- 在头像下面，左对齐
+          Row(
+            children: [
+              const SizedBox(width: 20),
+              Row(
+                children: [
+                  Text(
+                    state.userName,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  if (state.isVerified)
+                    const Icon(
+                      Icons.verified,
+                      color: Colors.green,
+                      size: 20,
+                    ),
+                  const SizedBox(width: 6),
+                  Text(
+                    state.unionName,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.green,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              // 关注按钮（4）- 在白色区域里面
+              Container(
+                height: 35,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: Colors.grey[300]!,
+                    width: 1,
+                  ),
+                ),
+                child: TextButton(
+                  onPressed: logic.toggleFollow,
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    minimumSize: Size.zero,
+                  ),
+                  child: Text(
+                    state.isFollowing ? '已关注' : '关注',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+            ],
+          ),
+          // const SizedBox(height: 20),
           // 策略注意事项（6）
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.symmetric(horizontal: 0),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: Colors.grey.withOpacity(0.1),
+              //     spreadRadius: 1,
+              //     blurRadius: 4,
+              //     offset: const Offset(0, 2),
+              //   ),
+              // ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   '策略注意事项:',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    fontSize: 14,
+                    // fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -234,24 +234,24 @@ class StrategyUnionMemberProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          // const SizedBox(height: 12),
           // 链接和时间区域（7）
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.symmetric(horizontal: 0),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: Colors.grey.withOpacity(0.1),
+              //     spreadRadius: 1,
+              //     blurRadius: 4,
+              //     offset: const Offset(0, 2),
+              //   ),
+              // ],
             ),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
@@ -263,11 +263,11 @@ class StrategyUnionMemberProfilePage extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.blue,
-                      decoration: TextDecoration.underline,
+                      // decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(width: 12),
                 Text(
                   state.joinDate,
                   style: TextStyle(
@@ -281,19 +281,19 @@ class StrategyUnionMemberProfilePage extends StatelessWidget {
           const SizedBox(height: 12),
           // 统计数据区域（8）
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(20),
+            // margin: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.only(left: 0,bottom: 20),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: Colors.grey.withOpacity(0.1),
+              //     spreadRadius: 1,
+              //     blurRadius: 4,
+              //     offset: const Offset(0, 2),
+              //   ),
+              // ],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

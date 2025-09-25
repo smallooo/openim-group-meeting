@@ -76,7 +76,7 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
               size: 24.w,
             ),
             onPressed: () {
-              // Get.to(() => StrategyUnionMemberProfilePage());
+              Get.to(() => StrategyUnionMemberProfilePage());
             },
           ),
 
