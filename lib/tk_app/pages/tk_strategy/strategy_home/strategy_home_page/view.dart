@@ -14,6 +14,7 @@ import '../../../../tk_widgets/tk_w9/tk_w9.dart';
 import '../../strategy_member_apply/view.dart';
 import '../../strategy_member_profile/view.dart';
 import '../../strategy_my/view.dart';
+import '../../strategy_union_member_profile/view.dart';
 import 'logic.dart';
 import 'safe_profile_card_widget.dart';
 
@@ -66,7 +67,24 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
           //     Get.to(() => StrategyMemberApplyPage());
           //   },
           // ),
+
+          // 策略申请图标
+          IconButton(
+            icon: Icon(
+              Icons.person_add_outlined,
+              color: Colors.black,
+              size: 24.w,
+            ),
+            onPressed: () {
+              // Get.to(() => StrategyUnionMemberProfilePage());
+            },
+          ),
+
+
           // 成员资料图标
+
+
+
           IconButton(
             icon: Icon(
               Icons.account_circle_outlined,
