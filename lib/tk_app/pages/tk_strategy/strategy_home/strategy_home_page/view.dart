@@ -12,6 +12,7 @@ import '../../../../tk_widgets/tk_strategy/crypto_info/crypto_info_data.dart';
 import '../../../../tk_widgets/tk_w8/tk_w8.dart';
 import '../../../../tk_widgets/tk_w9/tk_w9.dart';
 import '../../strategy_member_apply/view.dart';
+import '../../strategy_member_follow/view.dart';
 import '../../strategy_member_profile/view.dart';
 import '../../strategy_my/view.dart';
 import '../../strategy_union_member_profile/view.dart';
@@ -76,7 +77,10 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
               size: 24.w,
             ),
             onPressed: () {
-              Get.to(() => StrategyUnionMemberProfilePage());
+              // Get.to(() => StrategyUnionMemberProfilePage());
+              Get.to(() => StrategyMemberFollowPage());
+
+
             },
           ),
 
