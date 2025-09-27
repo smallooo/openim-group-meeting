@@ -68,14 +68,14 @@ class CustomAppBar extends StatelessWidget {
           
           const SizedBox(height: 16),
           
-          // 关注标签页
-          Row(
+          // 关注标签页 - 使用 Obx 监听响应式变化
+          Obx(() => Row(
             children: [
               Expanded(
                 child: _buildTabButton(
                   "正在关注",
                   FollowTabType.following,
-                  state.currentTab == FollowTabType.following,
+                  state.currentTab.value == FollowTabType.following,
                   () => logic.switchFollowTab(FollowTabType.following),
                 ),
               ),
@@ -84,22 +84,22 @@ class CustomAppBar extends StatelessWidget {
                 child: _buildTabButton(
                   "关注者",
                   FollowTabType.followers,
-                  state.currentTab == FollowTabType.followers,
+                  state.currentTab.value == FollowTabType.followers,
                   () => logic.switchFollowTab(FollowTabType.followers),
                 ),
               ),
             ],
-          ),
+          )),
           
           const SizedBox(height: 16),
           
-          // 用户类型筛选器
-          CustomSegmentedControl<UserType>(
+          // 用户类型筛选器 - 使用 Obx 监听响应式变化
+          Obx(() => CustomSegmentedControl<UserType>(
             items: const [UserType.user, UserType.trader],
-            selectedItem: state.currentUserType,
+            selectedItem: state.currentUserType.value,
             onChanged: (userType) => logic.switchUserType(userType),
             itemBuilder: (userType) => userType == UserType.user ? "用户" : "交易员",
-          ),
+          )),
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'token_storage_service.dart';
+import '../constants/api_constants.dart';
 
 
 part 'token_manager.g.dart';
@@ -75,6 +76,14 @@ class TokenManager {
     return accessToken;
   }
 
+  /// 强制刷新token
+  /// 
+  /// 无论token是否过期都强制刷新，用于应用启动时获取最新token
+  Future<bool> forceRefreshToken() async {
+    debugPrint('[TokenManager] 强制刷新token');
+    return await _refreshTokenIfNeeded();
+  }
+
   /// 刷新token（如果需要）
   Future<bool> _refreshTokenIfNeeded() async {
     // 如果正在刷新，等待刷新完成
@@ -96,14 +105,60 @@ class TokenManager {
         return false;
       }
 
-      // 调用刷新接口
-      final response = await _dio.post(
-        '/api/member/auth/refresh',
-        data: {'refreshToken': refreshToken},
-      );
+      debugPrint('[TokenManager] 准备刷新token，refreshToken: $refreshToken');
+      debugPrint('[TokenManager] 请求URL: ${_dio.options.baseUrl}/api/member/auth/refresh');
+      debugPrint('[TokenManager] 请求数据: {"refreshToken": "$refreshToken"}');
+
+      // 尝试不同的请求格式
+      Response response;
+      try {
+        // 首先尝试JSON格式
+        debugPrint('[TokenManager] 尝试JSON格式请求');
+        response = await _dio.post(
+          '/api/member/auth/refresh',
+          data: {'refreshToken': refreshToken},
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+      } catch (e) {
+        if (e is DioException && e.response?.statusCode == 500) {
+          debugPrint('[TokenManager] JSON格式失败，尝试form-urlencoded格式');
+          // 如果JSON格式失败，尝试form-urlencoded格式
+          response = await _dio.post(
+            '/api/member/auth/refresh',
+            data: {'refreshToken': refreshToken},
+            options: Options(
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+              },
+            ),
+          );
+        } else {
+          rethrow;
+        }
+      }
 
       if (response.statusCode == 200) {
         final data = response.data;
+        
+        // === 详细打印刷新令牌接口响应信息 ===
+        print('=== TokenManager 刷新令牌接口响应信息 ===');
+        print('HTTP状态码: ${response.statusCode}');
+        print('完整响应数据: $data');
+        if (data is Map<String, dynamic>) {
+          print('响应数据类型: ${data.runtimeType}');
+          print('响应数据键值对:');
+          data.forEach((key, value) {
+            print('  $key: $value (${value.runtimeType})');
+          });
+        }
+        print('=== TokenManager 刷新令牌接口响应结束 ===');
+        
         if (data['errCode'] == 0) {
           final tokenData = data['data'];
           final refreshResponse = TokenRefreshResponse.fromJson(tokenData);
@@ -128,12 +183,47 @@ class TokenManager {
           return false;
         }
       } else {
+        // === 详细打印非200状态码的响应信息 ===
+        print('=== TokenManager 刷新令牌接口错误响应信息 ===');
+        print('HTTP状态码: ${response.statusCode}');
+        print('完整响应数据: ${response.data}');
+        if (response.data is Map<String, dynamic>) {
+          print('响应数据类型: ${response.data.runtimeType}');
+          print('响应数据键值对:');
+          (response.data as Map<String, dynamic>).forEach((key, value) {
+            print('  $key: $value (${value.runtimeType})');
+          });
+        }
+        print('=== TokenManager 刷新令牌接口错误响应结束 ===');
+        
         debugPrint('[TokenManager] Token刷新请求失败: ${response.statusCode}');
+        debugPrint('[TokenManager] 响应数据: ${response.data}');
         _notifyRefreshCompleters(false);
         return false;
       }
     } catch (e) {
       debugPrint('[TokenManager] Token刷新异常: $e');
+      if (e is DioException) {
+        debugPrint('[TokenManager] ========== Dio异常详情 ==========');
+        debugPrint('[TokenManager] 状态码: ${e.response?.statusCode}');
+        debugPrint('[TokenManager] 响应数据: ${e.response?.data}');
+        debugPrint('[TokenManager] 请求URL: ${e.requestOptions.uri}');
+        debugPrint('[TokenManager] 请求数据: ${e.requestOptions.data}');
+        debugPrint('[TokenManager] 请求头: ${e.requestOptions.headers}');
+        debugPrint('[TokenManager] 响应头: ${e.response?.headers}');
+        debugPrint('[TokenManager] ================================');
+        
+        // 如果是500错误，尝试解析响应数据
+        if (e.response?.statusCode == 500) {
+          final responseData = e.response?.data;
+          if (responseData is Map<String, dynamic>) {
+            debugPrint('[TokenManager] 500错误详情:');
+            debugPrint('[TokenManager] - errCode: ${responseData['errCode']}');
+            debugPrint('[TokenManager] - errMsg: ${responseData['errMsg']}');
+            debugPrint('[TokenManager] - data: ${responseData['data']}');
+          }
+        }
+      }
       _notifyRefreshCompleters(false);
       return false;
     } finally {
@@ -173,15 +263,25 @@ class TokenManager {
       return null;
     }
 
-    // 更新请求头
-    requestOptions.headers['Authorization'] = 'Bearer $newToken';
+    // 更新请求头 - 与AuthInterceptor保持一致
+    requestOptions.headers['Access-Token'] = '$newToken';
     
     // 重试请求
     try {
+      debugPrint('[TokenManager] 开始重试原始请求');
+      debugPrint('[TokenManager] 重试请求URL: ${requestOptions.uri}');
+      debugPrint('[TokenManager] 重试请求头: ${requestOptions.headers}');
+      
       final dio = Dio();
-      return await dio.fetch(requestOptions);
+      final retryResponse = await dio.fetch(requestOptions);
+      
+      debugPrint('[TokenManager] 重试请求成功，状态码: ${retryResponse.statusCode}');
+      return retryResponse;
     } catch (e) {
       debugPrint('[TokenManager] 重试请求失败: $e');
+      if (e is DioException) {
+        debugPrint('[TokenManager] 重试失败详情: 状态码=${e.response?.statusCode}, 响应=${e.response?.data}');
+      }
       return null;
     }
   }
@@ -202,6 +302,15 @@ class TokenManager {
 @riverpod
 Future<TokenManager> tokenManager(TokenManagerRef ref) async {
   final tokenStorage = await ref.watch(tokenStorageServiceProvider.future);
-  final dio = Dio(); // 创建独立的Dio实例用于token刷新
+  final dio = Dio(BaseOptions(
+    baseUrl: ApiConstants.baseUrl, // 使用API常量
+    connectTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 30),
+    sendTimeout: const Duration(seconds: 30),
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+  ));
   return TokenManager(tokenStorage, dio);
 }

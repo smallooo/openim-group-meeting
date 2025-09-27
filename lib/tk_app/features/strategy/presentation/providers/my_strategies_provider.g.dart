@@ -49,7 +49,7 @@ final myStrategiesPaginationProvider =
 typedef MyStrategiesPaginationRef
     = AutoDisposeProviderRef<Map<String, dynamic>>;
 String _$myStrategiesNotifierHash() =>
-    r'1f757c873206890bdc248647ea5c90ec724d4f55';
+    r'bf24550cb54861a6691333e1cf6e1b8a1125a1a9';
 
 /// 我的策略状态管理
 ///

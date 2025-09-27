@@ -200,10 +200,11 @@ class UserProfileCardWidget extends StatelessWidget {
             height: avatarSize,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(avatarBorderRadius),
-              image: DecorationImage(
-                image: NetworkImage(data.avatarUrl),
-                fit: BoxFit.cover,
-              ),
+              color: Colors.grey[200],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(avatarBorderRadius),
+              child: _buildAvatarImage(),
             ),
           ),
         ),
@@ -213,14 +214,39 @@ class UserProfileCardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 姓名 (2)
-              Text(
-                data.name,
-                style: nameTextStyle ?? const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
+              // 姓名 (2) 和自己标识
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      data.name,
+                      style: nameTextStyle ?? const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (data.isOwnStrategy) ...[
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Text(
+                        '自己',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
               const SizedBox(height: 4),
               // 订阅信息 (3)
@@ -259,16 +285,7 @@ class UserProfileCardWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (data.guildIconUrl != null) ...[
-                    Container(
-                      width: 16,
-                      height: 16,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(data.guildIconUrl!),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    _buildGuildIcon(data.guildIconUrl!),
                     const SizedBox(width: 4),
                   ],
                   Text(
@@ -439,17 +456,7 @@ class UserProfileCardWidget extends StatelessWidget {
                 // 打赏者头像
                 ...data.tipperAvatars.take(3).map((avatarUrl) => Padding(
                   padding: const EdgeInsets.only(right: 4),
-                  child: Container(
-                    width: smallAvatarSize,
-                    height: smallAvatarSize,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(smallAvatarBorderRadius),
-                      image: DecorationImage(
-                        image: NetworkImage(avatarUrl),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                  child: _buildSmallAvatar(avatarUrl),
                 )),
                 const SizedBox(width: 4),
                 Text(
@@ -528,6 +535,147 @@ class UserProfileCardWidget extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  /// 构建头像图片，支持加载失败时显示默认头像
+  Widget _buildAvatarImage() {
+    // 检查头像URL是否有效
+    if (data.avatarUrl.isEmpty || !data.avatarUrl.startsWith('http')) {
+      return _buildDefaultAvatar();
+    }
+
+    return Image.network(
+      data.avatarUrl,
+      fit: BoxFit.cover,
+      width: avatarSize,
+      height: avatarSize,
+      errorBuilder: (context, error, stackTrace) {
+        print('头像加载失败: ${data.avatarUrl}, 错误: $error');
+        return _buildDefaultAvatar();
+      },
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Center(
+          child: CircularProgressIndicator(
+            value: loadingProgress.expectedTotalBytes != null
+                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                : null,
+            strokeWidth: 2,
+          ),
+        );
+      },
+    );
+  }
+
+  /// 构建默认头像
+  Widget _buildDefaultAvatar() {
+    return Container(
+      width: avatarSize,
+      height: avatarSize,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(avatarBorderRadius),
+      ),
+      child: Icon(
+        Icons.person,
+        size: avatarSize * 0.6,
+        color: Colors.grey[600],
+      ),
+    );
+  }
+
+  /// 构建小头像（打赏者头像）
+  Widget _buildSmallAvatar(String avatarUrl) {
+    // 检查头像URL是否有效
+    if (avatarUrl.isEmpty || !avatarUrl.startsWith('http')) {
+      return _buildDefaultSmallAvatar();
+    }
+
+    return Container(
+      width: smallAvatarSize,
+      height: smallAvatarSize,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(smallAvatarBorderRadius),
+        color: Colors.grey[200],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(smallAvatarBorderRadius),
+        child: Image.network(
+          avatarUrl,
+          fit: BoxFit.cover,
+          width: smallAvatarSize,
+          height: smallAvatarSize,
+          errorBuilder: (context, error, stackTrace) {
+            return _buildDefaultSmallAvatar();
+          },
+        ),
+      ),
+    );
+  }
+
+  /// 构建默认小头像
+  Widget _buildDefaultSmallAvatar() {
+    return Container(
+      width: smallAvatarSize,
+      height: smallAvatarSize,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(smallAvatarBorderRadius),
+      ),
+      child: Icon(
+        Icons.person,
+        size: smallAvatarSize * 0.6,
+        color: Colors.grey[600],
+      ),
+    );
+  }
+
+  /// 构建工会图标
+  Widget _buildGuildIcon(String iconUrl) {
+    // 检查图标URL是否有效
+    if (iconUrl.isEmpty || !iconUrl.startsWith('http')) {
+      return _buildDefaultGuildIcon();
+    }
+
+    return Container(
+      width: 16,
+      height: 16,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          iconUrl,
+          fit: BoxFit.cover,
+          width: 16,
+          height: 16,
+          errorBuilder: (context, error, stackTrace) {
+            return _buildDefaultGuildIcon();
+          },
+        ),
+      ),
+    );
+  }
+
+  /// 构建默认工会图标
+  Widget _buildDefaultGuildIcon() {
+    return Container(
+      width: 16,
+      height: 16,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Icon(
+        Icons.group,
+        size: 10,
+        color: Colors.grey[600],
+      ),
     );
   }
 }

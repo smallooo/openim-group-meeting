@@ -54,6 +54,9 @@ class UserProfileCardData {
   /// 订阅费用 (14)
   final String subscriptionFee;
 
+  /// 是否是自己的策略
+  final bool isOwnStrategy;
+
   const UserProfileCardData({
     required this.avatarUrl,
     required this.name,
@@ -73,6 +76,7 @@ class UserProfileCardData {
     required this.mainAmount,
     required this.latestStrategyTime,
     required this.subscriptionFee,
+    this.isOwnStrategy = false,
   });
 
   /// 创建默认数据
@@ -107,6 +111,7 @@ class UserProfileCardData {
       mainAmount: '218U',
       latestStrategyTime: '4分钟前',
       subscriptionFee: '订阅费/月',
+      isOwnStrategy: false,
     );
   }
 
@@ -130,6 +135,7 @@ class UserProfileCardData {
     String? mainAmount,
     String? latestStrategyTime,
     String? subscriptionFee,
+    bool? isOwnStrategy,
   }) {
     return UserProfileCardData(
       avatarUrl: avatarUrl ?? this.avatarUrl,
@@ -150,6 +156,7 @@ class UserProfileCardData {
       mainAmount: mainAmount ?? this.mainAmount,
       latestStrategyTime: latestStrategyTime ?? this.latestStrategyTime,
       subscriptionFee: subscriptionFee ?? this.subscriptionFee,
+      isOwnStrategy: isOwnStrategy ?? this.isOwnStrategy,
     );
   }
 }

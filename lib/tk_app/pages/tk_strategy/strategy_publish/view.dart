@@ -85,6 +85,10 @@ class StrategyPublishPage extends GetView<StrategyPublishLogic> {
                     _buildValidPeriodSection(),
                     const SizedBox(height: 40),
                     
+                    // 市场类型确认提示
+                    // _buildMarketTypeConfirmation(),
+                    // const SizedBox(height: 20),
+                    
                     // 发布按钮
                     _buildPublishButton(),
                     const SizedBox(height: 20),
@@ -109,11 +113,18 @@ class StrategyPublishPage extends GetView<StrategyPublishLogic> {
   Widget _buildTabBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: Row(
+      child: Column(
         children: [
-          _buildTabItem('合约策略', 0),
-          const SizedBox(width: 40),
-          _buildTabItem('现货策略', 1),
+          Row(
+            children: [
+              _buildTabItem('合约策略', 0),
+              const SizedBox(width: 40),
+              _buildTabItem('现货策略', 1),
+            ],
+          ),
+          // const SizedBox(height: 8),
+          // // 市场类型指示器
+          // _buildMarketTypeIndicator(),
         ],
       ),
     );
@@ -134,6 +145,49 @@ class StrategyPublishPage extends GetView<StrategyPublishLogic> {
         ),
       );
     });
+  }
+
+  Widget _buildMarketTypeIndicator() {
+    return Obx(() => Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: controller.state.selectedTabIndex.value == 0 
+            ? Colors.blue.withOpacity(0.1) 
+            : Colors.green.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: controller.state.selectedTabIndex.value == 0 
+              ? Colors.blue.withOpacity(0.3) 
+              : Colors.green.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            controller.state.selectedTabIndex.value == 0 
+                ? Icons.trending_up 
+                : Icons.show_chart,
+            size: 16,
+            color: controller.state.selectedTabIndex.value == 0 
+                ? Colors.blue 
+                : Colors.green,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            '当前市场类型: ${controller.state.currentMarketType}',
+            style: TextStyle(
+              fontSize: 12,
+              color: controller.state.selectedTabIndex.value == 0
+                  ? Colors.blue
+                  : Colors.green,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget _buildDivider() {
@@ -420,6 +474,48 @@ class StrategyPublishPage extends GetView<StrategyPublishLogic> {
         ),
       ),
     );
+  }
+
+  Widget _buildMarketTypeConfirmation() {
+    return Obx(() => Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: controller.state.selectedTabIndex.value == 0 
+            ? Colors.blue.withOpacity(0.05) 
+            : Colors.green.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: controller.state.selectedTabIndex.value == 0 
+              ? Colors.blue.withOpacity(0.2) 
+              : Colors.green.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.info_outline,
+            size: 20,
+            color: controller.state.selectedTabIndex.value == 0 
+                ? Colors.blue 
+                : Colors.green,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              '您即将发布${controller.state.currentMarketTypeDisplayName}，市场类型为 ${controller.state.currentMarketType}',
+              style: TextStyle(
+                fontSize: 14,
+                color: controller.state.selectedTabIndex.value == 0
+                    ? Colors.blue[700]
+                    : Colors.green[700],
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget _buildPublishButton() {

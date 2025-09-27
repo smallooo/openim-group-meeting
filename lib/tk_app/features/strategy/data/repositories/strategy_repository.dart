@@ -11,6 +11,11 @@ import '../../../../shared/models/strategy/trader_detail_response.dart';
 import '../../../../shared/models/strategy/trader_status_response.dart';
 import '../../../../shared/models/strategy/trader_apply_request.dart';
 import '../../../../shared/models/strategy/trader_apply_response.dart';
+import '../../../../shared/models/strategy/trader_list_response.dart';
+import '../../../../shared/models/strategy/strategy_ratings_response.dart';
+import '../../../../shared/models/strategy/strategy_rating_request.dart';
+import '../../../../shared/models/strategy/trader_strategies_response.dart';
+import '../../../../shared/models/strategy/trader_strategy_pagination_data.dart';
 
 part 'strategy_repository.g.dart';
 
@@ -183,6 +188,136 @@ class StrategyRepository {
       return response.data;
     } catch (e) {
       print('Repository: 申请交易员失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 获取交易员列表
+  /// 
+  /// [current] 当前页码，默认为1
+  /// [size] 每页大小，默认为10
+  Future<TraderListData> getTraderList({
+    int current = 1,
+    int size = 10,
+  }) async {
+    print('Repository: 开始调用API获取交易员列表...'); // 调试信息
+    
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(
+        ApiConstants.traderList,
+        queryParameters: {
+          'current': current,
+          'size': size,
+        },
+      );
+      
+      print('Repository: 原始API响应: $rawResponse'); // 调试信息
+      
+      // 手动解析响应
+      final response = TraderListResponse.fromJson(rawResponse);
+      
+      print('Repository: 解析后的响应: ${response.data}'); // 调试信息
+      print('Repository: 交易员记录数量: ${response.data.records.length}'); // 调试信息
+      
+      return response.data;
+    } catch (e) {
+      print('Repository: 获取交易员列表失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 获取策略评价列表
+  /// 
+  /// [strategyId] 策略ID
+  Future<StrategyRatingsData> getStrategyRatings(String strategyId) async {
+    print('Repository: 开始调用API获取策略评价列表...'); // 调试信息
+    
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(
+        '${ApiConstants.strategyRatings}/$strategyId/ratings',
+      );
+      
+      print('Repository: 原始API响应: $rawResponse'); // 调试信息
+      
+      // 手动解析响应
+      final response = StrategyRatingsResponse.fromJson(rawResponse);
+      
+      print('Repository: 解析后的响应: ${response.data}'); // 调试信息
+      print('Repository: 评价记录数量: ${response.data.records.length}'); // 调试信息
+      
+      return response.data;
+    } catch (e) {
+      print('Repository: 获取策略评价列表失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 提交策略评价
+  /// 
+  /// [strategyId] 策略ID
+  /// [request] 评价请求数据
+  Future<StrategyRatingResponse> submitStrategyRating(
+    String strategyId, 
+    StrategyRatingRequest request,
+  ) async {
+    print('Repository: 开始调用API提交策略评价...'); // 调试信息
+    
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.post<Map<String, dynamic>>(
+        '${ApiConstants.submitStrategyRating}/$strategyId/rating',
+        data: request.toJson(),
+      );
+      
+      print('Repository: 原始API响应: $rawResponse'); // 调试信息
+      
+      // 手动解析响应
+      final response = StrategyRatingResponse.fromJson(rawResponse);
+      
+      print('Repository: 解析后的响应: 评价提交成功'); // 调试信息
+      
+      return response;
+    } catch (e) {
+      print('Repository: 提交策略评价失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 获取交易员的策略列表
+  /// 
+  /// [traderId] 交易员ID
+  /// [current] 当前页码，默认为1
+  /// [size] 每页大小，默认为10
+  Future<TraderStrategyPaginationData> getTraderStrategies(
+    String traderId, {
+    int current = 1,
+    int size = 10,
+  }) async {
+    print('Repository: 开始调用API获取交易员策略列表...'); // 调试信息
+    
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(
+        '${ApiConstants.traderStrategies}/$traderId',
+        queryParameters: {
+          'current': current,
+          'size': size,
+        },
+      );
+      
+      print('Repository: 原始API响应: $rawResponse'); // 调试信息
+      
+      // 手动解析响应
+      final response = TraderStrategiesResponse.fromJson(rawResponse);
+      
+      print('Repository: 解析后的响应: ${response.data}'); // 调试信息
+      print('Repository: 交易员策略记录数量: ${response.data.records.length}'); // 调试信息
+      
+      return response.data;
+    } catch (e) {
+      print('Repository: 获取交易员策略列表失败: $e'); // 调试信息
       rethrow;
     }
   }

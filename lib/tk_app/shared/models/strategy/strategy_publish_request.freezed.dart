@@ -69,6 +69,10 @@ mixin _$StrategyPublishRequest {
   @JsonKey(name: 'validTo')
   String get validTo => throw _privateConstructorUsedError;
 
+  /// 市场类型:SPOT-现货,FUTURES-合约
+  @JsonKey(name: 'marketType')
+  String get marketType => throw _privateConstructorUsedError;
+
   /// Serializes this StrategyPublishRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
@@ -97,7 +101,8 @@ abstract class $StrategyPublishRequestCopyWith<$Res> {
       @JsonKey(name: 'takeProfitPrice') double takeProfitPrice,
       @JsonKey(name: 'stopLossPrice') double stopLossPrice,
       @JsonKey(name: 'validFrom') String validFrom,
-      @JsonKey(name: 'validTo') String validTo});
+      @JsonKey(name: 'validTo') String validTo,
+      @JsonKey(name: 'marketType') String marketType});
 }
 
 /// @nodoc
@@ -128,6 +133,7 @@ class _$StrategyPublishRequestCopyWithImpl<$Res,
     Object? stopLossPrice = null,
     Object? validFrom = null,
     Object? validTo = null,
+    Object? marketType = null,
   }) {
     return _then(_value.copyWith(
       traderId: null == traderId
@@ -178,6 +184,10 @@ class _$StrategyPublishRequestCopyWithImpl<$Res,
           ? _value.validTo
           : validTo // ignore: cast_nullable_to_non_nullable
               as String,
+      marketType: null == marketType
+          ? _value.marketType
+          : marketType // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -203,7 +213,8 @@ abstract class _$$StrategyPublishRequestImplCopyWith<$Res>
       @JsonKey(name: 'takeProfitPrice') double takeProfitPrice,
       @JsonKey(name: 'stopLossPrice') double stopLossPrice,
       @JsonKey(name: 'validFrom') String validFrom,
-      @JsonKey(name: 'validTo') String validTo});
+      @JsonKey(name: 'validTo') String validTo,
+      @JsonKey(name: 'marketType') String marketType});
 }
 
 /// @nodoc
@@ -233,6 +244,7 @@ class __$$StrategyPublishRequestImplCopyWithImpl<$Res>
     Object? stopLossPrice = null,
     Object? validFrom = null,
     Object? validTo = null,
+    Object? marketType = null,
   }) {
     return _then(_$StrategyPublishRequestImpl(
       traderId: null == traderId
@@ -283,6 +295,10 @@ class __$$StrategyPublishRequestImplCopyWithImpl<$Res>
           ? _value.validTo
           : validTo // ignore: cast_nullable_to_non_nullable
               as String,
+      marketType: null == marketType
+          ? _value.marketType
+          : marketType // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -302,7 +318,8 @@ class _$StrategyPublishRequestImpl implements _StrategyPublishRequest {
       @JsonKey(name: 'takeProfitPrice') required this.takeProfitPrice,
       @JsonKey(name: 'stopLossPrice') required this.stopLossPrice,
       @JsonKey(name: 'validFrom') required this.validFrom,
-      @JsonKey(name: 'validTo') required this.validTo});
+      @JsonKey(name: 'validTo') required this.validTo,
+      @JsonKey(name: 'marketType') required this.marketType});
 
   factory _$StrategyPublishRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$StrategyPublishRequestImplFromJson(json);
@@ -367,9 +384,14 @@ class _$StrategyPublishRequestImpl implements _StrategyPublishRequest {
   @JsonKey(name: 'validTo')
   final String validTo;
 
+  /// 市场类型:SPOT-现货,FUTURES-合约
+  @override
+  @JsonKey(name: 'marketType')
+  final String marketType;
+
   @override
   String toString() {
-    return 'StrategyPublishRequest(traderId: $traderId, title: $title, summary: $summary, content: $content, coinSymbol: $coinSymbol, strategyType: $strategyType, priceType: $priceType, targetPrice: $targetPrice, takeProfitPrice: $takeProfitPrice, stopLossPrice: $stopLossPrice, validFrom: $validFrom, validTo: $validTo)';
+    return 'StrategyPublishRequest(traderId: $traderId, title: $title, summary: $summary, content: $content, coinSymbol: $coinSymbol, strategyType: $strategyType, priceType: $priceType, targetPrice: $targetPrice, takeProfitPrice: $takeProfitPrice, stopLossPrice: $stopLossPrice, validFrom: $validFrom, validTo: $validTo, marketType: $marketType)';
   }
 
   @override
@@ -396,7 +418,9 @@ class _$StrategyPublishRequestImpl implements _StrategyPublishRequest {
                 other.stopLossPrice == stopLossPrice) &&
             (identical(other.validFrom, validFrom) ||
                 other.validFrom == validFrom) &&
-            (identical(other.validTo, validTo) || other.validTo == validTo));
+            (identical(other.validTo, validTo) || other.validTo == validTo) &&
+            (identical(other.marketType, marketType) ||
+                other.marketType == marketType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -414,7 +438,8 @@ class _$StrategyPublishRequestImpl implements _StrategyPublishRequest {
       takeProfitPrice,
       stopLossPrice,
       validFrom,
-      validTo);
+      validTo,
+      marketType);
 
   /// Create a copy of StrategyPublishRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -446,8 +471,9 @@ abstract class _StrategyPublishRequest implements StrategyPublishRequest {
       @JsonKey(name: 'takeProfitPrice') required final double takeProfitPrice,
       @JsonKey(name: 'stopLossPrice') required final double stopLossPrice,
       @JsonKey(name: 'validFrom') required final String validFrom,
-      @JsonKey(name: 'validTo')
-      required final String validTo}) = _$StrategyPublishRequestImpl;
+      @JsonKey(name: 'validTo') required final String validTo,
+      @JsonKey(name: 'marketType')
+      required final String marketType}) = _$StrategyPublishRequestImpl;
 
   factory _StrategyPublishRequest.fromJson(Map<String, dynamic> json) =
       _$StrategyPublishRequestImpl.fromJson;
@@ -511,6 +537,11 @@ abstract class _StrategyPublishRequest implements StrategyPublishRequest {
   @override
   @JsonKey(name: 'validTo')
   String get validTo;
+
+  /// 市场类型:SPOT-现货,FUTURES-合约
+  @override
+  @JsonKey(name: 'marketType')
+  String get marketType;
 
   /// Create a copy of StrategyPublishRequest
   /// with the given fields replaced by the non-null parameter values.

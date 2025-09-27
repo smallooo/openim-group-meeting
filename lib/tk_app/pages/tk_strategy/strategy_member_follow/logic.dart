@@ -15,16 +15,14 @@ class StrategyMemberFollowLogic extends GetxController {
 
   // 切换关注标签页
   void switchFollowTab(FollowTabType tabType) {
-    state.currentTab = tabType;
-    update();
+    state.currentTab.value = tabType;
     // 重新加载对应数据
     loadUserList();
   }
 
   // 切换用户类型筛选
   void switchUserType(UserType userType) {
-    state.currentUserType = userType;
-    update();
+    state.currentUserType.value = userType;
     // 重新加载对应数据
     loadUserList();
   }
@@ -32,33 +30,17 @@ class StrategyMemberFollowLogic extends GetxController {
   // 加载用户列表数据
   Future<void> loadUserList() async {
     try {
-      state.isLoading = true;
-      state.errorMessage = null;
-      update();
+      state.isLoading.value = true;
+      state.errorMessage.value = null;
 
       // TODO: 这里后续替换为真实的API调用
       await Future.delayed(const Duration(milliseconds: 500)); // 模拟网络延迟
       
-      // 根据当前筛选条件过滤数据
-      List<UserInfo> filteredList = state.userList.where((user) {
-        // 根据用户类型筛选
-        bool typeMatch = (state.currentUserType == UserType.user && user.userType == "user") ||
-                        (state.currentUserType == UserType.trader && user.userType == "trader");
-        
-        // 根据关注状态筛选
-        bool followMatch = (state.currentTab == FollowTabType.following && user.isFollowing) ||
-                          (state.currentTab == FollowTabType.followers && !user.isFollowing);
-        
-        return typeMatch && followMatch;
-      }).toList();
-
-      state.userList = filteredList;
-      state.isLoading = false;
-      update();
+      // 注意：这里不再需要手动过滤，因为 filteredUserList 会自动响应状态变化
+      state.isLoading.value = false;
     } catch (e) {
-      state.isLoading = false;
-      state.errorMessage = e.toString();
-      update();
+      state.isLoading.value = false;
+      state.errorMessage.value = e.toString();
     }
   }
 
@@ -75,7 +57,6 @@ class StrategyMemberFollowLogic extends GetxController {
       );
       
       state.userList[userIndex] = updatedUser;
-      update();
 
       // TODO: 这里后续替换为真实的API调用
       await Future.delayed(const Duration(milliseconds: 300)); // 模拟网络延迟
@@ -97,7 +78,6 @@ class StrategyMemberFollowLogic extends GetxController {
           isFollowing: !state.userList[userIndex].isFollowing,
         );
         state.userList[userIndex] = revertedUser;
-        update();
       }
       
       Get.snackbar(
@@ -116,14 +96,17 @@ class StrategyMemberFollowLogic extends GetxController {
     await loadUserList();
   }
 
-  // 获取当前筛选后的用户列表
+  // 计算属性 - 获取当前筛选后的用户列表
+  // 这个 getter 会自动响应 currentTab 和 currentUserType 的变化
   List<UserInfo> get filteredUserList {
     return state.userList.where((user) {
-      bool typeMatch = (state.currentUserType == UserType.user && user.userType == "user") ||
-                      (state.currentUserType == UserType.trader && user.userType == "trader");
+      // 根据用户类型筛选
+      bool typeMatch = (state.currentUserType.value == UserType.user && user.userType == "user") ||
+                      (state.currentUserType.value == UserType.trader && user.userType == "trader");
       
-      bool followMatch = (state.currentTab == FollowTabType.following && user.isFollowing) ||
-                        (state.currentTab == FollowTabType.followers && !user.isFollowing);
+      // 根据关注状态筛选
+      bool followMatch = (state.currentTab.value == FollowTabType.following && user.isFollowing) ||
+                        (state.currentTab.value == FollowTabType.followers && !user.isFollowing);
       
       return typeMatch && followMatch;
     }).toList();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // 用户信息模型
 class UserInfo {
@@ -45,23 +46,23 @@ enum UserType {
 }
 
 class StrategyMemberFollowState {
-  // 当前选中的标签页
-  FollowTabType currentTab = FollowTabType.following;
+  // 响应式变量 - 当前选中的标签页
+  final currentTab = FollowTabType.following.obs;
   
-  // 当前选中的用户类型
-  UserType currentUserType = UserType.user;
+  // 响应式变量 - 当前选中的用户类型
+  final currentUserType = UserType.user.obs;
   
-  // 用户列表
-  List<UserInfo> userList = [];
+  // 响应式变量 - 用户列表
+  final userList = <UserInfo>[].obs;
   
-  // 加载状态
-  bool isLoading = false;
+  // 响应式变量 - 加载状态
+  final isLoading = false.obs;
   
-  // 错误信息
-  String? errorMessage;
+  // 响应式变量 - 错误信息
+  final errorMessage = RxnString();
   
   // 当前用户信息（会长 David）
-  String currentUserName = "會長 David";
+  final currentUserName = "會長 David";
 
   StrategyMemberFollowState() {
     ///Initialize variables
@@ -70,7 +71,7 @@ class StrategyMemberFollowState {
 
   // 初始化模拟数据
   void _initMockData() {
-    userList = [
+    userList.value = [
       UserInfo(
         id: "1",
         username: "CG499",

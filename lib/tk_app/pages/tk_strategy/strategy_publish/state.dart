@@ -5,6 +5,16 @@ class StrategyPublishState {
   // Tab选择 (0: 合约策略, 1: 现货策略)
   RxInt selectedTabIndex = 0.obs;
   
+  // 市场类型常量
+  static const String marketTypeFutures = 'FUTURES'; // 合约
+  static const String marketTypeSpot = 'SPOT';       // 现货
+  
+  // 市场类型映射
+  static const Map<int, String> marketTypeMap = {
+    0: marketTypeFutures, // 合约策略
+    1: marketTypeSpot,    // 现货策略
+  };
+  
   // 输入框控制器
   TextEditingController titleController = TextEditingController();
   TextEditingController summaryController = TextEditingController();
@@ -96,5 +106,15 @@ class StrategyPublishState {
   void setValidToDate(DateTime date) {
     validToDate.value = date;
     _updateCanPublish();
+  }
+  
+  // 获取当前市场类型
+  String get currentMarketType {
+    return marketTypeMap[selectedTabIndex.value] ?? marketTypeFutures;
+  }
+  
+  // 获取市场类型显示名称
+  String get currentMarketTypeDisplayName {
+    return selectedTabIndex.value == 0 ? '合约策略' : '现货策略';
   }
 }

@@ -42,6 +42,11 @@ class StrategyPublishRequest with _$StrategyPublishRequest {
     
     /// 有效期结束时间
     @JsonKey(name: 'validTo') required String validTo,
+
+    /// 市场类型:SPOT-现货,FUTURES-合约
+    @JsonKey(name: 'marketType') required String marketType,
+
+
   }) = _StrategyPublishRequest;
 
   factory StrategyPublishRequest.fromJson(Map<String, dynamic> json) => 

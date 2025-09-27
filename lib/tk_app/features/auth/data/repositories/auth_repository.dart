@@ -49,10 +49,27 @@ class AuthRepository {
   /// 
   /// 返回新的令牌信息
   Future<Map<String, dynamic>> refreshToken(String refreshToken) async {
-    return await _apiClient.post<Map<String, dynamic>>(
+    print('=== 刷新令牌接口请求开始 ===');
+    print('接口地址: ${ApiConstants.authRefreshToken}');
+    print('请求参数: refreshToken = $refreshToken');
+    
+    final response = await _apiClient.post<Map<String, dynamic>>(
       ApiConstants.authRefreshToken,
       data: {'refreshToken': refreshToken},
     );
+    
+    print('=== 刷新令牌接口响应信息 ===');
+    print('完整响应数据: $response');
+    if (response != null) {
+      print('响应数据类型: ${response.runtimeType}');
+      print('响应数据键值对:');
+      response.forEach((key, value) {
+        print('  $key: $value (${value.runtimeType})');
+      });
+    }
+    print('=== 刷新令牌接口响应结束 ===');
+    
+    return response;
   }
 
   /// 退出登录

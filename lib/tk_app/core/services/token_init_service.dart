@@ -36,10 +36,16 @@ class TokenInitService {
 
       debugPrint('[TokenInitService] 发现refreshToken，尝试自动刷新获取最新accessToken');
       
-      // 只要有refreshToken，就尝试刷新获取最新的accessToken
-      final newAccessToken = await _tokenManager.getValidAccessToken();
-      if (newAccessToken == null || newAccessToken.isEmpty) {
+      // 只要有refreshToken，就强制刷新获取最新的accessToken
+      final refreshSuccess = await _tokenManager.forceRefreshToken();
+      if (!refreshSuccess) {
         debugPrint('[TokenInitService] Token刷新失败，需要重新登录');
+        return TokenInitResult.needsLogin();
+      }
+      
+      final newAccessToken = _tokenStorage.getAccessToken();
+      if (newAccessToken == null || newAccessToken.isEmpty) {
+        debugPrint('[TokenInitService] 获取新accessToken失败，需要重新登录');
         return TokenInitResult.needsLogin();
       }
 

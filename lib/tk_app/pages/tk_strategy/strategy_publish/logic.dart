@@ -56,6 +56,8 @@ class StrategyPublishLogic extends GetxController {
   // 切换Tab
   void switchTab(int index) {
     state.selectedTabIndex.value = index;
+    // 打印当前市场类型，便于调试
+    print('切换到Tab $index，市场类型: ${state.currentMarketType}');
   }
   
   // 选择类型
@@ -115,25 +117,26 @@ class StrategyPublishLogic extends GetxController {
         stopLossPrice: double.tryParse(state.limitPriceControllers[2].text) ?? 0.0,
         validFrom: _formatDateTime(state.validFromDate.value!),
         validTo: _formatDateTime(state.validToDate.value!),
+        marketType: state.currentMarketType, // 使用当前选择的市场类型
       );
       
       // 调用API发布策略
       final result = await _strategyRepository.publishStrategy(request);
       
       // 显示成功提示
-      Get.snackbar(
-        '发布成功', 
-        '策略发布成功！\n策略ID: ${result.strategyId}',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 8,
-      );
-      
+      // Get.snackbar(
+      //   '发布成功',
+      //   '策略发布成功！\n策略ID: ${result.strategyId}',
+      //   snackPosition: SnackPosition.TOP,
+      //   backgroundColor: Colors.green,
+      //   colorText: Colors.white,
+      //   duration: const Duration(seconds: 3),
+      //   margin: const EdgeInsets.all(16),
+      //   borderRadius: 8,
+      // );
+      //
       // 延迟一下再返回，让用户看到成功提示
-      await Future.delayed(const Duration(milliseconds: 1500));
+      // await Future.delayed(const Duration(milliseconds: 1500));
       
       // 发布成功后返回上一页
       Get.back();

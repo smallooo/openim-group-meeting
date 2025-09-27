@@ -70,19 +70,17 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
           // ),
 
           // 策略申请图标
-          IconButton(
-            icon: Icon(
-              Icons.person_add_outlined,
-              color: Colors.black,
-              size: 24.w,
-            ),
-            onPressed: () {
-              // Get.to(() => StrategyUnionMemberProfilePage());
-              Get.to(() => StrategyMemberFollowPage());
-
-
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(
+          //     Icons.person_add_outlined,
+          //     color: Colors.black,
+          //     size: 24.w,
+          //   ),
+          //   onPressed: () {
+          //     Get.to(() => StrategyUnionMemberProfilePage());
+          //     // Get.to(() => StrategyMemberFollowPage());
+          //   },
+          // ),
 
 
           // 成员资料图标
@@ -114,381 +112,681 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
+      // body: SingleChildScrollView(
+      //   child: Column(
+      //     children: [
+      //     // 通知区域  
+      //     // Container(
+      //     //   margin: const EdgeInsets.symmetric(horizontal: 16.0),
+      //     //   decoration: BoxDecoration(
+      //     //     color: const Color(0xFFF0F0F0),
+      //     //     borderRadius: BorderRadius.circular(12.0),
+      //     //   ),
+      //     //   child: IconTextWidget(
+      //     //     leftIcon: ImageRes.tkStrategyHomeNotice.toImage,
+      //     //     text: 'CG00587621于14:54订阅了會長David',
+      //     //     backgroundColor: const Color(0xFFE1BEE7),
+      //     //     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      //     //     borderRadius: 5.0,
+      //     //     height: 42,
+      //     //     textStyle: const TextStyle(
+      //     //       fontSize: 14.0,
+      //     //       color: Color(0xFF333333),
+      //     //       fontWeight: FontWeight.normal,
+      //     //     ),
+      //     //     onTap: () => _showSnackBar(context, '点击了订阅通知'),
+      //     //   ),
+      //     // ),
+      //     // SizedBox(height: 20.h),
+      //     // 两个加密货币卡片 + 查看更多按钮
+      //     // Padding(
+      //     //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+      //     //   child: Row(
+      //     //     children: [
+      //     //       // BTC 卡片
+      //     //       const Expanded(
+      //     //         child: CryptoCardWidget(
+      //     //           height: 87.0,
+      //     //           backgroundColor: Color(0xFFF8F8FA),
+      //     //           borderColor: Color(0xFFE8EAEF),
+      //     //           borderWidth: 1.0,
+      //     //           borderRadius: 5.0,
+      //     //           padding: EdgeInsets.all(8.0),
+      //     //           labelIcon: Icon(
+      //     //             Icons.currency_bitcoin,
+      //     //             color: Colors.white,
+      //     //             size: 16.0,
+      //     //           ),
+      //     //           labelText: 'BTC',
+      //     //           labelTextStyle: TextStyle(
+      //     //             color: Colors.white,
+      //     //             fontSize: 12.0,
+      //     //             fontWeight: FontWeight.w600,
+      //     //           ),
+      //     //           valueText: '1142.2',
+      //     //           valueTextStyle: TextStyle(
+      //     //             color: Colors.black,
+      //     //             fontSize: 16.0,
+      //     //             fontWeight: FontWeight.bold,
+      //     //           ),
+      //     //           valueTopSpacing: 11.0,  // 减少顶部间距给百分比更多空间
+      //     //           valueBottomSpacing: 3.0,  // 减少间距避免溢出
+      //     //           percentageIcon: Icon(
+      //     //             Icons.trending_up,
+      //     //             color: Color(0xFF008000),
+      //     //             size: 16.0,
+      //     //           ),
+      //     //           percentageText: '+2.23%',
+      //     //           percentageTextStyle: TextStyle(
+      //     //             color: Color(0xFF008000),
+      //     //             fontSize: 12.0,
+      //     //             fontWeight: FontWeight.w600,
+      //     //           ),
+      //     //           percentageColor: Color(0xFF008000),
+      //     //         ),
+      //     //       ),
+      //     //       SizedBox(width: 12.w),
+      //     //       // ETH 卡片
+      //     //       const Expanded(
+      //     //         child: CryptoCardWidget(
+      //     //           height: 87.0,
+      //     //           backgroundColor: Color(0xFFF8F8FA),
+      //     //           borderColor: Color(0xFFE8EAEF),
+      //     //           borderWidth: 1.0,
+      //     //           borderRadius: 5.0,
+      //     //           padding: EdgeInsets.all(8.0),
+      //     //           labelIcon: Icon(
+      //     //             Icons.currency_exchange,
+      //     //             color: Colors.white,
+      //     //             size: 12.0,
+      //     //           ),
+      //     //           labelText: 'ETH',
+      //     //           labelTextStyle: TextStyle(
+      //     //             color: Colors.white,
+      //     //             fontSize: 12.0,
+      //     //             fontWeight: FontWeight.w600,
+      //     //           ),
+      //     //           valueText: '3842.5',
+      //     //           valueTextStyle: TextStyle(
+      //     //             color: Colors.black,
+      //     //             fontSize: 16.0,
+      //     //             fontWeight: FontWeight.bold,
+      //     //           ),
+      //     //           valueTopSpacing: 11.0,  // 减少顶部间距给百分比更多空间
+      //     //           valueBottomSpacing: 3.0,  // 减少间距避免溢出
+      //     //           percentageIcon: Icon(
+      //     //             Icons.trending_down,
+      //     //             color: Color(0xFFFF0000),
+      //     //             size: 12.0,
+      //     //           ),
+      //     //           percentageText: '-1.45%',
+      //     //           percentageTextStyle: TextStyle(
+      //     //             color: Color(0xFFFF0000),
+      //     //             fontSize: 12.0,
+      //     //             fontWeight: FontWeight.w600,
+      //     //           ),
+      //     //           percentageColor: Color(0xFFFF0000),
+      //     //         ),
+      //     //       ),
+      //     //       SizedBox(width: 12.w),
+      //     //       // 查看更多按钮
+      //     //       const Expanded(
+      //     //         child: ViewMoreButtonWidget(
+      //     //           text: '查看更多',
+      //     //           rightIcon: Icon(Icons.chevron_right),
+      //     //           height: 87.0,
+      //     //           backgroundColor: Color(0xFFF8F8FA),
+      //     //           borderColor: Color(0xFFE8EAEF),
+      //     //           borderWidth: 1.0,
+      //     //           borderRadius: 5.0,
+      //     //           textStyle: TextStyle(
+      //     //             fontSize: 13.0,
+      //     //             fontWeight: FontWeight.w600,
+      //     //             color: Color(0xFF999999),
+      //     //           ),
+      //     //           rightIconColor: Colors.black54,
+      //     //         ),
+      //     //       ),
+      //     //     ],
+      //     //   ),
+      //     // ),
+      //     // SizedBox(height: 20.h),
+      //     // 趋势指标部分
+      //     _buildTrendIndicatorSection(),
+      //   ],
+      //   ),
+      // ),
+      body: Column(
+        children: [
           // 通知区域  
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0F0F0),
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: IconTextWidget(  
-              leftIcon: ImageRes.tkStrategyHomeNotice.toImage,
-              text: 'CG00587621于14:54订阅了會長David',
-              backgroundColor: const Color(0xFFE1BEE7),
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              borderRadius: 5.0,
-              height: 42,
-              textStyle: const TextStyle(
-                fontSize: 14.0,
-                color: Color(0xFF333333),
-                fontWeight: FontWeight.normal,
-              ),
-              onTap: () => _showSnackBar(context, '点击了订阅通知'),
-            ),
-          ),
-          SizedBox(height: 20.h),
+          // Container(
+          //   margin: const EdgeInsets.symmetric(horizontal: 16.0),
+          //   decoration: BoxDecoration(
+          //     color: const Color(0xFFF0F0F0),
+          //     borderRadius: BorderRadius.circular(12.0),
+          //   ),
+          //   child: IconTextWidget(
+          //     leftIcon: ImageRes.tkStrategyHomeNotice.toImage,
+          //     text: 'CG00587621于14:54订阅了會長David',
+          //     backgroundColor: const Color(0xFFE1BEE7),
+          //     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          //     borderRadius: 5.0,
+          //     height: 42,
+          //     textStyle: const TextStyle(
+          //       fontSize: 14.0,
+          //       color: Color(0xFF333333),
+          //       fontWeight: FontWeight.normal,
+          //     ),
+          //     onTap: () => _showSnackBar(context, '点击了订阅通知'),
+          //   ),
+          // ),
+          // SizedBox(height: 20.h),
           // 两个加密货币卡片 + 查看更多按钮
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Row(
-              children: [
-                // BTC 卡片
-                const Expanded(
-                  child: CryptoCardWidget(
-                    height: 87.0,
-                    backgroundColor: Color(0xFFF8F8FA),
-                    borderColor: Color(0xFFE8EAEF),
-                    borderWidth: 1.0,
-                    borderRadius: 5.0,
-                    padding: EdgeInsets.all(8.0),
-                    labelIcon: Icon(
-                      Icons.currency_bitcoin,
-                      color: Colors.white,
-                      size: 16.0,
-                    ),
-                    labelText: 'BTC',
-                    labelTextStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    valueText: '1142.2',
-                    valueTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    valueTopSpacing: 11.0,  // 减少顶部间距给百分比更多空间
-                    valueBottomSpacing: 3.0,  // 减少间距避免溢出
-                    percentageIcon: Icon(
-                      Icons.trending_up,
-                      color: Color(0xFF008000),
-                      size: 16.0,
-                    ),
-                    percentageText: '+2.23%',
-                    percentageTextStyle: TextStyle(
-                      color: Color(0xFF008000),
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    percentageColor: Color(0xFF008000),
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                // ETH 卡片
-                const Expanded(
-                  child: CryptoCardWidget(
-                    height: 87.0,
-                    backgroundColor: Color(0xFFF8F8FA),
-                    borderColor: Color(0xFFE8EAEF),
-                    borderWidth: 1.0,
-                    borderRadius: 5.0,
-                    padding: EdgeInsets.all(8.0),
-                    labelIcon: Icon(
-                      Icons.currency_exchange,
-                      color: Colors.white,
-                      size: 12.0,
-                    ),
-                    labelText: 'ETH',
-                    labelTextStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    valueText: '3842.5',
-                    valueTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    valueTopSpacing: 11.0,  // 减少顶部间距给百分比更多空间
-                    valueBottomSpacing: 3.0,  // 减少间距避免溢出
-                    percentageIcon: Icon(
-                      Icons.trending_down,
-                      color: Color(0xFFFF0000),
-                      size: 12.0,
-                    ),
-                    percentageText: '-1.45%',
-                    percentageTextStyle: TextStyle(
-                      color: Color(0xFFFF0000),
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    percentageColor: Color(0xFFFF0000),
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                // 查看更多按钮
-                const Expanded(
-                  child: ViewMoreButtonWidget(
-                    text: '查看更多',
-                    rightIcon: Icon(Icons.chevron_right),
-                    height: 87.0,
-                    backgroundColor: Color(0xFFF8F8FA),
-                    borderColor: Color(0xFFE8EAEF),
-                    borderWidth: 1.0,
-                    borderRadius: 5.0,
-                    textStyle: TextStyle(
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF999999),
-                    ),
-                    rightIconColor: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20.h),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+          //   child: Row(
+          //     children: [
+          //       // BTC 卡片
+          //       const Expanded(
+          //         child: CryptoCardWidget(
+          //           height: 87.0,
+          //           backgroundColor: Color(0xFFF8F8FA),
+          //           borderColor: Color(0xFFE8EAEF),
+          //           borderWidth: 1.0,
+          //           borderRadius: 5.0,
+          //           padding: EdgeInsets.all(8.0),
+          //           labelIcon: Icon(
+          //             Icons.currency_bitcoin,
+          //             color: Colors.white,
+          //             size: 16.0,
+          //           ),
+          //           labelText: 'BTC',
+          //           labelTextStyle: TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 12.0,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //           valueText: '1142.2',
+          //           valueTextStyle: TextStyle(
+          //             color: Colors.black,
+          //             fontSize: 16.0,
+          //             fontWeight: FontWeight.bold,
+          //           ),
+          //           valueTopSpacing: 11.0,  // 减少顶部间距给百分比更多空间
+          //           valueBottomSpacing: 3.0,  // 减少间距避免溢出
+          //           percentageIcon: Icon(
+          //             Icons.trending_up,
+          //             color: Color(0xFF008000),
+          //             size: 16.0,
+          //           ),
+          //           percentageText: '+2.23%',
+          //           percentageTextStyle: TextStyle(
+          //             color: Color(0xFF008000),
+          //             fontSize: 12.0,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //           percentageColor: Color(0xFF008000),
+          //         ),
+          //       ),
+          //       SizedBox(width: 12.w),
+          //       // ETH 卡片
+          //       const Expanded(
+          //         child: CryptoCardWidget(
+          //           height: 87.0,
+          //           backgroundColor: Color(0xFFF8F8FA),
+          //           borderColor: Color(0xFFE8EAEF),
+          //           borderWidth: 1.0,
+          //           borderRadius: 5.0,
+          //           padding: EdgeInsets.all(8.0),
+          //           labelIcon: Icon(
+          //             Icons.currency_exchange,
+          //             color: Colors.white,
+          //             size: 12.0,
+          //           ),
+          //           labelText: 'ETH',
+          //           labelTextStyle: TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 12.0,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //           valueText: '3842.5',
+          //           valueTextStyle: TextStyle(
+          //             color: Colors.black,
+          //             fontSize: 16.0,
+          //             fontWeight: FontWeight.bold,
+          //           ),
+          //           valueTopSpacing: 11.0,  // 减少顶部间距给百分比更多空间
+          //           valueBottomSpacing: 3.0,  // 减少间距避免溢出
+          //           percentageIcon: Icon(
+          //             Icons.trending_down,
+          //             color: Color(0xFFFF0000),
+          //             size: 12.0,
+          //           ),
+          //           percentageText: '-1.45%',
+          //           percentageTextStyle: TextStyle(
+          //             color: Color(0xFFFF0000),
+          //             fontSize: 12.0,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //           percentageColor: Color(0xFFFF0000),
+          //         ),
+          //       ),
+          //       SizedBox(width: 12.w),
+          //       // 查看更多按钮
+          //       const Expanded(
+          //         child: ViewMoreButtonWidget(
+          //           text: '查看更多',
+          //           rightIcon: Icon(Icons.chevron_right),
+          //           height: 87.0,
+          //           backgroundColor: Color(0xFFF8F8FA),
+          //           borderColor: Color(0xFFE8EAEF),
+          //           borderWidth: 1.0,
+          //           borderRadius: 5.0,
+          //           textStyle: TextStyle(
+          //             fontSize: 13.0,
+          //             fontWeight: FontWeight.w600,
+          //             color: Color(0xFF999999),
+          //           ),
+          //           rightIconColor: Colors.black54,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(height: 20.h),
           // 趋势指标部分
           _buildTrendIndicatorSection(),
         ],
-        ),
       ),
     );
   }
 
   /// 构建趋势指标部分
   Widget _buildTrendIndicatorSection() {
-    return Column(
+    return Expanded(child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 趋势指标标题和下拉选项
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 趋势指标文本
-              Text(
-                '趋势指标',
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
-              // 30M级别下拉选项
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '30M级别',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    SizedBox(width: 4.w),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 16.w,
-                      color: Colors.grey[600],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 6.h),
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       // 趋势指标文本
+        //       Text(
+        //         '趋势指标',
+        //         style: TextStyle(
+        //           fontSize: 18.sp,
+        //           fontWeight: FontWeight.w600,
+        //           color: Colors.black,
+        //         ),
+        //       ),
+        //       // 30M级别下拉选项
+        //       Container(
+        //         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+        //         child: Row(
+        //           mainAxisSize: MainAxisSize.min,
+        //           children: [
+        //             Text(
+        //               '30M级别',
+        //               style: TextStyle(
+        //                 fontSize: 14.sp,
+        //                 color: Colors.black87,
+        //               ),
+        //             ),
+        //             SizedBox(width: 4.w),
+        //             Icon(
+        //               Icons.keyboard_arrow_down,
+        //               size: 16.w,
+        //               color: Colors.grey[600],
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // SizedBox(height: 6.h),
         // 横线滑动表
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Row(
-            children: [
-              // 解锁卡片
-              UnlockCardWidget(
-                width: 160.w,
-                height: 101.h,
-                autoHeight: false,
-                topLeftText: '仅需10U',
-                topLeftTextOffset: const Offset(8.0, 8.0), // 左上角文本位置：距离左边8px，距离顶部8px
-                mainTextOffset: const Offset(17.0, 40.0), // 中间文本位置：距离左边8px，距离顶部25px
-                topLeftTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-                topRightImage: ImageRes.tkStrategyHomeV.toImage,
-                topRightImageSize: 40.0, // 设置图片大小为40x40
-                topRightImageOffset: const Offset(4.0, 0.0), // 设置图片位置：距离右边0px，距离顶部0px
-                topRightPadding: EdgeInsets.zero, // 移除内边距，让图片贴边
-                mainText: '解锁全部趋势指标',
-                mainTextStyle: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-                buttonText: '立即解锁',
-                buttonTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-                buttonBackgroundColor: Color(0xFF9E13F7),
-                backgroundColor: Colors.white,
-                borderColor: Colors.grey[300],
-                borderWidth: 1.0,
-                borderRadius: 8.0,
-                onButtonTap: () {
-                  // 解锁按钮点击事件
-                  print('立即解锁按钮被点击');
-                },
-              ),
-              SizedBox(width: 12.w),
-              // 动态生成加密货币信息卡片
-              ..._buildCryptoInfoCards(),
-            ],
-          ),
-        ),
-        SizedBox(height: 16.h),
+        // SingleChildScrollView(
+        //   scrollDirection: Axis.horizontal,
+        //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //   child: Row(
+        //     children: [
+        //       // 解锁卡片
+        //       UnlockCardWidget(
+        //         width: 160.w,
+        //         height: 101.h,
+        //         autoHeight: false,
+        //         topLeftText: '仅需10U',
+        //         topLeftTextOffset: const Offset(8.0, 8.0), // 左上角文本位置：距离左边8px，距离顶部8px
+        //         mainTextOffset: const Offset(17.0, 40.0), // 中间文本位置：距离左边8px，距离顶部25px
+        //         topLeftTextStyle: TextStyle(
+        //           color: Colors.black,
+        //           fontSize: 16.sp,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //         topRightImage: ImageRes.tkStrategyHomeV.toImage,
+        //         topRightImageSize: 40.0, // 设置图片大小为40x40
+        //         topRightImageOffset: const Offset(4.0, 0.0), // 设置图片位置：距离右边0px，距离顶部0px
+        //         topRightPadding: EdgeInsets.zero, // 移除内边距，让图片贴边
+        //         mainText: '解锁全部趋势指标',
+        //         mainTextStyle: TextStyle(
+        //           color: Colors.black87,
+        //           fontSize: 11.sp,
+        //           fontWeight: FontWeight.w500,
+        //         ),
+        //         buttonText: '立即解锁',
+        //         buttonTextStyle: TextStyle(
+        //           color: Colors.white,
+        //           fontSize: 11.sp,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //         buttonBackgroundColor: Color(0xFF9E13F7),
+        //         backgroundColor: Colors.white,
+        //         borderColor: Colors.grey[300],
+        //         borderWidth: 1.0,
+        //         borderRadius: 8.0,
+        //         onButtonTap: () {
+        //           // 解锁按钮点击事件
+        //           print('立即解锁按钮被点击');
+        //         },
+        //       ),
+        //       SizedBox(width: 12.w),
+        //       // 动态生成加密货币信息卡片
+        //       ..._buildCryptoInfoCards(),
+        //     ],
+        //   ),
+        // ),
+        // SizedBox(height: 16.h),
         // 交易员推荐
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       // 交易员推荐文本
+        //       Text(
+        //         '交易员推荐',
+        //         style: TextStyle(
+        //           fontSize: 18.sp,
+        //           fontWeight: FontWeight.w600,
+        //           color: Colors.black,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // SizedBox(height: 12.h),
+        // 交易员横线滑动表
+        // SingleChildScrollView(
+        //   scrollDirection: Axis.horizontal,
+        //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //   child: Row(
+        //     children: _buildTraderProfileCards(),
+        //   ),
+        // ),
+        SizedBox(height: 16.h),
+        // 合约策略和现货策略 Tab
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // 交易员推荐文本
-              Text(
-                '交易员推荐',
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
+              // 合约策略 Tab
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedTabIndex = 0;
+                  });
+                  // 切换到合约策略时，如果数据为空则加载数据
+                  if (logic.state.contractTraders.isEmpty) {
+                    logic.loadContractTraders(refresh: true);
+                  }
+                },
+                child: Text(
+                  '合约策略',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: selectedTabIndex == 0 ? Colors.black : Colors.grey,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+              // 现货策略 Tab
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedTabIndex = 1;
+                  });
+                  // 切换到现货策略时，如果数据为空则加载数据
+                  if (logic.state.spotTraders.isEmpty) {
+                    logic.loadSpotTraders(refresh: true);
+                  }
+                },
+                child: Text(
+                  '现货策略',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: selectedTabIndex == 1 ? Colors.black : Colors.grey,
+                  ),
                 ),
               ),
             ],
           ),
         ),
         SizedBox(height: 12.h),
-        // 交易员横线滑动表
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Row(
-            children: _buildTraderProfileCards(),
-          ),
-        ),
-         SizedBox(height: 16.h),
-         // 合约策略和现货策略 Tab
-         Padding(
-           padding: EdgeInsets.symmetric(horizontal: 16.w),
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.start,
-             children: [
-               // 合约策略 Tab
-               GestureDetector(
-                 onTap: () {
-                   setState(() {
-                     selectedTabIndex = 0;
-                   });
-                 },
-                 child: Text(
-                   '合约策略',
-                   style: TextStyle(
-                     fontSize: 18.sp,
-                     fontWeight: FontWeight.w600,
-                     color: selectedTabIndex == 0 ? Colors.black : Colors.grey,
-                   ),
-                 ),
-               ),
-               const SizedBox(width: 20),
-               // 现货策略 Tab
-               GestureDetector(
-                 onTap: () {
-                   setState(() {
-                     selectedTabIndex = 1;
-                   });
-                 },
-                 child: Text(
-                   '现货策略',
-                   style: TextStyle(
-                     fontSize: 18.sp,
-                     fontWeight: FontWeight.w600,
-                     color: selectedTabIndex == 1 ? Colors.black : Colors.grey,
-                   ),
-                 ),
-               ),
-             ],
-           ),
-         ),
-         SizedBox(height: 12.h),
-         // 策略列表（根据选中的 Tab 显示不同数据）
-         SizedBox(
-           height: 400.h, // 设置固定高度
-           child: ListView.builder(
-             padding: EdgeInsets.symmetric(horizontal: 16.w),
-             itemCount: _getCurrentStrategyData().length,
-             itemBuilder: (context, index) {
-               final data = _getCurrentStrategyData()[index];
-               return Padding(
-                 padding: EdgeInsets.only(bottom: 12.h),
-                 child: GestureDetector(
-                   onTap: () => logic.goToStrategyDetail(data),
-                   child: UserProfileCardWidget(
-                     data: data,
-                     padding: const EdgeInsets.all(16.0),
-                     borderRadius: 12.0,
-                     backgroundColor: Colors.white,
-                     border: Border.all(
-                       color: const Color(0xFFE8EAEF),
-                       width: 1.0,
-                     ),
-                     avatarSize: 60.0,
-                     avatarBorderRadius: 30.0,
-                     nameTextStyle: TextStyle(
-                       fontSize: 16.sp,
-                       fontWeight: FontWeight.w600,
-                       color: Colors.black,
-                     ),
-                     subscriptionLabelTextStyle: TextStyle(
-                       fontSize: 12.sp,
-                       color: Colors.grey[600],
-                     ),
-                     subscriptionValueTextStyle: TextStyle(
-                       fontSize: 14.sp,
-                       fontWeight: FontWeight.w500,
-                       color: Colors.black87,
-                     ),
-                     guildNameTextStyle: TextStyle(
-                       fontSize: 13.sp,
-                       color: Colors.black87,
-                     ),
-                     followersCountTextStyle: TextStyle(
-                       fontSize: 12.sp,
-                       color: Colors.grey[600],
-                     ),
-                     onAvatarTap: () {
-                       logic.goToStrategyDetail(data);
-                     },
-                     onTagTap: (index) {
-                       _showSnackBar(context, '点击了 ${data.name} 的标签: ${data.tags[index]}');
-                     },
-                   ),
-                 ),
-               );
-             },
-           ),
-         ),
+        // 策略列表（根据选中的 Tab 显示不同数据）
+        Expanded(child: Obx(() {
+          // 根据选中的Tab获取对应的数据
+          final currentTraders = selectedTabIndex == 0 ? logic.state.contractTraders : logic.state.spotTraders;
+          final isLoading = selectedTabIndex == 0 ? logic.state.isLoadingContractTraders.value : logic.state.isLoadingSpotTraders.value;
+          final isRefreshing = selectedTabIndex == 0 ? logic.state.isRefreshingContractTraders.value : logic.state.isRefreshingSpotTraders.value;
+          final error = selectedTabIndex == 0 ? logic.state.contractTradersError.value : logic.state.spotTradersError.value;
+          
+          if (error.isNotEmpty) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                if (selectedTabIndex == 0) {
+                  await logic.loadContractTraders(refresh: true);
+                } else {
+                  await logic.loadSpotTraders(refresh: true);
+                }
+                
+                // 显示刷新成功提示
+                if (mounted) {
+                  _showSnackBar(context, '数据已刷新');
+                }
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          size: 48.w,
+                          color: Colors.grey[400],
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          '加载失败',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          error,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.grey[500],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 16.h),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (selectedTabIndex == 0) {
+                              logic.loadContractTraders(refresh: true);
+                            } else {
+                              logic.loadSpotTraders(refresh: true);
+                            }
+                          },
+                          child: Text('重试'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+          
+          if (currentTraders.isEmpty && !isLoading) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                if (selectedTabIndex == 0) {
+                  await logic.loadContractTraders(refresh: true);
+                } else {
+                  await logic.loadSpotTraders(refresh: true);
+                }
+                
+                // 显示刷新成功提示
+                if (mounted) {
+                  _showSnackBar(context, '数据已刷新');
+                }
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.people_outline,
+                          size: 48.w,
+                          color: Colors.grey[400],
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          '暂无交易员数据',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          '下拉刷新获取最新数据',
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.grey[500],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+          
+          return RefreshIndicator(
+            onRefresh: () async {
+              // 下拉刷新时重新加载对应Tab的数据
+              if (selectedTabIndex == 0) {
+                await logic.loadContractTraders(refresh: true);
+              } else {
+                await logic.loadSpotTraders(refresh: true);
+              }
+              
+              // 显示刷新成功提示
+              if (mounted) {
+                // _showSnackBar(context, '数据已刷新');
+              }
+            },
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              itemCount: currentTraders.length + (isLoading && !isRefreshing ? 1 : 0),
+              itemBuilder: (context, index) {
+                // 加载更多指示器 - 只在非刷新状态下显示
+                if (index == currentTraders.length && !isRefreshing) {
+                  return Padding(
+                    padding: EdgeInsets.all(16.w),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                
+                final trader = currentTraders[index];
+                final data = logic.convertTraderToProfileCard(trader);
+                
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 12.h),
+                  child: GestureDetector(
+                    onTap: () => logic.goToStrategyDetail(data),
+                    child: UserProfileCardWidget(
+                      data: data,
+                      padding: const EdgeInsets.all(16.0),
+                      borderRadius: 12.0,
+                      backgroundColor: Colors.white,
+                      border: Border.all(
+                        color: const Color(0xFFE8EAEF),
+                        width: 1.0,
+                      ),
+                      avatarSize: 60.0,
+                      avatarBorderRadius: 30.0,
+                      nameTextStyle: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                      subscriptionLabelTextStyle: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.grey[600],
+                      ),
+                      subscriptionValueTextStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                      guildNameTextStyle: TextStyle(
+                        fontSize: 13.sp,
+                        color: Colors.black87,
+                      ),
+                      followersCountTextStyle: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.grey[600],
+                      ),
+                      onAvatarTap: () {
+                        logic.goToStrategyDetail(data);
+                      },
+                      onTagTap: (index) {
+                        _showSnackBar(context, '点击了 ${data.name} 的标签: ${data.tags[index]}');
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        })),
+        // SizedBox(
+        //   height: 400.h, // 设置固定高度
+        //   child:
+        // ),
       ],
-    );
+    ));
   }
 
   /// 构建加密货币信息卡片列表
@@ -708,10 +1006,6 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
     }).toList();
   }
 
-  /// 根据选中的 Tab 获取当前策略数据
-  List<UserProfileCardData> _getCurrentStrategyData() {
-    return selectedTabIndex == 0 ? _buildContractStrategyData() : _buildSpotStrategyData();
-  }
 
   /// 构建合约策略数据列表
   List<UserProfileCardData> _buildContractStrategyData() {

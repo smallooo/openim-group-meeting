@@ -26,8 +26,12 @@ class StrategyDetailState {
   // 策略跟踪列表
   RxList<TrackingComment> trackingList = <TrackingComment>[].obs;
   
-  // 打赏列表
+  // 打赏列表  
   RxList<RewardComment> rewardList = <RewardComment>[].obs;
+  
+  // 评价输入相关
+  RxBool isShowingCommentInput = false.obs;
+  RxString commentText = ''.obs;
 
   StrategyDetailState() {
     // 初始化示例数据
@@ -37,27 +41,27 @@ class StrategyDetailState {
   void _initializeData() {
     // 初始化策略跟踪评论
     trackingList.value = [
-      TrackingComment(
-        userAvatar: 'https://via.placeholder.com/40',
-        userName: '最后一搏',
-        userLevel: 'LV.0',
-        time: '03/21 17:41',
-        content: '谢谢会长',
-      ),
-      TrackingComment(
-        userAvatar: 'https://via.placeholder.com/40',
-        userName: '最后一搏',
-        userLevel: 'LV.0',
-        time: '03/21 17:41',
-        content: '谢谢会长',
-      ),
-      TrackingComment(
-        userAvatar: 'https://via.placeholder.com/40',
-        userName: '最后一搏',
-        userLevel: 'LV.0',
-        time: '03/21 17:41',
-        content: '谢谢会长',
-      ),
+    //   TrackingComment(
+    //     userAvatar: 'https://via.placeholder.com/40',
+    //     userName: '最后一搏',
+    //     userLevel: 'LV.0',
+    //     time: '03/21 17:41',
+    //     content: '谢谢会长',
+    //   ),
+    //   TrackingComment(
+    //     userAvatar: 'https://via.placeholder.com/40',
+    //     userName: '最后一搏',
+    //     userLevel: 'LV.0',
+    //     time: '03/21 17:41',
+    //     content: '谢谢会长',
+    //   ),
+    //   TrackingComment(
+    //     userAvatar: 'https://via.placeholder.com/40',
+    //     userName: '最后一搏',
+    //     userLevel: 'LV.0',
+    //     time: '03/21 17:41',
+    //     content: '谢谢会长',
+    //   ),
     ];
     
     // 初始化打赏评论

@@ -21,6 +21,7 @@ _$StrategyPublishRequestImpl _$$StrategyPublishRequestImplFromJson(
       stopLossPrice: (json['stopLossPrice'] as num).toDouble(),
       validFrom: json['validFrom'] as String,
       validTo: json['validTo'] as String,
+      marketType: json['marketType'] as String,
     );
 
 Map<String, dynamic> _$$StrategyPublishRequestImplToJson(
@@ -38,4 +39,5 @@ Map<String, dynamic> _$$StrategyPublishRequestImplToJson(
       'stopLossPrice': instance.stopLossPrice,
       'validFrom': instance.validFrom,
       'validTo': instance.validTo,
+      'marketType': instance.marketType,
     };

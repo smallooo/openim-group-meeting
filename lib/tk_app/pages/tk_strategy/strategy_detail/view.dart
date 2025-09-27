@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'logic.dart';
 import '../../../features/strategy/presentation/providers/strategy_detail_provider.dart';
+import '../../../features/strategy/presentation/providers/strategy_ratings_provider.dart';
 
 class StrategyDetailPage extends ConsumerWidget {
   final String strategyId;
@@ -25,6 +26,9 @@ class StrategyDetailPage extends ConsumerWidget {
       );
     });
     
+    // 触发评价数据加载
+    ref.watch(strategyRatingsNotifierProvider(strategyId));
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -44,32 +48,42 @@ class StrategyDetailPage extends ConsumerWidget {
         ),
         centerTitle: true,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          // 内容区域
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // 顶部用户信息
-                  _buildUserInfoSection(controller),
-                  
-                  const SizedBox(height: 12),
-                  
-                  // 策略信息卡片
-                  _buildStrategyInfoCard(controller),
-                  
-                  const SizedBox(height: 12),
-                  
-                  // Tab切换和内容
-                  _buildTabSection(controller),
-                ],
+          // 主要内容
+          Column(
+            children: [
+              // 内容区域
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // 顶部用户信息
+                      // _buildUserInfoSection(controller),
+                      
+                      const SizedBox(height: 12),
+                      
+                      // 策略信息卡片
+                      _buildStrategyInfoCard(controller),
+                      
+                      const SizedBox(height: 12),
+                      
+                      // Tab切换和内容
+                      _buildTabSection(controller),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              
+              // 底部固定按钮
+              _buildBottomButtons(controller),
+            ],
           ),
           
-          // 底部固定按钮
-          _buildBottomButtons(controller),
+          // 评价输入框（悬浮层）
+          Obx(() => controller.state.isShowingCommentInput.value 
+            ? _buildCommentInputOverlay(controller)
+            : const SizedBox.shrink()),
         ],
       ),
     );
@@ -375,7 +389,7 @@ class StrategyDetailPage extends ConsumerWidget {
   }
 
   Widget _buildTrackingList(StrategyDetailLogic controller) {
-    return ListView.builder(
+    return Obx(() => ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: controller.state.trackingList.length,
@@ -383,11 +397,11 @@ class StrategyDetailPage extends ConsumerWidget {
         final comment = controller.state.trackingList[index];
         return _buildCommentItem(comment, controller);
       },
-    );
+    ));
   }
 
   Widget _buildRewardList(StrategyDetailLogic controller) {
-    return ListView.builder(
+    return Obx(() => ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: controller.state.rewardList.length,
@@ -395,7 +409,7 @@ class StrategyDetailPage extends ConsumerWidget {
         final comment = controller.state.rewardList[index];
         return _buildRewardCommentItem(comment, controller);
       },
-    );
+    ));
   }
 
   Widget _buildCommentItem(dynamic comment, StrategyDetailLogic controller) {
@@ -647,6 +661,88 @@ class StrategyDetailPage extends ConsumerWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  // 评价输入框悬浮层
+  Widget _buildCommentInputOverlay(StrategyDetailLogic controller) {
+    return Container(
+      color: Colors.black.withOpacity(0.5),
+      child: Column(
+        children: [
+          // 点击空白区域关闭
+          Expanded(
+            child: GestureDetector(
+              onTap: () => controller.hideCommentInput(),
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+          
+          // 输入框区域
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(16),
+            child: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // 标题栏
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => controller.hideCommentInput(),
+                        child: const Icon(Icons.close, color: Colors.grey),
+                      ),
+                      const Expanded(
+                        child: Text(
+                          '添加评价',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.submitComment(),
+                        child: const Text(
+                          '发送',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF9E13F7),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // 输入框
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      autofocus: true,
+                      maxLines: 4,
+                      decoration: const InputDecoration(
+                        hintText: '请输入您的评价...',
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                      onChanged: (value) => controller.state.commentText.value = value,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

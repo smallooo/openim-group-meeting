@@ -51,6 +51,18 @@ class ApiConstants {
   static const String myFollows = '/api/strategy/my-follows';
 
 
+  // 交易员列表
+  static const String traderList = '/api/strategy/trader/list';
+
+  // 策略评价列表
+  static const String strategyRatings = '/api/strategy/strategies';
+
+  // 提交策略评价
+  static const String submitStrategyRating = '/api/strategy/strategies';
+
+  // 交易员的策略列表
+  static const String traderStrategies = '/api/strategy/strategies/trader';
+
   /// 默认超时时间（秒）
   static const int defaultTimeout = 30;
   
