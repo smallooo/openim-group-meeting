@@ -46,10 +46,12 @@ class SplashLogic extends GetxController {
       return;
     }
     
-    // 初始化邮箱登录token管理（自动刷新）
-    await _initializeEmailToken();
+    Logger.print('🔄 开始两套登录系统的统一校验...');
     
-    // 检查是否有缓存的登录数据
+    // 1. 初始化邮箱登录token管理（自动刷新）
+    final emailTokenResult = await _initializeEmailToken();
+    
+    // 2. 检查IM缓存数据
     final cachedData = await DataSp.getLoginCertificate();
     final loginAccount = DataSp.getLoginAccount();
     final email = (loginAccount is Map) ? (loginAccount['email'] as String?) : null;
@@ -70,13 +72,21 @@ class SplashLogic extends GetxController {
     Logger.print('  - 邮箱登录返回信息: ${emailLoginResponse != null ? "存在" : "不存在"}');
     Logger.print('  - IM登录返回信息: ${imLoginResponse != null ? "存在" : "不存在"}');
     
-    // 如果有有效的登录凭证和邮箱，就尝试自动登录（不要求所有缓存都存在）
-    if (cachedData != null && 
-        cachedData.userID.isNotEmpty && 
-        cachedData.imToken.isNotEmpty &&
-        email?.isNotEmpty == true) {
+    // 3. 同时校验两套系统的有效性
+    bool hasValidEmailToken = emailTokenResult?.isLoggedIn == true;
+    bool hasValidIMCache = (cachedData != null && 
+                           cachedData.userID.isNotEmpty && 
+                           cachedData.imToken.isNotEmpty && 
+                           email?.isNotEmpty == true);
+    
+    Logger.print('🔍 双系统校验结果:');
+    Logger.print('  - 邮箱Token系统: ${hasValidEmailToken ? "✅ 有效" : "❌ 无效"}');
+    Logger.print('  - IM缓存系统: ${hasValidIMCache ? "✅ 有效" : "❌ 无效"}');
+    
+    // 4. 只有两套系统都有效才进入App
+    if (hasValidEmailToken && hasValidIMCache) {
       try {
-        Logger.print('🚀 开始自动登录流程...');
+        Logger.print('🚀 两套系统都有效，开始自动登录流程...');
         
         // 使用缓存的登录数据直接登录 IM SDK
         await imLogic.login(cachedData.userID, cachedData.imToken);
@@ -93,7 +103,7 @@ class SplashLogic extends GetxController {
         final result = await ConversationLogic.getConversationFirstPage();
         Get.find<CacheController>().resetCache();
         AppNavigator.startSplashToMain(isAutoLogin: true, conversations: result);
-        Logger.print('✅ 使用缓存数据自动登录成功: ${cachedData.userID}');
+        Logger.print('✅ 双系统校验通过，自动登录成功: ${cachedData.userID}');
         return;
       } catch (e) {
         Logger.print('❌ 自动登录失败: $e');
@@ -104,20 +114,25 @@ class SplashLogic extends GetxController {
           return;
         }
         // 其他错误则清除本地数据并进入新登录页
+        Logger.print('💥 自动登录异常，清除所有数据');
         await _clearAllLoginData();
         Get.offAllNamed(AppRoutes.tk_login);
         return;
       }
-    }
-    
-    // 如果登录凭证无效，清除所有登录数据
-    if (cachedData != null && (cachedData.userID.isEmpty || cachedData.imToken.isEmpty)) {
-      Logger.print('⚠️ 检测到无效的登录凭证，清除所有缓存');
+    } else {
+      // 5. 任何一套系统失效都清除所有数据并跳转登录
+      Logger.print('⚠️ 双系统校验失败，清除所有数据并跳转登录页');
+      if (!hasValidEmailToken) {
+        Logger.print('  📍 邮箱Token系统失效原因: ${emailTokenResult?.error ?? "初始化失败"}');
+      }
+      if (!hasValidIMCache) {
+        Logger.print('  📍 IM缓存系统失效: 缓存数据不完整或邮箱信息缺失');
+      }
+      
+      // 清除所有登录数据，避免死循环
       await _clearAllLoginData();
+      Get.offAllNamed(AppRoutes.tk_login);
     }
-    
-    // 没有完整登录数据则进入新登录页
-    Get.offAllNamed(AppRoutes.tk_login);
   }
   
   /// 清除所有登录相关数据
@@ -142,7 +157,7 @@ class SplashLogic extends GetxController {
   }
   
   /// 初始化邮箱登录token管理（自动刷新）
-  Future<void> _initializeEmailToken() async {
+  Future<TokenInitResult?> _initializeEmailToken() async {
     try {
       // 创建 ProviderContainer 来访问 Riverpod providers
       final container = ProviderContainer();
@@ -169,8 +184,11 @@ class SplashLogic extends GetxController {
       
       // 清理 container
       container.dispose();
+      
+      return initResult;
     } catch (e) {
       Logger.print('❌ 初始化邮箱登录 Token 失败: $e');
+      return null;
     }
   }
 
