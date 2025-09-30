@@ -51,6 +51,10 @@ abstract class AppRoutes {
   static const selectContactsFromTag = '/select_contacts_from_tag';
   static const tkMine = '/tk_mine';
   static const tkMyInfo = '/tk_my_info';
+  static const verifyPassword = '/verify_password';
+  static const paymentProgress = '/payment_progress';
+  static const paymentSuccess = '/payment_success';
+  static const paymentFail = '/payment_fail';
 }
 
 extension RoutesExtension on String {

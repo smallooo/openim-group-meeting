@@ -2374,6 +2374,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.14"
+  taowu_balance_sdk:
+    dependency: "direct main"
+    description:
+      path: "local_plugin/balance-sdk"
+      relative: true
+    source: path
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -2414,6 +2421,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  toklink_common:
+    dependency: "direct main"
+    description:
+      path: "local_plugin/toklink-common"
+      relative: true
+    source: path
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:

@@ -1,6 +1,14 @@
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../tk_subscription/order_detail/view.dart';
+import '../../tk_subscription/order_list/view.dart';
+import '../../tk_subscription/payment_fail_page/usage_example.dart';
+import '../../tk_subscription/payment_progress/usage_example.dart';
+import '../../tk_subscription/payment_success/usage_example.dart';
+import '../../tk_subscription/recharge_balance/view.dart';
+import '../../tk_subscription/strategy_subscription/view.dart';
+import '../../tk_subscription/verify_password/usage_example.dart';
 import 'state.dart';
 import '../strategy_member_follow/view.dart';
 import '../strategy_member_follow/state.dart';
@@ -146,6 +154,17 @@ class StrategyUnionMemberProfileLogic extends GetxController {
     // TODO: 实现订阅逻辑
     state.subscribersCount++;
     update();
+
+    // Get.to(() => StrategySubscriptionPage());
+    // Get.to(() => const RechargeBalancePage());
+    // Get.to(() => const OrderListPage());
+    // Get.to(() => const OrderDetailPage());
+    // Get.to(() => const VerifyPasswordUsageExample());
+    // Get.to(() => const PaymentProgressUsageExample());
+    // Get.to(() => const PaymentSuccessUsageExample());
+    // Get.to(() => const PaymentFailUsageExample());
+
+
   }
 
   // 打赏功能

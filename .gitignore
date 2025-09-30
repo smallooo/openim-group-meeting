@@ -13,6 +13,7 @@ unlinked_spec.ds
 .sentrynativeandroid/
 .sentrynativeios/
 lib/tk_app/tk_widgets/README/*.md
+lib/tk_app/**/*.md
 
 # IDE 相关
 .idea/

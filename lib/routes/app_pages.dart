@@ -91,6 +91,14 @@ import '../tk_app/pages/tk_mine/tk_mine_binding.dart';
 import '../tk_app/pages/tk_mine/tk_mine_view.dart';
 import '../tk_app/pages/tk_mine/tk_my_info/tk_my_info_binding.dart';
 import '../tk_app/pages/tk_mine/tk_my_info/tk_my_info_view.dart';
+import '../tk_app/pages/tk_subscription/verify_password/binding.dart';
+import '../tk_app/pages/tk_subscription/verify_password/view.dart';
+import '../tk_app/pages/tk_subscription/payment_progress/binding.dart';
+import '../tk_app/pages/tk_subscription/payment_progress/view.dart';
+import '../tk_app/pages/tk_subscription/payment_success/binding.dart';
+import '../tk_app/pages/tk_subscription/payment_success/view.dart';
+import '../tk_app/pages/tk_subscription/payment_fail_page/binding.dart';
+import '../tk_app/pages/tk_subscription/payment_fail_page/view.dart';
 
 part 'app_routes.dart';
 
@@ -348,6 +356,26 @@ class AppPages {
       name: AppRoutes.tkMyInfo,
       page: () => TkMyInfoPage(),
       binding: TkMyInfoBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.verifyPassword,
+      page: () => VerifyPasswordPage(),
+      binding: VerifyPasswordBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.paymentProgress,
+      page: () => PaymentProgressPage(),
+      binding: PaymentProgressBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.paymentSuccess,
+      page: () => PaymentSuccessPage(),
+      binding: PaymentSuccessBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.paymentFail,
+      page: () => PaymentFailPage(),
+      binding: PaymentFailPageBinding(),
     ),
   ];
 }

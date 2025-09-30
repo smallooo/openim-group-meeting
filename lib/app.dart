@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:toklink/tk_app/core/constants/api_constants.dart';
 
+import 'api_sdk_use/balance_api.dart';
 import 'core/controller/im_controller.dart';
 import 'tk_app/core/network/api_client.dart';
 import 'tk_app/features/strategy/data/repositories/strategy_repository.dart';
@@ -17,6 +19,12 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // Balance API 初始化
+    balanceApi.initialize(
+      baseUrl: ApiConstants.baseUrl,
+    );
+
     return ProviderScope(
       child: AppView(
         builder: (locale, builder) => GetMaterialApp(

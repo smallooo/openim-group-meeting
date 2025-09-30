@@ -216,5 +216,11 @@ class ImageRes {
   static const tkStrategyHomeNotice = "$_dir/tk_strategy_home_notice.png";
   static const tkStrategyHomeV = "$_dir/tk_strategy_home_v.png";
 
+  static const tkSecurityLogo = "$_dir/tk_security_logo.png";
+  static const tkPaymentProgress = "$_dir/tk_payment_progress.png";
+  static const tkPaySuccess = "$_dir/tk_pay_success.png";
+  static const tkPayFail = "$_dir/tk_pay_fail.png";
+
+
 
 }
