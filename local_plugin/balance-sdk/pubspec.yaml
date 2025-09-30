@@ -2,14 +2,14 @@
 # AUTO-GENERATED FILE, DO NOT MODIFY!
 #
 
-name: 'taowu_balance_sdk'
+name: 'toklink_balance_sdk'
 version: '1.0.0'
 description: 'Toklink Wallet Balance Service Dart/Flutter SDK'
 homepage: 'https://github.com/toklink/project'
 environment:
   sdk: '>=2.12.0 <3.0.0'
 dependencies:
-  http: '^1.0.0'
+  http: '1.0.0'
   intl: '^0.19.0'
   meta: '^1.1.8'
 dev_dependencies:

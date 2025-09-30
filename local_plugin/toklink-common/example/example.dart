@@ -14,68 +14,33 @@ void main() {
   };
 
   final secret = 'taowu_payment_secret_key_2024';
-  final userId = '1972908017283805186';
+  final memberId = '1969282597516636161'; // Long type member ID as string
 
-  final result = paymentData.generateSignature(secret, userId);
+  final result = paymentData.generateSignature(secret, memberId);
 
   print('Payment Data: $paymentData');
   print('Generated Signature: ${result.signature}');
   print('Response Headers: ${result.responseHeaders}');
   print('');
 
-  // Example 2: Manual signature generation
-  print('2. Manual signature generation:');
-  final manualParams = {
-    'memberId': '1972908017283805186',
-    'amount': '100.00',
+  // Example 2: Generate another signature for different data
+  print('2. Another signature generation:');
+  final balanceData = {
     'currencyId': '1',
-    'timestamp': '1640995200',
-    'nonce': 'abc123def456',
-    'userId': '1972908017283805186',
   };
 
-  final manualSignature = SignatureUtil.generateSignature(manualParams, secret);
-  print('Manual Parameters: $manualParams');
-  print('Manual Signature: $manualSignature');
+  final balanceResult = balanceData.generateSignature(secret, memberId);
+  print('Balance Query Data: $balanceData');
+  print('Balance Query Signature: ${balanceResult.signature}');
+  print('Balance Query Headers: ${balanceResult.responseHeaders}');
   print('');
 
-  // Example 3: Signature validation
-  print('3. Signature validation:');
+  // Example 3: Using generated headers
+  print('3. Generated headers usage:');
   final headers = result.responseHeaders;
-  final isValid = paymentData.validateSignature(
-    secret,
-    headers['X-Signature']!,
-    headers['X-Timestamp']!,
-    headers['X-Nonce']!,
-    userId,
-  );
-
-  print('Validation Result: $isValid');
+  print('Signature Header: X-Signature = ${headers['X-Signature']}');
+  print('Timestamp Header: X-Timestamp = ${headers['X-Timestamp']}');
+  print('Nonce Header: X-Nonce = ${headers['X-Nonce']}');
+  print('These headers can be used for API requests requiring signature authentication');
   print('');
-
-  // Example 4: Invalid signature validation
-  print('4. Invalid signature validation:');
-  final invalidSignature = paymentData.validateSignature(
-    secret,
-    'invalid-signature',
-    headers['X-Timestamp']!,
-    headers['X-Nonce']!,
-    userId,
-  );
-
-  print('Invalid Signature Result: $invalidSignature');
-  print('');
-
-  // Example 5: Time window validation
-  print('5. Time window validation (old timestamp):');
-  final oldTimestamp = '1000000000'; // Very old timestamp
-  final oldTimeValidation = paymentData.validateSignature(
-    secret,
-    headers['X-Signature']!,
-    oldTimestamp,
-    headers['X-Nonce']!,
-    userId,
-  );
-
-  print('Old Timestamp Result: $oldTimeValidation');
 }

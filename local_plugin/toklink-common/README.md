@@ -32,11 +32,11 @@ void main() {
     'partnerOrderNo': 'ORDER123456',
   };
 
-  final secret = 'your-secret-key';
-  final userId = '12345';
+  final secret = 'taowu_payment_secret_key_2024';
+  final memberId = '12345';
 
   // Generate signature with headers
-  final result = paymentData.generateSignature(secret, userId);
+  final result = paymentData.generateSignature(secret, memberId);
 
   print('Signature: ${result.signature}');
   print('Headers: ${result.responseHeaders}');
@@ -61,8 +61,8 @@ void main() {
     'partnerOrderNo': 'ORDER123456',
   };
 
-  final secret = 'your-secret-key';
-  final userId = '12345';
+  final secret = 'taowu_payment_secret_key_2024';
+  final memberId = '12345';
   final receivedSignature = 'received-signature-from-header';
   final receivedTimestamp = 'received-timestamp-from-header';
   final receivedNonce = 'received-nonce-from-header';
@@ -73,7 +73,7 @@ void main() {
     receivedSignature,
     receivedTimestamp,
     receivedNonce,
-    userId,
+    memberId,
   );
 
   print('Signature valid: $isValid');
@@ -92,10 +92,10 @@ void main() {
     'amount': '100.00',
     'timestamp': '1640995200',
     'nonce': 'abc123def456',
-    'userId': '12345',
+    'memberId': '12345',
   };
 
-  final secret = 'your-secret-key';
+  final secret = 'taowu_payment_secret_key_2024';
   final signature = SignatureUtil.generateSignature(params, secret);
 
   print('Manual signature: $signature');
@@ -121,7 +121,7 @@ void main() {
 1. **Parameter Processing**:
    - Extract all non-null, non-empty parameters
    - Convert all values to strings
-   - Add timestamp, nonce, and userId
+   - Add timestamp, nonce, and memberId
 
 2. **String Construction**:
    - Sort parameters alphabetically by key
