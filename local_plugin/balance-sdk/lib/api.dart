@@ -27,7 +27,11 @@ part 'auth/oauth.dart';
 part 'auth/http_basic_auth.dart';
 part 'auth/http_bearer_auth.dart';
 
-part 'api/capi_api.dart';
+part 'api/fund_app_api.dart';
+part 'api/payment_password_app_api.dart';
+part 'api/red_packet_app_api.dart';
+part 'api/wallet_payment_app_api.dart';
+part 'api/wallet_refund_app_api.dart';
 
 part 'model/api_resp_balance.dart';
 part 'model/api_resp_list_balance.dart';
@@ -41,18 +45,19 @@ part 'model/api_resp_void.dart';
 part 'model/balance.dart';
 part 'model/balance_query_dto.dart';
 part 'model/create_red_packet_dto.dart';
+part 'model/currency_balance_query_dto.dart';
 part 'model/payment_password_status_vo.dart';
 part 'model/payment_password_verify_dto.dart';
 part 'model/payment_process_dto.dart';
 part 'model/payment_process_result_vo.dart';
 part 'model/receive_red_packet_dto.dart';
 part 'model/receive_red_packet_result_vo.dart';
+part 'model/red_packet_detail_query_dto.dart';
 part 'model/red_packet_record_vo.dart';
 part 'model/red_packet_vo.dart';
 part 'model/refund_password_verify_dto.dart';
 part 'model/refund_process_dto.dart';
 part 'model/refund_process_result_vo.dart';
-
 
 const _delimiters = {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 const _dateEpochMarker = 'epoch';

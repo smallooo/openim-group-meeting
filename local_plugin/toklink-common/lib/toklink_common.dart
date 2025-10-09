@@ -2,3 +2,4 @@
 library toklink_common;
 
 export 'utils/signature_util.dart';
+export 'enums/currency_enum.dart';

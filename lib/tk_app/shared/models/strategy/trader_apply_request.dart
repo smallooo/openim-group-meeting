@@ -35,13 +35,13 @@ class PricingConfig with _$PricingConfig {
     @JsonKey(name: 'strategyType') required String strategyType,
     
     /// 月订阅费
-    @JsonKey(name: 'monthlyPrice') required double monthlyPrice,
+    @JsonKey(name: 'monthlyPrice') double? monthlyPrice,
     
     /// 季度订阅费
-    @JsonKey(name: 'quarterlyPrice') required double quarterlyPrice,
+    @JsonKey(name: 'quarterlyPrice') double? quarterlyPrice,
     
     /// 年订阅费
-    @JsonKey(name: 'yearlyPrice') required double yearlyPrice,
+    @JsonKey(name: 'yearlyPrice') double? yearlyPrice,
     
     /// 货币单位 (默认CNY)
     @JsonKey(name: 'currency') @Default('CNY') String currency,

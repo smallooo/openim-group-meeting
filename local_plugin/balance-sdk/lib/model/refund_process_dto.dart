@@ -46,39 +46,42 @@ class RefundProcessDTO {
   String reason;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is RefundProcessDTO &&
-     other.memberId == memberId &&
-     other.walletOrderNo == walletOrderNo &&
-     other.partnerRefundNo == partnerRefundNo &&
-     other.refundAmount == refundAmount &&
-     other.currencyId == currencyId &&
-     other.reason == reason;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RefundProcessDTO &&
+          other.memberId == memberId &&
+          other.walletOrderNo == walletOrderNo &&
+          other.partnerRefundNo == partnerRefundNo &&
+          other.refundAmount == refundAmount &&
+          other.currencyId == currencyId &&
+          other.reason == reason;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (memberId.hashCode) +
-    (walletOrderNo.hashCode) +
-    (partnerRefundNo.hashCode) +
-    (refundAmount.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode) +
-    (reason.hashCode);
+      // ignore: unnecessary_parenthesis
+      (memberId.hashCode) +
+      (walletOrderNo.hashCode) +
+      (partnerRefundNo.hashCode) +
+      (refundAmount.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode) +
+      (reason.hashCode);
 
   @override
-  String toString() => 'RefundProcessDTO[memberId=$memberId, walletOrderNo=$walletOrderNo, partnerRefundNo=$partnerRefundNo, refundAmount=$refundAmount, currencyId=$currencyId, reason=$reason]';
+  String toString() =>
+      'RefundProcessDTO[memberId=$memberId, walletOrderNo=$walletOrderNo, partnerRefundNo=$partnerRefundNo, refundAmount=$refundAmount, currencyId=$currencyId, reason=$reason]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'memberId'] = this.memberId;
-      json[r'walletOrderNo'] = this.walletOrderNo;
-      json[r'partnerRefundNo'] = this.partnerRefundNo;
-      json[r'refundAmount'] = this.refundAmount;
+    json[r'memberId'] = this.memberId;
+    json[r'walletOrderNo'] = this.walletOrderNo;
+    json[r'partnerRefundNo'] = this.partnerRefundNo;
+    json[r'refundAmount'] = this.refundAmount;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
     } else {
       json[r'currencyId'] = null;
     }
-      json[r'reason'] = this.reason;
+    json[r'reason'] = this.reason;
     return json;
   }
 
@@ -94,8 +97,10 @@ class RefundProcessDTO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "RefundProcessDTO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "RefundProcessDTO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "RefundProcessDTO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "RefundProcessDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -114,7 +119,10 @@ class RefundProcessDTO {
     return null;
   }
 
-  static List<RefundProcessDTO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RefundProcessDTO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RefundProcessDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -142,13 +150,19 @@ class RefundProcessDTO {
   }
 
   // maps a json object with a list of RefundProcessDTO-objects as value to a dart map
-  static Map<String, List<RefundProcessDTO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<RefundProcessDTO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<RefundProcessDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = RefundProcessDTO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = RefundProcessDTO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -163,4 +177,3 @@ class RefundProcessDTO {
     'reason',
   };
 }
-

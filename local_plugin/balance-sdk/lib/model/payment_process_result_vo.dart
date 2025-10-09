@@ -114,36 +114,39 @@ class PaymentProcessResultVO {
   num userBalance;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PaymentProcessResultVO &&
-     other.success == success &&
-     other.errorCode == errorCode &&
-     other.errorMessage == errorMessage &&
-     other.partnerOrderNo == partnerOrderNo &&
-     other.walletOrderNo == walletOrderNo &&
-     other.status == status &&
-     other.amount == amount &&
-     other.currencyId == currencyId &&
-     other.paymentTime == paymentTime &&
-     other.createTime == createTime &&
-     other.userBalance == userBalance;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PaymentProcessResultVO &&
+          other.success == success &&
+          other.errorCode == errorCode &&
+          other.errorMessage == errorMessage &&
+          other.partnerOrderNo == partnerOrderNo &&
+          other.walletOrderNo == walletOrderNo &&
+          other.status == status &&
+          other.amount == amount &&
+          other.currencyId == currencyId &&
+          other.paymentTime == paymentTime &&
+          other.createTime == createTime &&
+          other.userBalance == userBalance;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (success == null ? 0 : success!.hashCode) +
-    (errorCode == null ? 0 : errorCode!.hashCode) +
-    (errorMessage == null ? 0 : errorMessage!.hashCode) +
-    (partnerOrderNo == null ? 0 : partnerOrderNo!.hashCode) +
-    (walletOrderNo == null ? 0 : walletOrderNo!.hashCode) +
-    (status == null ? 0 : status!.hashCode) +
-    (amount.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode) +
-    (paymentTime == null ? 0 : paymentTime!.hashCode) +
-    (createTime == null ? 0 : createTime!.hashCode) +
-    (userBalance.hashCode);
+      // ignore: unnecessary_parenthesis
+      (success == null ? 0 : success!.hashCode) +
+      (errorCode == null ? 0 : errorCode!.hashCode) +
+      (errorMessage == null ? 0 : errorMessage!.hashCode) +
+      (partnerOrderNo == null ? 0 : partnerOrderNo!.hashCode) +
+      (walletOrderNo == null ? 0 : walletOrderNo!.hashCode) +
+      (status == null ? 0 : status!.hashCode) +
+      (amount.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode) +
+      (paymentTime == null ? 0 : paymentTime!.hashCode) +
+      (createTime == null ? 0 : createTime!.hashCode) +
+      (userBalance.hashCode);
 
   @override
-  String toString() => 'PaymentProcessResultVO[success=$success, errorCode=$errorCode, errorMessage=$errorMessage, partnerOrderNo=$partnerOrderNo, walletOrderNo=$walletOrderNo, status=$status, amount=$amount, currencyId=$currencyId, paymentTime=$paymentTime, createTime=$createTime, userBalance=$userBalance]';
+  String toString() =>
+      'PaymentProcessResultVO[success=$success, errorCode=$errorCode, errorMessage=$errorMessage, partnerOrderNo=$partnerOrderNo, walletOrderNo=$walletOrderNo, status=$status, amount=$amount, currencyId=$currencyId, paymentTime=$paymentTime, createTime=$createTime, userBalance=$userBalance]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -177,7 +180,7 @@ class PaymentProcessResultVO {
     } else {
       json[r'status'] = null;
     }
-      json[r'amount'] = this.amount;
+    json[r'amount'] = this.amount;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
     } else {
@@ -193,7 +196,7 @@ class PaymentProcessResultVO {
     } else {
       json[r'createTime'] = null;
     }
-      json[r'userBalance'] = this.userBalance;
+    json[r'userBalance'] = this.userBalance;
     return json;
   }
 
@@ -209,8 +212,10 @@ class PaymentProcessResultVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "PaymentProcessResultVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "PaymentProcessResultVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "PaymentProcessResultVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "PaymentProcessResultVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -222,9 +227,8 @@ class PaymentProcessResultVO {
         partnerOrderNo: mapValueOfType<String>(json, r'partnerOrderNo'),
         walletOrderNo: mapValueOfType<String>(json, r'walletOrderNo'),
         status: mapValueOfType<String>(json, r'status'),
-        amount: json[r'amount'] == null
-            ? 0
-            : num.parse(json[r'amount'].toString()),
+        amount:
+            json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
         currencyId: mapValueOfType<int>(json, r'currencyId'),
         paymentTime: mapValueOfType<int>(json, r'paymentTime'),
         createTime: mapValueOfType<int>(json, r'createTime'),
@@ -236,7 +240,10 @@ class PaymentProcessResultVO {
     return null;
   }
 
-  static List<PaymentProcessResultVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<PaymentProcessResultVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <PaymentProcessResultVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -264,20 +271,24 @@ class PaymentProcessResultVO {
   }
 
   // maps a json object with a list of PaymentProcessResultVO-objects as value to a dart map
-  static Map<String, List<PaymentProcessResultVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<PaymentProcessResultVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<PaymentProcessResultVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PaymentProcessResultVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = PaymentProcessResultVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

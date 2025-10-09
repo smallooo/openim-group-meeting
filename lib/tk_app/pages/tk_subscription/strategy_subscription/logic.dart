@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../../routes/app_pages.dart';
+import '../recharge_balance/view.dart';
 import 'state.dart';
 
 class StrategySubscriptionLogic extends GetxController {
@@ -24,18 +26,21 @@ class StrategySubscriptionLogic extends GetxController {
   // 快速充值
   void quickTopUp() {
     // TODO: 实现快速充值功能
-    Get.snackbar('提示', '快速充值功能正在开发中');
+    // Get.snackbar('提示', '快速充值功能正在开发中');
+    Get.to(() => const RechargeBalancePage());
+
   }
   
   // 查看服务详情
   void viewServiceDetails() {
     // TODO: 跳转到服务详情页面
-    Get.snackbar('提示', '查看详情功能正在开发中');
+    // Get.snackbar('提示', '查看详情功能正在开发中');
   }
   
   // 订阅服务
   void subscribe() {
     // TODO: 实现订阅逻辑
-    Get.snackbar('提示', '订阅功能正在开发中');
+    // Get.snackbar('提示', '订阅功能正在开发中');
+    Get.toNamed(AppRoutes.verifyPassword);
   }
 }

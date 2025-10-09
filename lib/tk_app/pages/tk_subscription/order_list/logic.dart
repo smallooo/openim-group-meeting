@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../order_detail/view.dart';
 import 'state.dart';
 
 class OrderListLogic extends GetxController {
@@ -29,24 +30,25 @@ class OrderListLogic extends GetxController {
   // 联系客服
   void contactCustomerService(OrderItem order) {
     // TODO: 实现联系客服功能
-    Get.snackbar('提示', '联系客服功能正在开发中');
+    // Get.snackbar('提示', '联系客服功能正在开发中');
   }
   
   // 申请售后
   void applyAfterSales(OrderItem order) {
-    // TODO: 实现申请售后功能
-    Get.snackbar('提示', '申请售后功能正在开发中');
+    Get.toNamed('/order_after_detail', arguments: order);
   }
   
   // 查看订单详情
   void viewOrderDetails(OrderItem order) {
     // TODO: 跳转到订单详情页面
-    Get.snackbar('提示', '查看订单详情功能正在开发中');
+    // Get.snackbar('提示', '查看订单详情功能正在开发中');
+    Get.to(() => const OrderDetailPage());
+
   }
   
   // 更多操作
   void showMoreOptions(OrderItem order) {
     // TODO: 显示更多操作选项
-    Get.snackbar('提示', '更多操作功能正在开发中');
+    // Get.snackbar('提示', '更多操作功能正在开发中');
   }
 }

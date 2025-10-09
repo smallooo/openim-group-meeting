@@ -99,6 +99,12 @@ import '../tk_app/pages/tk_subscription/payment_success/binding.dart';
 import '../tk_app/pages/tk_subscription/payment_success/view.dart';
 import '../tk_app/pages/tk_subscription/payment_fail_page/binding.dart';
 import '../tk_app/pages/tk_subscription/payment_fail_page/view.dart';
+import '../tk_app/pages/tk_subscription/order_request_refund/binding.dart';
+import '../tk_app/pages/tk_subscription/order_request_refund/view.dart';
+import '../tk_app/pages/tk_subscription/order_refund_submit/binding.dart';
+import '../tk_app/pages/tk_subscription/order_refund_submit/view.dart';
+import '../tk_app/pages/tk_subscription/order_after_detail/binding.dart';
+import '../tk_app/pages/tk_subscription/order_after_detail/view.dart';
 
 part 'app_routes.dart';
 
@@ -376,6 +382,21 @@ class AppPages {
       name: AppRoutes.paymentFail,
       page: () => PaymentFailPage(),
       binding: PaymentFailPageBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.orderRequestRefund,
+      page: () => OrderRequestRefundPage(),
+      binding: OrderRequestRefundBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.orderRefundSubmit,
+      page: () => OrderRefundSubmitPage(),
+      binding: OrderRefundSubmitBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.orderAfterDetail,
+      page: () => OrderAfterDetailPage(),
+      binding: OrderAfterDetailBinding(),
     ),
   ];
 }

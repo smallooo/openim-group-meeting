@@ -249,15 +249,33 @@ class StrategyMemberApplyPage extends GetView<StrategyMemberApplyLogic> {
   }
 
   Widget _buildSubscriptionFees() {
-    return Column(
-      children: [
-        _buildFeeItem('订阅费/月', controller.state.monthlyFeeEnabled, controller.state.monthlyFeeController, controller.toggleMonthlyFee),
-        const SizedBox(height: 16),
-        _buildFeeItem('订阅费/季', controller.state.quarterlyFeeEnabled, controller.state.quarterlyFeeController, controller.toggleQuarterlyFee),
-        const SizedBox(height: 16),
-        _buildFeeItem('订阅费/年', controller.state.yearlyFeeEnabled, controller.state.yearlyFeeController, controller.toggleYearlyFee),
-      ],
-    );
+    return Obx(() {
+      final isContract = controller.state.selectedTabIndex.value == 0;
+      return Column(
+        children: [
+          _buildFeeItem(
+            '订阅费/月',
+            isContract ? controller.state.contractMonthlyFeeEnabled : controller.state.spotMonthlyFeeEnabled,
+            isContract ? controller.state.contractMonthlyFeeController : controller.state.spotMonthlyFeeController,
+            isContract ? controller.toggleContractMonthlyFee : controller.toggleSpotMonthlyFee,
+          ),
+          const SizedBox(height: 16),
+          _buildFeeItem(
+            '订阅费/季',
+            isContract ? controller.state.contractQuarterlyFeeEnabled : controller.state.spotQuarterlyFeeEnabled,
+            isContract ? controller.state.contractQuarterlyFeeController : controller.state.spotQuarterlyFeeController,
+            isContract ? controller.toggleContractQuarterlyFee : controller.toggleSpotQuarterlyFee,
+          ),
+          const SizedBox(height: 16),
+          _buildFeeItem(
+            '订阅费/年',
+            isContract ? controller.state.contractYearlyFeeEnabled : controller.state.spotYearlyFeeEnabled,
+            isContract ? controller.state.contractYearlyFeeController : controller.state.spotYearlyFeeController,
+            isContract ? controller.toggleContractYearlyFee : controller.toggleSpotYearlyFee,
+          ),
+        ],
+      );
+    });
   }
 
   Widget _buildFeeItem(String title, RxBool enabled, TextEditingController textController, Function(bool) onToggle) {

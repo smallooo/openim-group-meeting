@@ -292,15 +292,15 @@ mixin _$PricingConfig {
 
   /// 月订阅费
   @JsonKey(name: 'monthlyPrice')
-  double get monthlyPrice => throw _privateConstructorUsedError;
+  double? get monthlyPrice => throw _privateConstructorUsedError;
 
   /// 季度订阅费
   @JsonKey(name: 'quarterlyPrice')
-  double get quarterlyPrice => throw _privateConstructorUsedError;
+  double? get quarterlyPrice => throw _privateConstructorUsedError;
 
   /// 年订阅费
   @JsonKey(name: 'yearlyPrice')
-  double get yearlyPrice => throw _privateConstructorUsedError;
+  double? get yearlyPrice => throw _privateConstructorUsedError;
 
   /// 货币单位 (默认CNY)
   @JsonKey(name: 'currency')
@@ -325,9 +325,9 @@ abstract class $PricingConfigCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'traderId') int traderId,
       @JsonKey(name: 'strategyType') String strategyType,
-      @JsonKey(name: 'monthlyPrice') double monthlyPrice,
-      @JsonKey(name: 'quarterlyPrice') double quarterlyPrice,
-      @JsonKey(name: 'yearlyPrice') double yearlyPrice,
+      @JsonKey(name: 'monthlyPrice') double? monthlyPrice,
+      @JsonKey(name: 'quarterlyPrice') double? quarterlyPrice,
+      @JsonKey(name: 'yearlyPrice') double? yearlyPrice,
       @JsonKey(name: 'currency') String currency});
 }
 
@@ -348,9 +348,9 @@ class _$PricingConfigCopyWithImpl<$Res, $Val extends PricingConfig>
   $Res call({
     Object? traderId = null,
     Object? strategyType = null,
-    Object? monthlyPrice = null,
-    Object? quarterlyPrice = null,
-    Object? yearlyPrice = null,
+    Object? monthlyPrice = freezed,
+    Object? quarterlyPrice = freezed,
+    Object? yearlyPrice = freezed,
     Object? currency = null,
   }) {
     return _then(_value.copyWith(
@@ -362,18 +362,18 @@ class _$PricingConfigCopyWithImpl<$Res, $Val extends PricingConfig>
           ? _value.strategyType
           : strategyType // ignore: cast_nullable_to_non_nullable
               as String,
-      monthlyPrice: null == monthlyPrice
+      monthlyPrice: freezed == monthlyPrice
           ? _value.monthlyPrice
           : monthlyPrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      quarterlyPrice: null == quarterlyPrice
+              as double?,
+      quarterlyPrice: freezed == quarterlyPrice
           ? _value.quarterlyPrice
           : quarterlyPrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      yearlyPrice: null == yearlyPrice
+              as double?,
+      yearlyPrice: freezed == yearlyPrice
           ? _value.yearlyPrice
           : yearlyPrice // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -393,9 +393,9 @@ abstract class _$$PricingConfigImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'traderId') int traderId,
       @JsonKey(name: 'strategyType') String strategyType,
-      @JsonKey(name: 'monthlyPrice') double monthlyPrice,
-      @JsonKey(name: 'quarterlyPrice') double quarterlyPrice,
-      @JsonKey(name: 'yearlyPrice') double yearlyPrice,
+      @JsonKey(name: 'monthlyPrice') double? monthlyPrice,
+      @JsonKey(name: 'quarterlyPrice') double? quarterlyPrice,
+      @JsonKey(name: 'yearlyPrice') double? yearlyPrice,
       @JsonKey(name: 'currency') String currency});
 }
 
@@ -414,9 +414,9 @@ class __$$PricingConfigImplCopyWithImpl<$Res>
   $Res call({
     Object? traderId = null,
     Object? strategyType = null,
-    Object? monthlyPrice = null,
-    Object? quarterlyPrice = null,
-    Object? yearlyPrice = null,
+    Object? monthlyPrice = freezed,
+    Object? quarterlyPrice = freezed,
+    Object? yearlyPrice = freezed,
     Object? currency = null,
   }) {
     return _then(_$PricingConfigImpl(
@@ -428,18 +428,18 @@ class __$$PricingConfigImplCopyWithImpl<$Res>
           ? _value.strategyType
           : strategyType // ignore: cast_nullable_to_non_nullable
               as String,
-      monthlyPrice: null == monthlyPrice
+      monthlyPrice: freezed == monthlyPrice
           ? _value.monthlyPrice
           : monthlyPrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      quarterlyPrice: null == quarterlyPrice
+              as double?,
+      quarterlyPrice: freezed == quarterlyPrice
           ? _value.quarterlyPrice
           : quarterlyPrice // ignore: cast_nullable_to_non_nullable
-              as double,
-      yearlyPrice: null == yearlyPrice
+              as double?,
+      yearlyPrice: freezed == yearlyPrice
           ? _value.yearlyPrice
           : yearlyPrice // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -454,9 +454,9 @@ class _$PricingConfigImpl implements _PricingConfig {
   const _$PricingConfigImpl(
       {@JsonKey(name: 'traderId') this.traderId = 0,
       @JsonKey(name: 'strategyType') required this.strategyType,
-      @JsonKey(name: 'monthlyPrice') required this.monthlyPrice,
-      @JsonKey(name: 'quarterlyPrice') required this.quarterlyPrice,
-      @JsonKey(name: 'yearlyPrice') required this.yearlyPrice,
+      @JsonKey(name: 'monthlyPrice') this.monthlyPrice,
+      @JsonKey(name: 'quarterlyPrice') this.quarterlyPrice,
+      @JsonKey(name: 'yearlyPrice') this.yearlyPrice,
       @JsonKey(name: 'currency') this.currency = 'CNY'});
 
   factory _$PricingConfigImpl.fromJson(Map<String, dynamic> json) =>
@@ -475,17 +475,17 @@ class _$PricingConfigImpl implements _PricingConfig {
   /// 月订阅费
   @override
   @JsonKey(name: 'monthlyPrice')
-  final double monthlyPrice;
+  final double? monthlyPrice;
 
   /// 季度订阅费
   @override
   @JsonKey(name: 'quarterlyPrice')
-  final double quarterlyPrice;
+  final double? quarterlyPrice;
 
   /// 年订阅费
   @override
   @JsonKey(name: 'yearlyPrice')
-  final double yearlyPrice;
+  final double? yearlyPrice;
 
   /// 货币单位 (默认CNY)
   @override
@@ -541,9 +541,9 @@ abstract class _PricingConfig implements PricingConfig {
   const factory _PricingConfig(
       {@JsonKey(name: 'traderId') final int traderId,
       @JsonKey(name: 'strategyType') required final String strategyType,
-      @JsonKey(name: 'monthlyPrice') required final double monthlyPrice,
-      @JsonKey(name: 'quarterlyPrice') required final double quarterlyPrice,
-      @JsonKey(name: 'yearlyPrice') required final double yearlyPrice,
+      @JsonKey(name: 'monthlyPrice') final double? monthlyPrice,
+      @JsonKey(name: 'quarterlyPrice') final double? quarterlyPrice,
+      @JsonKey(name: 'yearlyPrice') final double? yearlyPrice,
       @JsonKey(name: 'currency') final String currency}) = _$PricingConfigImpl;
 
   factory _PricingConfig.fromJson(Map<String, dynamic> json) =
@@ -562,17 +562,17 @@ abstract class _PricingConfig implements PricingConfig {
   /// 月订阅费
   @override
   @JsonKey(name: 'monthlyPrice')
-  double get monthlyPrice;
+  double? get monthlyPrice;
 
   /// 季度订阅费
   @override
   @JsonKey(name: 'quarterlyPrice')
-  double get quarterlyPrice;
+  double? get quarterlyPrice;
 
   /// 年订阅费
   @override
   @JsonKey(name: 'yearlyPrice')
-  double get yearlyPrice;
+  double? get yearlyPrice;
 
   /// 货币单位 (默认CNY)
   @override

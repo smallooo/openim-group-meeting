@@ -155,7 +155,7 @@ class StrategyUnionMemberProfileLogic extends GetxController {
     state.subscribersCount++;
     update();
 
-    // Get.to(() => StrategySubscriptionPage());
+    Get.to(() => StrategySubscriptionPage());
     // Get.to(() => const RechargeBalancePage());
     // Get.to(() => const OrderListPage());
     // Get.to(() => const OrderDetailPage());

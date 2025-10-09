@@ -30,9 +30,9 @@ _$PricingConfigImpl _$$PricingConfigImplFromJson(Map<String, dynamic> json) =>
     _$PricingConfigImpl(
       traderId: (json['traderId'] as num?)?.toInt() ?? 0,
       strategyType: json['strategyType'] as String,
-      monthlyPrice: (json['monthlyPrice'] as num).toDouble(),
-      quarterlyPrice: (json['quarterlyPrice'] as num).toDouble(),
-      yearlyPrice: (json['yearlyPrice'] as num).toDouble(),
+      monthlyPrice: (json['monthlyPrice'] as num?)?.toDouble(),
+      quarterlyPrice: (json['quarterlyPrice'] as num?)?.toDouble(),
+      yearlyPrice: (json['yearlyPrice'] as num?)?.toDouble(),
       currency: json['currency'] as String? ?? 'CNY',
     );
 

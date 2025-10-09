@@ -114,36 +114,39 @@ class RefundProcessResultVO {
   DateTime? createTime;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is RefundProcessResultVO &&
-     other.success == success &&
-     other.errorCode == errorCode &&
-     other.errorMessage == errorMessage &&
-     other.walletRefundNo == walletRefundNo &&
-     other.partnerRefundNo == partnerRefundNo &&
-     other.walletOrderNo == walletOrderNo &&
-     other.refundAmount == refundAmount &&
-     other.status == status &&
-     other.userBalance == userBalance &&
-     other.processTime == processTime &&
-     other.createTime == createTime;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RefundProcessResultVO &&
+          other.success == success &&
+          other.errorCode == errorCode &&
+          other.errorMessage == errorMessage &&
+          other.walletRefundNo == walletRefundNo &&
+          other.partnerRefundNo == partnerRefundNo &&
+          other.walletOrderNo == walletOrderNo &&
+          other.refundAmount == refundAmount &&
+          other.status == status &&
+          other.userBalance == userBalance &&
+          other.processTime == processTime &&
+          other.createTime == createTime;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (success == null ? 0 : success!.hashCode) +
-    (errorCode == null ? 0 : errorCode!.hashCode) +
-    (errorMessage == null ? 0 : errorMessage!.hashCode) +
-    (walletRefundNo == null ? 0 : walletRefundNo!.hashCode) +
-    (partnerRefundNo == null ? 0 : partnerRefundNo!.hashCode) +
-    (walletOrderNo == null ? 0 : walletOrderNo!.hashCode) +
-    (refundAmount.hashCode) +
-    (status == null ? 0 : status!.hashCode) +
-    (userBalance.hashCode) +
-    (processTime == null ? 0 : processTime!.hashCode) +
-    (createTime == null ? 0 : createTime!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (success == null ? 0 : success!.hashCode) +
+      (errorCode == null ? 0 : errorCode!.hashCode) +
+      (errorMessage == null ? 0 : errorMessage!.hashCode) +
+      (walletRefundNo == null ? 0 : walletRefundNo!.hashCode) +
+      (partnerRefundNo == null ? 0 : partnerRefundNo!.hashCode) +
+      (walletOrderNo == null ? 0 : walletOrderNo!.hashCode) +
+      (refundAmount.hashCode) +
+      (status == null ? 0 : status!.hashCode) +
+      (userBalance.hashCode) +
+      (processTime == null ? 0 : processTime!.hashCode) +
+      (createTime == null ? 0 : createTime!.hashCode);
 
   @override
-  String toString() => 'RefundProcessResultVO[success=$success, errorCode=$errorCode, errorMessage=$errorMessage, walletRefundNo=$walletRefundNo, partnerRefundNo=$partnerRefundNo, walletOrderNo=$walletOrderNo, refundAmount=$refundAmount, status=$status, userBalance=$userBalance, processTime=$processTime, createTime=$createTime]';
+  String toString() =>
+      'RefundProcessResultVO[success=$success, errorCode=$errorCode, errorMessage=$errorMessage, walletRefundNo=$walletRefundNo, partnerRefundNo=$partnerRefundNo, walletOrderNo=$walletOrderNo, refundAmount=$refundAmount, status=$status, userBalance=$userBalance, processTime=$processTime, createTime=$createTime]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -177,13 +180,13 @@ class RefundProcessResultVO {
     } else {
       json[r'walletOrderNo'] = null;
     }
-      json[r'refundAmount'] = this.refundAmount;
+    json[r'refundAmount'] = this.refundAmount;
     if (this.status != null) {
       json[r'status'] = this.status;
     } else {
       json[r'status'] = null;
     }
-      json[r'userBalance'] = this.userBalance;
+    json[r'userBalance'] = this.userBalance;
     if (this.processTime != null) {
       json[r'processTime'] = this.processTime!.toUtc().toIso8601String();
     } else {
@@ -209,8 +212,10 @@ class RefundProcessResultVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "RefundProcessResultVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "RefundProcessResultVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "RefundProcessResultVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "RefundProcessResultVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -236,7 +241,10 @@ class RefundProcessResultVO {
     return null;
   }
 
-  static List<RefundProcessResultVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RefundProcessResultVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RefundProcessResultVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -264,20 +272,24 @@ class RefundProcessResultVO {
   }
 
   // maps a json object with a list of RefundProcessResultVO-objects as value to a dart map
-  static Map<String, List<RefundProcessResultVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<RefundProcessResultVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<RefundProcessResultVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = RefundProcessResultVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = RefundProcessResultVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

@@ -14,7 +14,7 @@ void main() {
   };
 
   final secret = 'taowu_payment_secret_key_2024';
-  final memberId = '1969282597516636161'; // Long type member ID as string
+  final memberId = '1973018638679584770'; // Long type member ID as string
 
   final result = paymentData.generateSignature(secret, memberId);
 

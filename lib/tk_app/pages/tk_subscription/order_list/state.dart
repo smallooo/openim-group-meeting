@@ -16,26 +16,33 @@ class OrderListState {
   void _initSampleData() {
     orderList.value = [
       OrderItem(
-        transactionId: 'SG002000250905004572',
+        transactionId: 'TXN20240726A1B2C3D4E5',
         status: OrderStatus.paid,
         items: [
           OrderProduct(
-            name: '高级会员订阅',
+            name: '智能手表 S1 Por',
             quantity: 1,
-            price: 30.00,
-            icon: Icons.verified_user,
-            iconColor: Colors.black,
+            price: 899.00,
+            icon: Icons.watch,
+            iconColor: Colors.blue,
           ),
           OrderProduct(
-            name: '代币套餐包',
+            name: '无线蓝牙耳机 X-Bass',
             quantity: 1,
-            price: 20.00,
-            icon: Icons.card_giftcard,
-            iconColor: Colors.green,
+            price: 249.50,
+            icon: Icons.headphones,
+            iconColor: Colors.orange,
+          ),
+          OrderProduct(
+            name: '手机快充线 Type-C',
+            quantity: 1,
+            price: 39.00,
+            icon: Icons.cable,
+            iconColor: Colors.grey,
           ),
         ],
-        totalAmount: 50.00,
-        createTime: DateTime.now().subtract(const Duration(days: 1)),
+        totalAmount: 1437.00,
+        createTime: DateTime(2024, 7, 26, 14, 30),
       ),
       OrderItem(
         transactionId: 'SG002000250905004572',

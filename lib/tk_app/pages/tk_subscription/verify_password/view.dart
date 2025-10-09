@@ -11,15 +11,18 @@ class VerifyPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 确保控制器被注册
-    final logic = Get.put(VerifyPasswordLogic());
+    // 获取已注册的控制器
+    final logic = Get.find<VerifyPasswordLogic>();
     final state = logic.state;
-    
-    return Scaffold(
+      
+      return Scaffold(
       backgroundColor: Colors.white,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Get.back(),
@@ -39,17 +42,24 @@ class VerifyPasswordPage extends StatelessWidget {
   }
   
   Widget _buildBody(BuildContext context, VerifyPasswordLogic logic, VerifyPasswordState state) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.05, // 5% 边距
-        vertical: 20,
-      ),
+    return GestureDetector(
+      onTap: () {
+        // 点击空白地方收起键盘
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top + kToolbarHeight + 0, // 状态栏高度 + 导航栏高度 + 额外间距
+          left: MediaQuery.of(context).size.width * 0.05, // 5% 左边距
+          right: MediaQuery.of(context).size.width * 0.05, // 5% 右边距
+          bottom: 20,
+        ),
       child: Column(
         children: [
           // 图片占位符
           _buildImagePlaceholder(context),
           
-          const SizedBox(height: 40),
+          // const SizedBox(height: 40),
           
           // 标题和描述
           _buildTitleAndDescription(),
@@ -81,6 +91,7 @@ class VerifyPasswordPage extends StatelessWidget {
           _buildVerifyButton(context, logic, state),
         ],
       ),
+      ),
     );
   }
   
@@ -90,7 +101,7 @@ class VerifyPasswordPage extends StatelessWidget {
       height: MediaQuery.of(context).size.width * 0.6,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         // boxShadow: [
         //   BoxShadow(
         //     color: Colors.black.withValues(alpha: 0.1),
@@ -152,6 +163,7 @@ class VerifyPasswordPage extends StatelessWidget {
   
   Widget _buildPinInputFields(BuildContext context, VerifyPasswordLogic logic, VerifyPasswordState state) {
     return PinCodeTextField(
+      key: ValueKey('pin_input_${logic.hashCode}'),
       appContext: context,
       length: 6,
       controller: logic.pinController,
@@ -329,7 +341,7 @@ class VerifyPasswordPage extends StatelessWidget {
       child: ElevatedButton(
         onPressed: state.isVerifying.value ? null : logic.performVerification,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF7C4DFF),
+          backgroundColor: const Color(0xFF9E13F7),
           foregroundColor: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(

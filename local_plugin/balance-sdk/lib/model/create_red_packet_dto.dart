@@ -60,26 +60,29 @@ class CreateRedPacketDTO {
   String? blessing;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is CreateRedPacketDTO &&
-     other.groupId == groupId &&
-     other.packetType == packetType &&
-     other.currencyId == currencyId &&
-     other.totalAmount == totalAmount &&
-     other.totalCount == totalCount &&
-     other.blessing == blessing;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CreateRedPacketDTO &&
+          other.groupId == groupId &&
+          other.packetType == packetType &&
+          other.currencyId == currencyId &&
+          other.totalAmount == totalAmount &&
+          other.totalCount == totalCount &&
+          other.blessing == blessing;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (groupId == null ? 0 : groupId!.hashCode) +
-    (packetType.hashCode) +
-    (currencyId.hashCode) +
-    (totalAmount.hashCode) +
-    (totalCount.hashCode) +
-    (blessing == null ? 0 : blessing!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (groupId == null ? 0 : groupId!.hashCode) +
+      (packetType.hashCode) +
+      (currencyId.hashCode) +
+      (totalAmount.hashCode) +
+      (totalCount.hashCode) +
+      (blessing == null ? 0 : blessing!.hashCode);
 
   @override
-  String toString() => 'CreateRedPacketDTO[groupId=$groupId, packetType=$packetType, currencyId=$currencyId, totalAmount=$totalAmount, totalCount=$totalCount, blessing=$blessing]';
+  String toString() =>
+      'CreateRedPacketDTO[groupId=$groupId, packetType=$packetType, currencyId=$currencyId, totalAmount=$totalAmount, totalCount=$totalCount, blessing=$blessing]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -88,10 +91,10 @@ class CreateRedPacketDTO {
     } else {
       json[r'groupId'] = null;
     }
-      json[r'packetType'] = this.packetType;
-      json[r'currencyId'] = this.currencyId;
-      json[r'totalAmount'] = this.totalAmount;
-      json[r'totalCount'] = this.totalCount;
+    json[r'packetType'] = this.packetType;
+    json[r'currencyId'] = this.currencyId;
+    json[r'totalAmount'] = this.totalAmount;
+    json[r'totalCount'] = this.totalCount;
     if (this.blessing != null) {
       json[r'blessing'] = this.blessing;
     } else {
@@ -112,8 +115,10 @@ class CreateRedPacketDTO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "CreateRedPacketDTO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "CreateRedPacketDTO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "CreateRedPacketDTO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "CreateRedPacketDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -132,7 +137,10 @@ class CreateRedPacketDTO {
     return null;
   }
 
-  static List<CreateRedPacketDTO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<CreateRedPacketDTO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <CreateRedPacketDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -160,13 +168,19 @@ class CreateRedPacketDTO {
   }
 
   // maps a json object with a list of CreateRedPacketDTO-objects as value to a dart map
-  static Map<String, List<CreateRedPacketDTO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<CreateRedPacketDTO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<CreateRedPacketDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = CreateRedPacketDTO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = CreateRedPacketDTO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -180,4 +194,3 @@ class CreateRedPacketDTO {
     'totalCount',
   };
 }
-

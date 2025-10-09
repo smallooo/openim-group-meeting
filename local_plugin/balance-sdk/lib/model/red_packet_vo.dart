@@ -202,56 +202,59 @@ class RedPacketVO {
   num receivedAmount;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is RedPacketVO &&
-     other.id == id &&
-     other.packetNo == packetNo &&
-     other.senderId == senderId &&
-     other.senderName == senderName &&
-     other.groupId == groupId &&
-     other.packetType == packetType &&
-     other.packetTypeDesc == packetTypeDesc &&
-     other.currencyId == currencyId &&
-     other.currencyName == currencyName &&
-     other.totalAmount == totalAmount &&
-     other.totalCount == totalCount &&
-     other.remainingCount == remainingCount &&
-     other.remainingAmount == remainingAmount &&
-     other.blessing == blessing &&
-     other.status == status &&
-     other.statusDesc == statusDesc &&
-     other.expireTime == expireTime &&
-     other.createdAt == createdAt &&
-     other.records == records &&
-     other.isReceived == isReceived &&
-     other.receivedAmount == receivedAmount;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RedPacketVO &&
+          other.id == id &&
+          other.packetNo == packetNo &&
+          other.senderId == senderId &&
+          other.senderName == senderName &&
+          other.groupId == groupId &&
+          other.packetType == packetType &&
+          other.packetTypeDesc == packetTypeDesc &&
+          other.currencyId == currencyId &&
+          other.currencyName == currencyName &&
+          other.totalAmount == totalAmount &&
+          other.totalCount == totalCount &&
+          other.remainingCount == remainingCount &&
+          other.remainingAmount == remainingAmount &&
+          other.blessing == blessing &&
+          other.status == status &&
+          other.statusDesc == statusDesc &&
+          other.expireTime == expireTime &&
+          other.createdAt == createdAt &&
+          other.records == records &&
+          other.isReceived == isReceived &&
+          other.receivedAmount == receivedAmount;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (id == null ? 0 : id!.hashCode) +
-    (packetNo == null ? 0 : packetNo!.hashCode) +
-    (senderId == null ? 0 : senderId!.hashCode) +
-    (senderName == null ? 0 : senderName!.hashCode) +
-    (groupId == null ? 0 : groupId!.hashCode) +
-    (packetType == null ? 0 : packetType!.hashCode) +
-    (packetTypeDesc == null ? 0 : packetTypeDesc!.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode) +
-    (currencyName == null ? 0 : currencyName!.hashCode) +
-    (totalAmount.hashCode) +
-    (totalCount == null ? 0 : totalCount!.hashCode) +
-    (remainingCount == null ? 0 : remainingCount!.hashCode) +
-    (remainingAmount.hashCode) +
-    (blessing == null ? 0 : blessing!.hashCode) +
-    (status == null ? 0 : status!.hashCode) +
-    (statusDesc == null ? 0 : statusDesc!.hashCode) +
-    (expireTime == null ? 0 : expireTime!.hashCode) +
-    (createdAt == null ? 0 : createdAt!.hashCode) +
-    (records.hashCode) +
-    (isReceived == null ? 0 : isReceived!.hashCode) +
-    (receivedAmount.hashCode);
+      // ignore: unnecessary_parenthesis
+      (id == null ? 0 : id!.hashCode) +
+      (packetNo == null ? 0 : packetNo!.hashCode) +
+      (senderId == null ? 0 : senderId!.hashCode) +
+      (senderName == null ? 0 : senderName!.hashCode) +
+      (groupId == null ? 0 : groupId!.hashCode) +
+      (packetType == null ? 0 : packetType!.hashCode) +
+      (packetTypeDesc == null ? 0 : packetTypeDesc!.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode) +
+      (currencyName == null ? 0 : currencyName!.hashCode) +
+      (totalAmount.hashCode) +
+      (totalCount == null ? 0 : totalCount!.hashCode) +
+      (remainingCount == null ? 0 : remainingCount!.hashCode) +
+      (remainingAmount.hashCode) +
+      (blessing == null ? 0 : blessing!.hashCode) +
+      (status == null ? 0 : status!.hashCode) +
+      (statusDesc == null ? 0 : statusDesc!.hashCode) +
+      (expireTime == null ? 0 : expireTime!.hashCode) +
+      (createdAt == null ? 0 : createdAt!.hashCode) +
+      (records.hashCode) +
+      (isReceived == null ? 0 : isReceived!.hashCode) +
+      (receivedAmount.hashCode);
 
   @override
-  String toString() => 'RedPacketVO[id=$id, packetNo=$packetNo, senderId=$senderId, senderName=$senderName, groupId=$groupId, packetType=$packetType, packetTypeDesc=$packetTypeDesc, currencyId=$currencyId, currencyName=$currencyName, totalAmount=$totalAmount, totalCount=$totalCount, remainingCount=$remainingCount, remainingAmount=$remainingAmount, blessing=$blessing, status=$status, statusDesc=$statusDesc, expireTime=$expireTime, createdAt=$createdAt, records=$records, isReceived=$isReceived, receivedAmount=$receivedAmount]';
+  String toString() =>
+      'RedPacketVO[id=$id, packetNo=$packetNo, senderId=$senderId, senderName=$senderName, groupId=$groupId, packetType=$packetType, packetTypeDesc=$packetTypeDesc, currencyId=$currencyId, currencyName=$currencyName, totalAmount=$totalAmount, totalCount=$totalCount, remainingCount=$remainingCount, remainingAmount=$remainingAmount, blessing=$blessing, status=$status, statusDesc=$statusDesc, expireTime=$expireTime, createdAt=$createdAt, records=$records, isReceived=$isReceived, receivedAmount=$receivedAmount]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -300,7 +303,7 @@ class RedPacketVO {
     } else {
       json[r'currencyName'] = null;
     }
-      json[r'totalAmount'] = this.totalAmount;
+    json[r'totalAmount'] = this.totalAmount;
     if (this.totalCount != null) {
       json[r'totalCount'] = this.totalCount;
     } else {
@@ -311,7 +314,7 @@ class RedPacketVO {
     } else {
       json[r'remainingCount'] = null;
     }
-      json[r'remainingAmount'] = this.remainingAmount;
+    json[r'remainingAmount'] = this.remainingAmount;
     if (this.blessing != null) {
       json[r'blessing'] = this.blessing;
     } else {
@@ -337,13 +340,13 @@ class RedPacketVO {
     } else {
       json[r'createdAt'] = null;
     }
-      json[r'records'] = this.records;
+    json[r'records'] = this.records;
     if (this.isReceived != null) {
       json[r'isReceived'] = this.isReceived;
     } else {
       json[r'isReceived'] = null;
     }
-      json[r'receivedAmount'] = this.receivedAmount;
+    json[r'receivedAmount'] = this.receivedAmount;
     return json;
   }
 
@@ -359,8 +362,10 @@ class RedPacketVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "RedPacketVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "RedPacketVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "RedPacketVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "RedPacketVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -398,7 +403,10 @@ class RedPacketVO {
     return null;
   }
 
-  static List<RedPacketVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedPacketVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedPacketVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -426,20 +434,24 @@ class RedPacketVO {
   }
 
   // maps a json object with a list of RedPacketVO-objects as value to a dart map
-  static Map<String, List<RedPacketVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<RedPacketVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<RedPacketVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = RedPacketVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = RedPacketVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

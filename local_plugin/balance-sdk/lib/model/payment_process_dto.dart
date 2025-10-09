@@ -38,28 +38,31 @@ class PaymentProcessDTO {
   int? currencyId;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PaymentProcessDTO &&
-     other.partnerOrderNo == partnerOrderNo &&
-     other.memberId == memberId &&
-     other.amount == amount &&
-     other.currencyId == currencyId;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PaymentProcessDTO &&
+          other.partnerOrderNo == partnerOrderNo &&
+          other.memberId == memberId &&
+          other.amount == amount &&
+          other.currencyId == currencyId;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (partnerOrderNo.hashCode) +
-    (memberId.hashCode) +
-    (amount.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (partnerOrderNo.hashCode) +
+      (memberId.hashCode) +
+      (amount.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode);
 
   @override
-  String toString() => 'PaymentProcessDTO[partnerOrderNo=$partnerOrderNo, memberId=$memberId, amount=$amount, currencyId=$currencyId]';
+  String toString() =>
+      'PaymentProcessDTO[partnerOrderNo=$partnerOrderNo, memberId=$memberId, amount=$amount, currencyId=$currencyId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'partnerOrderNo'] = this.partnerOrderNo;
-      json[r'memberId'] = this.memberId;
-      json[r'amount'] = this.amount;
+    json[r'partnerOrderNo'] = this.partnerOrderNo;
+    json[r'memberId'] = this.memberId;
+    json[r'amount'] = this.amount;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
     } else {
@@ -80,8 +83,10 @@ class PaymentProcessDTO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "PaymentProcessDTO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "PaymentProcessDTO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "PaymentProcessDTO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "PaymentProcessDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -89,16 +94,18 @@ class PaymentProcessDTO {
       return PaymentProcessDTO(
         partnerOrderNo: mapValueOfType<String>(json, r'partnerOrderNo')!,
         memberId: mapValueOfType<int>(json, r'memberId')!,
-        amount: json[r'amount'] == null
-            ? 0
-            : num.parse(json[r'amount'].toString()),
+        amount:
+            json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
         currencyId: mapValueOfType<int>(json, r'currencyId'),
       );
     }
     return null;
   }
 
-  static List<PaymentProcessDTO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<PaymentProcessDTO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <PaymentProcessDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -126,13 +133,19 @@ class PaymentProcessDTO {
   }
 
   // maps a json object with a list of PaymentProcessDTO-objects as value to a dart map
-  static Map<String, List<PaymentProcessDTO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<PaymentProcessDTO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<PaymentProcessDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PaymentProcessDTO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = PaymentProcessDTO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -145,4 +158,3 @@ class PaymentProcessDTO {
     'amount',
   };
 }
-

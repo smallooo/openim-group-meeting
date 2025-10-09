@@ -1,227 +1,216 @@
-# Balance API SDK 使用指南
+# Member SDK 测试代码
 
-这是对 `taowu_balance_sdk` 的封装，提供了更便捷的调用方式。
+这个目录包含了用于验证 `toklink_member_sdk` 是否可用的完整测试代码。
 
 ## 📁 文件说明
 
-- `balance_api.dart` - Balance SDK 封装类，提供所有钱包相关API
-- `balance_api_example.dart` - 使用示例代码
-- `README.md` - 本说明文档
+### 1. `member_sdk_simple_test.dart`
+**快速测试文件** - 不依赖网络，验证 SDK 基本功能
+- ✅ 测试基本导入
+- ✅ 测试模型创建
+- ✅ 测试 JSON 序列化/反序列化
+- ✅ 测试 API 实例创建
+- ✅ 测试配置
+
+### 2. `member_sdk_test.dart`
+**完整测试文件** - 包含网络请求测试
+- ✅ 发送邮箱验证码
+- ✅ 邮箱验证码登录
+- ✅ 获取当前用户信息
+- ✅ 刷新 Token
+- ✅ 退出登录
+- ✅ 包含测试页面 Widget
+
+### 3. `member_sdk_integration_test.dart`
+**集成测试文件** - 测试与现有系统的兼容性
+- ✅ 认证系统兼容性测试
+- ✅ SDK 适配器示例
+- ✅ 错误处理分析
+- ✅ 包含测试页面 Widget
+
+### 4. `run_member_sdk_test.dart`
+**测试运行器** - 提供命令行界面运行各种测试
 
 ## 🚀 快速开始
 
-### 1. 初始化
+### 方法一：使用测试运行器（推荐）
 
-在应用启动时初始化 Balance API（建议在 `main.dart` 或 `app.dart` 中）:
+```bash
+# 运行快速测试（不依赖网络）
+dart run lib/api_sdk_use/run_member_sdk_test.dart quick
+
+# 运行集成测试
+dart run lib/api_sdk_use/run_member_sdk_test.dart integration
+
+# 运行网络测试
+dart run lib/api_sdk_use/run_member_sdk_test.dart network
+
+# 运行所有测试
+dart run lib/api_sdk_use/run_member_sdk_test.dart all
+```
+
+### 方法二：直接运行测试文件
+
+```bash
+# 运行快速测试
+dart run lib/api_sdk_use/member_sdk_simple_test.dart
+
+# 运行完整测试（需要修改 main 函数）
+dart run lib/api_sdk_use/member_sdk_test.dart
+```
+
+### 方法三：在 Flutter 应用中使用
 
 ```dart
-import 'package:your_app/api_sdk_use/balance_api.dart';
+import 'package:your_app/api_sdk_use/member_sdk_simple_test.dart';
 
 void main() {
-  // 初始化 Balance API
-  balanceApi.initialize(
-    baseUrl: 'https://your-api-domain.com/v1',
-    accessToken: 'your-initial-token', // 可选
-  );
-  
-  runApp(MyApp());
+  // 运行快速测试
+  MemberSdkSimpleTest.quickTest();
 }
 ```
 
-### 2. 设置访问令牌
+## 📋 测试步骤
 
-用户登录后设置 token:
-
-```dart
-// 登录成功后
-balanceApi.setAccessToken('user-access-token');
+### 第一步：验证 SDK 基本功能
+```bash
+dart run lib/api_sdk_use/run_member_sdk_test.dart quick
 ```
 
-### 3. 使用 API
+**预期输出：**
+```
+🚀 Member SDK 快速测试开始...
 
-#### 查询余额
+📦 测试基本导入...
+✅ 基本导入成功
+   - ApiClient: ApiClient
+   - EmailAuthAppApi: EmailAuthAppApi
+   - MemberAppApi: MemberAppApi
+   - TokenAppApi: TokenAppApi
 
-```dart
-// 查询指定币种余额（例如 USDT，币种ID=1）
-final balance = await balanceApi.getBalance(1);
-if (balance != null) {
-  print('可用余额: ${balance.availableBalance}');
-}
+🏗️ 测试模型创建...
+✅ 模型创建成功
+   - SendEmailCodeCommand: test@example.com
+   - EmailCodeLoginCommand: test@example.com
+   - TokenRefreshCommand: test_refresh_token
+   - TokenLogoutCommand: TokenLogoutCommand
 
-// 查询所有余额
-final balances = await balanceApi.getBalanceSummary();
+🔄 测试 JSON 序列化/反序列化...
+✅ JSON 序列化成功
+✅ JSON 反序列化成功
+✅ 数据一致性验证通过
+
+🔧 测试 API 实例创建...
+✅ API 实例创建成功
+
+⚙️ 测试配置...
+✅ 默认客户端获取成功
+✅ 自定义客户端创建成功
+✅ 默认头添加成功
+
+✅ Member SDK 快速测试完成 - SDK 基本可用！
 ```
 
-#### 支付密码管理
-
-```dart
-// 检查是否已设置支付密码
-final status = await balanceApi.getPaymentPasswordStatus();
-if (status?.hasPassword == false) {
-  // 设置支付密码
-  await balanceApi.setPaymentPassword('123456');
-}
-
-// 修改支付密码
-await balanceApi.changePaymentPassword(
-  oldPassword: '123456',
-  newPassword: '654321',
-);
-
-// 验证支付密码
-final isValid = await balanceApi.verifyPaymentPassword('123456');
+### 第二步：测试网络请求
+```bash
+dart run lib/api_sdk_use/run_member_sdk_test.dart network
 ```
 
-#### 支付功能
+**预期输出：**
+```
+🌐 测试网络请求...
 
-```dart
-// 验证密码并支付
-final verifyDTO = PaymentPasswordVerifyDTO(
-  // 根据实际需要填写参数
-);
+📤 发送请求...
+   - URL: https://gw.trunk.toklink.io/v1/auth/email/send-code
+   - Method: POST
+   - Body: {email: test@example.com, purpose: LOGIN, ...}
 
-final result = await balanceApi.verifyPasswordAndPay(verifyDTO);
-if (result != null) {
-  print('支付成功');
-}
+✅ 网络请求成功
+   - 响应: ApiRespSendEmailCodeResponse(...)
 ```
 
-#### 红包功能
-
-```dart
-// 创建红包
-final createDTO = CreateRedPacketDTO(
-  // 填写红包参数
-);
-final packetNo = await balanceApi.createRedPacket(createDTO);
-
-// 领取红包
-final receiveDTO = ReceiveRedPacketDTO(
-  // 填写领取参数
-);
-final result = await balanceApi.receiveRedPacket(receiveDTO);
-
-// 查询红包详情
-final detail = await balanceApi.getRedPacketDetail('packet-no-123');
+### 第三步：测试兼容性
+```bash
+dart run lib/api_sdk_use/run_member_sdk_test.dart integration
 ```
 
-## 📖 完整 API 列表
+## 🔧 配置说明
 
-### 余额查询
-- `getBalance(currencyId)` - 查询指定币种余额
-- `getBalanceList({queryDTO})` - 查询余额列表
-- `getBalanceSummary()` - 获取余额总览
-
-### 支付密码管理
-- `getPaymentPasswordStatus()` - 查询支付密码状态
-- `setPaymentPassword(password)` - 设置支付密码
-- `changePaymentPassword({oldPassword, newPassword})` - 修改支付密码
-- `verifyPaymentPassword(password)` - 验证支付密码
-
-### 支付功能
-- `processPayment(paymentProcessDTO)` - 处理支付订单
-- `verifyPasswordAndPay(paymentPasswordVerifyDTO)` - 验证密码并支付
-
-### 退款功能
-- `processRefund(refundProcessDTO)` - 处理退款订单
-- `verifyPasswordAndRefund(refundPasswordVerifyDTO)` - 验证密码并退款
-
-### 红包功能
-- `createRedPacket(createRedPacketDTO)` - 创建红包
-- `receiveRedPacket(receiveRedPacketDTO)` - 领取红包
-- `getRedPacketDetail(packetNo)` - 查询红包详情
-
-## 🔐 认证配置
-
-如果你的 API 需要签名认证，可以使用以下方法:
+### SDK 配置
+测试代码会自动配置 SDK 使用以下设置：
 
 ```dart
-final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-final nonce = 'random-nonce-${DateTime.now().microsecondsSinceEpoch}';
-final signature = balanceApi.generateSignature(
-  timestamp: timestamp,
-  nonce: nonce,
-  secretKey: 'your-secret-key',
-);
+// 基础 URL
+defaultApiClient.basePath = 'https://gw.trunk.toklink.io/v1';
 
-balanceApi.setAuthHeaders(
-  timestamp: timestamp,
-  nonce: nonce,
-  signature: signature,
-);
+// 请求头
+defaultApiClient.addDefaultHeader('Content-Type', 'application/json');
+defaultApiClient.addDefaultHeader('Accept', 'application/json');
 ```
 
-## 💡 在 GetX 控制器中使用
+### 认证配置
+如果需要测试需要认证的接口，可以设置 Access Token：
 
 ```dart
-import 'package:get/get.dart';
-import 'package:your_app/api_sdk_use/balance_api.dart';
-
-class WalletController extends GetxController {
-  final balanceList = <Balance>[].obs;
-  final isLoading = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    loadBalances();
-  }
-
-  Future<void> loadBalances() async {
-    isLoading.value = true;
-    final balances = await balanceApi.getBalanceSummary();
-    if (balances != null) {
-      balanceList.value = balances;
-    }
-    isLoading.value = false;
-  }
-}
+defaultApiClient.addDefaultHeader('Access-Token', 'your_access_token_here');
 ```
 
-## 🎨 在 UI 中使用
+## 🐛 常见问题
 
-```dart
-class WalletPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(WalletController());
-    
-    return Scaffold(
-      appBar: AppBar(title: Text('我的钱包')),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
-        }
-        
-        return ListView.builder(
-          itemCount: controller.balanceList.length,
-          itemBuilder: (context, index) {
-            final balance = controller.balanceList[index];
-            return ListTile(
-              title: Text(balance.currencyName ?? '未知币种'),
-              subtitle: Text('可用: ${balance.availableBalance}'),
-            );
-          },
-        );
-      }),
-    );
-  }
-}
+### 1. 导入错误
+```
+Error: Could not resolve the package 'toklink_member_sdk'
+```
+**解决方案：** 确保在 `pubspec.yaml` 中正确添加了依赖：
+```yaml
+dependencies:
+  toklink_member_sdk:
+    path: local_plugin/member-sdk
 ```
 
-## ⚠️ 注意事项
+### 2. 网络连接失败
+```
+❌ 网络请求失败: SocketException: Failed host lookup
+```
+**解决方案：** 
+- 检查网络连接
+- 确认服务器地址是否正确
+- 检查防火墙设置
 
-1. **初始化时机**: 确保在使用任何 API 前已调用 `initialize()` 方法
-2. **Token 管理**: 在用户登录/登出时及时更新 token
-3. **错误处理**: 所有 API 方法都已包含错误处理，返回 null 表示失败
-4. **DTO 参数**: 使用时需要根据实际的 DTO 结构填写参数
-5. **安全性**: 不要在代码中硬编码敏感信息（如密钥、密码等）
+### 3. API 异常
+```
+❌ 网络请求失败: ApiException: 401 Unauthorized
+```
+**解决方案：**
+- 检查认证信息是否正确
+- 确认 API 地址和版本
+- 检查请求参数格式
 
-## 🔗 相关文档
+## 📊 测试结果分析
 
-- [Balance SDK 原始文档](../../local_plugin/balance-sdk/README.md)
-- [API 文档](../../local_plugin/balance-sdk/doc/CAPIApi.md)
+### 成功指标
+- ✅ 所有基本功能测试通过
+- ✅ JSON 序列化/反序列化正常
+- ✅ API 实例创建成功
+- ✅ 网络请求返回有效响应
 
-## 📝 更多示例
+### 失败处理
+- ❌ 基本功能失败 → 检查 SDK 安装
+- ❌ 网络请求失败 → 检查网络和服务器
+- ❌ 认证失败 → 检查认证配置
 
-查看 `balance_api_example.dart` 文件获取更多详细的使用示例。
+## 🔄 下一步
+
+测试通过后，你可以：
+
+1. **创建 SDK 适配器** - 参考 `member_sdk_integration_test.dart` 中的示例
+2. **逐步迁移现有接口** - 从简单接口开始替换
+3. **集成到现有项目** - 使用适配器模式保持兼容性
+
+## 📞 支持
+
+如果遇到问题，请检查：
+1. SDK 是否正确安装
+2. 网络连接是否正常
+3. 服务器是否可访问
+4. 认证信息是否正确

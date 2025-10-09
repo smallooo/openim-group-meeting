@@ -51,20 +51,33 @@ class StrategyMemberApplyLogic extends GetxController {
   void switchTab(int index) {
     state.selectedTabIndex.value = index;
   }
-  
-  // 切换订阅费开关
-  void toggleMonthlyFee(bool value) {
-    state.monthlyFeeEnabled.value = value;
+
+  // 合约策略的订阅费开关
+  void toggleContractMonthlyFee(bool value) {
+    state.contractMonthlyFeeEnabled.value = value;
   }
-  
-  void toggleQuarterlyFee(bool value) {
-    state.quarterlyFeeEnabled.value = value;
+
+  void toggleContractQuarterlyFee(bool value) {
+    state.contractQuarterlyFeeEnabled.value = value;
   }
-  
-  void toggleYearlyFee(bool value) {
-    state.yearlyFeeEnabled.value = value;
+
+  void toggleContractYearlyFee(bool value) {
+    state.contractYearlyFeeEnabled.value = value;
   }
-  
+
+  // 现货策略的订阅费开关
+  void toggleSpotMonthlyFee(bool value) {
+    state.spotMonthlyFeeEnabled.value = value;
+  }
+
+  void toggleSpotQuarterlyFee(bool value) {
+    state.spotQuarterlyFeeEnabled.value = value;
+  }
+
+  void toggleSpotYearlyFee(bool value) {
+    state.spotYearlyFeeEnabled.value = value;
+  }
+
   // 切换隐私政策同意状态
   void togglePrivacyPolicy(bool value) {
     state.privacyPolicyAgreed.value = value;
@@ -89,29 +102,40 @@ class StrategyMemberApplyLogic extends GetxController {
     if (state.isSubmitting.value) {
       return; // 防止重复提交
     }
-    
+
     try {
       state.isSubmitting.value = true;
-      
-      // 构建价格配置数组 - 只包含当前选中的策略类型
+
       final List<PricingConfig> pricingConfigs = [];
-      final strategyType = state.selectedTabIndex.value == 0 ? 'FUTURES' : 'SPOT'; // 0-合约, 1-现货
-      
-      pricingConfigs.add(PricingConfig(
-        traderId: 0, // 默认为0
-        strategyType: strategyType,
-        monthlyPrice: state.monthlyFeeEnabled.value 
-            ? double.tryParse(state.monthlyFeeController.text) ?? 0.0 
-            : 0.0,
-        quarterlyPrice: state.quarterlyFeeEnabled.value 
-            ? double.tryParse(state.quarterlyFeeController.text) ?? 0.0 
-            : 0.0,
-        yearlyPrice: state.yearlyFeeEnabled.value 
-            ? double.tryParse(state.yearlyFeeController.text) ?? 0.0 
-            : 0.0,
-        currency: 'CNY',
-      ));
-      
+
+      // 为 "FUTURES" 构建价格配置
+      final futuresConfig = _buildPricingConfig(
+        'FUTURES',
+        state.contractMonthlyFeeEnabled.value,
+        state.contractQuarterlyFeeEnabled.value,
+        state.contractYearlyFeeEnabled.value,
+        state.contractMonthlyFeeController,
+        state.contractQuarterlyFeeController,
+        state.contractYearlyFeeController,
+      );
+      if (futuresConfig != null) {
+        pricingConfigs.add(futuresConfig);
+      }
+
+      // 为 "SPOT" 构建价格配置
+      final spotConfig = _buildPricingConfig(
+        'SPOT',
+        state.spotMonthlyFeeEnabled.value,
+        state.spotQuarterlyFeeEnabled.value,
+        state.spotYearlyFeeEnabled.value,
+        state.spotMonthlyFeeController,
+        state.spotQuarterlyFeeController,
+        state.spotYearlyFeeController,
+      );
+      if (spotConfig != null) {
+        pricingConfigs.add(spotConfig);
+      }
+
       // 构建申请请求数据
       final request = TraderApplyRequest(
         traderName: state.nicknameController.text,
@@ -119,49 +143,82 @@ class StrategyMemberApplyLogic extends GetxController {
         bio: state.introController.text,
         pricingConfigs: pricingConfigs,
       );
-      
-      print('申请参数: ${request.toJson()}');
-      
-      // 调用API申请交易员
+
+
+      print("....");
+      print("....");
+
+      // 发起申请
       final result = await _strategyRepository.applyTrader(request);
-      
-      print('申请结果: traderId=${result.traderId}, status=${result.status}');
-      
-      // 申请成功后，立即更新交易员状态
+
+      // 申请成功后，刷新交易员状态
       await _refreshTraderStatus(result.traderId);
-      
-      // 显示成功提示
-      Get.snackbar(
-        '申请成功', 
-        '交易员申请已提交成功！\n交易员ID: ${result.traderId}\n状态: ${result.status}',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 8,
-      );
-      
-      // 延迟一下再返回，让用户看到成功提示
-      await Future.delayed(const Duration(milliseconds: 1500));
-      
-      // 申请成功后返回上一页
+
+      Get.snackbar('成功', '申请已提交');
       Get.back();
-      
     } catch (e) {
-      print('申请交易员失败: $e');
-      Get.snackbar(
-        '申请失败', 
-        '交易员申请失败: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 8,
-      );
+      // 提取并显示更友好的错误信息
+      String errorMessage = e.toString();
+      if (e is Exception) {
+        // 尝试从Exception中提取可读信息
+        final message = e.toString();
+        if (message.startsWith('Exception: ')) {
+          errorMessage = message.substring('Exception: '.length);
+        }
+      }
+      Get.snackbar('错误', '提交申请失败: $errorMessage');
     } finally {
       state.isSubmitting.value = false;
+    }
+  }
+
+  // 根据策略类型构建价格配置
+  PricingConfig? _buildPricingConfig(
+    String strategyType,
+    bool monthlyEnabled,
+    bool quarterlyEnabled,
+    bool yearlyEnabled,
+    TextEditingController monthlyController,
+    TextEditingController quarterlyController,
+    TextEditingController yearlyController,
+  ) {
+    final Map<String, dynamic> pricingConfigMap = {
+      'traderId': 0,
+      'strategyType': strategyType,
+      'currency': 'CNY',
+    };
+
+    bool hasPrice = false;
+    if (monthlyEnabled) {
+      final price = double.tryParse(monthlyController.text);
+      if (price != null && price > 0) {
+        pricingConfigMap['monthlyPrice'] = price;
+        hasPrice = true;
+      }
+    }
+    if (quarterlyEnabled) {
+      final price = double.tryParse(quarterlyController.text);
+      if (price != null && price > 0) {
+        pricingConfigMap['quarterlyPrice'] = price;
+        hasPrice = true;
+      }
+    }
+    if (yearlyEnabled) {
+      final price = double.tryParse(yearlyController.text);
+      if (price != null && price > 0) {
+        pricingConfigMap['yearlyPrice'] = price;
+        hasPrice = true;
+      }
+    }
+
+    return hasPrice ? PricingConfig.fromJson(pricingConfigMap) : null;
+  }
+
+  void pickAndUploadImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      state.avatarUrl.value = image.path;
     }
   }
   

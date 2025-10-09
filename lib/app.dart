@@ -21,9 +21,9 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // Balance API 初始化
-    balanceApi.initialize(
-      baseUrl: ApiConstants.baseUrl,
-    );
+    // balanceApi.initialize(
+    //   baseUrl: ApiConstants.baseUrl,
+    // );
 
     return ProviderScope(
       child: AppView(

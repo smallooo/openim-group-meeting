@@ -52,22 +52,25 @@ class ApiRespRefundProcessResultVO {
   RefundProcessResultVO? data;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is ApiRespRefundProcessResultVO &&
-     other.errCode == errCode &&
-     other.errMsg == errMsg &&
-     other.errDlt == errDlt &&
-     other.data == data;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ApiRespRefundProcessResultVO &&
+          other.errCode == errCode &&
+          other.errMsg == errMsg &&
+          other.errDlt == errDlt &&
+          other.data == data;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (errCode == null ? 0 : errCode!.hashCode) +
-    (errMsg == null ? 0 : errMsg!.hashCode) +
-    (errDlt == null ? 0 : errDlt!.hashCode) +
-    (data == null ? 0 : data!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (errCode == null ? 0 : errCode!.hashCode) +
+      (errMsg == null ? 0 : errMsg!.hashCode) +
+      (errDlt == null ? 0 : errDlt!.hashCode) +
+      (data == null ? 0 : data!.hashCode);
 
   @override
-  String toString() => 'ApiRespRefundProcessResultVO[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
+  String toString() =>
+      'ApiRespRefundProcessResultVO[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -106,8 +109,10 @@ class ApiRespRefundProcessResultVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "ApiRespRefundProcessResultVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "ApiRespRefundProcessResultVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "ApiRespRefundProcessResultVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "ApiRespRefundProcessResultVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -122,7 +127,10 @@ class ApiRespRefundProcessResultVO {
     return null;
   }
 
-  static List<ApiRespRefundProcessResultVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<ApiRespRefundProcessResultVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <ApiRespRefundProcessResultVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -150,20 +158,24 @@ class ApiRespRefundProcessResultVO {
   }
 
   // maps a json object with a list of ApiRespRefundProcessResultVO-objects as value to a dart map
-  static Map<String, List<ApiRespRefundProcessResultVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<ApiRespRefundProcessResultVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<ApiRespRefundProcessResultVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ApiRespRefundProcessResultVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = ApiRespRefundProcessResultVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

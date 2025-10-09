@@ -136,38 +136,41 @@ class Balance {
   int? isDeleted;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is Balance &&
-     other.id == id &&
-     other.memberId == memberId &&
-     other.currencyId == currencyId &&
-     other.currencyName == currencyName &&
-     other.availableAmount == availableAmount &&
-     other.frozenAmount == frozenAmount &&
-     other.totalAmount == totalAmount &&
-     other.version == version &&
-     other.status == status &&
-     other.createdAt == createdAt &&
-     other.updatedAt == updatedAt &&
-     other.isDeleted == isDeleted;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Balance &&
+          other.id == id &&
+          other.memberId == memberId &&
+          other.currencyId == currencyId &&
+          other.currencyName == currencyName &&
+          other.availableAmount == availableAmount &&
+          other.frozenAmount == frozenAmount &&
+          other.totalAmount == totalAmount &&
+          other.version == version &&
+          other.status == status &&
+          other.createdAt == createdAt &&
+          other.updatedAt == updatedAt &&
+          other.isDeleted == isDeleted;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (id == null ? 0 : id!.hashCode) +
-    (memberId == null ? 0 : memberId!.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode) +
-    (currencyName == null ? 0 : currencyName!.hashCode) +
-    (availableAmount == null ? 0 : availableAmount!.hashCode) +
-    (frozenAmount == null ? 0 : frozenAmount!.hashCode) +
-    (totalAmount == null ? 0 : totalAmount!.hashCode) +
-    (version == null ? 0 : version!.hashCode) +
-    (status == null ? 0 : status!.hashCode) +
-    (createdAt == null ? 0 : createdAt!.hashCode) +
-    (updatedAt == null ? 0 : updatedAt!.hashCode) +
-    (isDeleted == null ? 0 : isDeleted!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (id == null ? 0 : id!.hashCode) +
+      (memberId == null ? 0 : memberId!.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode) +
+      (currencyName == null ? 0 : currencyName!.hashCode) +
+      (availableAmount == null ? 0 : availableAmount!.hashCode) +
+      (frozenAmount == null ? 0 : frozenAmount!.hashCode) +
+      (totalAmount == null ? 0 : totalAmount!.hashCode) +
+      (version == null ? 0 : version!.hashCode) +
+      (status == null ? 0 : status!.hashCode) +
+      (createdAt == null ? 0 : createdAt!.hashCode) +
+      (updatedAt == null ? 0 : updatedAt!.hashCode) +
+      (isDeleted == null ? 0 : isDeleted!.hashCode);
 
   @override
-  String toString() => 'Balance[id=$id, memberId=$memberId, currencyId=$currencyId, currencyName=$currencyName, availableAmount=$availableAmount, frozenAmount=$frozenAmount, totalAmount=$totalAmount, version=$version, status=$status, createdAt=$createdAt, updatedAt=$updatedAt, isDeleted=$isDeleted]';
+  String toString() =>
+      'Balance[id=$id, memberId=$memberId, currencyId=$currencyId, currencyName=$currencyName, availableAmount=$availableAmount, frozenAmount=$frozenAmount, totalAmount=$totalAmount, version=$version, status=$status, createdAt=$createdAt, updatedAt=$updatedAt, isDeleted=$isDeleted]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -246,8 +249,10 @@ class Balance {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "Balance[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "Balance[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "Balance[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "Balance[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -276,7 +281,10 @@ class Balance {
     return null;
   }
 
-  static List<Balance> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<Balance> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <Balance>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -304,20 +312,24 @@ class Balance {
   }
 
   // maps a json object with a list of Balance-objects as value to a dart map
-  static Map<String, List<Balance>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<Balance>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<Balance>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = Balance.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = Balance.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

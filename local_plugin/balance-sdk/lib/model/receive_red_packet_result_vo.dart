@@ -80,28 +80,31 @@ class ReceiveRedPacketResultVO {
   String? message;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is ReceiveRedPacketResultVO &&
-     other.success == success &&
-     other.amount == amount &&
-     other.currencyName == currencyName &&
-     other.isBest == isBest &&
-     other.senderName == senderName &&
-     other.blessing == blessing &&
-     other.message == message;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReceiveRedPacketResultVO &&
+          other.success == success &&
+          other.amount == amount &&
+          other.currencyName == currencyName &&
+          other.isBest == isBest &&
+          other.senderName == senderName &&
+          other.blessing == blessing &&
+          other.message == message;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (success == null ? 0 : success!.hashCode) +
-    (amount.hashCode) +
-    (currencyName == null ? 0 : currencyName!.hashCode) +
-    (isBest == null ? 0 : isBest!.hashCode) +
-    (senderName == null ? 0 : senderName!.hashCode) +
-    (blessing == null ? 0 : blessing!.hashCode) +
-    (message == null ? 0 : message!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (success == null ? 0 : success!.hashCode) +
+      (amount.hashCode) +
+      (currencyName == null ? 0 : currencyName!.hashCode) +
+      (isBest == null ? 0 : isBest!.hashCode) +
+      (senderName == null ? 0 : senderName!.hashCode) +
+      (blessing == null ? 0 : blessing!.hashCode) +
+      (message == null ? 0 : message!.hashCode);
 
   @override
-  String toString() => 'ReceiveRedPacketResultVO[success=$success, amount=$amount, currencyName=$currencyName, isBest=$isBest, senderName=$senderName, blessing=$blessing, message=$message]';
+  String toString() =>
+      'ReceiveRedPacketResultVO[success=$success, amount=$amount, currencyName=$currencyName, isBest=$isBest, senderName=$senderName, blessing=$blessing, message=$message]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -110,7 +113,7 @@ class ReceiveRedPacketResultVO {
     } else {
       json[r'success'] = null;
     }
-      json[r'amount'] = this.amount;
+    json[r'amount'] = this.amount;
     if (this.currencyName != null) {
       json[r'currencyName'] = this.currencyName;
     } else {
@@ -151,17 +154,18 @@ class ReceiveRedPacketResultVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "ReceiveRedPacketResultVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "ReceiveRedPacketResultVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "ReceiveRedPacketResultVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "ReceiveRedPacketResultVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
       return ReceiveRedPacketResultVO(
         success: mapValueOfType<bool>(json, r'success'),
-        amount: json[r'amount'] == null
-            ? 0
-            : num.parse(json[r'amount'].toString()),
+        amount:
+            json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
         currencyName: mapValueOfType<String>(json, r'currencyName'),
         isBest: mapValueOfType<bool>(json, r'isBest'),
         senderName: mapValueOfType<String>(json, r'senderName'),
@@ -172,7 +176,10 @@ class ReceiveRedPacketResultVO {
     return null;
   }
 
-  static List<ReceiveRedPacketResultVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<ReceiveRedPacketResultVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <ReceiveRedPacketResultVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -200,20 +207,24 @@ class ReceiveRedPacketResultVO {
   }
 
   // maps a json object with a list of ReceiveRedPacketResultVO-objects as value to a dart map
-  static Map<String, List<ReceiveRedPacketResultVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<ReceiveRedPacketResultVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<ReceiveRedPacketResultVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ReceiveRedPacketResultVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = ReceiveRedPacketResultVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

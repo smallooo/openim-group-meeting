@@ -8,18 +8,26 @@ class StrategyMemberApplyState {
   // 输入框控制器
   TextEditingController nicknameController = TextEditingController();
   TextEditingController introController = TextEditingController();
-  TextEditingController monthlyFeeController = TextEditingController();
-  TextEditingController quarterlyFeeController = TextEditingController();
-  TextEditingController yearlyFeeController = TextEditingController();
-  
+
+  // 合约策略的收费设置
+  TextEditingController contractMonthlyFeeController = TextEditingController();
+  TextEditingController contractQuarterlyFeeController = TextEditingController();
+  TextEditingController contractYearlyFeeController = TextEditingController();
+  RxBool contractMonthlyFeeEnabled = false.obs;
+  RxBool contractQuarterlyFeeEnabled = false.obs;
+  RxBool contractYearlyFeeEnabled = false.obs;
+
+  // 现货策略的收费设置
+  TextEditingController spotMonthlyFeeController = TextEditingController();
+  TextEditingController spotQuarterlyFeeController = TextEditingController();
+  TextEditingController spotYearlyFeeController = TextEditingController();
+  RxBool spotMonthlyFeeEnabled = false.obs;
+  RxBool spotQuarterlyFeeEnabled = false.obs;
+  RxBool spotYearlyFeeEnabled = false.obs;
+
   // 当前选中的tab (0: 合约策略, 1: 现货策略)
   RxInt selectedTabIndex = 0.obs;
-  
-  // 订阅费开关状态
-  RxBool monthlyFeeEnabled = false.obs;
-  RxBool quarterlyFeeEnabled = false.obs;
-  RxBool yearlyFeeEnabled = false.obs;
-  
+
   // 隐私政策同意状态
   RxBool privacyPolicyAgreed = false.obs;
   
@@ -31,10 +39,13 @@ class StrategyMemberApplyState {
 
   StrategyMemberApplyState() {
     // 初始化默认值
-    monthlyFeeController.text = '30';
-    quarterlyFeeController.text = '72';
-    yearlyFeeController.text = '288';
-    
+    contractMonthlyFeeController.text = '30';
+    contractQuarterlyFeeController.text = '72';
+    contractYearlyFeeController.text = '288';
+    spotMonthlyFeeController.text = '30';
+    spotQuarterlyFeeController.text = '72';
+    spotYearlyFeeController.text = '288';
+
     // 监听输入框变化
     nicknameController.addListener(_updateCanSubmit);
     introController.addListener(_updateCanSubmit);
@@ -52,8 +63,11 @@ class StrategyMemberApplyState {
   void dispose() {
     nicknameController.dispose();
     introController.dispose();
-    monthlyFeeController.dispose();
-    quarterlyFeeController.dispose();
-    yearlyFeeController.dispose();
+    contractMonthlyFeeController.dispose();
+    contractQuarterlyFeeController.dispose();
+    contractYearlyFeeController.dispose();
+    spotMonthlyFeeController.dispose();
+    spotQuarterlyFeeController.dispose();
+    spotYearlyFeeController.dispose();
   }
 }

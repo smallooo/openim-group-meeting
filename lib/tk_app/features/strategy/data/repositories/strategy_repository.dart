@@ -179,6 +179,12 @@ class StrategyRepository {
       );
       
       print('Repository: 原始API响应: $rawResponse'); // 调试信息
+
+      // 检查 'ok' 状态
+      if (rawResponse['ok'] == false) {
+        // 如果 'ok' 是 false，则抛出带有消息的异常
+        throw Exception(rawResponse['message'] ?? '申请交易员失败');
+      }
       
       // 手动解析响应
       final response = TraderApplyResponse.fromJson(rawResponse);

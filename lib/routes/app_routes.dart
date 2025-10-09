@@ -55,6 +55,9 @@ abstract class AppRoutes {
   static const paymentProgress = '/payment_progress';
   static const paymentSuccess = '/payment_success';
   static const paymentFail = '/payment_fail';
+  static const orderRequestRefund = '/order_request_refund';
+  static const orderRefundSubmit = '/order_refund_submit';
+  static const orderAfterDetail = '/order_after_detail';
 }
 
 extension RoutesExtension on String {

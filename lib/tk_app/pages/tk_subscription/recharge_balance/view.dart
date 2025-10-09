@@ -45,24 +45,43 @@ class RechargeBalancePage extends StatelessWidget {
                   
                   const SizedBox(height: 20),
                   
-                  // 购买点数标题
-                  _buildPurchaseTitle(),
-                  
-                  const SizedBox(height: 16),
-                  
-                  // 充值选项列表
-                  _buildRechargeOptions(logic, state),
+                  // 购买点数标题和充值选项列表容器
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 购买点数标题
+                        _buildPurchaseTitle(),
+                        
+                        const SizedBox(height: 16),
+                        
+                        // 充值选项列表
+                        _buildRechargeOptions(logic, state),
+                      ],
+                    ),
+                  ),
                   
                   const SizedBox(height: 20),
-                  
-                  // 协议确认
-                  _buildAgreementCheckbox(logic, state),
-                  
-                  const SizedBox(height: 100), // 为底部按钮留出空间
                 ],
               ),
             ),
           ),
+          
+          // 协议确认
+          _buildAgreementCheckbox(logic, state),
           
           // 底部付款信息和充值按钮
           _buildBottomPaymentSection(logic, state),
@@ -90,14 +109,39 @@ class RechargeBalancePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Obx(() => Text(
-            '余额:${state.currentBalance.value}点',
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
+          Obx(() => RichText(
+            text: TextSpan(
+              children: [
+                const TextSpan(
+                  text: '余额: ',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+                WidgetSpan(
+                  child: Transform.translate(
+                    offset: const Offset(4, 5),
+                    child: Text(
+                      '${state.currentBalance.value}点',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           )),
+          const SizedBox(height: 12),
+          Container(
+            height: 1,
+            color: Colors.grey[300],
+            margin: const EdgeInsets.symmetric(horizontal: 0),
+          ),
           const SizedBox(height: 12),
           RichText(
             text: TextSpan(
@@ -117,7 +161,7 @@ class RechargeBalancePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.green,
-                        decoration: TextDecoration.underline,
+                        // decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
@@ -132,17 +176,14 @@ class RechargeBalancePage extends StatelessWidget {
 
   // 购买点数标题
   Widget _buildPurchaseTitle() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: const Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          '购买点数',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
+    return const Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        '购买点数',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
         ),
       ),
     );
@@ -150,13 +191,10 @@ class RechargeBalancePage extends StatelessWidget {
 
   // 充值选项列表
   Widget _buildRechargeOptions(RechargeBalanceLogic logic, RechargeBalanceState state) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: List.generate(
-          state.rechargeOptions.length,
-          (index) => _buildRechargeOptionCard(logic, state, index),
-        ),
+    return Column(
+      children: List.generate(
+        state.rechargeOptions.length,
+        (index) => _buildRechargeOptionCard(logic, state, index),
       ),
     );
   }
@@ -164,82 +202,84 @@ class RechargeBalancePage extends StatelessWidget {
   // 单个充值选项卡片
   Widget _buildRechargeOptionCard(RechargeBalanceLogic logic, RechargeBalanceState state, int index) {
     final option = state.rechargeOptions[index];
-    final isSelected = state.selectedOptionIndex.value == index;
     
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
         onTap: () => logic.selectRechargeOption(index),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isSelected ? const Color(0xFF9E13F7) : Colors.grey[300]!,
-              width: isSelected ? 2 : 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
+        child: Obx(() {
+          final isSelected = state.selectedOptionIndex.value == index;
+          return Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isSelected ? const Color(0xFF9E13F7) : Colors.grey[300]!,
+                width: isSelected ? 2 : 1,
               ),
-            ],
-          ),
-          child: Row(
-            children: [
-              // 点数信息
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${option.points}点',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          '单价:${option.unitPrice}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      option.description,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                        height: 1.4,
-                      ),
-                    ),
-                  ],
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
-              ),
-              
-              // 选中状态指示器
-              if (isSelected)
-                Container(
-                  margin: const EdgeInsets.only(left: 12),
-                  child: const Icon(
-                    Icons.check_circle,
-                    color: Color(0xFF9E13F7),
-                    size: 24,
+              ],
+            ),
+            child: Row(
+              children: [
+                // 点数信息
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${option.points}点',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            '单价: ${option.unitPrice}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        option.description,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-            ],
-          ),
-        ),
+                
+                // 选中状态指示器
+                if (isSelected)
+                  Container(
+                    margin: const EdgeInsets.only(left: 12),
+                    child: const Icon(
+                      Icons.check_circle,
+                      color: Color(0xFF9E13F7),
+                      size: 24,
+                    ),
+                  ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
@@ -247,10 +287,11 @@ class RechargeBalancePage extends StatelessWidget {
   // 协议确认复选框
   Widget _buildAgreementCheckbox(RechargeBalanceLogic logic, RechargeBalanceState state) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.green.withValues(alpha: 0.1),
+        // color: Colors.green.withValues(alpha: 0.1),
+        color: const Color(0xFFD4FFE6),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -285,27 +326,29 @@ class RechargeBalancePage extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     const TextSpan(
-                      text: '我确认已阅读并同意(',
+                      text: '我确认已阅读并同意',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black,
+                        color:  Color(0xFF999999),
                       ),
                     ),
                     WidgetSpan(
                       child: GestureDetector(
                         onTap: () => logic.viewPurchaseAgreement(),
-                        child: const Text(
-                          '购买与使用协议',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.green,
-                            decoration: TextDecoration.underline,
-                          ),
+                        child: Transform.translate(
+                          offset: const Offset(4, 1),
+                          child:const Text(
+                              '(购买与使用协议)',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                                // decoration: TextDecoration.underline,
+                              ) ,),
                         ),
                       ),
                     ),
                     const TextSpan(
-                      text: ')',
+                      text: '',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -328,6 +371,7 @@ class RechargeBalancePage extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: SafeArea(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,7 +381,7 @@ class RechargeBalancePage extends StatelessWidget {
                   '实付款',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey,
+                    color: Color(0xFF333333),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -352,23 +396,23 @@ class RechargeBalancePage extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 20),
-            Expanded(
-              child: GestureDetector(
-                onTap: () => logic.confirmRecharge(),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF9E13F7),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '订阅',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+            GestureDetector(
+              onTap: () => logic.confirmRecharge(),
+              child: Container(
+                width: 131,
+                height: 46,
+                // padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF9E13F7),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Center(
+                  child: Text(
+                    '订阅',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

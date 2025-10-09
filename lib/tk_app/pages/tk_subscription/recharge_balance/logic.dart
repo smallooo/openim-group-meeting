@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../../routes/app_pages.dart';
 import 'state.dart';
 
 class RechargeBalanceLogic extends GetxController {
@@ -24,7 +25,7 @@ class RechargeBalanceLogic extends GetxController {
   // 查看购买与使用协议
   void viewPurchaseAgreement() {
     // TODO: 跳转到协议页面
-    Get.snackbar('提示', '查看购买与使用协议功能正在开发中');
+    // Get.snackbar('提示', '查看购买与使用协议功能正在开发中');
   }
   
   // 确认充值
@@ -40,6 +41,8 @@ class RechargeBalanceLogic extends GetxController {
     }
     
     // TODO: 实现充值逻辑
-    Get.snackbar('提示', '充值功能正在开发中');
+    // Get.snackbar('提示', '充值功能正在开发中');
+    Get.toNamed(AppRoutes.verifyPassword);
+
   }
 }

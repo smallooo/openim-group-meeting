@@ -40,24 +40,27 @@ class BalanceQueryDTO {
   String? currencyName;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is BalanceQueryDTO &&
-     other.memberId == memberId &&
-     other.currencyId == currencyId &&
-     other.currencyName == currencyName;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BalanceQueryDTO &&
+          other.memberId == memberId &&
+          other.currencyId == currencyId &&
+          other.currencyName == currencyName;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (memberId.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode) +
-    (currencyName == null ? 0 : currencyName!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (memberId.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode) +
+      (currencyName == null ? 0 : currencyName!.hashCode);
 
   @override
-  String toString() => 'BalanceQueryDTO[memberId=$memberId, currencyId=$currencyId, currencyName=$currencyName]';
+  String toString() =>
+      'BalanceQueryDTO[memberId=$memberId, currencyId=$currencyId, currencyName=$currencyName]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'memberId'] = this.memberId;
+    json[r'memberId'] = this.memberId;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
     } else {
@@ -83,8 +86,10 @@ class BalanceQueryDTO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "BalanceQueryDTO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "BalanceQueryDTO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "BalanceQueryDTO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "BalanceQueryDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -98,7 +103,10 @@ class BalanceQueryDTO {
     return null;
   }
 
-  static List<BalanceQueryDTO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<BalanceQueryDTO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <BalanceQueryDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -126,13 +134,19 @@ class BalanceQueryDTO {
   }
 
   // maps a json object with a list of BalanceQueryDTO-objects as value to a dart map
-  static Map<String, List<BalanceQueryDTO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<BalanceQueryDTO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<BalanceQueryDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = BalanceQueryDTO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = BalanceQueryDTO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -143,4 +157,3 @@ class BalanceQueryDTO {
     'memberId',
   };
 }
-

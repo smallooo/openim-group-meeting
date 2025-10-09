@@ -99,8 +99,8 @@ class StrategySubscriptionPage extends StatelessWidget {
             '服务信息',
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
             ),
           ),
           const SizedBox(height: 16),
@@ -150,7 +150,7 @@ class StrategySubscriptionPage extends StatelessWidget {
                               text: '查看详情',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xFF9E13F7),
+                                color: Color(0xFF0BAE4E),
                               ),
                             ),
                           ],
@@ -171,7 +171,7 @@ class StrategySubscriptionPage extends StatelessWidget {
   Widget _buildDurationSelection(StrategySubscriptionLogic logic, StrategySubscriptionState state) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16,top: 16,bottom: 16,right: 0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -190,96 +190,117 @@ class StrategySubscriptionPage extends StatelessWidget {
             '订阅时长',
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
             ),
           ),
           const SizedBox(height: 16),
-          Obx(() => Row(
-            children: List.generate(
-              state.durationOptions.length,
-              (index) => Expanded(
-                child: GestureDetector(
-                  onTap: () => logic.selectDuration(index),
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      right: index < state.durationOptions.length - 1 ? 12 : 0,
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: state.selectedDurationIndex.value == index 
-                          ? const Color(0xFF9E13F7) 
-                          : Colors.white,
-                      border: Border.all(
-                        color: state.selectedDurationIndex.value == index 
-                            ? const Color(0xFF9E13F7) 
-                            : Colors.grey[300]!,
-                        width: 1,
+          Obx(() => SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                state.durationOptions.length,
+                (index) => Container(
+                  width: 132,  // 固定宽度，让右边显示一部分
+                  height: 110,  // 增加高度以容纳所有内容
+                  margin: EdgeInsets.only(
+                    right: index < state.durationOptions.length - 1 ? 12 : 20, // 最后一项右边距大一些
+                  ),
+                  child: GestureDetector(
+                    onTap: () => logic.selectDuration(index),
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 12, top: 0, right: 0, bottom: 12),
+                      decoration: BoxDecoration(
+                        color: state.selectedDurationIndex.value == index
+                            ? const Color(0xFF9E13F7)
+                            : Colors.white,
+                        border: Border.all(
+                          color: state.selectedDurationIndex.value == index
+                              ? const Color(0xFF9E13F7)
+                              : Colors.grey[300]!,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      children: [
-                        // 限时优惠标签
-                        if (state.durationOptions[index].isLimited)
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: state.selectedDurationIndex.value == index 
-                                  ? Colors.white.withValues(alpha: 0.2)
-                                  : Colors.red,
-                              borderRadius: BorderRadius.circular(10),
+                      child: Stack(
+                        children: [
+                          // 主要内容
+                          Positioned(
+                            left: 2,
+                            top: 15,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                          // 时长
+                          Text(
+                            state.durationOptions[index].duration,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: state.selectedDurationIndex.value == index
+                                  ? Colors.white
+                                  : Colors.grey[600],
                             ),
-                            child: Text(
-                              '限时优惠',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: state.selectedDurationIndex.value == index 
-                                    ? Colors.white 
-                                    : Colors.white,
-                                fontWeight: FontWeight.w500,
+                          ),
+                          const SizedBox(height: 8),
+
+                          // 价格
+                          Text(
+                            state.durationOptions[index].price,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: state.selectedDurationIndex.value == index
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+
+                          // 原价
+                          Text(
+                            state.durationOptions[index].originalPrice,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: state.selectedDurationIndex.value == index
+                                  ? Colors.white.withValues(alpha: 0.7)
+                                  : Colors.grey[500],
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                              ],
+                            ),
+                          ),
+                          // 限时优惠标签 - 右上角
+                          if (state.durationOptions[index].isLimited)
+                            Positioned(
+                              top: -0.5,  // 紧贴上边，稍微超出一点
+                              right: -0.5,  // 紧贴右边，稍微超出一点
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: state.selectedDurationIndex.value == index
+                                      ? Colors.white.withValues(alpha: 0.2)
+                                      : Colors.red,
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(8.5),
+                                    bottomLeft: Radius.circular(8),
+                                  ),
+                                ),
+                                child: Text(
+                                  '限时优惠',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    color: state.selectedDurationIndex.value == index
+                                        ? Colors.white
+                                        : Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        const SizedBox(height: 8),
-                        
-                        // 时长
-                        Text(
-                          state.durationOptions[index].duration,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: state.selectedDurationIndex.value == index 
-                                ? Colors.white 
-                                : Colors.grey[600],
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        
-                        // 价格
-                        Text(
-                          state.durationOptions[index].price,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: state.selectedDurationIndex.value == index 
-                                ? Colors.white 
-                                : Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        
-                        // 原价
-                        Text(
-                          state.durationOptions[index].originalPrice,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: state.selectedDurationIndex.value == index 
-                                ? Colors.white.withValues(alpha: 0.7)
-                                : Colors.grey[500],
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -317,17 +338,17 @@ class StrategySubscriptionPage extends StatelessWidget {
                   '钱包余额',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Obx(() => Text(
                   state.walletBalance.value,
                   style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
                   ),
                 )),
               ],
@@ -337,10 +358,10 @@ class StrategySubscriptionPage extends StatelessWidget {
             onTap: () => logic.quickTopUp(),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF9E13F7).withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
+              // decoration: BoxDecoration(
+              //   color: const Color(0xFF9E13F7).withValues(alpha: 0.1),
+              //   borderRadius: BorderRadius.circular(20),
+              // ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -348,15 +369,15 @@ class StrategySubscriptionPage extends StatelessWidget {
                     '快速充值',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF9E13F7),
-                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF333333),
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                   SizedBox(width: 4),
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 12,
-                    color: Color(0xFF9E13F7),
+                    color: Color(0xFF333333),
                   ),
                 ],
               ),
@@ -390,14 +411,15 @@ class StrategySubscriptionPage extends StatelessWidget {
               '到期自动续订，可随时取消',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: Colors.grey,
               ),
             ),
           ),
           Obx(() => Switch(
             value: state.autoRenewal.value,
             onChanged: (value) => logic.toggleAutoRenewal(),
-            activeColor: const Color(0xFF9E13F7),
+            activeColor: const Color(0xFF34C75C),
+            // inactiveThumbColor: const Color(0xFFFFFFFF),
           )),
         ],
       ),
@@ -427,8 +449,8 @@ class StrategySubscriptionPage extends StatelessWidget {
             '免费声明',
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
             ),
           ),
           SizedBox(height: 8),
@@ -452,6 +474,7 @@ class StrategySubscriptionPage extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: SafeArea(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -461,7 +484,7 @@ class StrategySubscriptionPage extends StatelessWidget {
                   '实付款',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey,
+                    color: Color(0xFF333333),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -476,23 +499,22 @@ class StrategySubscriptionPage extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 20),
-            Expanded(
-              child: GestureDetector(
-                onTap: () => logic.subscribe(),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF9E13F7),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '订阅',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+            GestureDetector(
+              onTap: () => logic.subscribe(),
+              child: Container(
+                width: 131,
+                height: 46,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF9E13F7),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Center(
+                  child: Text(
+                    '订阅',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

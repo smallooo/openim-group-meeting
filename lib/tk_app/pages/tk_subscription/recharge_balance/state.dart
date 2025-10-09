@@ -15,19 +15,19 @@ class RechargeBalanceState {
       description: '支付 USD获得12点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
     ),
     RechargeOption(
-      points: 12,
+      points: 22,
       unitPrice: 'USD', 
-      description: '支付 USD获得12点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
+      description: '支付 USD获得22点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
     ),
     RechargeOption(
-      points: 12,
+      points: 32,
       unitPrice: 'USD',
-      description: '支付 USD获得12点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
+      description: '支付 USD获得32点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
     ),
     RechargeOption(
-      points: 12,
+      points: 42,
       unitPrice: 'USD',
-      description: '支付 USD获得12点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
+      description: '支付 USD获得42点,点数可以在平台兑换支付订阅费用、兑换奖品等站内行为',
     ),
   ];
   

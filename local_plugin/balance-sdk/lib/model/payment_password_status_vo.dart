@@ -36,18 +36,21 @@ class PaymentPasswordStatusVO {
   bool? isLocked;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PaymentPasswordStatusVO &&
-     other.hasPassword == hasPassword &&
-     other.isLocked == isLocked;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PaymentPasswordStatusVO &&
+          other.hasPassword == hasPassword &&
+          other.isLocked == isLocked;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (hasPassword == null ? 0 : hasPassword!.hashCode) +
-    (isLocked == null ? 0 : isLocked!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (hasPassword == null ? 0 : hasPassword!.hashCode) +
+      (isLocked == null ? 0 : isLocked!.hashCode);
 
   @override
-  String toString() => 'PaymentPasswordStatusVO[hasPassword=$hasPassword, isLocked=$isLocked]';
+  String toString() =>
+      'PaymentPasswordStatusVO[hasPassword=$hasPassword, isLocked=$isLocked]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -76,8 +79,10 @@ class PaymentPasswordStatusVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "PaymentPasswordStatusVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "PaymentPasswordStatusVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "PaymentPasswordStatusVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "PaymentPasswordStatusVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -90,7 +95,10 @@ class PaymentPasswordStatusVO {
     return null;
   }
 
-  static List<PaymentPasswordStatusVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<PaymentPasswordStatusVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <PaymentPasswordStatusVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -118,20 +126,24 @@ class PaymentPasswordStatusVO {
   }
 
   // maps a json object with a list of PaymentPasswordStatusVO-objects as value to a dart map
-  static Map<String, List<PaymentPasswordStatusVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<PaymentPasswordStatusVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<PaymentPasswordStatusVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PaymentPasswordStatusVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = PaymentPasswordStatusVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

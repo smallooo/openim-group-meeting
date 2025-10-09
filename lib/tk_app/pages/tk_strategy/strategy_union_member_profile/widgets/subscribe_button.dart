@@ -33,7 +33,7 @@ class SubscribeButton extends StatelessWidget {
                   backgroundColor: Colors.purple,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   elevation: 0,
                 ),

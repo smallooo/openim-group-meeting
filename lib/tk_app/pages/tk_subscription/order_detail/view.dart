@@ -186,9 +186,9 @@ class OrderDetailPage extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
-            color: Colors.black,
+            color: label == '总计' ? Colors.black : const Color(0xFF666666),
           ),
         ),
         const Spacer(),
@@ -196,7 +196,7 @@ class OrderDetailPage extends StatelessWidget {
           value,
           style: const TextStyle(
             fontSize: 14,
-            color: Colors.black,
+            color: Color(0xFF666666),
             fontWeight: FontWeight.w500,
           ),
         ),

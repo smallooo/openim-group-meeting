@@ -100,32 +100,35 @@ class RedPacketRecordVO {
   DateTime? receivedAt;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is RedPacketRecordVO &&
-     other.id == id &&
-     other.packetId == packetId &&
-     other.packetNo == packetNo &&
-     other.receiverId == receiverId &&
-     other.receiverName == receiverName &&
-     other.amount == amount &&
-     other.isBest == isBest &&
-     other.isBestDesc == isBestDesc &&
-     other.receivedAt == receivedAt;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RedPacketRecordVO &&
+          other.id == id &&
+          other.packetId == packetId &&
+          other.packetNo == packetNo &&
+          other.receiverId == receiverId &&
+          other.receiverName == receiverName &&
+          other.amount == amount &&
+          other.isBest == isBest &&
+          other.isBestDesc == isBestDesc &&
+          other.receivedAt == receivedAt;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (id == null ? 0 : id!.hashCode) +
-    (packetId == null ? 0 : packetId!.hashCode) +
-    (packetNo == null ? 0 : packetNo!.hashCode) +
-    (receiverId == null ? 0 : receiverId!.hashCode) +
-    (receiverName == null ? 0 : receiverName!.hashCode) +
-    (amount.hashCode) +
-    (isBest == null ? 0 : isBest!.hashCode) +
-    (isBestDesc == null ? 0 : isBestDesc!.hashCode) +
-    (receivedAt == null ? 0 : receivedAt!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (id == null ? 0 : id!.hashCode) +
+      (packetId == null ? 0 : packetId!.hashCode) +
+      (packetNo == null ? 0 : packetNo!.hashCode) +
+      (receiverId == null ? 0 : receiverId!.hashCode) +
+      (receiverName == null ? 0 : receiverName!.hashCode) +
+      (amount.hashCode) +
+      (isBest == null ? 0 : isBest!.hashCode) +
+      (isBestDesc == null ? 0 : isBestDesc!.hashCode) +
+      (receivedAt == null ? 0 : receivedAt!.hashCode);
 
   @override
-  String toString() => 'RedPacketRecordVO[id=$id, packetId=$packetId, packetNo=$packetNo, receiverId=$receiverId, receiverName=$receiverName, amount=$amount, isBest=$isBest, isBestDesc=$isBestDesc, receivedAt=$receivedAt]';
+  String toString() =>
+      'RedPacketRecordVO[id=$id, packetId=$packetId, packetNo=$packetNo, receiverId=$receiverId, receiverName=$receiverName, amount=$amount, isBest=$isBest, isBestDesc=$isBestDesc, receivedAt=$receivedAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -154,7 +157,7 @@ class RedPacketRecordVO {
     } else {
       json[r'receiverName'] = null;
     }
-      json[r'amount'] = this.amount;
+    json[r'amount'] = this.amount;
     if (this.isBest != null) {
       json[r'isBest'] = this.isBest;
     } else {
@@ -185,8 +188,10 @@ class RedPacketRecordVO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "RedPacketRecordVO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "RedPacketRecordVO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "RedPacketRecordVO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "RedPacketRecordVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -197,9 +202,8 @@ class RedPacketRecordVO {
         packetNo: mapValueOfType<String>(json, r'packetNo'),
         receiverId: mapValueOfType<int>(json, r'receiverId'),
         receiverName: mapValueOfType<String>(json, r'receiverName'),
-        amount: json[r'amount'] == null
-            ? 0
-            : num.parse(json[r'amount'].toString()),
+        amount:
+            json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
         isBest: mapValueOfType<int>(json, r'isBest'),
         isBestDesc: mapValueOfType<String>(json, r'isBestDesc'),
         receivedAt: mapDateTime(json, r'receivedAt', ''),
@@ -208,7 +212,10 @@ class RedPacketRecordVO {
     return null;
   }
 
-  static List<RedPacketRecordVO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedPacketRecordVO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedPacketRecordVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -236,20 +243,24 @@ class RedPacketRecordVO {
   }
 
   // maps a json object with a list of RedPacketRecordVO-objects as value to a dart map
-  static Map<String, List<RedPacketRecordVO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<RedPacketRecordVO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<RedPacketRecordVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = RedPacketRecordVO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = RedPacketRecordVO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-  };
+  static const requiredKeys = <String>{};
 }
-

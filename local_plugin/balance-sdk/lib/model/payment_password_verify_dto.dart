@@ -38,28 +38,31 @@ class PaymentPasswordVerifyDTO {
   int? currencyId;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is PaymentPasswordVerifyDTO &&
-     other.paymentPassword == paymentPassword &&
-     other.partnerOrderNo == partnerOrderNo &&
-     other.amount == amount &&
-     other.currencyId == currencyId;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PaymentPasswordVerifyDTO &&
+          other.paymentPassword == paymentPassword &&
+          other.partnerOrderNo == partnerOrderNo &&
+          other.amount == amount &&
+          other.currencyId == currencyId;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (paymentPassword.hashCode) +
-    (partnerOrderNo.hashCode) +
-    (amount.hashCode) +
-    (currencyId == null ? 0 : currencyId!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (paymentPassword.hashCode) +
+      (partnerOrderNo.hashCode) +
+      (amount.hashCode) +
+      (currencyId == null ? 0 : currencyId!.hashCode);
 
   @override
-  String toString() => 'PaymentPasswordVerifyDTO[paymentPassword=$paymentPassword, partnerOrderNo=$partnerOrderNo, amount=$amount, currencyId=$currencyId]';
+  String toString() =>
+      'PaymentPasswordVerifyDTO[paymentPassword=$paymentPassword, partnerOrderNo=$partnerOrderNo, amount=$amount, currencyId=$currencyId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'paymentPassword'] = this.paymentPassword;
-      json[r'partnerOrderNo'] = this.partnerOrderNo;
-      json[r'amount'] = this.amount;
+    json[r'paymentPassword'] = this.paymentPassword;
+    json[r'partnerOrderNo'] = this.partnerOrderNo;
+    json[r'amount'] = this.amount;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
     } else {
@@ -80,8 +83,10 @@ class PaymentPasswordVerifyDTO {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "PaymentPasswordVerifyDTO[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "PaymentPasswordVerifyDTO[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "PaymentPasswordVerifyDTO[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "PaymentPasswordVerifyDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -89,16 +94,18 @@ class PaymentPasswordVerifyDTO {
       return PaymentPasswordVerifyDTO(
         paymentPassword: mapValueOfType<String>(json, r'paymentPassword')!,
         partnerOrderNo: mapValueOfType<String>(json, r'partnerOrderNo')!,
-        amount: json[r'amount'] == null
-            ? 0
-            : num.parse(json[r'amount'].toString()),
+        amount:
+            json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
         currencyId: mapValueOfType<int>(json, r'currencyId'),
       );
     }
     return null;
   }
 
-  static List<PaymentPasswordVerifyDTO> listFromJson(dynamic json, {bool growable = false,}) {
+  static List<PaymentPasswordVerifyDTO> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <PaymentPasswordVerifyDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -126,13 +133,19 @@ class PaymentPasswordVerifyDTO {
   }
 
   // maps a json object with a list of PaymentPasswordVerifyDTO-objects as value to a dart map
-  static Map<String, List<PaymentPasswordVerifyDTO>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<PaymentPasswordVerifyDTO>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<PaymentPasswordVerifyDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PaymentPasswordVerifyDTO.listFromJson(entry.value, growable: growable,);
+        map[entry.key] = PaymentPasswordVerifyDTO.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -145,4 +158,3 @@ class PaymentPasswordVerifyDTO {
     'amount',
   };
 }
-

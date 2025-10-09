@@ -37,9 +37,13 @@ class PaymentSuccessPage extends StatelessWidget {
     
     return Scaffold(
       backgroundColor: Colors.white,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.white60,
         elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Get.back(),
@@ -69,12 +73,17 @@ class PaymentSuccessPage extends StatelessWidget {
     List<Map<String, dynamic>> items,
   ) {
     return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top + kToolbarHeight + 20, // 状态栏高度 + 导航栏高度 + 额外间距
+        left: 0,
+        right: 0,
+        bottom: 20,
+      ),
       child: SizedBox(
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             
             // 成功图标
             _buildSuccessIcon(context),
@@ -113,8 +122,8 @@ class PaymentSuccessPage extends StatelessWidget {
   
   Widget _buildSuccessIcon(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.3,
-      height: MediaQuery.of(context).size.width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.2,
+      height: MediaQuery.of(context).size.width * 0.2,
       child: ImageRes.tkPaySuccess.toImage,
     );
   }
@@ -123,7 +132,7 @@ class PaymentSuccessPage extends StatelessWidget {
     return const Text(
       '付款成功',
       style: TextStyle(
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: FontWeight.bold,
         color: Color(0xFF333333),
       ),
@@ -134,7 +143,7 @@ class PaymentSuccessPage extends StatelessWidget {
     return Text(
       '$currency $amount',
       style: const TextStyle(
-        fontSize: 32,
+        fontSize: 24,
         fontWeight: FontWeight.bold,
         color: Color(0xFF4CAF50),
       ),
@@ -172,8 +181,8 @@ class PaymentSuccessPage extends StatelessWidget {
           const Text(
             '订单详情',
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
               color: Color(0xFF333333),
             ),
           ),
@@ -311,7 +320,7 @@ class PaymentSuccessPage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => Get.back(),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF7C4DFF),
+            backgroundColor: const Color(0xFF9E13F7),
             foregroundColor: Colors.white,
             elevation: 0,
             shape: RoundedRectangleBorder(

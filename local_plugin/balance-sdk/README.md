@@ -56,15 +56,14 @@ import 'package:toklink_balance_sdk/api.dart';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
 
-final api_instance = CAPIApi();
-final oldPassword = oldPassword_example; // String | 原支付密码
-final newPassword = newPassword_example; // String | 新支付密码
+final api_instance = FundAppApi();
+final currencyBalanceQueryDTO = CurrencyBalanceQueryDTO(); // CurrencyBalanceQueryDTO | 
 
 try {
-    final result = api_instance.changeMyPaymentPassword(oldPassword, newPassword);
+    final result = api_instance.getMyBalance(currencyBalanceQueryDTO);
     print(result);
 } catch (e) {
-    print('Exception when calling CAPIApi->changeMyPaymentPassword: $e\n');
+    print('Exception when calling FundAppApi->getMyBalance: $e\n');
 }
 
 ```
@@ -75,20 +74,20 @@ All URIs are relative to *http://localhost:9998/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*CAPIApi* | [**changeMyPaymentPassword**](doc//CAPIApi.md#changemypaymentpassword) | **POST** /wallet-password/change | 修改我的支付密码
-*CAPIApi* | [**createRedPacket**](doc//CAPIApi.md#createredpacket) | **POST** /wallet-red-packet/create | 创建红包
-*CAPIApi* | [**getMyBalance**](doc//CAPIApi.md#getmybalance) | **GET** /wallet-fund/{currencyId} | 查询我的指定币种余额
-*CAPIApi* | [**getMyBalanceList**](doc//CAPIApi.md#getmybalancelist) | **GET** /wallet-fund/list | 查询我的余额列表
-*CAPIApi* | [**getMyBalanceSummary**](doc//CAPIApi.md#getmybalancesummary) | **GET** /wallet-fund/summary | 获取我的余额总览
-*CAPIApi* | [**getMyPaymentPasswordStatus**](doc//CAPIApi.md#getmypaymentpasswordstatus) | **GET** /wallet-password/status | 查询我的支付密码状态
-*CAPIApi* | [**getRedPacketDetail**](doc//CAPIApi.md#getredpacketdetail) | **GET** /wallet-red-packet/detail/{packetNo} | 查询红包详情
-*CAPIApi* | [**processMyPayment**](doc//CAPIApi.md#processmypayment) | **POST** /wallet-payment/process | 处理我的支付订单
-*CAPIApi* | [**processMyRefund**](doc//CAPIApi.md#processmyrefund) | **POST** /wallet-refund/process | 处理我的退款订单
-*CAPIApi* | [**receiveRedPacket**](doc//CAPIApi.md#receiveredpacket) | **POST** /wallet-red-packet/receive | 领取红包
-*CAPIApi* | [**setMyPaymentPassword**](doc//CAPIApi.md#setmypaymentpassword) | **POST** /wallet-password/set | 设置我的支付密码
-*CAPIApi* | [**verifyMyPaymentPassword**](doc//CAPIApi.md#verifymypaymentpassword) | **POST** /wallet-password/verify | 验证我的支付密码
-*CAPIApi* | [**verifyPasswordAndPay**](doc//CAPIApi.md#verifypasswordandpay) | **POST** /wallet-payment/verify | 验证支付密码并支付
-*CAPIApi* | [**verifyPasswordAndRefund**](doc//CAPIApi.md#verifypasswordandrefund) | **POST** /wallet-refund/verify | 验证支付密码并退款
+*FundAppApi* | [**getMyBalance**](doc//FundAppApi.md#getmybalance) | **POST** /wallet-fund/currency | 查询我的指定币种余额
+*FundAppApi* | [**getMyBalanceList**](doc//FundAppApi.md#getmybalancelist) | **POST** /wallet-fund/list | 查询我的余额列表
+*FundAppApi* | [**getMyBalanceSummary**](doc//FundAppApi.md#getmybalancesummary) | **POST** /wallet-fund/summary | 获取我的余额总览
+*PaymentPasswordAppApi* | [**changeMyPaymentPassword**](doc//PaymentPasswordAppApi.md#changemypaymentpassword) | **POST** /wallet-password/change | 修改我的支付密码
+*PaymentPasswordAppApi* | [**getMyPaymentPasswordStatus**](doc//PaymentPasswordAppApi.md#getmypaymentpasswordstatus) | **POST** /wallet-password/status | 查询我的支付密码状态
+*PaymentPasswordAppApi* | [**setMyPaymentPassword**](doc//PaymentPasswordAppApi.md#setmypaymentpassword) | **POST** /wallet-password/set | 设置我的支付密码
+*PaymentPasswordAppApi* | [**verifyMyPaymentPassword**](doc//PaymentPasswordAppApi.md#verifymypaymentpassword) | **POST** /wallet-password/verify | 验证我的支付密码
+*RedPacketAppApi* | [**createRedPacket**](doc//RedPacketAppApi.md#createredpacket) | **POST** /wallet-red-packet/create | 创建红包
+*RedPacketAppApi* | [**getRedPacketDetail**](doc//RedPacketAppApi.md#getredpacketdetail) | **POST** /wallet-red-packet/detail | 查询红包详情
+*RedPacketAppApi* | [**receiveRedPacket**](doc//RedPacketAppApi.md#receiveredpacket) | **POST** /wallet-red-packet/receive | 领取红包
+*WalletPaymentAppApi* | [**processMyPayment**](doc//WalletPaymentAppApi.md#processmypayment) | **POST** /wallet-payment/process | 处理我的支付订单
+*WalletPaymentAppApi* | [**verifyPasswordAndPay**](doc//WalletPaymentAppApi.md#verifypasswordandpay) | **POST** /wallet-payment/verify | 验证支付密码并支付
+*WalletRefundAppApi* | [**processMyRefund**](doc//WalletRefundAppApi.md#processmyrefund) | **POST** /wallet-refund/process | 处理我的退款订单
+*WalletRefundAppApi* | [**verifyPasswordAndRefund**](doc//WalletRefundAppApi.md#verifypasswordandrefund) | **POST** /wallet-refund/verify | 验证支付密码并退款
 
 
 ## Documentation For Models
@@ -105,12 +104,14 @@ Class | Method | HTTP request | Description
  - [Balance](doc//Balance.md)
  - [BalanceQueryDTO](doc//BalanceQueryDTO.md)
  - [CreateRedPacketDTO](doc//CreateRedPacketDTO.md)
+ - [CurrencyBalanceQueryDTO](doc//CurrencyBalanceQueryDTO.md)
  - [PaymentPasswordStatusVO](doc//PaymentPasswordStatusVO.md)
  - [PaymentPasswordVerifyDTO](doc//PaymentPasswordVerifyDTO.md)
  - [PaymentProcessDTO](doc//PaymentProcessDTO.md)
  - [PaymentProcessResultVO](doc//PaymentProcessResultVO.md)
  - [ReceiveRedPacketDTO](doc//ReceiveRedPacketDTO.md)
  - [ReceiveRedPacketResultVO](doc//ReceiveRedPacketResultVO.md)
+ - [RedPacketDetailQueryDTO](doc//RedPacketDetailQueryDTO.md)
  - [RedPacketRecordVO](doc//RedPacketRecordVO.md)
  - [RedPacketVO](doc//RedPacketVO.md)
  - [RefundPasswordVerifyDTO](doc//RefundPasswordVerifyDTO.md)

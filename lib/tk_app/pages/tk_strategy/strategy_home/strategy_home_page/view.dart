@@ -11,6 +11,13 @@ import '../../../../tk_widgets/tk_strategy/crypto_info/crypto_info_widget.dart';
 import '../../../../tk_widgets/tk_strategy/crypto_info/crypto_info_data.dart';
 import '../../../../tk_widgets/tk_w8/tk_w8.dart';
 import '../../../../tk_widgets/tk_w9/tk_w9.dart';
+import '../../../tk_quantification/order_set/logic.dart';
+import '../../../tk_quantification/order_set/view.dart';
+import '../../../tk_quantification/quantification_home/logic.dart';
+import '../../../tk_quantification/quantification_home/view.dart';
+import '../../../tk_quantification/strategy_set/logic.dart';
+import '../../../tk_quantification/strategy_set/view.dart';
+import '../../../tk_subscription/order_list/view.dart';
 import '../../strategy_member_apply/view.dart';
 import '../../strategy_member_follow/view.dart';
 import '../../strategy_member_profile/view.dart';
@@ -57,6 +64,23 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
         backgroundColor: Colors.white,
         elevation: 0.5,
         actions: [
+
+          IconButton(
+            icon: Icon(
+              Icons.list_alt,
+              color: Colors.black,
+              size: 24.w,
+            ),
+            onPressed: () {
+              // Get.to(() => const OrderListPage());
+
+              Get.put(QuantificationHomeLogic());
+              Get.to(() =>  QuantificationHomePage());
+
+
+
+            },
+          ),
           // 策略申请图标
           // IconButton(
           //   icon: Icon(
@@ -68,6 +92,9 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
           //     Get.to(() => StrategyMemberApplyPage());
           //   },
           // ),
+
+
+
 
           // 策略申请图标
           // IconButton(

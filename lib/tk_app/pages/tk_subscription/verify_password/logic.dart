@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../routes/app_pages.dart';
 import 'state.dart';
 
 class VerifyPasswordLogic extends GetxController {
   final VerifyPasswordState state = VerifyPasswordState();
   
   // 管理TextField的控制器
-  late TextEditingController _pinController;
+  TextEditingController? _pinController;
   
   @override
   void onInit() {
@@ -21,12 +22,21 @@ class VerifyPasswordLogic extends GetxController {
   
   @override
   void onClose() {
-    _pinController.dispose();
+    // 确保控制器被正确清理
+    if (_pinController != null) {
+      _pinController!.dispose();
+      _pinController = null;
+    }
     super.onClose();
   }
   
   // 获取TextEditingController
-  TextEditingController get pinController => _pinController;
+  TextEditingController get pinController {
+    if (_pinController == null) {
+      _pinController = TextEditingController();
+    }
+    return _pinController!;
+  }
   
   // 处理PIN码输入
   void onPinChanged(String value) {
@@ -76,8 +86,8 @@ class VerifyPasswordLogic extends GetxController {
       // TODO: 实现实际的PIN码验证逻辑
       await Future.delayed(const Duration(seconds: 1)); // 模拟网络请求
       
-      // 验证成功
-      Get.back(result: true);
+      // 验证成功，跳转到支付进度页面
+      Get.offNamed(AppRoutes.paymentProgress);
     } catch (e) {
       state.setError('PIN码验证失败，请重试');
     } finally {
@@ -99,8 +109,8 @@ class VerifyPasswordLogic extends GetxController {
       // TODO: 实现实际的生物识别验证逻辑
       await Future.delayed(const Duration(seconds: 1)); // 模拟生物识别
       
-      // 验证成功
-      Get.back(result: true);
+      // 验证成功，跳转到支付进度页面
+      Get.offNamed(AppRoutes.paymentProgress);
     } catch (e) {
       state.setError('生物识别验证失败，请重试');
     } finally {

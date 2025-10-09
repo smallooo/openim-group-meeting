@@ -1,0 +1,16 @@
+#
+# AUTO-GENERATED FILE, DO NOT MODIFY!
+#
+
+name: 'toklink_product_sdk'
+version: '1.0.0'
+description: 'Toklink Product Service Dart/Flutter SDK'
+homepage: 'https://github.com/toklink/project'
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+dependencies:
+  http: '1.1.0'
+  intl: '^0.17.0'
+  meta: '^1.1.8'
+dev_dependencies:
+  test: '>=1.16.0 <1.18.0'
