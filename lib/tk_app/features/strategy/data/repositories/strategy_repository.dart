@@ -16,6 +16,8 @@ import '../../../../shared/models/strategy/strategy_ratings_response.dart';
 import '../../../../shared/models/strategy/strategy_rating_request.dart';
 import '../../../../shared/models/strategy/trader_strategies_response.dart';
 import '../../../../shared/models/strategy/trader_strategy_pagination_data.dart';
+import '../../../../shared/models/strategy/subscription_status_model.dart';
+import '../../../../shared/models/strategy/trader_pricing_model.dart';
 
 part 'strategy_repository.g.dart';
 
@@ -179,12 +181,6 @@ class StrategyRepository {
       );
       
       print('Repository: 原始API响应: $rawResponse'); // 调试信息
-
-      // 检查 'ok' 状态
-      if (rawResponse['ok'] == false) {
-        // 如果 'ok' 是 false，则抛出带有消息的异常
-        throw Exception(rawResponse['message'] ?? '申请交易员失败');
-      }
       
       // 手动解析响应
       final response = TraderApplyResponse.fromJson(rawResponse);
@@ -324,6 +320,61 @@ class StrategyRepository {
       return response.data;
     } catch (e) {
       print('Repository: 获取交易员策略列表失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 获取订阅状态
+  ///
+  /// [traderId] 交易员ID
+  Future<SubscriptionStatus> getSubscriptionStatus(String traderId) async {
+    print('Repository: 开始调用API获取订阅状态...'); // 调试信息
+
+    try {
+      // 构造请求URL
+      final url = ApiConstants.subscriptionStatus.replaceAll('{traderId}', traderId);
+
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(url);
+
+      print('Repository: 原始API响应: $rawResponse'); // 调试信息
+
+      // 手动解析响应
+      final response = SubscriptionStatus.fromJson(rawResponse['data']);
+
+      print('Repository: 解析后的响应: $response'); // 调试信息
+
+      return response;
+    } catch (e) {
+      print('Repository: 获取订阅状态失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 获取交易员价格
+  ///
+  /// [traderId] 交易员ID
+  Future<List<TraderPricing>> getTraderPricing(String traderId) async {
+    print('Repository: 开始调用API获取交易员价格...'); // 调试信息
+
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(
+        ApiConstants.traderPricing.replaceAll('{traderId}', traderId),
+      );
+
+      print('Repository: 原始API响应: $rawResponse'); // 调试信息
+
+      // 手动解析响应
+      final response = (rawResponse['data'] as List)
+          .map((item) => TraderPricing.fromJson(item))
+          .toList();
+
+      print('Repository: 解析后的响应: $response'); // 调试信息
+
+      return response;
+    } catch (e) {
+      print('Repository: 获取交易员价格失败: $e'); // 调试信息
       rethrow;
     }
   }

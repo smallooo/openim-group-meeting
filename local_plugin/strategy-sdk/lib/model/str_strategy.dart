@@ -19,6 +19,7 @@ class StrStrategy {
     this.summary,
     this.content,
     this.coinSymbol,
+    this.marketType,
     this.strategyType,
     this.priceType,
     this.targetPrice,
@@ -92,6 +93,15 @@ class StrStrategy {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   String? coinSymbol;
+
+  /// 市场类型:SPOT-现货,FUTURES-合约
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? marketType;
 
   /// 策略类型: 1-短线 2-中线 3-长线
   ///
@@ -265,6 +275,7 @@ class StrStrategy {
           other.summary == summary &&
           other.content == content &&
           other.coinSymbol == coinSymbol &&
+          other.marketType == marketType &&
           other.strategyType == strategyType &&
           other.priceType == priceType &&
           other.targetPrice == targetPrice &&
@@ -293,6 +304,7 @@ class StrStrategy {
       (summary == null ? 0 : summary!.hashCode) +
       (content == null ? 0 : content!.hashCode) +
       (coinSymbol == null ? 0 : coinSymbol!.hashCode) +
+      (marketType == null ? 0 : marketType!.hashCode) +
       (strategyType == null ? 0 : strategyType!.hashCode) +
       (priceType == null ? 0 : priceType!.hashCode) +
       (targetPrice == null ? 0 : targetPrice!.hashCode) +
@@ -314,7 +326,7 @@ class StrStrategy {
 
   @override
   String toString() =>
-      'StrStrategy[id=$id, traderId=$traderId, title=$title, summary=$summary, content=$content, coinSymbol=$coinSymbol, strategyType=$strategyType, priceType=$priceType, targetPrice=$targetPrice, takeProfitPrice=$takeProfitPrice, stopLossPrice=$stopLossPrice, validFrom=$validFrom, validTo=$validTo, viewCount=$viewCount, followCount=$followCount, avgRating=$avgRating, ratingCount=$ratingCount, status=$status, version=$version, isDeleted=$isDeleted, createdBy=$createdBy, updatedBy=$updatedBy, createdAt=$createdAt, updatedAt=$updatedAt]';
+      'StrStrategy[id=$id, traderId=$traderId, title=$title, summary=$summary, content=$content, coinSymbol=$coinSymbol, marketType=$marketType, strategyType=$strategyType, priceType=$priceType, targetPrice=$targetPrice, takeProfitPrice=$takeProfitPrice, stopLossPrice=$stopLossPrice, validFrom=$validFrom, validTo=$validTo, viewCount=$viewCount, followCount=$followCount, avgRating=$avgRating, ratingCount=$ratingCount, status=$status, version=$version, isDeleted=$isDeleted, createdBy=$createdBy, updatedBy=$updatedBy, createdAt=$createdAt, updatedAt=$updatedAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -347,6 +359,11 @@ class StrStrategy {
       json[r'coinSymbol'] = this.coinSymbol;
     } else {
       json[r'coinSymbol'] = null;
+    }
+    if (this.marketType != null) {
+      json[r'marketType'] = this.marketType;
+    } else {
+      json[r'marketType'] = null;
     }
     if (this.strategyType != null) {
       json[r'strategyType'] = this.strategyType;
@@ -468,6 +485,7 @@ class StrStrategy {
         summary: mapValueOfType<String>(json, r'summary'),
         content: mapValueOfType<String>(json, r'content'),
         coinSymbol: mapValueOfType<String>(json, r'coinSymbol'),
+        marketType: mapValueOfType<String>(json, r'marketType'),
         strategyType: mapValueOfType<int>(json, r'strategyType'),
         priceType: mapValueOfType<int>(json, r'priceType'),
         targetPrice: json[r'targetPrice'] == null

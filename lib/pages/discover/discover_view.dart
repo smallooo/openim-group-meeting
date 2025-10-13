@@ -53,7 +53,8 @@ class DiscoverPage extends StatelessWidget {
           icon: ImageRes.tagIcon,
           title: '量化',
           onTap: () {
-            // logic.goToStrategyPage();
+            logic.goToDan();
+
           },
           // icon: ImageRes.tkFind1,
           // title: '频道入口',

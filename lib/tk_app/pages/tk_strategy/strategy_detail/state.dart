@@ -10,7 +10,7 @@ class StrategyDetailState {
   // 策略信息
   RxString strategyId = '61466'.obs;
   RxString strategyType = '短线'.obs;
-  RxString symbol = '\$'.obs;
+  RxString symbol = ''.obs;
   RxBool isContract = true.obs;
   RxBool isLong = true.obs;
   RxInt followCount = 0.obs;
@@ -66,14 +66,14 @@ class StrategyDetailState {
     
     // 初始化打赏评论
     rewardList.value = [
-      RewardComment(
-        userAvatar: 'https://via.placeholder.com/40',
-        userName: '最后一搏',
-        userLevel: 'LV.0',
-        time: '03/21 17:41',
-        content: '谢谢会长',
-        rewardAmount: 10.0,
-      ),
+      // RewardComment(
+      //   userAvatar: 'https://via.placeholder.com/40',
+      //   userName: '最后一搏',
+      //   userLevel: 'LV.0',
+      //   time: '03/21 17:41',
+      //   content: '谢谢会长',
+      //   rewardAmount: 10.0,
+      // ),
     ];
   }
 }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../routes/app_pages.dart';
 
 import '../../tk_subscription/order_detail/view.dart';
 import '../../tk_subscription/order_list/view.dart';
@@ -20,6 +21,7 @@ import '../../../shared/models/strategy/trader_strategy_item.dart';
 
 class StrategyUnionMemberProfileLogic extends GetxController {
   final StrategyUnionMemberProfileState state = StrategyUnionMemberProfileState();
+  final RxBool isSubscribed = false.obs;
   
   String? _traderId;
 
@@ -61,6 +63,9 @@ class StrategyUnionMemberProfileLogic extends GetxController {
       
       print('StrategyUnionMemberProfileLogic: 获取交易员详情成功: ${traderDetail.traderName}');
       
+      // 获取订阅状态
+      final subscriptionStatus = await repository.getSubscriptionStatus(_traderId!);
+      isSubscribed.value = subscriptionStatus.isSubscribed;
       // 更新状态数据
       _updateStateWithTraderDetail(traderDetail);
       
@@ -151,20 +156,7 @@ class StrategyUnionMemberProfileLogic extends GetxController {
 
   // 订阅功能
   void subscribe() {
-    // TODO: 实现订阅逻辑
-    state.subscribersCount++;
-    update();
-
-    Get.to(() => StrategySubscriptionPage());
-    // Get.to(() => const RechargeBalancePage());
-    // Get.to(() => const OrderListPage());
-    // Get.to(() => const OrderDetailPage());
-    // Get.to(() => const VerifyPasswordUsageExample());
-    // Get.to(() => const PaymentProgressUsageExample());
-    // Get.to(() => const PaymentSuccessUsageExample());
-    // Get.to(() => const PaymentFailUsageExample());
-
-
+    Get.toNamed(AppRoutes.strategySubscription, arguments: {'traderId': _traderId});
   }
 
   // 打赏功能

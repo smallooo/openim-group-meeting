@@ -10,23 +10,15 @@
 
 part of openapi.api;
 
-class IPageStrTrader {
-  /// Returns a new [IPageStrTrader] instance.
-  IPageStrTrader({
-    this.total,
+class IPageTraderStrategyResponseDTO {
+  /// Returns a new [IPageTraderStrategyResponseDTO] instance.
+  IPageTraderStrategyResponseDTO({
     this.size,
-    this.current,
-    this.records = const [],
+    this.total,
     this.pages,
+    this.records = const [],
+    this.current,
   });
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  int? total;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -42,9 +34,7 @@ class IPageStrTrader {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? current;
-
-  List<StrTrader> records;
+  int? total;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -54,59 +44,69 @@ class IPageStrTrader {
   ///
   int? pages;
 
+  List<TraderStrategyResponseDTO> records;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  int? current;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is IPageStrTrader &&
-          other.total == total &&
+      other is IPageTraderStrategyResponseDTO &&
           other.size == size &&
-          other.current == current &&
+          other.total == total &&
+          other.pages == pages &&
           other.records == records &&
-          other.pages == pages;
+          other.current == current;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (total == null ? 0 : total!.hashCode) +
       (size == null ? 0 : size!.hashCode) +
-      (current == null ? 0 : current!.hashCode) +
+      (total == null ? 0 : total!.hashCode) +
+      (pages == null ? 0 : pages!.hashCode) +
       (records.hashCode) +
-      (pages == null ? 0 : pages!.hashCode);
+      (current == null ? 0 : current!.hashCode);
 
   @override
   String toString() =>
-      'IPageStrTrader[total=$total, size=$size, current=$current, records=$records, pages=$pages]';
+      'IPageTraderStrategyResponseDTO[size=$size, total=$total, pages=$pages, records=$records, current=$current]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (this.total != null) {
-      json[r'total'] = this.total;
-    } else {
-      json[r'total'] = null;
-    }
     if (this.size != null) {
       json[r'size'] = this.size;
     } else {
       json[r'size'] = null;
     }
-    if (this.current != null) {
-      json[r'current'] = this.current;
+    if (this.total != null) {
+      json[r'total'] = this.total;
     } else {
-      json[r'current'] = null;
+      json[r'total'] = null;
     }
-    json[r'records'] = this.records;
     if (this.pages != null) {
       json[r'pages'] = this.pages;
     } else {
       json[r'pages'] = null;
     }
+    json[r'records'] = this.records;
+    if (this.current != null) {
+      json[r'current'] = this.current;
+    } else {
+      json[r'current'] = null;
+    }
     return json;
   }
 
-  /// Returns a new [IPageStrTrader] instance and imports its values from
+  /// Returns a new [IPageTraderStrategyResponseDTO] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static IPageStrTrader? fromJson(dynamic value) {
+  static IPageTraderStrategyResponseDTO? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -116,32 +116,32 @@ class IPageStrTrader {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "IPageStrTrader[$key]" is missing from JSON.');
+              'Required key "IPageTraderStrategyResponseDTO[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "IPageStrTrader[$key]" has a null value in JSON.');
+              'Required key "IPageTraderStrategyResponseDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return IPageStrTrader(
-        total: mapValueOfType<int>(json, r'total'),
+      return IPageTraderStrategyResponseDTO(
         size: mapValueOfType<int>(json, r'size'),
-        current: mapValueOfType<int>(json, r'current'),
-        records: StrTrader.listFromJson(json[r'records']),
+        total: mapValueOfType<int>(json, r'total'),
         pages: mapValueOfType<int>(json, r'pages'),
+        records: TraderStrategyResponseDTO.listFromJson(json[r'records']),
+        current: mapValueOfType<int>(json, r'current'),
       );
     }
     return null;
   }
 
-  static List<IPageStrTrader> listFromJson(
+  static List<IPageTraderStrategyResponseDTO> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <IPageStrTrader>[];
+    final result = <IPageTraderStrategyResponseDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = IPageStrTrader.fromJson(row);
+        final value = IPageTraderStrategyResponseDTO.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -150,12 +150,12 @@ class IPageStrTrader {
     return result.toList(growable: growable);
   }
 
-  static Map<String, IPageStrTrader> mapFromJson(dynamic json) {
-    final map = <String, IPageStrTrader>{};
+  static Map<String, IPageTraderStrategyResponseDTO> mapFromJson(dynamic json) {
+    final map = <String, IPageTraderStrategyResponseDTO>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = IPageStrTrader.fromJson(entry.value);
+        final value = IPageTraderStrategyResponseDTO.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -164,17 +164,17 @@ class IPageStrTrader {
     return map;
   }
 
-  // maps a json object with a list of IPageStrTrader-objects as value to a dart map
-  static Map<String, List<IPageStrTrader>> mapListFromJson(
+  // maps a json object with a list of IPageTraderStrategyResponseDTO-objects as value to a dart map
+  static Map<String, List<IPageTraderStrategyResponseDTO>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<IPageStrTrader>>{};
+    final map = <String, List<IPageTraderStrategyResponseDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = IPageStrTrader.listFromJson(
+        map[entry.key] = IPageTraderStrategyResponseDTO.listFromJson(
           entry.value,
           growable: growable,
         );

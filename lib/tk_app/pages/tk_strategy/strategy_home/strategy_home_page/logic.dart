@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pull_to_refresh_new/pull_to_refresh.dart';
 
-import '../../../../core/helpers/trader_helpers.dart';
-import '../../../../core/network/api_client.dart';
 import '../../../../core/services/trader_status_service.dart';
 import '../../../../features/strategy/data/repositories/strategy_repository.dart';
 import '../../../../shared/models/strategy/trader_list_response.dart';
@@ -18,52 +14,33 @@ import '../../strategy_detail/view.dart';
 
 class StrategyHomePageLogic extends GetxController {
   final StrategyHomePageState state = StrategyHomePageState();
-  late final StrategyRepository _strategyRepository;
-  late final RefreshController _contractRefreshController;
-  late final RefreshController _spotRefreshController;
-
+  
   @override
   void onInit() {
     super.onInit();
-    _initializeRepository();
-    checkAndRefreshTraderStatus();
-    // 初始化时加载数据
-    loadContractTraders(refresh: true);
-    loadSpotTraders(refresh: true);
+    // 初始化时检查交易员状态
+    _checkTraderStatusOnInit();
+    // 加载交易员列表数据
+    loadContractTraders();
+    loadSpotTraders();
   }
-
-  void _initializeRepository() {
+  
+  /// 初始化时检查交易员状态
+  Future<void> _checkTraderStatusOnInit() async {
     try {
-      _strategyRepository = Get.find<StrategyRepository>();
+      // 确保TraderStatusService已注册
+      if (!Get.isRegistered<TraderStatusService>()) {
+        Get.put(TraderStatusService());
+      }
+      
+      // 检查交易员状态
+      await TraderStatusService.to.checkTraderStatus();
     } catch (e) {
-      print('Warning: 无法从GetX获取StrategyRepository，使用Riverpod方式: $e');
-      _initializeRepositoryWithRiverpod();
-    }
-    _contractRefreshController = RefreshController();
-    _spotRefreshController = RefreshController();
-  }
-
-  // 使用Riverpod初始化仓库
-  void _initializeRepositoryWithRiverpod() async {
-    try {
-      final container = ProviderContainer();
-      _strategyRepository = await container.read(strategyRepositoryProvider.future);
-    } catch (e) {
-      print('Error: 使用Riverpod获取StrategyRepository失败: $e');
-      // Fallback to direct instantiation if Riverpod fails
-      final apiClient = ApiClient();
-      _strategyRepository = StrategyRepository(apiClient);
+      print('StrategyHomePageLogic: 检查交易员状态失败: $e');
     }
   }
-
-  @override
-  void onClose() {
-    _contractRefreshController.dispose();
-    _spotRefreshController.dispose();
-    super.onClose();
-  }
-
-  /// 跳转到策略详情页面
+  
+  // 跳转到策略详情页面
   void goToStrategyDetail(dynamic strategyData) {
     // 从UserProfileCardData中提取traderId，这里使用id字段
     String? traderId;

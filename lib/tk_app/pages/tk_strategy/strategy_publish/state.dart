@@ -26,13 +26,14 @@ class StrategyPublishState {
   RxInt selectedTypeIndex = 0.obs;
   List<String> typeOptions = ['短线', '中线', '长线'];
   
-  // 价格设置
+  // 价格设置 - 为限价和市价分别创建独立的控制器
   List<TextEditingController> priceControllers = [];
-  List<TextEditingController> limitPriceControllers = [];
+  List<TextEditingController> limitPriceControllers = []; // 限价模式的价格控制器
+  List<TextEditingController> marketPriceControllers = []; // 市价模式的价格控制器
   List<TextEditingController> optionalControllers = [];
   
-  // 价格类型选择 (UI索引: 0-限价, 1-市价 -> API值: 1-限价, 2-市价)
-  List<RxInt> priceTypeIndexes = [0.obs, 0.obs, 0.obs];
+  // 价格类型选择 (全局: 0-限价, 1-市价 -> API值: 1-限价, 2-市价)
+  RxInt priceTypeIndex = 0.obs;
   List<String> priceTypeOptions = ['限价', '市价'];
   
   // 协议同意状态
@@ -49,10 +50,11 @@ class StrategyPublishState {
   Rx<DateTime?> validToDate = Rx<DateTime?>(null);
 
   StrategyPublishState() {
-    // 初始化价格控制器
+    // 初始化价格控制器 - 为每种价格类型创建独立的控制器
     for (int i = 0; i < 3; i++) {
       priceControllers.add(TextEditingController());
-      limitPriceControllers.add(TextEditingController());
+      limitPriceControllers.add(TextEditingController()); // 限价模式控制器
+      marketPriceControllers.add(TextEditingController()); // 市价模式控制器
       optionalControllers.add(TextEditingController());
     }
     
@@ -85,10 +87,14 @@ class StrategyPublishState {
     coinController.dispose();
     directionController.dispose();
     
+    // 释放所有价格控制器
     for (var controller in priceControllers) {
       controller.dispose();
     }
     for (var controller in limitPriceControllers) {
+      controller.dispose();
+    }
+    for (var controller in marketPriceControllers) {
       controller.dispose();
     }
     for (var controller in optionalControllers) {
@@ -116,5 +122,24 @@ class StrategyPublishState {
   // 获取市场类型显示名称
   String get currentMarketTypeDisplayName {
     return selectedTabIndex.value == 0 ? '合约策略' : '现货策略';
+  }
+  
+  /// 根据价格类型获取对应的价格控制器
+  /// [priceIndex] 价格索引 (0-目标价格, 1-止盈价格, 2-止损价格)
+  /// [priceTypeIndex] 价格类型索引 (0-限价, 1-市价)
+  TextEditingController getPriceController(int priceIndex, int priceTypeIndex) {
+    if (priceTypeIndex == 0) {
+      // 限价模式
+      return limitPriceControllers[priceIndex];
+    } else {
+      // 市价模式
+      return marketPriceControllers[priceIndex];
+    }
+  }
+  
+  /// 获取当前选中价格类型对应的控制器
+  /// [priceIndex] 价格索引 (0-目标价格, 1-止盈价格, 2-止损价格)
+  TextEditingController getCurrentPriceController(int priceIndex) {
+    return getPriceController(priceIndex, priceTypeIndex.value);
   }
 }

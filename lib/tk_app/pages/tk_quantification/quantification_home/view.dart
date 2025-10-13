@@ -60,10 +60,13 @@ class QuantificationHomePage extends StatelessWidget {
                 } else {
                   status = '未启动';
                 }
-                return _StrategyCard(
-                  cryptoPair: 'BTC-USDT-多',
-                  realizedProfit: '0.0435 USDT',
-                  status: status,
+                return GestureDetector(
+                  onTap: () => logic.onCardTapped(),
+                  child: _StrategyCard(
+                    cryptoPair: 'BTC-USDT-多',
+                    realizedProfit: '0.0435 USDT',
+                    status: status,
+                  ),
                 );
               },
             ),

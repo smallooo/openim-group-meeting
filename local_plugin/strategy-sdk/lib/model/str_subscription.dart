@@ -16,6 +16,7 @@ class StrSubscription {
     this.id,
     this.subscriberId,
     this.traderId,
+    this.strategyType,
     this.subscriptionType,
     this.amount,
     this.startTime,
@@ -58,6 +59,15 @@ class StrSubscription {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   int? traderId;
+
+  /// 订阅的策略类型:SPOT-现货,FUTURES-合约
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? strategyType;
 
   /// 订阅类型: 1-月订阅 2-季度订阅 3-年订阅
   ///
@@ -192,6 +202,7 @@ class StrSubscription {
           other.id == id &&
           other.subscriberId == subscriberId &&
           other.traderId == traderId &&
+          other.strategyType == strategyType &&
           other.subscriptionType == subscriptionType &&
           other.amount == amount &&
           other.startTime == startTime &&
@@ -213,6 +224,7 @@ class StrSubscription {
       (id == null ? 0 : id!.hashCode) +
       (subscriberId == null ? 0 : subscriberId!.hashCode) +
       (traderId == null ? 0 : traderId!.hashCode) +
+      (strategyType == null ? 0 : strategyType!.hashCode) +
       (subscriptionType == null ? 0 : subscriptionType!.hashCode) +
       (amount == null ? 0 : amount!.hashCode) +
       (startTime == null ? 0 : startTime!.hashCode) +
@@ -230,7 +242,7 @@ class StrSubscription {
 
   @override
   String toString() =>
-      'StrSubscription[id=$id, subscriberId=$subscriberId, traderId=$traderId, subscriptionType=$subscriptionType, amount=$amount, startTime=$startTime, endTime=$endTime, autoRenew=$autoRenew, status=$status, paymentStatus=$paymentStatus, paymentTime=$paymentTime, version=$version, isDeleted=$isDeleted, createdBy=$createdBy, updatedBy=$updatedBy, createdAt=$createdAt, updatedAt=$updatedAt]';
+      'StrSubscription[id=$id, subscriberId=$subscriberId, traderId=$traderId, strategyType=$strategyType, subscriptionType=$subscriptionType, amount=$amount, startTime=$startTime, endTime=$endTime, autoRenew=$autoRenew, status=$status, paymentStatus=$paymentStatus, paymentTime=$paymentTime, version=$version, isDeleted=$isDeleted, createdBy=$createdBy, updatedBy=$updatedBy, createdAt=$createdAt, updatedAt=$updatedAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -248,6 +260,11 @@ class StrSubscription {
       json[r'traderId'] = this.traderId;
     } else {
       json[r'traderId'] = null;
+    }
+    if (this.strategyType != null) {
+      json[r'strategyType'] = this.strategyType;
+    } else {
+      json[r'strategyType'] = null;
     }
     if (this.subscriptionType != null) {
       json[r'subscriptionType'] = this.subscriptionType;
@@ -346,6 +363,7 @@ class StrSubscription {
         id: mapValueOfType<int>(json, r'id'),
         subscriberId: mapValueOfType<int>(json, r'subscriberId'),
         traderId: mapValueOfType<int>(json, r'traderId'),
+        strategyType: mapValueOfType<String>(json, r'strategyType'),
         subscriptionType: mapValueOfType<int>(json, r'subscriptionType'),
         amount: json[r'amount'] == null
             ? null

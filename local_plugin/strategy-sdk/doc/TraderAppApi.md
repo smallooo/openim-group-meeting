@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost:9997/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**applyTrader**](TraderAppApi.md#applytrader) | **POST** /trader/apply | 申请成为交易员
+[**checkTraderStatus**](TraderAppApi.md#checktraderstatus) | **GET** /trader/status | 检查当前用户是否为交易员
 [**getTraderDetail**](TraderAppApi.md#gettraderdetail) | **GET** /trader/{traderId} | 获取交易员详情
 [**getTraderList**](TraderAppApi.md#gettraderlist) | **GET** /trader/list | 获取交易员列表
 [**getTraderStats**](TraderAppApi.md#gettraderstats) | **GET** /trader/stats | 获取交易员统计数据
@@ -74,6 +75,59 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **checkTraderStatus**
+> ApiRespTraderStatusDTO checkTraderStatus()
+
+检查当前用户是否为交易员
+
+### Example
+```dart
+import 'package:toklink_strategy_sdk/api.dart';
+// TODO Configure API key authorization: X-Timestamp
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: Access-Token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Signature
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Nonce
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
+
+final api_instance = TraderAppApi();
+
+try {
+    final result = api_instance.checkTraderStatus();
+    print(result);
+} catch (e) {
+    print('Exception when calling TraderAppApi->checkTraderStatus: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ApiRespTraderStatusDTO**](ApiRespTraderStatusDTO.md)
+
+### Authorization
+
+[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **getTraderDetail**
 > ApiRespStrTrader getTraderDetail(traderId)
 
@@ -132,7 +186,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getTraderList**
-> ApiRespIPageStrTrader getTraderList(queryDTO)
+> ApiRespIPageTraderListResponseDTO getTraderList(queryDTO)
 
 获取交易员列表
 
@@ -175,7 +229,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespIPageStrTrader**](ApiRespIPageStrTrader.md)
+[**ApiRespIPageTraderListResponseDTO**](ApiRespIPageTraderListResponseDTO.md)
 
 ### Authorization
 

@@ -63,10 +63,20 @@ class ApiConstants {
   // 交易员的策略列表
   static const String traderStrategies = '/api/strategy/strategies/trader';
 
-  /// 默认超时时间（秒）
-  static const int defaultTimeout = 30;
+  // 获取订阅状态
+  static const String subscriptionStatus = '/api/strategy/api/subscribe/{traderId}/status';
+
+  // 获取交易员价格
+  static const String traderPricing = '/api/strategy/trader/pricing/trader/{traderId}';
+
+  /// 钱包相关 API
+  // 获取钱包密码状态
+  static const String walletPasswordStatus = '/api/balance/wallet-password/status';
   
-  /// 分页默认参数
-  static const int defaultPageSize = 20;
+  // 设置钱包密码
+  static const String setWalletPassword = '/api/balance/wallet-password/set';
+
+  // 默认分页大小
+  static const int defaultPageSize = 10;
   static const int defaultPageNum = 1;
 }

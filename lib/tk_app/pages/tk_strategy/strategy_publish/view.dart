@@ -386,15 +386,15 @@ class StrategyPublishPage extends GetView<StrategyPublishLogic> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.grey[200]!),
                   ),
-                  child: TextField(
-                    controller: controller.state.limitPriceControllers[index],
+                  child: Obx(() => TextField(
+                    controller: controller.state.getCurrentPriceController(index),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: _getPriceHintText(index),
                       hintStyle: const TextStyle(color: Colors.grey),
                       contentPadding: EdgeInsets.zero,
                     ),
-                  ),
+                  )),
                 ),
               ),
               
@@ -455,9 +455,9 @@ class StrategyPublishPage extends GetView<StrategyPublishLogic> {
   }
 
   Widget _buildPriceTypeOption(int priceIndex, int typeIndex, String title) {
-    final isSelected = controller.state.priceTypeIndexes[priceIndex].value == typeIndex;
+    final isSelected = controller.state.priceTypeIndex.value == typeIndex;
     return GestureDetector(
-      onTap: () => controller.selectPriceType(priceIndex, typeIndex),
+      onTap: () => controller.selectPriceType(typeIndex),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(

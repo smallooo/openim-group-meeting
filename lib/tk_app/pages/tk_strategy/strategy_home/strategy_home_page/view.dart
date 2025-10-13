@@ -11,6 +11,8 @@ import '../../../../tk_widgets/tk_strategy/crypto_info/crypto_info_widget.dart';
 import '../../../../tk_widgets/tk_strategy/crypto_info/crypto_info_data.dart';
 import '../../../../tk_widgets/tk_w8/tk_w8.dart';
 import '../../../../tk_widgets/tk_w9/tk_w9.dart';
+import '../../../tk_pay/tk_pay_home/logic.dart';
+import '../../../tk_pay/tk_pay_home/view.dart';
 import '../../../tk_quantification/order_set/logic.dart';
 import '../../../tk_quantification/order_set/view.dart';
 import '../../../tk_quantification/quantification_home/logic.dart';
@@ -72,10 +74,8 @@ class _StrategyHomePagePageState extends State<StrategyHomePagePage> {
               size: 24.w,
             ),
             onPressed: () {
-              // Get.to(() => const OrderListPage());
+              Get.to(() => const OrderListPage());
 
-              Get.put(QuantificationHomeLogic());
-              Get.to(() =>  QuantificationHomePage());
 
 
 

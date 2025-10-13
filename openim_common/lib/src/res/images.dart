@@ -222,5 +222,9 @@ class ImageRes {
   static const tkPayFail = "$_dir/tk_pay_fail.png";
 
 
+  static const tkPayHome1 = "$_dir/tk_pay_home_1.png";
+  static const tkPayHome2 = "$_dir/tk_pay_home_2.png";
+  static const tkPayHome3 = "$_dir/tk_pay_home_3.png";
+  static const tkPayHome4 = "$_dir/tk_pay_home_4.png";
 
 }

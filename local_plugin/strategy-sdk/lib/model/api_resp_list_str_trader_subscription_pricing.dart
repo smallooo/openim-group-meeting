@@ -10,13 +10,13 @@
 
 part of openapi.api;
 
-class ApiRespIPageStrTrader {
-  /// Returns a new [ApiRespIPageStrTrader] instance.
-  ApiRespIPageStrTrader({
+class ApiRespListStrTraderSubscriptionPricing {
+  /// Returns a new [ApiRespListStrTraderSubscriptionPricing] instance.
+  ApiRespListStrTraderSubscriptionPricing({
     this.errCode,
     this.errMsg,
     this.errDlt,
-    this.data,
+    this.data = const [],
   });
 
   ///
@@ -43,18 +43,12 @@ class ApiRespIPageStrTrader {
   ///
   String? errDlt;
 
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  IPageStrTrader? data;
+  List<StrTraderSubscriptionPricing> data;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ApiRespIPageStrTrader &&
+      other is ApiRespListStrTraderSubscriptionPricing &&
           other.errCode == errCode &&
           other.errMsg == errMsg &&
           other.errDlt == errDlt &&
@@ -66,11 +60,11 @@ class ApiRespIPageStrTrader {
       (errCode == null ? 0 : errCode!.hashCode) +
       (errMsg == null ? 0 : errMsg!.hashCode) +
       (errDlt == null ? 0 : errDlt!.hashCode) +
-      (data == null ? 0 : data!.hashCode);
+      (data.hashCode);
 
   @override
   String toString() =>
-      'ApiRespIPageStrTrader[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
+      'ApiRespListStrTraderSubscriptionPricing[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -89,18 +83,14 @@ class ApiRespIPageStrTrader {
     } else {
       json[r'errDlt'] = null;
     }
-    if (this.data != null) {
-      json[r'data'] = this.data;
-    } else {
-      json[r'data'] = null;
-    }
+    json[r'data'] = this.data;
     return json;
   }
 
-  /// Returns a new [ApiRespIPageStrTrader] instance and imports its values from
+  /// Returns a new [ApiRespListStrTraderSubscriptionPricing] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static ApiRespIPageStrTrader? fromJson(dynamic value) {
+  static ApiRespListStrTraderSubscriptionPricing? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -110,31 +100,31 @@ class ApiRespIPageStrTrader {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "ApiRespIPageStrTrader[$key]" is missing from JSON.');
+              'Required key "ApiRespListStrTraderSubscriptionPricing[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "ApiRespIPageStrTrader[$key]" has a null value in JSON.');
+              'Required key "ApiRespListStrTraderSubscriptionPricing[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return ApiRespIPageStrTrader(
+      return ApiRespListStrTraderSubscriptionPricing(
         errCode: mapValueOfType<int>(json, r'errCode'),
         errMsg: mapValueOfType<String>(json, r'errMsg'),
         errDlt: mapValueOfType<String>(json, r'errDlt'),
-        data: IPageStrTrader.fromJson(json[r'data']),
+        data: StrTraderSubscriptionPricing.listFromJson(json[r'data']),
       );
     }
     return null;
   }
 
-  static List<ApiRespIPageStrTrader> listFromJson(
+  static List<ApiRespListStrTraderSubscriptionPricing> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <ApiRespIPageStrTrader>[];
+    final result = <ApiRespListStrTraderSubscriptionPricing>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = ApiRespIPageStrTrader.fromJson(row);
+        final value = ApiRespListStrTraderSubscriptionPricing.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -143,12 +133,14 @@ class ApiRespIPageStrTrader {
     return result.toList(growable: growable);
   }
 
-  static Map<String, ApiRespIPageStrTrader> mapFromJson(dynamic json) {
-    final map = <String, ApiRespIPageStrTrader>{};
+  static Map<String, ApiRespListStrTraderSubscriptionPricing> mapFromJson(
+      dynamic json) {
+    final map = <String, ApiRespListStrTraderSubscriptionPricing>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = ApiRespIPageStrTrader.fromJson(entry.value);
+        final value =
+            ApiRespListStrTraderSubscriptionPricing.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -157,17 +149,18 @@ class ApiRespIPageStrTrader {
     return map;
   }
 
-  // maps a json object with a list of ApiRespIPageStrTrader-objects as value to a dart map
-  static Map<String, List<ApiRespIPageStrTrader>> mapListFromJson(
+  // maps a json object with a list of ApiRespListStrTraderSubscriptionPricing-objects as value to a dart map
+  static Map<String, List<ApiRespListStrTraderSubscriptionPricing>>
+      mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<ApiRespIPageStrTrader>>{};
+    final map = <String, List<ApiRespListStrTraderSubscriptionPricing>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ApiRespIPageStrTrader.listFromJson(
+        map[entry.key] = ApiRespListStrTraderSubscriptionPricing.listFromJson(
           entry.value,
           growable: growable,
         );

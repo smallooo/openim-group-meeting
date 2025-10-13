@@ -9,22 +9,23 @@ All URIs are relative to *http://localhost:9997/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**cancelSubscription**](SubscriptionAppApi.md#cancelsubscription) | **DELETE** /api/subscriptions/{subscriptionId} | 取消订阅
+[**call1**](SubscriptionAppApi.md#call1) | **GET** /api/subscribe/{traderId}/status/{strategyType} | 检查是否已订阅指定策略类型
 [**checkSubscription**](SubscriptionAppApi.md#checksubscription) | **GET** /api/subscription/check | 检查用户订阅状态（Feign调用）
 [**checkSubscriptionStatus**](SubscriptionAppApi.md#checksubscriptionstatus) | **GET** /api/subscribe/{traderId}/status | 检查是否已订阅
 [**getMyPaymentOrders**](SubscriptionAppApi.md#getmypaymentorders) | **GET** /api/my-payment-orders | 查询我的支付订单
 [**getMyRefundOrders**](SubscriptionAppApi.md#getmyrefundorders) | **GET** /api/my-refund-orders | 查询我的退款订单
 [**getMySubscriptions**](SubscriptionAppApi.md#getmysubscriptions) | **GET** /api/my-subscriptions | 我的订阅列表
 [**getPaymentOrderDetail**](SubscriptionAppApi.md#getpaymentorderdetail) | **GET** /api/payment-orders/{paymentOrderNo} | 查询支付订单详情
+[**getPaymentOrderStatus**](SubscriptionAppApi.md#getpaymentorderstatus) | **GET** /api/payment-order-status/{paymentOrderNo} | 查询支付订单支付状态
 [**getRefundOrderDetail**](SubscriptionAppApi.md#getrefundorderdetail) | **GET** /api/refund-orders/{refundOrderNo} | 查询退款订单详情
 [**requestRefund**](SubscriptionAppApi.md#requestrefund) | **POST** /api/subscriptions/{subscriptionId}/refund | 申请退款
 [**subscribeTrader**](SubscriptionAppApi.md#subscribetrader) | **POST** /api/subscribe/{traderId} | 订阅交易员
 
 
-# **cancelSubscription**
-> ApiRespVoid cancelSubscription(subscriptionId)
+# **call1**
+> ApiRespMapStringObject call1(traderId, strategyType)
 
-取消订阅
+检查是否已订阅指定策略类型
 
 ### Example
 ```dart
@@ -47,13 +48,14 @@ import 'package:toklink_strategy_sdk/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
 
 final api_instance = SubscriptionAppApi();
-final subscriptionId = 789; // int | 
+final traderId = 789; // int | 
+final strategyType = strategyType_example; // String | 
 
 try {
-    final result = api_instance.cancelSubscription(subscriptionId);
+    final result = api_instance.call1(traderId, strategyType);
     print(result);
 } catch (e) {
-    print('Exception when calling SubscriptionAppApi->cancelSubscription: $e\n');
+    print('Exception when calling SubscriptionAppApi->call1: $e\n');
 }
 ```
 
@@ -61,11 +63,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **subscriptionId** | **int**|  | 
+ **traderId** | **int**|  | 
+ **strategyType** | **String**|  | 
 
 ### Return type
 
-[**ApiRespVoid**](ApiRespVoid.md)
+[**ApiRespMapStringObject**](ApiRespMapStringObject.md)
 
 ### Authorization
 
@@ -408,6 +411,63 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ApiRespStrSubscriptionPayment**](ApiRespStrSubscriptionPayment.md)
+
+### Authorization
+
+[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getPaymentOrderStatus**
+> ApiRespPaymentStatusInfo getPaymentOrderStatus(paymentOrderNo)
+
+查询支付订单支付状态
+
+### Example
+```dart
+import 'package:toklink_strategy_sdk/api.dart';
+// TODO Configure API key authorization: X-Timestamp
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: Access-Token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Signature
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Nonce
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
+
+final api_instance = SubscriptionAppApi();
+final paymentOrderNo = paymentOrderNo_example; // String | 
+
+try {
+    final result = api_instance.getPaymentOrderStatus(paymentOrderNo);
+    print(result);
+} catch (e) {
+    print('Exception when calling SubscriptionAppApi->getPaymentOrderStatus: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **paymentOrderNo** | **String**|  | 
+
+### Return type
+
+[**ApiRespPaymentStatusInfo**](ApiRespPaymentStatusInfo.md)
 
 ### Authorization
 

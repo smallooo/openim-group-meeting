@@ -6,15 +6,15 @@ void main() {
   // Example 1: Generate signature for payment data
   print('1. Generating signature for payment data:');
   final paymentData = {
-    'memberId': '12345',
-    'amount': '100.00',
+    'memberId': '1977672558140461058',
+    'amount': '30',
     'currencyId': '1',
-    'partnerOrderNo': 'ORDER123456',
+    'partnerOrderNo': 'PAY202510131749240002',
     'reason': 'Payment for service',
   };
 
   final secret = 'taowu_payment_secret_key_2024';
-  final memberId = '1973018638679584770'; // Long type member ID as string
+  final memberId = '1977672558140461058'; // Long type member ID as string
 
   final result = paymentData.generateSignature(secret, memberId);
 

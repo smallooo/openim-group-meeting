@@ -16,6 +16,7 @@ class TraderApplyDTO {
     required this.traderName,
     required this.traderAvatar,
     this.bio,
+    this.pricingConfigs = const [],
   });
 
   /// 交易员名称
@@ -33,24 +34,29 @@ class TraderApplyDTO {
   ///
   String? bio;
 
+  /// 策略订阅价格配置列表（可选）
+  List<TraderSubscriptionPricingDTO> pricingConfigs;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TraderApplyDTO &&
           other.traderName == traderName &&
           other.traderAvatar == traderAvatar &&
-          other.bio == bio;
+          other.bio == bio &&
+          other.pricingConfigs == pricingConfigs;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (traderName.hashCode) +
       (traderAvatar.hashCode) +
-      (bio == null ? 0 : bio!.hashCode);
+      (bio == null ? 0 : bio!.hashCode) +
+      (pricingConfigs.hashCode);
 
   @override
   String toString() =>
-      'TraderApplyDTO[traderName=$traderName, traderAvatar=$traderAvatar, bio=$bio]';
+      'TraderApplyDTO[traderName=$traderName, traderAvatar=$traderAvatar, bio=$bio, pricingConfigs=$pricingConfigs]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -61,6 +67,7 @@ class TraderApplyDTO {
     } else {
       json[r'bio'] = null;
     }
+    json[r'pricingConfigs'] = this.pricingConfigs;
     return json;
   }
 
@@ -88,6 +95,8 @@ class TraderApplyDTO {
         traderName: mapValueOfType<String>(json, r'traderName')!,
         traderAvatar: mapValueOfType<String>(json, r'traderAvatar')!,
         bio: mapValueOfType<String>(json, r'bio'),
+        pricingConfigs:
+            TraderSubscriptionPricingDTO.listFromJson(json[r'pricingConfigs']),
       );
     }
     return null;

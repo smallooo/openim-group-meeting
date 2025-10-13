@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/services/trader_status_service.dart';
 import '../../../features/strategy/data/repositories/strategy_repository.dart';
+import '../strategy_member_fee_set/logic.dart';
+import '../strategy_member_fee_set/view.dart';
 import '../strategy_publish/view.dart';
 import 'state.dart';
 
@@ -110,7 +112,9 @@ class StrategyMemberProfileLogic extends GetxController {
   
   // 费用设置
   void openFeeSettings() {
-    Get.snackbar('提示', '费用设置');
+    // Get.snackbar('提示', '费用设置');
+    Get.put(StrategyMemberFeeSetLogic());
+    Get.to(() =>  StrategyMemberFeeSetPage());
   }
   
   // 押金管理

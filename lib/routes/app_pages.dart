@@ -105,6 +105,18 @@ import '../tk_app/pages/tk_subscription/order_refund_submit/binding.dart';
 import '../tk_app/pages/tk_subscription/order_refund_submit/view.dart';
 import '../tk_app/pages/tk_subscription/order_after_detail/binding.dart';
 import '../tk_app/pages/tk_subscription/order_after_detail/view.dart';
+import '../tk_app/pages/tk_pay/tk_pay_wallet/binding.dart';
+import '../tk_app/pages/tk_pay/tk_pay_wallet/view.dart';
+import '../tk_app/pages/tk_pay/tk_pay_bill_page/binding.dart';
+import '../tk_app/pages/tk_pay/tk_pay_bill_page/view.dart';
+import '../tk_app/pages/tk_pay/tk_pay_set_pass_word/binding.dart';
+import '../tk_app/pages/tk_pay/tk_pay_set_pass_word/view.dart';
+import '../tk_app/pages/tk_pay/tk_pay_change_pass_word/binding.dart';
+import '../tk_app/pages/tk_pay/tk_pay_change_pass_word/view.dart';
+import '../tk_app/pages/tk_pay/tk_pay_set/binding.dart';
+import '../tk_app/pages/tk_pay/tk_pay_set/view.dart';
+import '../tk_app/pages/tk_subscription/strategy_subscription/view.dart';
+import '../tk_app/pages/tk_subscription/strategy_subscription/binding.dart';
 
 part 'app_routes.dart';
 
@@ -136,11 +148,6 @@ class AppPages {
       page: () => SplashPage(),
       binding: SplashBinding(),
     ),
-    // _pageBuilder(
-    //   name: AppRoutes.login,
-    //   page: () => LoginPage(),
-    //   binding: LoginBinding(),
-    // ),
     _pageBuilder(
       name: AppRoutes.login,
       page: () => TkLoginPage(),
@@ -397,6 +404,36 @@ class AppPages {
       name: AppRoutes.orderAfterDetail,
       page: () => OrderAfterDetailPage(),
       binding: OrderAfterDetailBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkPayWallet,
+      page: () => TkPayWalletPage(),
+      binding: TkPayWalletBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkPayBill,
+      page: () => TkPayBillPagePage(),
+      binding: TkPayBillPageBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkPaySet,
+      page: () => TkPaySetPage(),
+      binding: TkPaySetBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkPaySetPassWord,
+      page: () => TkPaySetPassWordPage(),
+      binding: TkPaySetPassWordBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkPayChangePassWord,
+      page: () => TkPayChangePassWordPage(),
+      binding: TkPayChangePassWordBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.strategySubscription,
+      page: () => StrategySubscriptionPage(),
+      binding: StrategySubscriptionBinding(),
     ),
   ];
 }

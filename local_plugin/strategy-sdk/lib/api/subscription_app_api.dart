@@ -16,19 +16,23 @@ class SubscriptionAppApi {
 
   final ApiClient apiClient;
 
-  /// 取消订阅
+  /// 检查是否已订阅指定策略类型
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
-  /// * [int] subscriptionId (required):
-  Future<Response> cancelSubscriptionWithHttpInfo(
-    int subscriptionId,
+  /// * [int] traderId (required):
+  ///
+  /// * [String] strategyType (required):
+  Future<Response> call1WithHttpInfo(
+    int traderId,
+    String strategyType,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/subscriptions/{subscriptionId}'
-        .replaceAll('{subscriptionId}', subscriptionId.toString());
+    final path = r'/api/subscribe/{traderId}/status/{strategyType}'
+        .replaceAll('{traderId}', traderId.toString())
+        .replaceAll('{strategyType}', strategyType);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -41,7 +45,7 @@ class SubscriptionAppApi {
 
     return apiClient.invokeAPI(
       path,
-      'DELETE',
+      'GET',
       queryParams,
       postBody,
       headerParams,
@@ -50,16 +54,20 @@ class SubscriptionAppApi {
     );
   }
 
-  /// 取消订阅
+  /// 检查是否已订阅指定策略类型
   ///
   /// Parameters:
   ///
-  /// * [int] subscriptionId (required):
-  Future<ApiRespVoid?> cancelSubscription(
-    int subscriptionId,
+  /// * [int] traderId (required):
+  ///
+  /// * [String] strategyType (required):
+  Future<ApiRespMapStringObject?> call1(
+    int traderId,
+    String strategyType,
   ) async {
-    final response = await cancelSubscriptionWithHttpInfo(
-      subscriptionId,
+    final response = await call1WithHttpInfo(
+      traderId,
+      strategyType,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
@@ -71,8 +79,8 @@ class SubscriptionAppApi {
         response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(
         await _decodeBodyBytes(response),
-        'ApiRespVoid',
-      ) as ApiRespVoid;
+        'ApiRespMapStringObject',
+      ) as ApiRespMapStringObject;
     }
     return null;
   }
@@ -443,6 +451,67 @@ class SubscriptionAppApi {
         await _decodeBodyBytes(response),
         'ApiRespStrSubscriptionPayment',
       ) as ApiRespStrSubscriptionPayment;
+    }
+    return null;
+  }
+
+  /// 查询支付订单支付状态
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] paymentOrderNo (required):
+  Future<Response> getPaymentOrderStatusWithHttpInfo(
+    String paymentOrderNo,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/api/payment-order-status/{paymentOrderNo}'
+        .replaceAll('{paymentOrderNo}', paymentOrderNo);
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// 查询支付订单支付状态
+  ///
+  /// Parameters:
+  ///
+  /// * [String] paymentOrderNo (required):
+  Future<ApiRespPaymentStatusInfo?> getPaymentOrderStatus(
+    String paymentOrderNo,
+  ) async {
+    final response = await getPaymentOrderStatusWithHttpInfo(
+      paymentOrderNo,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'ApiRespPaymentStatusInfo',
+      ) as ApiRespPaymentStatusInfo;
     }
     return null;
   }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/helpers/trader_helpers.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/services/trader_status_service.dart';
 import '../../../features/strategy/data/repositories/strategy_repository.dart';
@@ -152,7 +153,9 @@ class StrategyMemberApplyLogic extends GetxController {
       final result = await _strategyRepository.applyTrader(request);
 
       // 申请成功后，刷新交易员状态
-      await _refreshTraderStatus(result.traderId);
+      await _refreshTraderStatus();
+
+      checkAndRefreshTraderStatus();
 
       Get.snackbar('成功', '申请已提交');
       Get.back();
@@ -223,7 +226,7 @@ class StrategyMemberApplyLogic extends GetxController {
   }
   
   // 刷新交易员状态
-  Future<void> _refreshTraderStatus(String newTraderId) async {
+  Future<void> _refreshTraderStatus() async {
     try {
       print('申请成功后刷新交易员状态...');
       

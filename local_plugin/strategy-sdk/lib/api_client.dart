@@ -241,12 +241,20 @@ class ApiClient {
           return ApiRespIPageStrSubscriptionPayment.fromJson(value);
         case 'ApiRespIPageStrSubscriptionRefund':
           return ApiRespIPageStrSubscriptionRefund.fromJson(value);
-        case 'ApiRespIPageStrTrader':
-          return ApiRespIPageStrTrader.fromJson(value);
+        case 'ApiRespIPageTraderListResponseDTO':
+          return ApiRespIPageTraderListResponseDTO.fromJson(value);
+        case 'ApiRespIPageTraderOpinionResponseDTO':
+          return ApiRespIPageTraderOpinionResponseDTO.fromJson(value);
+        case 'ApiRespIPageTraderStrategyResponseDTO':
+          return ApiRespIPageTraderStrategyResponseDTO.fromJson(value);
         case 'ApiRespListStrStrategy':
           return ApiRespListStrStrategy.fromJson(value);
+        case 'ApiRespListStrTraderSubscriptionPricing':
+          return ApiRespListStrTraderSubscriptionPricing.fromJson(value);
         case 'ApiRespMapStringObject':
           return ApiRespMapStringObject.fromJson(value);
+        case 'ApiRespPaymentStatusInfo':
+          return ApiRespPaymentStatusInfo.fromJson(value);
         case 'ApiRespStrStrategy':
           return ApiRespStrStrategy.fromJson(value);
         case 'ApiRespStrSubscriptionPayment':
@@ -255,6 +263,10 @@ class ApiClient {
           return ApiRespStrSubscriptionRefund.fromJson(value);
         case 'ApiRespStrTrader':
           return ApiRespStrTrader.fromJson(value);
+        case 'ApiRespStrTraderSubscriptionPricing':
+          return ApiRespStrTraderSubscriptionPricing.fromJson(value);
+        case 'ApiRespTraderStatusDTO':
+          return ApiRespTraderStatusDTO.fromJson(value);
         case 'ApiRespVoid':
           return ApiRespVoid.fromJson(value);
         case 'FollowQueryDTO':
@@ -273,10 +285,16 @@ class ApiClient {
           return IPageStrSubscriptionPayment.fromJson(value);
         case 'IPageStrSubscriptionRefund':
           return IPageStrSubscriptionRefund.fromJson(value);
-        case 'IPageStrTrader':
-          return IPageStrTrader.fromJson(value);
+        case 'IPageTraderListResponseDTO':
+          return IPageTraderListResponseDTO.fromJson(value);
+        case 'IPageTraderOpinionResponseDTO':
+          return IPageTraderOpinionResponseDTO.fromJson(value);
+        case 'IPageTraderStrategyResponseDTO':
+          return IPageTraderStrategyResponseDTO.fromJson(value);
         case 'PaymentOrderQueryDTO':
           return PaymentOrderQueryDTO.fromJson(value);
+        case 'PaymentStatusInfo':
+          return PaymentStatusInfo.fromJson(value);
         case 'PublicStrategyQueryDTO':
           return PublicStrategyQueryDTO.fromJson(value);
         case 'PublicStrategyResponse':
@@ -299,6 +317,8 @@ class ApiClient {
           return StrSubscriptionRefund.fromJson(value);
         case 'StrTrader':
           return StrTrader.fromJson(value);
+        case 'StrTraderSubscriptionPricing':
+          return StrTraderSubscriptionPricing.fromJson(value);
         case 'StrategyCommentDTO':
           return StrategyCommentDTO.fromJson(value);
         case 'StrategyCommentQueryDTO':
@@ -319,8 +339,24 @@ class ApiClient {
           return SubscriptionQueryDTO.fromJson(value);
         case 'TraderApplyDTO':
           return TraderApplyDTO.fromJson(value);
+        case 'TraderListResponseDTO':
+          return TraderListResponseDTO.fromJson(value);
+        case 'TraderOpinionCreateDTO':
+          return TraderOpinionCreateDTO.fromJson(value);
+        case 'TraderOpinionResponseDTO':
+          return TraderOpinionResponseDTO.fromJson(value);
+        case 'TraderOpinionUpdateDTO':
+          return TraderOpinionUpdateDTO.fromJson(value);
         case 'TraderQueryDTO':
           return TraderQueryDTO.fromJson(value);
+        case 'TraderStatusDTO':
+          return TraderStatusDTO.fromJson(value);
+        case 'TraderStrategyQueryDTO':
+          return TraderStrategyQueryDTO.fromJson(value);
+        case 'TraderStrategyResponseDTO':
+          return TraderStrategyResponseDTO.fromJson(value);
+        case 'TraderSubscriptionPricingDTO':
+          return TraderSubscriptionPricingDTO.fromJson(value);
         case 'TraderUpdateDTO':
           return TraderUpdateDTO.fromJson(value);
         case 'TrendingStrategyQueryDTO':

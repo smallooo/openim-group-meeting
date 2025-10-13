@@ -60,7 +60,7 @@ class TraderQueryDTO {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? status;
+  int? status;
 
   /// 排序字段
   ///
@@ -164,7 +164,7 @@ class TraderQueryDTO {
         current: mapValueOfType<int>(json, r'current'),
         size: mapValueOfType<int>(json, r'size'),
         traderName: mapValueOfType<String>(json, r'traderName'),
-        status: mapValueOfType<String>(json, r'status'),
+        status: mapValueOfType<int>(json, r'status'),
         orderBy: mapValueOfType<String>(json, r'orderBy'),
         orderDirection: mapValueOfType<String>(json, r'orderDirection'),
       );

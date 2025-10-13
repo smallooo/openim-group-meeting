@@ -5,6 +5,9 @@ import 'package:pull_to_refresh_new/pull_to_refresh.dart';
 import 'package:toklink/tk_app/pages/tk_strategy/strategy_home/strategy_home_page/view.dart';
 import 'package:toklink/tk_app/pages/tk_strategy/strategy_home/strategy_home_page/binding.dart';
 
+import '../../tk_app/pages/tk_quantification/quantification_home/logic.dart';
+import '../../tk_app/pages/tk_quantification/quantification_home/view.dart';
+
 class DiscoverLogic extends GetxController {
   final refreshCtrl = RefreshController();
   final appLogic = Get.find<AppController>();
@@ -37,4 +40,15 @@ class DiscoverLogic extends GetxController {
       binding: StrategyHomePageBinding(),
     );
   }
+  void goToDan() {
+    // Get.to(
+    //       () => StrategyHomePagePage(),
+    //   binding: StrategyHomePageBinding(),
+    // );
+
+    Get.put(QuantificationHomeLogic());
+    Get.to(() =>  QuantificationHomePage());
+
+  }
+
 }

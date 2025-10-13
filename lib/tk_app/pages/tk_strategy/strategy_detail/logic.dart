@@ -97,7 +97,7 @@ class StrategyDetailLogic extends GetxController {
     // 更新策略信息
     state.strategyId.value = data.id;
     state.strategyType.value = _getStrategyTypeText(data.strategyType);
-    state.symbol.value = '\$${data.coinSymbol}';
+    state.symbol.value = data.coinSymbol;
     state.isContract.value = true; // 根据实际业务逻辑判断
     // 根据价格关系判断多空：如果止盈价 > 目标价格，则为多头；如果止盈价 < 目标价格，则为空头
     state.isLong.value = data.takeProfitPrice > data.targetPrice;

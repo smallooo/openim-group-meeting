@@ -69,7 +69,7 @@ class TkMinePage extends StatelessWidget {
                 height: 50,
                 leftIcon: const Icon(Icons.payment, color: Color(0xFF4CAF50)),
                 text: '支付',
-                onTap: () => _showSnackBar(context, '点击了支付'),
+                onTap: logic.toPayPage,
                 backgroundColor: Colors.transparent,
                 showRippleEffect: false,
               ),

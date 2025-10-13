@@ -13,13 +13,18 @@ part of openapi.api;
 class SubscribeTraderDTO {
   /// Returns a new [SubscribeTraderDTO] instance.
   SubscribeTraderDTO({
+    required this.strategyType,
     required this.subscriptionType,
     this.autoRenew,
     required this.paymentMethod,
     this.clientIp,
+    this.returnUrl,
   });
 
-  /// 订阅类型
+  /// 策略类型:SPOT-现货,FUTURES-合约
+  String strategyType;
+
+  /// 订阅类型: 1-月订阅 2-季度订阅 3-年订阅
   int subscriptionType;
 
   /// 是否自动续费
@@ -43,29 +48,43 @@ class SubscribeTraderDTO {
   ///
   String? clientIp;
 
+  /// 同步返回地址
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? returnUrl;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SubscribeTraderDTO &&
+          other.strategyType == strategyType &&
           other.subscriptionType == subscriptionType &&
           other.autoRenew == autoRenew &&
           other.paymentMethod == paymentMethod &&
-          other.clientIp == clientIp;
+          other.clientIp == clientIp &&
+          other.returnUrl == returnUrl;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
+      (strategyType.hashCode) +
       (subscriptionType.hashCode) +
       (autoRenew == null ? 0 : autoRenew!.hashCode) +
       (paymentMethod.hashCode) +
-      (clientIp == null ? 0 : clientIp!.hashCode);
+      (clientIp == null ? 0 : clientIp!.hashCode) +
+      (returnUrl == null ? 0 : returnUrl!.hashCode);
 
   @override
   String toString() =>
-      'SubscribeTraderDTO[subscriptionType=$subscriptionType, autoRenew=$autoRenew, paymentMethod=$paymentMethod, clientIp=$clientIp]';
+      'SubscribeTraderDTO[strategyType=$strategyType, subscriptionType=$subscriptionType, autoRenew=$autoRenew, paymentMethod=$paymentMethod, clientIp=$clientIp, returnUrl=$returnUrl]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
+    json[r'strategyType'] = this.strategyType;
     json[r'subscriptionType'] = this.subscriptionType;
     if (this.autoRenew != null) {
       json[r'autoRenew'] = this.autoRenew;
@@ -77,6 +96,11 @@ class SubscribeTraderDTO {
       json[r'clientIp'] = this.clientIp;
     } else {
       json[r'clientIp'] = null;
+    }
+    if (this.returnUrl != null) {
+      json[r'returnUrl'] = this.returnUrl;
+    } else {
+      json[r'returnUrl'] = null;
     }
     return json;
   }
@@ -102,10 +126,12 @@ class SubscribeTraderDTO {
       }());
 
       return SubscribeTraderDTO(
+        strategyType: mapValueOfType<String>(json, r'strategyType')!,
         subscriptionType: mapValueOfType<int>(json, r'subscriptionType')!,
         autoRenew: mapValueOfType<bool>(json, r'autoRenew'),
         paymentMethod: mapValueOfType<String>(json, r'paymentMethod')!,
         clientIp: mapValueOfType<String>(json, r'clientIp'),
+        returnUrl: mapValueOfType<String>(json, r'returnUrl'),
       );
     }
     return null;
@@ -162,6 +188,7 @@ class SubscribeTraderDTO {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
+    'strategyType',
     'subscriptionType',
     'paymentMethod',
   };

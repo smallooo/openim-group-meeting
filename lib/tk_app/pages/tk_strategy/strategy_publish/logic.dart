@@ -65,9 +65,12 @@ class StrategyPublishLogic extends GetxController {
     state.selectedTypeIndex.value = index;
   }
   
-  // 选择价格类型
-  void selectPriceType(int priceIndex, int typeIndex) {
-    state.priceTypeIndexes[priceIndex].value = typeIndex;
+  /// 选择价格类型（全局）
+  /// [typeIndex] 价格类型索引 (0-限价, 1-市价)
+  void selectPriceType(int typeIndex) {
+    state.priceTypeIndex.value = typeIndex;
+    // 价格类型切换时，UI会自动显示对应类型的控制器，无需额外处理
+    print('价格类型切换到 ${typeIndex == 0 ? '限价' : '市价'} 模式');
   }
   
   // 切换协议同意状态
@@ -111,32 +114,35 @@ class StrategyPublishLogic extends GetxController {
         content: state.contentController.text,
         coinSymbol: state.coinController.text,
         strategyType: state.selectedTypeIndex.value + 1, // 1-短线 2-中线 3-长线
-        priceType: state.priceTypeIndexes[0].value + 1, // 1-限价 2-市价
-        targetPrice: double.tryParse(state.limitPriceControllers[0].text) ?? 0.0,
-        takeProfitPrice: double.tryParse(state.limitPriceControllers[1].text) ?? 0.0,
-        stopLossPrice: double.tryParse(state.limitPriceControllers[2].text) ?? 0.0,
+        priceType: state.priceTypeIndex.value + 1, // 1-限价 2-市价
+        // 根据当前选择的价格类型获取对应的价格值
+        targetPrice: double.tryParse(state.getCurrentPriceController(0).text) ?? 0.0,
+        takeProfitPrice: double.tryParse(state.getCurrentPriceController(1).text) ?? 0.0,
+        stopLossPrice: double.tryParse(state.getCurrentPriceController(2).text) ?? 0.0,
         validFrom: _formatDateTime(state.validFromDate.value!),
         validTo: _formatDateTime(state.validToDate.value!),
         marketType: state.currentMarketType, // 使用当前选择的市场类型
       );
-      
+
+      Get.back();
+
       // 调用API发布策略
       final result = await _strategyRepository.publishStrategy(request);
       
       // 显示成功提示
-      // Get.snackbar(
-      //   '发布成功',
-      //   '策略发布成功！\n策略ID: ${result.strategyId}',
-      //   snackPosition: SnackPosition.TOP,
-      //   backgroundColor: Colors.green,
-      //   colorText: Colors.white,
-      //   duration: const Duration(seconds: 3),
-      //   margin: const EdgeInsets.all(16),
-      //   borderRadius: 8,
-      // );
-      //
+      Get.snackbar(
+        '发布成功',
+        '策略发布成功！\n策略ID: ${result.strategyId}',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 8,
+      );
+
       // 延迟一下再返回，让用户看到成功提示
-      // await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 1000));
       
       // 发布成功后返回上一页
       Get.back();

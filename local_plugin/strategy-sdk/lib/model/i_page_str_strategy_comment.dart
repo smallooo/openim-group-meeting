@@ -13,20 +13,12 @@ part of openapi.api;
 class IPageStrStrategyComment {
   /// Returns a new [IPageStrStrategyComment] instance.
   IPageStrStrategyComment({
-    this.total,
     this.size,
-    this.current,
-    this.records = const [],
+    this.total,
     this.pages,
+    this.records = const [],
+    this.current,
   });
-
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  int? total;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -42,9 +34,7 @@ class IPageStrStrategyComment {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? current;
-
-  List<StrStrategyComment> records;
+  int? total;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -54,51 +44,61 @@ class IPageStrStrategyComment {
   ///
   int? pages;
 
+  List<StrStrategyComment> records;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  int? current;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is IPageStrStrategyComment &&
-          other.total == total &&
           other.size == size &&
-          other.current == current &&
+          other.total == total &&
+          other.pages == pages &&
           other.records == records &&
-          other.pages == pages;
+          other.current == current;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (total == null ? 0 : total!.hashCode) +
       (size == null ? 0 : size!.hashCode) +
-      (current == null ? 0 : current!.hashCode) +
+      (total == null ? 0 : total!.hashCode) +
+      (pages == null ? 0 : pages!.hashCode) +
       (records.hashCode) +
-      (pages == null ? 0 : pages!.hashCode);
+      (current == null ? 0 : current!.hashCode);
 
   @override
   String toString() =>
-      'IPageStrStrategyComment[total=$total, size=$size, current=$current, records=$records, pages=$pages]';
+      'IPageStrStrategyComment[size=$size, total=$total, pages=$pages, records=$records, current=$current]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (this.total != null) {
-      json[r'total'] = this.total;
-    } else {
-      json[r'total'] = null;
-    }
     if (this.size != null) {
       json[r'size'] = this.size;
     } else {
       json[r'size'] = null;
     }
-    if (this.current != null) {
-      json[r'current'] = this.current;
+    if (this.total != null) {
+      json[r'total'] = this.total;
     } else {
-      json[r'current'] = null;
+      json[r'total'] = null;
     }
-    json[r'records'] = this.records;
     if (this.pages != null) {
       json[r'pages'] = this.pages;
     } else {
       json[r'pages'] = null;
+    }
+    json[r'records'] = this.records;
+    if (this.current != null) {
+      json[r'current'] = this.current;
+    } else {
+      json[r'current'] = null;
     }
     return json;
   }
@@ -124,11 +124,11 @@ class IPageStrStrategyComment {
       }());
 
       return IPageStrStrategyComment(
-        total: mapValueOfType<int>(json, r'total'),
         size: mapValueOfType<int>(json, r'size'),
-        current: mapValueOfType<int>(json, r'current'),
-        records: StrStrategyComment.listFromJson(json[r'records']),
+        total: mapValueOfType<int>(json, r'total'),
         pages: mapValueOfType<int>(json, r'pages'),
+        records: StrStrategyComment.listFromJson(json[r'records']),
+        current: mapValueOfType<int>(json, r'current'),
       );
     }
     return null;

@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getMyStrategies**](StrategyAppApi.md#getmystrategies) | **GET** /strategies/my | 我的策略列表
 [**getPublicStrategies**](StrategyAppApi.md#getpublicstrategies) | **GET** /strategies/public | 公用策略看板
+[**getStrategiesByTrader**](StrategyAppApi.md#getstrategiesbytrader) | **GET** /strategies/trader/{traderId} | 根据交易员ID获取策略列表
 [**getStrategyDetail**](StrategyAppApi.md#getstrategydetail) | **GET** /strategies/{strategyId} | 获取策略详情
 [**getTrendingStrategies**](StrategyAppApi.md#gettrendingstrategies) | **GET** /strategies/trending | 热门策略排行
 [**publishStrategy**](StrategyAppApi.md#publishstrategy) | **POST** /strategies | 发布策略
@@ -120,6 +121,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ApiRespIPagePublicStrategyResponse**](ApiRespIPagePublicStrategyResponse.md)
+
+### Authorization
+
+[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getStrategiesByTrader**
+> ApiRespIPageTraderStrategyResponseDTO getStrategiesByTrader(traderId, queryDTO)
+
+根据交易员ID获取策略列表
+
+### Example
+```dart
+import 'package:toklink_strategy_sdk/api.dart';
+// TODO Configure API key authorization: X-Timestamp
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: Access-Token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Signature
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Nonce
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
+
+final api_instance = StrategyAppApi();
+final traderId = 789; // int | 
+final queryDTO = ; // TraderStrategyQueryDTO | 
+
+try {
+    final result = api_instance.getStrategiesByTrader(traderId, queryDTO);
+    print(result);
+} catch (e) {
+    print('Exception when calling StrategyAppApi->getStrategiesByTrader: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **traderId** | **int**|  | 
+ **queryDTO** | [**TraderStrategyQueryDTO**](.md)|  | 
+
+### Return type
+
+[**ApiRespIPageTraderStrategyResponseDTO**](ApiRespIPageTraderStrategyResponseDTO.md)
 
 ### Authorization
 

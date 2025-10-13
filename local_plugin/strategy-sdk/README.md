@@ -80,6 +80,7 @@ Class | Method | HTTP request | Description
 *FollowAppApi* | [**unfollowTrader**](doc//FollowAppApi.md#unfollowtrader) | **DELETE** /follow/follow/{traderId} | 取消关注交易员
 *StrategyAppApi* | [**getMyStrategies**](doc//StrategyAppApi.md#getmystrategies) | **GET** /strategies/my | 我的策略列表
 *StrategyAppApi* | [**getPublicStrategies**](doc//StrategyAppApi.md#getpublicstrategies) | **GET** /strategies/public | 公用策略看板
+*StrategyAppApi* | [**getStrategiesByTrader**](doc//StrategyAppApi.md#getstrategiesbytrader) | **GET** /strategies/trader/{traderId} | 根据交易员ID获取策略列表
 *StrategyAppApi* | [**getStrategyDetail**](doc//StrategyAppApi.md#getstrategydetail) | **GET** /strategies/{strategyId} | 获取策略详情
 *StrategyAppApi* | [**getTrendingStrategies**](doc//StrategyAppApi.md#gettrendingstrategies) | **GET** /strategies/trending | 热门策略排行
 *StrategyAppApi* | [**publishStrategy**](doc//StrategyAppApi.md#publishstrategy) | **POST** /strategies | 发布策略
@@ -89,22 +90,41 @@ Class | Method | HTTP request | Description
 *StrategyCommentAppApi* | [**getStrategyComments**](doc//StrategyCommentAppApi.md#getstrategycomments) | **GET** /strategies/{strategyId}/comments | 获取策略评论列表
 *StrategyRatingAppApi* | [**getStrategyRatings**](doc//StrategyRatingAppApi.md#getstrategyratings) | **GET** /strategies/{strategyId}/ratings | 获取策略评价列表
 *StrategyRatingAppApi* | [**rateStrategy**](doc//StrategyRatingAppApi.md#ratestrategy) | **POST** /strategies/{strategyId}/rating | 评价策略
-*SubscriptionAppApi* | [**cancelSubscription**](doc//SubscriptionAppApi.md#cancelsubscription) | **DELETE** /api/subscriptions/{subscriptionId} | 取消订阅
+*SubscriptionAppApi* | [**call1**](doc//SubscriptionAppApi.md#call1) | **GET** /api/subscribe/{traderId}/status/{strategyType} | 检查是否已订阅指定策略类型
 *SubscriptionAppApi* | [**checkSubscription**](doc//SubscriptionAppApi.md#checksubscription) | **GET** /api/subscription/check | 检查用户订阅状态（Feign调用）
 *SubscriptionAppApi* | [**checkSubscriptionStatus**](doc//SubscriptionAppApi.md#checksubscriptionstatus) | **GET** /api/subscribe/{traderId}/status | 检查是否已订阅
 *SubscriptionAppApi* | [**getMyPaymentOrders**](doc//SubscriptionAppApi.md#getmypaymentorders) | **GET** /api/my-payment-orders | 查询我的支付订单
 *SubscriptionAppApi* | [**getMyRefundOrders**](doc//SubscriptionAppApi.md#getmyrefundorders) | **GET** /api/my-refund-orders | 查询我的退款订单
 *SubscriptionAppApi* | [**getMySubscriptions**](doc//SubscriptionAppApi.md#getmysubscriptions) | **GET** /api/my-subscriptions | 我的订阅列表
 *SubscriptionAppApi* | [**getPaymentOrderDetail**](doc//SubscriptionAppApi.md#getpaymentorderdetail) | **GET** /api/payment-orders/{paymentOrderNo} | 查询支付订单详情
+*SubscriptionAppApi* | [**getPaymentOrderStatus**](doc//SubscriptionAppApi.md#getpaymentorderstatus) | **GET** /api/payment-order-status/{paymentOrderNo} | 查询支付订单支付状态
 *SubscriptionAppApi* | [**getRefundOrderDetail**](doc//SubscriptionAppApi.md#getrefundorderdetail) | **GET** /api/refund-orders/{refundOrderNo} | 查询退款订单详情
 *SubscriptionAppApi* | [**requestRefund**](doc//SubscriptionAppApi.md#requestrefund) | **POST** /api/subscriptions/{subscriptionId}/refund | 申请退款
 *SubscriptionAppApi* | [**subscribeTrader**](doc//SubscriptionAppApi.md#subscribetrader) | **POST** /api/subscribe/{traderId} | 订阅交易员
 *TraderAppApi* | [**applyTrader**](doc//TraderAppApi.md#applytrader) | **POST** /trader/apply | 申请成为交易员
+*TraderAppApi* | [**checkTraderStatus**](doc//TraderAppApi.md#checktraderstatus) | **GET** /trader/status | 检查当前用户是否为交易员
 *TraderAppApi* | [**getTraderDetail**](doc//TraderAppApi.md#gettraderdetail) | **GET** /trader/{traderId} | 获取交易员详情
 *TraderAppApi* | [**getTraderList**](doc//TraderAppApi.md#gettraderlist) | **GET** /trader/list | 获取交易员列表
 *TraderAppApi* | [**getTraderStats**](doc//TraderAppApi.md#gettraderstats) | **GET** /trader/stats | 获取交易员统计数据
 *TraderAppApi* | [**syncTraderStats**](doc//TraderAppApi.md#synctraderstats) | **POST** /trader/sync-stats | 手动同步交易员统计数据
 *TraderAppApi* | [**updateTraderProfile**](doc//TraderAppApi.md#updatetraderprofile) | **PUT** /trader/profile | 更新交易员资料
+*TraderOpinionAppApi* | [**countOpinionsByTraderId**](doc//TraderOpinionAppApi.md#countopinionsbytraderid) | **GET** /trader-opinion/count/trader/{traderId} | 统计交易员观点数量
+*TraderOpinionAppApi* | [**createOpinion**](doc//TraderOpinionAppApi.md#createopinion) | **POST** /trader-opinion | 创建观点
+*TraderOpinionAppApi* | [**deleteOpinion**](doc//TraderOpinionAppApi.md#deleteopinion) | **DELETE** /trader-opinion/{opinionId} | 删除观点
+*TraderOpinionAppApi* | [**getMyOpinions**](doc//TraderOpinionAppApi.md#getmyopinions) | **GET** /trader-opinion/my-opinions | 我的观点列表
+*TraderOpinionAppApi* | [**getOpinionsByTraderId**](doc//TraderOpinionAppApi.md#getopinionsbytraderid) | **GET** /trader-opinion/trader/{traderId} | 根据交易员ID查询观点列表
+*TraderOpinionAppApi* | [**likeOpinion**](doc//TraderOpinionAppApi.md#likeopinion) | **POST** /trader-opinion/{opinionId}/like | 点赞观点
+*TraderOpinionAppApi* | [**unlikeOpinion**](doc//TraderOpinionAppApi.md#unlikeopinion) | **DELETE** /trader-opinion/{opinionId}/like | 取消点赞观点
+*TraderOpinionAppApi* | [**updateOpinion**](doc//TraderOpinionAppApi.md#updateopinion) | **PUT** /trader-opinion | 更新观点
+*TraderSubscriptionPricingAppApi* | [**deletePricing**](doc//TraderSubscriptionPricingAppApi.md#deletepricing) | **DELETE** /trader/pricing/{id} | 删除价格配置
+*TraderSubscriptionPricingAppApi* | [**getActivePricingByStrategyType**](doc//TraderSubscriptionPricingAppApi.md#getactivepricingbystrategytype) | **GET** /trader/pricing/strategy/{strategyType} | 根据策略类型获取所有激活的价格配置
+*TraderSubscriptionPricingAppApi* | [**getMyActivePricing**](doc//TraderSubscriptionPricingAppApi.md#getmyactivepricing) | **GET** /trader/pricing/my/active | 获取我的激活订阅价格列表
+*TraderSubscriptionPricingAppApi* | [**getMyPricing**](doc//TraderSubscriptionPricingAppApi.md#getmypricing) | **GET** /trader/pricing/my | 获取我的订阅价格列表
+*TraderSubscriptionPricingAppApi* | [**getTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#gettraderpricing) | **GET** /trader/pricing/trader/{traderId} | 获取交易员的订阅价格
+*TraderSubscriptionPricingAppApi* | [**getTraderStrategyPricing**](doc//TraderSubscriptionPricingAppApi.md#gettraderstrategypricing) | **GET** /trader/pricing/trader/{traderId}/strategy/{strategyType} | 获取指定交易员和策略类型的价格
+*TraderSubscriptionPricingAppApi* | [**setTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#settraderpricing) | **POST** /trader/pricing/set | 设置交易员订阅价格
+*TraderSubscriptionPricingAppApi* | [**togglePricingActive**](doc//TraderSubscriptionPricingAppApi.md#togglepricingactive) | **PUT** /trader/pricing/toggle/{id} | 启用/禁用价格配置
+*TraderSubscriptionPricingAppApi* | [**updateTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#updatetraderpricing) | **PUT** /trader/pricing/update/{id} | 更新交易员订阅价格
 
 
 ## Documentation For Models
@@ -117,13 +137,19 @@ Class | Method | HTTP request | Description
  - [ApiRespIPageStrSubscription](doc//ApiRespIPageStrSubscription.md)
  - [ApiRespIPageStrSubscriptionPayment](doc//ApiRespIPageStrSubscriptionPayment.md)
  - [ApiRespIPageStrSubscriptionRefund](doc//ApiRespIPageStrSubscriptionRefund.md)
- - [ApiRespIPageStrTrader](doc//ApiRespIPageStrTrader.md)
+ - [ApiRespIPageTraderListResponseDTO](doc//ApiRespIPageTraderListResponseDTO.md)
+ - [ApiRespIPageTraderOpinionResponseDTO](doc//ApiRespIPageTraderOpinionResponseDTO.md)
+ - [ApiRespIPageTraderStrategyResponseDTO](doc//ApiRespIPageTraderStrategyResponseDTO.md)
  - [ApiRespListStrStrategy](doc//ApiRespListStrStrategy.md)
+ - [ApiRespListStrTraderSubscriptionPricing](doc//ApiRespListStrTraderSubscriptionPricing.md)
  - [ApiRespMapStringObject](doc//ApiRespMapStringObject.md)
+ - [ApiRespPaymentStatusInfo](doc//ApiRespPaymentStatusInfo.md)
  - [ApiRespStrStrategy](doc//ApiRespStrStrategy.md)
  - [ApiRespStrSubscriptionPayment](doc//ApiRespStrSubscriptionPayment.md)
  - [ApiRespStrSubscriptionRefund](doc//ApiRespStrSubscriptionRefund.md)
  - [ApiRespStrTrader](doc//ApiRespStrTrader.md)
+ - [ApiRespStrTraderSubscriptionPricing](doc//ApiRespStrTraderSubscriptionPricing.md)
+ - [ApiRespTraderStatusDTO](doc//ApiRespTraderStatusDTO.md)
  - [ApiRespVoid](doc//ApiRespVoid.md)
  - [FollowQueryDTO](doc//FollowQueryDTO.md)
  - [IPagePublicStrategyResponse](doc//IPagePublicStrategyResponse.md)
@@ -133,8 +159,11 @@ Class | Method | HTTP request | Description
  - [IPageStrSubscription](doc//IPageStrSubscription.md)
  - [IPageStrSubscriptionPayment](doc//IPageStrSubscriptionPayment.md)
  - [IPageStrSubscriptionRefund](doc//IPageStrSubscriptionRefund.md)
- - [IPageStrTrader](doc//IPageStrTrader.md)
+ - [IPageTraderListResponseDTO](doc//IPageTraderListResponseDTO.md)
+ - [IPageTraderOpinionResponseDTO](doc//IPageTraderOpinionResponseDTO.md)
+ - [IPageTraderStrategyResponseDTO](doc//IPageTraderStrategyResponseDTO.md)
  - [PaymentOrderQueryDTO](doc//PaymentOrderQueryDTO.md)
+ - [PaymentStatusInfo](doc//PaymentStatusInfo.md)
  - [PublicStrategyQueryDTO](doc//PublicStrategyQueryDTO.md)
  - [PublicStrategyResponse](doc//PublicStrategyResponse.md)
  - [RefundOrderQueryDTO](doc//RefundOrderQueryDTO.md)
@@ -146,6 +175,7 @@ Class | Method | HTTP request | Description
  - [StrSubscriptionPayment](doc//StrSubscriptionPayment.md)
  - [StrSubscriptionRefund](doc//StrSubscriptionRefund.md)
  - [StrTrader](doc//StrTrader.md)
+ - [StrTraderSubscriptionPricing](doc//StrTraderSubscriptionPricing.md)
  - [StrategyCommentDTO](doc//StrategyCommentDTO.md)
  - [StrategyCommentQueryDTO](doc//StrategyCommentQueryDTO.md)
  - [StrategyQueryDTO](doc//StrategyQueryDTO.md)
@@ -156,7 +186,15 @@ Class | Method | HTTP request | Description
  - [SubscriptionCheckDTO](doc//SubscriptionCheckDTO.md)
  - [SubscriptionQueryDTO](doc//SubscriptionQueryDTO.md)
  - [TraderApplyDTO](doc//TraderApplyDTO.md)
+ - [TraderListResponseDTO](doc//TraderListResponseDTO.md)
+ - [TraderOpinionCreateDTO](doc//TraderOpinionCreateDTO.md)
+ - [TraderOpinionResponseDTO](doc//TraderOpinionResponseDTO.md)
+ - [TraderOpinionUpdateDTO](doc//TraderOpinionUpdateDTO.md)
  - [TraderQueryDTO](doc//TraderQueryDTO.md)
+ - [TraderStatusDTO](doc//TraderStatusDTO.md)
+ - [TraderStrategyQueryDTO](doc//TraderStrategyQueryDTO.md)
+ - [TraderStrategyResponseDTO](doc//TraderStrategyResponseDTO.md)
+ - [TraderSubscriptionPricingDTO](doc//TraderSubscriptionPricingDTO.md)
  - [TraderUpdateDTO](doc//TraderUpdateDTO.md)
  - [TrendingStrategyQueryDTO](doc//TrendingStrategyQueryDTO.md)
 

@@ -3,26 +3,7 @@ import 'package:get/get.dart';
 class StrategySubscriptionState {
   // 订阅时长选项
   RxInt selectedDurationIndex = 1.obs; // 默认选择1季（中间选项）
-  List<SubscriptionDuration> durationOptions = [
-    SubscriptionDuration(
-      duration: '1月',
-      price: '98u',
-      originalPrice: '139U',
-      isLimited: true,
-    ),
-    SubscriptionDuration(
-      duration: '1季',
-      price: '98u', 
-      originalPrice: '139U',
-      isLimited: true,
-    ),
-    SubscriptionDuration(
-      duration: '1年',
-      price: '98u',
-      originalPrice: '139U', 
-      isLimited: true,
-    ),
-  ];
+  RxList<SubscriptionDuration> durationOptions = <SubscriptionDuration>[].obs;
 
   // 钱包余额
   RxString walletBalance = '0 U'.obs;
@@ -36,7 +17,7 @@ class StrategySubscriptionState {
   RxString serviceAvatar = ''.obs;
   
   // 当前选中的价格
-  String get currentPrice => durationOptions[selectedDurationIndex.value].price;
+  String get currentPrice => durationOptions.isNotEmpty ? durationOptions[selectedDurationIndex.value].price : '';
   
   StrategySubscriptionState() {
     ///Initialize variables
