@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:toklink_strategy_sdk/api.dart';
 
 import '../../../api_sdk/strategy_sdk_adapter.dart';
+import '../../../core/utils/access_token_helper.dart';
 import '../../../features/strategy/data/repositories/strategy_repository.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../shared/models/strategy/trader_pricing_model.dart';
@@ -133,7 +134,7 @@ class StrategySubscriptionLogic extends GetxController {
       }
 
       // 2) 读取当前登录 token（按你的项目实际实现替换）
-      final accessToken = await _getAccessToken();
+      final accessToken = await TokenAccessHelper.getAccessTokenDirect();
       if (accessToken == null || accessToken.isEmpty) {
         Get.snackbar('错误', '未登录或缺少令牌');
         return;
@@ -212,22 +213,4 @@ class StrategySubscriptionLogic extends GetxController {
     }
   }
 
-  // 获取当前 Access-Token（按你的项目实际替换）
-  Future<String?> _getAccessToken() async {
-    // 示例：如果你有 AuthService
-    // final auth = Get.find<AuthService>();
-    // return auth.accessToken;
-
-    // 示例：如果存储在 SharedPreferences / SecureStorage，请按实际读取
-    // final prefs = await SharedPreferences.getInstance();
-    // return prefs.getString('access_token');
-
-    // 占位
-
-
-
-    return 'YOUR_ACCESS_TOKEN';
-
-
-  }
 }

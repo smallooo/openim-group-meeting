@@ -106,7 +106,7 @@ class TokenManager {
       }
 
       debugPrint('[TokenManager] 准备刷新token，refreshToken: $refreshToken');
-      debugPrint('[TokenManager] 请求URL: ${_dio.options.baseUrl}/api/member/auth/refresh');
+      debugPrint('[TokenManager] 请求URL: ${_dio.options.baseUrl}/member/app/auth/refresh');
       debugPrint('[TokenManager] 请求数据: {"refreshToken": "$refreshToken"}');
 
       // 尝试不同的请求格式
@@ -115,7 +115,7 @@ class TokenManager {
         // 首先尝试JSON格式
         debugPrint('[TokenManager] 尝试JSON格式请求');
         response = await _dio.post(
-          '/api/member/auth/refresh',
+          '/member/app/auth/token/refresh',
           data: {'refreshToken': refreshToken},
           options: Options(
             headers: {
@@ -129,7 +129,7 @@ class TokenManager {
           debugPrint('[TokenManager] JSON格式失败，尝试form-urlencoded格式');
           // 如果JSON格式失败，尝试form-urlencoded格式
           response = await _dio.post(
-            '/api/member/auth/refresh',
+            '/member/app/auth/token/refresh',
             data: {'refreshToken': refreshToken},
             options: Options(
               headers: {

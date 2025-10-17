@@ -85,10 +85,10 @@ class AuthInterceptor extends Interceptor {
   bool _shouldSkipAuth(String path) {
     // 不需要认证的接口
     final skipPaths = [
-      '/api/member/auth/send-code',
-      '/api/member/auth/code-login',
-      '/api/member/auth/refresh',
-      '/api/member/auth/logout',
+      '/member/app/auth/send-code',
+      '/member/app/auth/code-login',
+      '/member/app/auth/token/refresh',
+      '/member/app/auth/logout',
     ];
     
     return skipPaths.any((skipPath) => path.contains(skipPath));
