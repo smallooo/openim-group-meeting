@@ -5,18 +5,18 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getMyStrategies**](StrategyAppApi.md#getmystrategies) | **GET** /strategies/my | 我的策略列表
-[**getPublicStrategies**](StrategyAppApi.md#getpublicstrategies) | **GET** /strategies/public | 公用策略看板
-[**getStrategiesByTrader**](StrategyAppApi.md#getstrategiesbytrader) | **GET** /strategies/trader/{traderId} | 根据交易员ID获取策略列表
-[**getStrategyDetail**](StrategyAppApi.md#getstrategydetail) | **GET** /strategies/{strategyId} | 获取策略详情
-[**getTrendingStrategies**](StrategyAppApi.md#gettrendingstrategies) | **GET** /strategies/trending | 热门策略排行
-[**publishStrategy**](StrategyAppApi.md#publishstrategy) | **POST** /strategies | 发布策略
-[**recordStrategyView**](StrategyAppApi.md#recordstrategyview) | **POST** /strategies/{strategyId}/view | 记录策略浏览
-[**updateStrategy**](StrategyAppApi.md#updatestrategy) | **PUT** /strategies/{strategyId} | 更新策略
+[**getMyStrategies**](StrategyAppApi.md#getmystrategies) | **GET** /app/strategies/my | 我的策略列表
+[**getPublicStrategies**](StrategyAppApi.md#getpublicstrategies) | **GET** /app/strategies/public | 公用策略看板
+[**getStrategiesByTrader**](StrategyAppApi.md#getstrategiesbytrader) | **GET** /app/strategies/trader/{traderId} | 根据交易员ID获取策略列表
+[**getStrategyDetail**](StrategyAppApi.md#getstrategydetail) | **GET** /app/strategies/{strategyId} | 获取策略详情
+[**getTrendingStrategies**](StrategyAppApi.md#gettrendingstrategies) | **GET** /app/strategies/trending | 热门策略排行
+[**publishStrategy**](StrategyAppApi.md#publishstrategy) | **POST** /app/strategies | 发布策略
+[**recordStrategyView**](StrategyAppApi.md#recordstrategyview) | **POST** /app/strategies/{strategyId}/view | 记录策略浏览
+[**updateStrategy**](StrategyAppApi.md#updatestrategy) | **PUT** /app/strategies/{strategyId} | 更新策略
 
 
 # **getMyStrategies**

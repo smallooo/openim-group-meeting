@@ -117,6 +117,14 @@ import '../tk_app/pages/tk_pay/tk_pay_set/binding.dart';
 import '../tk_app/pages/tk_pay/tk_pay_set/view.dart';
 import '../tk_app/pages/tk_subscription/strategy_subscription/view.dart';
 import '../tk_app/pages/tk_subscription/strategy_subscription/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_order/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_order/view.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_order_detail/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_order_detail/view.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_create_order/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_create_order/view.dart';
+import '../tk_app/pages/tk_channel/tk_channel_home/binding.dart';
+import '../tk_app/pages/tk_channel/tk_channel_home/view.dart';
 
 part 'app_routes.dart';
 
@@ -434,6 +442,26 @@ class AppPages {
       name: AppRoutes.strategySubscription,
       page: () => StrategySubscriptionPage(),
       binding: StrategySubscriptionBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeOrder,
+      page: () => TkGuaranteeOrderPage(),
+      binding: TkGuaranteeOrderBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeOrderDetail,
+      page: () => TkGuaranteeOrderDetailPage(),
+      binding: TkGuaranteeOrderDetailBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeCreateOrder,
+      page: () => TkGuaranteeCreateOrderPage(),
+      binding: TkGuaranteeCreateOrderBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkChannelHome,
+      page: () => TkChannelHomePage(),
+      binding: TkChannelHomeBinding(),
     ),
   ];
 }

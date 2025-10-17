@@ -5,12 +5,12 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**sendSmsCaptcha**](SmsLoginAppApi.md#sendsmscaptcha) | **POST** /login/sms-captcha | 获取短信验证码
-[**smsLogin**](SmsLoginAppApi.md#smslogin) | **POST** /login/sms | 短信验证码登录
+[**sendSmsCaptcha**](SmsLoginAppApi.md#sendsmscaptcha) | **POST** /app/auth/login/sms-captcha | 获取短信验证码
+[**smsLogin**](SmsLoginAppApi.md#smslogin) | **POST** /app/auth/login/sms | 短信验证码登录
 
 
 # **sendSmsCaptcha**

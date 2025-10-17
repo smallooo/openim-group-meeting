@@ -27,7 +27,7 @@ class FollowAppApi {
     int traderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/follow/follow/{traderId}/status'
+    final path = r'/app/follow/follow/{traderId}/status'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -88,7 +88,7 @@ class FollowAppApi {
     int traderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/follow/follow/{traderId}'
+    final path = r'/app/follow/follow/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -149,7 +149,7 @@ class FollowAppApi {
     FollowQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/follow/my-follows';
+    final path = r'/app/follow/my-follows';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -211,7 +211,7 @@ class FollowAppApi {
     int traderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/follow/follow/{traderId}'
+    final path = r'/app/follow/follow/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals

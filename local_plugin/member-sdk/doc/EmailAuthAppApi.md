@@ -5,17 +5,17 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**emailCodeLogin**](EmailAuthAppApi.md#emailcodelogin) | **POST** /auth/email/code-login | 邮箱验证码登录
-[**emailLogin**](EmailAuthAppApi.md#emaillogin) | **POST** /auth/email/login | 邮箱登录
-[**getAuthStatus**](EmailAuthAppApi.md#getauthstatus) | **POST** /auth/email/status | 获取认证状态
-[**sendEmailCode**](EmailAuthAppApi.md#sendemailcode) | **POST** /auth/email/send-code | 发送邮箱验证码
-[**sendVerificationEmail**](EmailAuthAppApi.md#sendverificationemail) | **POST** /auth/email/send-verification | 发送邮箱验证链接
-[**verifyCode**](EmailAuthAppApi.md#verifycode) | **POST** /auth/email/verify-code | 验证跨设备验证码
-[**verifyEmail**](EmailAuthAppApi.md#verifyemail) | **POST** /auth/email/verify | 验证邮箱链接
+[**emailCodeLogin**](EmailAuthAppApi.md#emailcodelogin) | **POST** /app/auth/email/code-login | 邮箱验证码登录
+[**emailLogin**](EmailAuthAppApi.md#emaillogin) | **POST** /app/auth/email/login | 邮箱登录
+[**getAuthStatus**](EmailAuthAppApi.md#getauthstatus) | **POST** /app/auth/email/status | 获取认证状态
+[**sendEmailCode**](EmailAuthAppApi.md#sendemailcode) | **POST** /app/auth/email/send-code | 发送邮箱验证码
+[**sendVerificationEmail**](EmailAuthAppApi.md#sendverificationemail) | **POST** /app/auth/email/send-verification | 发送邮箱验证链接
+[**verifyCode**](EmailAuthAppApi.md#verifycode) | **POST** /app/auth/email/verify-code | 验证跨设备验证码
+[**verifyEmail**](EmailAuthAppApi.md#verifyemail) | **POST** /app/auth/email/verify | 验证邮箱链接
 
 
 # **emailCodeLogin**

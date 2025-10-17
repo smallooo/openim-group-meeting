@@ -5,11 +5,11 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getCurrentUser**](MemberAppApi.md#getcurrentuser) | **POST** /profile/me | 获取当前用户信息
+[**getCurrentUser**](MemberAppApi.md#getcurrentuser) | **POST** /app/profile/me | 获取当前用户信息
 
 
 # **getCurrentUser**

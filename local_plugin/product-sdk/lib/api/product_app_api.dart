@@ -23,7 +23,7 @@ class ProductAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> brandListWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/product/brand/list';
+    final path = r'/app/product/brand/list';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -66,73 +66,29 @@ class ProductAppApi {
     return null;
   }
 
-  /// 获取分类树
-  ///
-  /// 获取所有启用的分类树形结构
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> categoryTreeWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/product/category/tree';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// 获取分类树
-  ///
-  /// 获取所有启用的分类树形结构
-  Future<CategoryListDTO?> categoryTree() async {
-    final response = await categoryTreeWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'CategoryListDTO',
-      ) as CategoryListDTO;
-    }
-    return null;
-  }
-
   /// 获取频道分类树
   ///
   /// 获取频道和分类的完整树形结构
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> channelCategoryTreeWithHttpInfo() async {
+  ///
+  /// Parameters:
+  ///
+  /// * [SellerIdRequest] sellerIdRequest:
+  Future<Response> channelCategoryTreeWithHttpInfo({
+    SellerIdRequest? sellerIdRequest,
+  }) async {
     // ignore: prefer_const_declarations
-    final path = r'/product/channel-category/tree';
+    final path = r'/app/product/channel-category/tree';
 
     // ignore: prefer_final_locals
-    Object? postBody;
+    Object? postBody = sellerIdRequest;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>[];
+    const contentTypes = <String>['application/json'];
 
     return apiClient.invokeAPI(
       path,
@@ -148,8 +104,16 @@ class ProductAppApi {
   /// 获取频道分类树
   ///
   /// 获取频道和分类的完整树形结构
-  Future<ChannelCategoryTreeDTO?> channelCategoryTree() async {
-    final response = await channelCategoryTreeWithHttpInfo();
+  ///
+  /// Parameters:
+  ///
+  /// * [SellerIdRequest] sellerIdRequest:
+  Future<ChannelCategoryTreeDTO?> channelCategoryTree({
+    SellerIdRequest? sellerIdRequest,
+  }) async {
+    final response = await channelCategoryTreeWithHttpInfo(
+      sellerIdRequest: sellerIdRequest,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -168,21 +132,21 @@ class ProductAppApi {
 
   /// 获取频道列表
   ///
-  /// 获取所有频道列表，支持分页和状态筛选
+  /// 获取所有频道列表，支持状态筛选，包含分类数据
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
-  /// * [PageChannelQueryDTO] pageChannelQueryDTO (required):
+  /// * [ChannelListQueryDTO] channelListQueryDTO (required):
   Future<Response> channelListWithHttpInfo(
-    PageChannelQueryDTO pageChannelQueryDTO,
+    ChannelListQueryDTO channelListQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/product/channel/list';
+    final path = r'/app/product/channel/list';
 
     // ignore: prefer_final_locals
-    Object? postBody = pageChannelQueryDTO;
+    Object? postBody = channelListQueryDTO;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
@@ -203,16 +167,16 @@ class ProductAppApi {
 
   /// 获取频道列表
   ///
-  /// 获取所有频道列表，支持分页和状态筛选
+  /// 获取所有频道列表，支持状态筛选，包含分类数据
   ///
   /// Parameters:
   ///
-  /// * [PageChannelQueryDTO] pageChannelQueryDTO (required):
-  Future<PageResultDTO?> channelList(
-    PageChannelQueryDTO pageChannelQueryDTO,
+  /// * [ChannelListQueryDTO] channelListQueryDTO (required):
+  Future<ChannelListDTO?> channelList(
+    ChannelListQueryDTO channelListQueryDTO,
   ) async {
     final response = await channelListWithHttpInfo(
-      pageChannelQueryDTO,
+      channelListQueryDTO,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
@@ -224,8 +188,8 @@ class ProductAppApi {
         response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(
         await _decodeBodyBytes(response),
-        'PageResultDTO',
-      ) as PageResultDTO;
+        'ChannelListDTO',
+      ) as ChannelListDTO;
     }
     return null;
   }
@@ -243,7 +207,7 @@ class ProductAppApi {
     IdRequest idRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/product/detail';
+    final path = r'/app/product/detail';
 
     // ignore: prefer_final_locals
     Object? postBody = idRequest;
@@ -294,70 +258,6 @@ class ProductAppApi {
     return null;
   }
 
-  /// 获取频道下的分类列表
-  ///
-  /// 获取指定频道下的所有分类，支持树形结构
-  ///
-  /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [ChannelCategoryQueryDTO] channelCategoryQueryDTO (required):
-  Future<Response> getChannelCategoriesWithHttpInfo(
-    ChannelCategoryQueryDTO channelCategoryQueryDTO,
-  ) async {
-    // ignore: prefer_const_declarations
-    final path = r'/product/channel/categories';
-
-    // ignore: prefer_final_locals
-    Object? postBody = channelCategoryQueryDTO;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>['application/json'];
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// 获取频道下的分类列表
-  ///
-  /// 获取指定频道下的所有分类，支持树形结构
-  ///
-  /// Parameters:
-  ///
-  /// * [ChannelCategoryQueryDTO] channelCategoryQueryDTO (required):
-  Future<CategoryListDTO?> getChannelCategories(
-    ChannelCategoryQueryDTO channelCategoryQueryDTO,
-  ) async {
-    final response = await getChannelCategoriesWithHttpInfo(
-      channelCategoryQueryDTO,
-    );
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'CategoryListDTO',
-      ) as CategoryListDTO;
-    }
-    return null;
-  }
-
   /// 获取搜索建议
   ///
   /// 获取搜索建议和热门搜索词
@@ -371,7 +271,7 @@ class ProductAppApi {
     SuggestionsQueryDTO? suggestionsQueryDTO,
   }) async {
     // ignore: prefer_const_declarations
-    final path = r'/product/search/suggestions';
+    final path = r'/app/product/search/suggestions';
 
     // ignore: prefer_final_locals
     Object? postBody = suggestionsQueryDTO;
@@ -435,7 +335,7 @@ class ProductAppApi {
     ProductQueryDTO productQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/product/list';
+    final path = r'/app/product/list';
 
     // ignore: prefer_final_locals
     Object? postBody = productQueryDTO;
@@ -499,7 +399,7 @@ class ProductAppApi {
     ProductQueryDTO productQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/product/product/search';
+    final path = r'/app/product/product/search';
 
     // ignore: prefer_final_locals
     Object? postBody = productQueryDTO;
@@ -546,6 +446,56 @@ class ProductAppApi {
         await _decodeBodyBytes(response),
         'PageResultDTO',
       ) as PageResultDTO;
+    }
+    return null;
+  }
+
+  /// 获取所有商家列表
+  ///
+  /// 获取所有商家及其店铺信息
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> sellerListWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/app/product/seller/list';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// 获取所有商家列表
+  ///
+  /// 获取所有商家及其店铺信息
+  Future<MchSellerDTO?> sellerList() async {
+    final response = await sellerListWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'MchSellerDTO',
+      ) as MchSellerDTO;
     }
     return null;
   }

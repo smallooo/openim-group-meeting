@@ -10,13 +10,13 @@
 
 part of openapi.api;
 
-class ApiRespListCategoryListDTO {
-  /// Returns a new [ApiRespListCategoryListDTO] instance.
-  ApiRespListCategoryListDTO({
+class ApiRespOrderCreateResponseDTO {
+  /// Returns a new [ApiRespOrderCreateResponseDTO] instance.
+  ApiRespOrderCreateResponseDTO({
     this.errCode,
     this.errMsg,
     this.errDlt,
-    this.data = const [],
+    this.data,
   });
 
   ///
@@ -43,12 +43,18 @@ class ApiRespListCategoryListDTO {
   ///
   String? errDlt;
 
-  List<CategoryListDTO> data;
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  OrderCreateResponseDTO? data;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ApiRespListCategoryListDTO &&
+      other is ApiRespOrderCreateResponseDTO &&
           other.errCode == errCode &&
           other.errMsg == errMsg &&
           other.errDlt == errDlt &&
@@ -60,11 +66,11 @@ class ApiRespListCategoryListDTO {
       (errCode == null ? 0 : errCode!.hashCode) +
       (errMsg == null ? 0 : errMsg!.hashCode) +
       (errDlt == null ? 0 : errDlt!.hashCode) +
-      (data.hashCode);
+      (data == null ? 0 : data!.hashCode);
 
   @override
   String toString() =>
-      'ApiRespListCategoryListDTO[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
+      'ApiRespOrderCreateResponseDTO[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -83,14 +89,18 @@ class ApiRespListCategoryListDTO {
     } else {
       json[r'errDlt'] = null;
     }
-    json[r'data'] = this.data;
+    if (this.data != null) {
+      json[r'data'] = this.data;
+    } else {
+      json[r'data'] = null;
+    }
     return json;
   }
 
-  /// Returns a new [ApiRespListCategoryListDTO] instance and imports its values from
+  /// Returns a new [ApiRespOrderCreateResponseDTO] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static ApiRespListCategoryListDTO? fromJson(dynamic value) {
+  static ApiRespOrderCreateResponseDTO? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -100,31 +110,31 @@ class ApiRespListCategoryListDTO {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "ApiRespListCategoryListDTO[$key]" is missing from JSON.');
+              'Required key "ApiRespOrderCreateResponseDTO[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "ApiRespListCategoryListDTO[$key]" has a null value in JSON.');
+              'Required key "ApiRespOrderCreateResponseDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return ApiRespListCategoryListDTO(
+      return ApiRespOrderCreateResponseDTO(
         errCode: mapValueOfType<int>(json, r'errCode'),
         errMsg: mapValueOfType<String>(json, r'errMsg'),
         errDlt: mapValueOfType<String>(json, r'errDlt'),
-        data: CategoryListDTO.listFromJson(json[r'data']),
+        data: OrderCreateResponseDTO.fromJson(json[r'data']),
       );
     }
     return null;
   }
 
-  static List<ApiRespListCategoryListDTO> listFromJson(
+  static List<ApiRespOrderCreateResponseDTO> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <ApiRespListCategoryListDTO>[];
+    final result = <ApiRespOrderCreateResponseDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = ApiRespListCategoryListDTO.fromJson(row);
+        final value = ApiRespOrderCreateResponseDTO.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -133,12 +143,12 @@ class ApiRespListCategoryListDTO {
     return result.toList(growable: growable);
   }
 
-  static Map<String, ApiRespListCategoryListDTO> mapFromJson(dynamic json) {
-    final map = <String, ApiRespListCategoryListDTO>{};
+  static Map<String, ApiRespOrderCreateResponseDTO> mapFromJson(dynamic json) {
+    final map = <String, ApiRespOrderCreateResponseDTO>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = ApiRespListCategoryListDTO.fromJson(entry.value);
+        final value = ApiRespOrderCreateResponseDTO.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -147,17 +157,17 @@ class ApiRespListCategoryListDTO {
     return map;
   }
 
-  // maps a json object with a list of ApiRespListCategoryListDTO-objects as value to a dart map
-  static Map<String, List<ApiRespListCategoryListDTO>> mapListFromJson(
+  // maps a json object with a list of ApiRespOrderCreateResponseDTO-objects as value to a dart map
+  static Map<String, List<ApiRespOrderCreateResponseDTO>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<ApiRespListCategoryListDTO>>{};
+    final map = <String, List<ApiRespOrderCreateResponseDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ApiRespListCategoryListDTO.listFromJson(
+        map[entry.key] = ApiRespOrderCreateResponseDTO.listFromJson(
           entry.value,
           growable: growable,
         );

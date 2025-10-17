@@ -69,45 +69,46 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:9994/v1*
+All URIs are relative to *http://localhost:9994*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ProductAppApi* | [**brandList**](doc//ProductAppApi.md#brandlist) | **POST** /product/brand/list | 获取品牌列表
-*ProductAppApi* | [**categoryTree**](doc//ProductAppApi.md#categorytree) | **POST** /product/category/tree | 获取分类树
-*ProductAppApi* | [**channelCategoryTree**](doc//ProductAppApi.md#channelcategorytree) | **POST** /product/channel-category/tree | 获取频道分类树
-*ProductAppApi* | [**channelList**](doc//ProductAppApi.md#channellist) | **POST** /product/channel/list | 获取频道列表
-*ProductAppApi* | [**detail**](doc//ProductAppApi.md#detail) | **POST** /product/detail | 获取商品详情
-*ProductAppApi* | [**getChannelCategories**](doc//ProductAppApi.md#getchannelcategories) | **POST** /product/channel/categories | 获取频道下的分类列表
-*ProductAppApi* | [**getSearchSuggestions**](doc//ProductAppApi.md#getsearchsuggestions) | **POST** /product/search/suggestions | 获取搜索建议
-*ProductAppApi* | [**list**](doc//ProductAppApi.md#list) | **POST** /product/list | 获取商品列表
-*ProductAppApi* | [**search**](doc//ProductAppApi.md#search) | **POST** /product/product/search | 搜索商品
+*ProductAppApi* | [**brandList**](doc//ProductAppApi.md#brandlist) | **POST** /app/product/brand/list | 获取品牌列表
+*ProductAppApi* | [**channelCategoryTree**](doc//ProductAppApi.md#channelcategorytree) | **POST** /app/product/channel-category/tree | 获取频道分类树
+*ProductAppApi* | [**channelList**](doc//ProductAppApi.md#channellist) | **POST** /app/product/channel/list | 获取频道列表
+*ProductAppApi* | [**detail**](doc//ProductAppApi.md#detail) | **POST** /app/product/detail | 获取商品详情
+*ProductAppApi* | [**getSearchSuggestions**](doc//ProductAppApi.md#getsearchsuggestions) | **POST** /app/product/search/suggestions | 获取搜索建议
+*ProductAppApi* | [**list**](doc//ProductAppApi.md#list) | **POST** /app/product/list | 获取商品列表
+*ProductAppApi* | [**search**](doc//ProductAppApi.md#search) | **POST** /app/product/product/search | 搜索商品
+*ProductAppApi* | [**sellerList**](doc//ProductAppApi.md#sellerlist) | **POST** /app/product/seller/list | 获取所有商家列表
 
 
 ## Documentation For Models
 
  - [ApiRespListBrandDTO](doc//ApiRespListBrandDTO.md)
- - [ApiRespListCategoryListDTO](doc//ApiRespListCategoryListDTO.md)
  - [ApiRespListChannelCategoryTreeDTO](doc//ApiRespListChannelCategoryTreeDTO.md)
- - [ApiRespPageResultDTOChannelListDTO](doc//ApiRespPageResultDTOChannelListDTO.md)
+ - [ApiRespListChannelListDTO](doc//ApiRespListChannelListDTO.md)
+ - [ApiRespListMchSellerDTO](doc//ApiRespListMchSellerDTO.md)
  - [ApiRespPageResultDTOProductListItemDTO](doc//ApiRespPageResultDTOProductListItemDTO.md)
  - [ApiRespProductDetailDTO](doc//ApiRespProductDetailDTO.md)
  - [ApiRespSearchSuggestionsDTO](doc//ApiRespSearchSuggestionsDTO.md)
  - [BrandDTO](doc//BrandDTO.md)
- - [CategoryListDTO](doc//CategoryListDTO.md)
+ - [CategoryDTO](doc//CategoryDTO.md)
  - [CategoryTreeDTO](doc//CategoryTreeDTO.md)
- - [ChannelCategoryQueryDTO](doc//ChannelCategoryQueryDTO.md)
  - [ChannelCategoryTreeDTO](doc//ChannelCategoryTreeDTO.md)
+ - [ChannelListDTO](doc//ChannelListDTO.md)
+ - [ChannelListQueryDTO](doc//ChannelListQueryDTO.md)
  - [HotKeywordDTO](doc//HotKeywordDTO.md)
  - [IdRequest](doc//IdRequest.md)
- - [PageChannelQueryDTO](doc//PageChannelQueryDTO.md)
+ - [MchSellerDTO](doc//MchSellerDTO.md)
+ - [MchShopDTO](doc//MchShopDTO.md)
  - [PageResultDTO](doc//PageResultDTO.md)
- - [PageResultDTOChannelListDTO](doc//PageResultDTOChannelListDTO.md)
  - [PageResultDTOProductListItemDTO](doc//PageResultDTOProductListItemDTO.md)
  - [ProductDetailDTO](doc//ProductDetailDTO.md)
  - [ProductQueryDTO](doc//ProductQueryDTO.md)
  - [SearchSuggestionItemDTO](doc//SearchSuggestionItemDTO.md)
  - [SearchSuggestionsDTO](doc//SearchSuggestionsDTO.md)
+ - [SellerIdRequest](doc//SellerIdRequest.md)
  - [SkuItem](doc//SkuItem.md)
  - [Specification](doc//Specification.md)
  - [SuggestionsQueryDTO](doc//SuggestionsQueryDTO.md)

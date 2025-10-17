@@ -34,7 +34,7 @@ class PaymentPasswordAppApi {
     String newPassword,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-password/change';
+    final path = r'/app/wallet-password/change';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -101,7 +101,7 @@ class PaymentPasswordAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> getMyPaymentPasswordStatusWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-password/status';
+    final path = r'/app/wallet-password/status';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -158,7 +158,7 @@ class PaymentPasswordAppApi {
     String password,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-password/set';
+    final path = r'/app/wallet-password/set';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -226,7 +226,7 @@ class PaymentPasswordAppApi {
     String password,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-password/verify';
+    final path = r'/app/wallet-password/verify';
 
     // ignore: prefer_final_locals
     Object? postBody;

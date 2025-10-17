@@ -29,7 +29,7 @@ class RefundAppApi {
     RefundApplyRequest refundApplyRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/refund/apply';
+    final path = r'/app/refund/apply';
 
     // ignore: prefer_final_locals
     Object? postBody = refundApplyRequest;
@@ -93,7 +93,7 @@ class RefundAppApi {
     RefundApproveRequest refundApproveRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/refund/approve';
+    final path = r'/app/refund/approve';
 
     // ignore: prefer_final_locals
     Object? postBody = refundApproveRequest;
@@ -159,7 +159,7 @@ class RefundAppApi {
   ) async {
     // ignore: prefer_const_declarations
     final path =
-        r'/refund/{refundNo}/cancel'.replaceAll('{refundNo}', refundNo);
+        r'/app/refund/{refundNo}/cancel'.replaceAll('{refundNo}', refundNo);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -224,7 +224,7 @@ class RefundAppApi {
     RefundConfirmRequest refundConfirmRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/refund/confirm';
+    final path = r'/app/refund/confirm';
 
     // ignore: prefer_final_locals
     Object? postBody = refundConfirmRequest;
@@ -289,8 +289,8 @@ class RefundAppApi {
     int orderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path =
-        r'/refund/order/{orderId}'.replaceAll('{orderId}', orderId.toString());
+    final path = r'/app/refund/order/{orderId}'
+        .replaceAll('{orderId}', orderId.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -356,7 +356,7 @@ class RefundAppApi {
     String refundNo,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/refund/{refundNo}'.replaceAll('{refundNo}', refundNo);
+    final path = r'/app/refund/{refundNo}'.replaceAll('{refundNo}', refundNo);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -442,7 +442,7 @@ class RefundAppApi {
     int? size,
   }) async {
     // ignore: prefer_const_declarations
-    final path = r'/refund/list';
+    final path = r'/app/refund/list';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -551,7 +551,7 @@ class RefundAppApi {
     RefundQueryRequest refundQueryRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/refund/refund/query';
+    final path = r'/app/refund/refund/query';
 
     // ignore: prefer_final_locals
     Object? postBody = refundQueryRequest;

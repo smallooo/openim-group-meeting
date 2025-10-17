@@ -70,40 +70,40 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*EmailAuthAppApi* | [**emailCodeLogin**](doc//EmailAuthAppApi.md#emailcodelogin) | **POST** /auth/email/code-login | 邮箱验证码登录
-*EmailAuthAppApi* | [**emailLogin**](doc//EmailAuthAppApi.md#emaillogin) | **POST** /auth/email/login | 邮箱登录
-*EmailAuthAppApi* | [**getAuthStatus**](doc//EmailAuthAppApi.md#getauthstatus) | **POST** /auth/email/status | 获取认证状态
-*EmailAuthAppApi* | [**sendEmailCode**](doc//EmailAuthAppApi.md#sendemailcode) | **POST** /auth/email/send-code | 发送邮箱验证码
-*EmailAuthAppApi* | [**sendVerificationEmail**](doc//EmailAuthAppApi.md#sendverificationemail) | **POST** /auth/email/send-verification | 发送邮箱验证链接
-*EmailAuthAppApi* | [**verifyCode**](doc//EmailAuthAppApi.md#verifycode) | **POST** /auth/email/verify-code | 验证跨设备验证码
-*EmailAuthAppApi* | [**verifyEmail**](doc//EmailAuthAppApi.md#verifyemail) | **POST** /auth/email/verify | 验证邮箱链接
-*GoogleAuthAppApi* | [**authorize**](doc//GoogleAuthAppApi.md#authorize) | **GET** /oauth2/google/authorize | 获取Google授权URL
-*GoogleAuthAppApi* | [**call1**](doc//GoogleAuthAppApi.md#call1) | **POST** /oauth2/google/login | Google登录
-*GoogleAuthAppApi* | [**call1_0**](doc//GoogleAuthAppApi.md#call1_0) | **POST** /oauth2/google/callback | Google OAuth2回调
-*GoogleAuthAppApi* | [**call1_1**](doc//GoogleAuthAppApi.md#call1_1) | **POST** /oauth2/google/auth-url | 获取授权URL
-*MemberAddressAppApi* | [**delete**](doc//MemberAddressAppApi.md#delete) | **POST** /address/delete | 删除收货地址
-*MemberAddressAppApi* | [**list**](doc//MemberAddressAppApi.md#list) | **POST** /address/list | 查询当前用户的收货地址列表
-*MemberAddressAppApi* | [**save**](doc//MemberAddressAppApi.md#save) | **POST** /address/save | 新增收货地址
-*MemberAddressAppApi* | [**update**](doc//MemberAddressAppApi.md#update) | **POST** /address/update | 更新收货地址
-*MemberAppApi* | [**getCurrentUser**](doc//MemberAppApi.md#getcurrentuser) | **POST** /profile/me | 获取当前用户信息
-*MemberRelationAppApi* | [**attention**](doc//MemberRelationAppApi.md#attention) | **POST** /member/relation/attention/{memberId} | 关注一个用户
-*MemberRelationAppApi* | [**unattention**](doc//MemberRelationAppApi.md#unattention) | **POST** /member/relation/unattention/{memberId} | 取消关注一个用户
-*SmsLoginAppApi* | [**sendSmsCaptcha**](doc//SmsLoginAppApi.md#sendsmscaptcha) | **POST** /login/sms-captcha | 获取短信验证码
-*SmsLoginAppApi* | [**smsLogin**](doc//SmsLoginAppApi.md#smslogin) | **POST** /login/sms | 短信验证码登录
-*TelegramAuthAppApi* | [**call2**](doc//TelegramAuthAppApi.md#call2) | **POST** /auth/telegram/login | Telegram登录
-*TelegramAuthAppApi* | [**call2_0**](doc//TelegramAuthAppApi.md#call2_0) | **POST** /auth/telegram/callback | Telegram登录回调
-*TelegramAuthAppApi* | [**getConfig**](doc//TelegramAuthAppApi.md#getconfig) | **POST** /auth/telegram/config | 获取Telegram Bot配置
-*TelegramAuthAppApi* | [**getWidgetScript**](doc//TelegramAuthAppApi.md#getwidgetscript) | **POST** /auth/telegram/widget-script | 获取Telegram Widget脚本配置
-*TikTokAuthAppApi* | [**callback**](doc//TikTokAuthAppApi.md#callback) | **POST** /oauth2/tiktok/callback | TikTok OAuth2回调
-*TikTokAuthAppApi* | [**getAuthUrl**](doc//TikTokAuthAppApi.md#getauthurl) | **POST** /oauth2/tiktok/auth-url | 获取TikTok授权URL
-*TikTokAuthAppApi* | [**login**](doc//TikTokAuthAppApi.md#login) | **POST** /oauth2/tiktok/login | TikTok授权登录
-*TokenAppApi* | [**checkTokenStatus**](doc//TokenAppApi.md#checktokenstatus) | **POST** /auth/status | 检查Token状态
-*TokenAppApi* | [**logout**](doc//TokenAppApi.md#logout) | **POST** /auth/logout | 退出登录
-*TokenAppApi* | [**refreshToken**](doc//TokenAppApi.md#refreshtoken) | **POST** /auth/refresh | 刷新AccessToken
+*EmailAuthAppApi* | [**emailCodeLogin**](doc//EmailAuthAppApi.md#emailcodelogin) | **POST** /app/auth/email/code-login | 邮箱验证码登录
+*EmailAuthAppApi* | [**emailLogin**](doc//EmailAuthAppApi.md#emaillogin) | **POST** /app/auth/email/login | 邮箱登录
+*EmailAuthAppApi* | [**getAuthStatus**](doc//EmailAuthAppApi.md#getauthstatus) | **POST** /app/auth/email/status | 获取认证状态
+*EmailAuthAppApi* | [**sendEmailCode**](doc//EmailAuthAppApi.md#sendemailcode) | **POST** /app/auth/email/send-code | 发送邮箱验证码
+*EmailAuthAppApi* | [**sendVerificationEmail**](doc//EmailAuthAppApi.md#sendverificationemail) | **POST** /app/auth/email/send-verification | 发送邮箱验证链接
+*EmailAuthAppApi* | [**verifyCode**](doc//EmailAuthAppApi.md#verifycode) | **POST** /app/auth/email/verify-code | 验证跨设备验证码
+*EmailAuthAppApi* | [**verifyEmail**](doc//EmailAuthAppApi.md#verifyemail) | **POST** /app/auth/email/verify | 验证邮箱链接
+*GoogleAuthAppApi* | [**getGoogleAuthUrl**](doc//GoogleAuthAppApi.md#getgoogleauthurl) | **POST** /app/auth/oauth2/google/auth-url | 获取授权URL
+*GoogleAuthAppApi* | [**googleAuthorize**](doc//GoogleAuthAppApi.md#googleauthorize) | **GET** /app/auth/oauth2/google/authorize | 获取Google授权URL
+*GoogleAuthAppApi* | [**googleCallback**](doc//GoogleAuthAppApi.md#googlecallback) | **POST** /app/auth/oauth2/google/callback | Google OAuth2回调
+*GoogleAuthAppApi* | [**googleLogin**](doc//GoogleAuthAppApi.md#googlelogin) | **POST** /app/auth/oauth2/google/login | Google登录
+*MemberAddressAppApi* | [**delete**](doc//MemberAddressAppApi.md#delete) | **POST** /app/address/delete | 删除收货地址
+*MemberAddressAppApi* | [**list**](doc//MemberAddressAppApi.md#list) | **POST** /app/address/list | 查询当前用户的收货地址列表
+*MemberAddressAppApi* | [**save**](doc//MemberAddressAppApi.md#save) | **POST** /app/address/save | 新增收货地址
+*MemberAddressAppApi* | [**update**](doc//MemberAddressAppApi.md#update) | **POST** /app/address/update | 更新收货地址
+*MemberAppApi* | [**getCurrentUser**](doc//MemberAppApi.md#getcurrentuser) | **POST** /app/profile/me | 获取当前用户信息
+*MemberRelationAppApi* | [**attention**](doc//MemberRelationAppApi.md#attention) | **POST** /app/member/relation/attention/{memberId} | 关注一个用户
+*MemberRelationAppApi* | [**unattention**](doc//MemberRelationAppApi.md#unattention) | **POST** /app/member/relation/unattention/{memberId} | 取消关注一个用户
+*SmsLoginAppApi* | [**sendSmsCaptcha**](doc//SmsLoginAppApi.md#sendsmscaptcha) | **POST** /app/auth/login/sms-captcha | 获取短信验证码
+*SmsLoginAppApi* | [**smsLogin**](doc//SmsLoginAppApi.md#smslogin) | **POST** /app/auth/login/sms | 短信验证码登录
+*TelegramAuthAppApi* | [**callback**](doc//TelegramAuthAppApi.md#callback) | **POST** /app/auth/telegram/callback | Telegram登录回调
+*TelegramAuthAppApi* | [**getConfig**](doc//TelegramAuthAppApi.md#getconfig) | **POST** /app/auth/telegram/config | 获取Telegram Bot配置
+*TelegramAuthAppApi* | [**getWidgetScript**](doc//TelegramAuthAppApi.md#getwidgetscript) | **POST** /app/auth/telegram/widget-script | 获取Telegram Widget脚本配置
+*TelegramAuthAppApi* | [**login**](doc//TelegramAuthAppApi.md#login) | **POST** /app/auth/telegram/login | Telegram登录
+*TikTokAuthAppApi* | [**getTikTokAuthUrl**](doc//TikTokAuthAppApi.md#gettiktokauthurl) | **POST** /app/auth/oauth2/tiktok/auth-url | 获取TikTok授权URL
+*TikTokAuthAppApi* | [**tiktokCallback**](doc//TikTokAuthAppApi.md#tiktokcallback) | **POST** /app/auth/oauth2/tiktok/callback | TikTok OAuth2回调
+*TikTokAuthAppApi* | [**tiktokLogin**](doc//TikTokAuthAppApi.md#tiktoklogin) | **POST** /app/auth/oauth2/tiktok/login | TikTok授权登录
+*TokenAppApi* | [**checkTokenStatus**](doc//TokenAppApi.md#checktokenstatus) | **POST** /app/auth/token/status | 检查Token状态
+*TokenAppApi* | [**logout**](doc//TokenAppApi.md#logout) | **POST** /app/auth/token/logout | 退出登录
+*TokenAppApi* | [**refreshToken**](doc//TokenAppApi.md#refreshtoken) | **POST** /app/auth/token/refresh | 刷新AccessToken
 
 
 ## Documentation For Models

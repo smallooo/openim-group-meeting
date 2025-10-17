@@ -227,4 +227,16 @@ class ImageRes {
   static const tkPayHome3 = "$_dir/tk_pay_home_3.png";
   static const tkPayHome4 = "$_dir/tk_pay_home_4.png";
 
+  static const tkGuarantee1 = "$_dir/tk_guarantee_1.png";
+  static const tkGuarantee2 = "$_dir/tk_guarantee_2.png";
+  static const tkGuarantee3 = "$_dir/tk_guarantee_3.png";
+  static const tkGuarantee4 = "$_dir/tk_guarantee_4.png";
+  static const tkGuarantee5 = "$_dir/tk_guarantee_5.png";
+  static const tkGuarantee6 = "$_dir/tk_guarantee_6.png";
+
+  static const tkGuaranteeOrder1 = "$_dir/tk_guarantee_order_1.png";
+  static const tkGuaranteeOrder2 = "$_dir/tk_guarantee_order_2.png";
+  static const tkGuaranteeOrder3 = "$_dir/tk_guarantee_order_3.png";
+
+
 }

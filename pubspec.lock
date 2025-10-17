@@ -2435,10 +2435,24 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  toklink_order_sdk:
+    dependency: "direct main"
+    description:
+      path: "local_plugin/order-sdk"
+      relative: true
+    source: path
+    version: "1.0.0"
   toklink_pay_sdk:
     dependency: "direct main"
     description:
       path: "local_plugin/pay-sdk"
+      relative: true
+    source: path
+    version: "1.0.0"
+  toklink_product_sdk:
+    dependency: "direct main"
+    description:
+      path: "local_plugin/product-sdk"
       relative: true
     source: path
     version: "1.0.0"

@@ -336,6 +336,10 @@ class ChatLogic extends SuperController {
       ? AppNavigator.startChatSetup(conversationInfo: conversationInfo)
       : AppNavigator.startGroupChatSetup(conversationInfo: conversationInfo);
 
+  void createOrder() {
+    AppNavigator.startTkGuaranteeCreateOrder();
+  }
+
   void _putMemberInfo(List<GroupMembersInfo>? list) {
     list?.forEach((member) {
       memberUpdateInfoMap[member.userID!] = member;

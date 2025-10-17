@@ -17,16 +17,8 @@ lib/auth/authentication.dart
 lib/auth/http_basic_auth.dart
 lib/auth/http_bearer_auth.dart
 lib/auth/oauth.dart
-lib/model/api_resp_channel_pay_order.dart
-lib/model/api_resp_list_notify_log_response.dart
-lib/model/api_resp_map_string_object.dart
-lib/model/api_resp_notify_data_response.dart
-lib/model/api_resp_string.dart
-lib/model/channel_pay_order.dart
 lib/model/notify_data_request.dart
-lib/model/notify_data_response.dart
 lib/model/notify_detail_query_dto.dart
-lib/model/notify_log_response.dart
 lib/model/notify_logs_query_dto.dart
 lib/model/notify_query_dto.dart
 lib/model/personal_pay_order_list_query_dto.dart

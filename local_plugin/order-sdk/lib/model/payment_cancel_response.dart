@@ -17,6 +17,7 @@ class PaymentCancelResponse {
     this.orderNo,
     this.status,
     this.cancelTime,
+    this.thirdPartyOrderNo,
   });
 
   /// 支付系统订单号
@@ -55,6 +56,15 @@ class PaymentCancelResponse {
   ///
   int? cancelTime;
 
+  /// 第三方支付订单号
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? thirdPartyOrderNo;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -62,7 +72,8 @@ class PaymentCancelResponse {
           other.paymentId == paymentId &&
           other.orderNo == orderNo &&
           other.status == status &&
-          other.cancelTime == cancelTime;
+          other.cancelTime == cancelTime &&
+          other.thirdPartyOrderNo == thirdPartyOrderNo;
 
   @override
   int get hashCode =>
@@ -70,11 +81,12 @@ class PaymentCancelResponse {
       (paymentId == null ? 0 : paymentId!.hashCode) +
       (orderNo == null ? 0 : orderNo!.hashCode) +
       (status == null ? 0 : status!.hashCode) +
-      (cancelTime == null ? 0 : cancelTime!.hashCode);
+      (cancelTime == null ? 0 : cancelTime!.hashCode) +
+      (thirdPartyOrderNo == null ? 0 : thirdPartyOrderNo!.hashCode);
 
   @override
   String toString() =>
-      'PaymentCancelResponse[paymentId=$paymentId, orderNo=$orderNo, status=$status, cancelTime=$cancelTime]';
+      'PaymentCancelResponse[paymentId=$paymentId, orderNo=$orderNo, status=$status, cancelTime=$cancelTime, thirdPartyOrderNo=$thirdPartyOrderNo]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -97,6 +109,11 @@ class PaymentCancelResponse {
       json[r'cancelTime'] = this.cancelTime;
     } else {
       json[r'cancelTime'] = null;
+    }
+    if (this.thirdPartyOrderNo != null) {
+      json[r'thirdPartyOrderNo'] = this.thirdPartyOrderNo;
+    } else {
+      json[r'thirdPartyOrderNo'] = null;
     }
     return json;
   }
@@ -126,6 +143,7 @@ class PaymentCancelResponse {
         orderNo: mapValueOfType<String>(json, r'orderNo'),
         status: mapValueOfType<String>(json, r'status'),
         cancelTime: mapValueOfType<int>(json, r'cancelTime'),
+        thirdPartyOrderNo: mapValueOfType<String>(json, r'thirdPartyOrderNo'),
       );
     }
     return null;

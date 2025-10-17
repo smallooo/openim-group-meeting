@@ -29,7 +29,7 @@ class NotifyDataAppApi {
     NotifyDetailQueryDTO notifyDetailQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/notify-data/detail';
+    final path = r'/app/notify-data/detail';
 
     // ignore: prefer_final_locals
     Object? postBody = notifyDetailQueryDTO;
@@ -58,7 +58,7 @@ class NotifyDataAppApi {
   /// Parameters:
   ///
   /// * [NotifyDetailQueryDTO] notifyDetailQueryDTO (required):
-  Future<ApiRespNotifyDataResponse?> getNotifyDetail(
+  Future<void> getNotifyDetail(
     NotifyDetailQueryDTO notifyDetailQueryDTO,
   ) async {
     final response = await getNotifyDetailWithHttpInfo(
@@ -67,17 +67,6 @@ class NotifyDataAppApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespNotifyDataResponse',
-      ) as ApiRespNotifyDataResponse;
-    }
-    return null;
   }
 
   /// 获取通知日志
@@ -93,7 +82,7 @@ class NotifyDataAppApi {
     NotifyLogsQueryDTO notifyLogsQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/notify-data/logs';
+    final path = r'/app/notify-data/logs';
 
     // ignore: prefer_final_locals
     Object? postBody = notifyLogsQueryDTO;
@@ -122,7 +111,7 @@ class NotifyDataAppApi {
   /// Parameters:
   ///
   /// * [NotifyLogsQueryDTO] notifyLogsQueryDTO (required):
-  Future<ApiRespListNotifyLogResponse?> getNotifyLogs(
+  Future<void> getNotifyLogs(
     NotifyLogsQueryDTO notifyLogsQueryDTO,
   ) async {
     final response = await getNotifyLogsWithHttpInfo(
@@ -131,17 +120,6 @@ class NotifyDataAppApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespListNotifyLogResponse',
-      ) as ApiRespListNotifyLogResponse;
-    }
-    return null;
   }
 
   /// 查询通知数据
@@ -157,7 +135,7 @@ class NotifyDataAppApi {
     NotifyQueryDTO notifyQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/notify-data/query';
+    final path = r'/app/notify-data/query';
 
     // ignore: prefer_final_locals
     Object? postBody = notifyQueryDTO;
@@ -186,7 +164,7 @@ class NotifyDataAppApi {
   /// Parameters:
   ///
   /// * [NotifyQueryDTO] notifyQueryDTO (required):
-  Future<ApiRespMapStringObject?> queryNotifyData(
+  Future<void> queryNotifyData(
     NotifyQueryDTO notifyQueryDTO,
   ) async {
     final response = await queryNotifyDataWithHttpInfo(
@@ -195,17 +173,6 @@ class NotifyDataAppApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespMapStringObject',
-      ) as ApiRespMapStringObject;
-    }
-    return null;
   }
 
   /// 接收异步通知数据
@@ -221,7 +188,7 @@ class NotifyDataAppApi {
     NotifyDataRequest notifyDataRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/notify-data/receive';
+    final path = r'/app/notify-data/receive';
 
     // ignore: prefer_final_locals
     Object? postBody = notifyDataRequest;
@@ -250,7 +217,7 @@ class NotifyDataAppApi {
   /// Parameters:
   ///
   /// * [NotifyDataRequest] notifyDataRequest (required):
-  Future<ApiRespString?> receiveNotifyData(
+  Future<void> receiveNotifyData(
     NotifyDataRequest notifyDataRequest,
   ) async {
     final response = await receiveNotifyDataWithHttpInfo(
@@ -259,17 +226,6 @@ class NotifyDataAppApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespString',
-      ) as ApiRespString;
-    }
-    return null;
   }
 
   /// 手动触发通知
@@ -285,7 +241,7 @@ class NotifyDataAppApi {
     TriggerNotifyDTO triggerNotifyDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/notify-data/trigger';
+    final path = r'/app/notify-data/trigger';
 
     // ignore: prefer_final_locals
     Object? postBody = triggerNotifyDTO;
@@ -314,7 +270,7 @@ class NotifyDataAppApi {
   /// Parameters:
   ///
   /// * [TriggerNotifyDTO] triggerNotifyDTO (required):
-  Future<ApiRespString?> triggerNotify(
+  Future<void> triggerNotify(
     TriggerNotifyDTO triggerNotifyDTO,
   ) async {
     final response = await triggerNotifyWithHttpInfo(
@@ -323,16 +279,5 @@ class NotifyDataAppApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespString',
-      ) as ApiRespString;
-    }
-    return null;
   }
 }

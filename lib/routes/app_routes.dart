@@ -64,6 +64,10 @@ abstract class AppRoutes {
   static const expandChatHistory = _Paths.expandChatHistory;
   static const selectContactsFromTag = _Paths.selectContactsFromTag;
   static const strategySubscription = _Paths.strategySubscription;
+  static const tkGuaranteeOrder = _Paths.tkGuaranteeOrder;
+  static const tkGuaranteeOrderDetail = _Paths.tkGuaranteeOrderDetail;
+  static const tkGuaranteeCreateOrder = _Paths.tkGuaranteeCreateOrder;
+  static const tkChannelHome = _Paths.tkChannelHome;
 }
 
 abstract class _Paths {
@@ -130,6 +134,10 @@ abstract class _Paths {
   static const expandChatHistory = '/expand_chat_history';
   static const selectContactsFromTag = '/select_contacts_from_tag';
   static const strategySubscription = '/strategy_subscription';
+  static const tkGuaranteeOrder = '/tk_guarantee_order';
+  static const tkGuaranteeOrderDetail = '/tk_guarantee_order_detail';
+  static const tkGuaranteeCreateOrder = '/tk_guarantee_create_order';
+  static const tkChannelHome = '/tk_channel_home';
 }
 
 extension RoutesExtension on String {

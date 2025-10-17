@@ -29,7 +29,7 @@ class MemberRelationAppApi {
     int memberId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/member/relation/attention/{memberId}'
+    final path = r'/app/member/relation/attention/{memberId}'
         .replaceAll('{memberId}', memberId.toString());
 
     // ignore: prefer_final_locals
@@ -94,7 +94,7 @@ class MemberRelationAppApi {
     int memberId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/member/relation/unattention/{memberId}'
+    final path = r'/app/member/relation/unattention/{memberId}'
         .replaceAll('{memberId}', memberId.toString());
 
     // ignore: prefer_final_locals

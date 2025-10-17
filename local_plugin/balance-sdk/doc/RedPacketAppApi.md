@@ -5,13 +5,13 @@
 import 'package:toklink_balance_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9998/v1*
+All URIs are relative to *http://localhost:9998*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createRedPacket**](RedPacketAppApi.md#createredpacket) | **POST** /wallet-red-packet/create | 创建红包
-[**getRedPacketDetail**](RedPacketAppApi.md#getredpacketdetail) | **POST** /wallet-red-packet/detail | 查询红包详情
-[**receiveRedPacket**](RedPacketAppApi.md#receiveredpacket) | **POST** /wallet-red-packet/receive | 领取红包
+[**createRedPacket**](RedPacketAppApi.md#createredpacket) | **POST** /app/wallet-red-packet/create | 创建红包
+[**getRedPacketDetail**](RedPacketAppApi.md#getredpacketdetail) | **POST** /app/wallet-red-packet/detail | 查询红包详情
+[**receiveRedPacket**](RedPacketAppApi.md#receiveredpacket) | **POST** /app/wallet-red-packet/receive | 领取红包
 
 
 # **createRedPacket**

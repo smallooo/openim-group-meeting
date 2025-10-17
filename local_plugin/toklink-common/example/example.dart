@@ -7,9 +7,9 @@ void main() {
   print('1. Generating signature for payment data:');
   final paymentData = {
     'memberId': '1977672558140461058',
-    'amount': '30',
-    'currencyId': '1',
-    'partnerOrderNo': 'PAY202510131749240002',
+    'amount': '199.98',
+    'currencyId': '7',
+    'partnerOrderNo': 'WO17606110759126798',
     'reason': 'Payment for service',
   };
 

@@ -5,18 +5,18 @@
 import 'package:toklink_order_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9995/v1*
+All URIs are relative to *http://localhost:9995*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**applyRefund**](RefundAppApi.md#applyrefund) | **POST** /refund/apply | 申请退款
-[**approveRefund**](RefundAppApi.md#approverefund) | **POST** /refund/approve | 审核退款申请
-[**cancelRefund**](RefundAppApi.md#cancelrefund) | **POST** /refund/{refundNo}/cancel | 撤销退款申请
-[**confirmRefund**](RefundAppApi.md#confirmrefund) | **POST** /refund/confirm | 确认退款
-[**getRefundByOrderId**](RefundAppApi.md#getrefundbyorderid) | **GET** /refund/order/{orderId} | 根据订单ID获取退款申请
-[**getRefundDetail**](RefundAppApi.md#getrefunddetail) | **GET** /refund/{refundNo} | 获取退款申请详情
-[**getRefundList**](RefundAppApi.md#getrefundlist) | **GET** /refund/list | 分页查询退款申请列表
-[**queryRefund**](RefundAppApi.md#queryrefund) | **POST** /refund/refund/query | 查询退款订单状态
+[**applyRefund**](RefundAppApi.md#applyrefund) | **POST** /app/refund/apply | 申请退款
+[**approveRefund**](RefundAppApi.md#approverefund) | **POST** /app/refund/approve | 审核退款申请
+[**cancelRefund**](RefundAppApi.md#cancelrefund) | **POST** /app/refund/{refundNo}/cancel | 撤销退款申请
+[**confirmRefund**](RefundAppApi.md#confirmrefund) | **POST** /app/refund/confirm | 确认退款
+[**getRefundByOrderId**](RefundAppApi.md#getrefundbyorderid) | **GET** /app/refund/order/{orderId} | 根据订单ID获取退款申请
+[**getRefundDetail**](RefundAppApi.md#getrefunddetail) | **GET** /app/refund/{refundNo} | 获取退款申请详情
+[**getRefundList**](RefundAppApi.md#getrefundlist) | **GET** /app/refund/list | 分页查询退款申请列表
+[**queryRefund**](RefundAppApi.md#queryrefund) | **POST** /app/refund/refund/query | 查询退款订单状态
 
 
 # **applyRefund**

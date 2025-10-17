@@ -5,19 +5,19 @@
 import 'package:toklink_pay_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9996/v1*
+All URIs are relative to *http://localhost:9996*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getNotifyDetail**](NotifyDataAppApi.md#getnotifydetail) | **POST** /notify-data/detail | 获取通知详情
-[**getNotifyLogs**](NotifyDataAppApi.md#getnotifylogs) | **POST** /notify-data/logs | 获取通知日志
-[**queryNotifyData**](NotifyDataAppApi.md#querynotifydata) | **POST** /notify-data/query | 查询通知数据
-[**receiveNotifyData**](NotifyDataAppApi.md#receivenotifydata) | **POST** /notify-data/receive | 接收异步通知数据
-[**triggerNotify**](NotifyDataAppApi.md#triggernotify) | **POST** /notify-data/trigger | 手动触发通知
+[**getNotifyDetail**](NotifyDataAppApi.md#getnotifydetail) | **POST** /app/notify-data/detail | 获取通知详情
+[**getNotifyLogs**](NotifyDataAppApi.md#getnotifylogs) | **POST** /app/notify-data/logs | 获取通知日志
+[**queryNotifyData**](NotifyDataAppApi.md#querynotifydata) | **POST** /app/notify-data/query | 查询通知数据
+[**receiveNotifyData**](NotifyDataAppApi.md#receivenotifydata) | **POST** /app/notify-data/receive | 接收异步通知数据
+[**triggerNotify**](NotifyDataAppApi.md#triggernotify) | **POST** /app/notify-data/trigger | 手动触发通知
 
 
 # **getNotifyDetail**
-> ApiRespNotifyDataResponse getNotifyDetail(notifyDetailQueryDTO)
+> getNotifyDetail(notifyDetailQueryDTO)
 
 获取通知详情
 
@@ -47,8 +47,7 @@ final api_instance = NotifyDataAppApi();
 final notifyDetailQueryDTO = NotifyDetailQueryDTO(); // NotifyDetailQueryDTO | 
 
 try {
-    final result = api_instance.getNotifyDetail(notifyDetailQueryDTO);
-    print(result);
+    api_instance.getNotifyDetail(notifyDetailQueryDTO);
 } catch (e) {
     print('Exception when calling NotifyDataAppApi->getNotifyDetail: $e\n');
 }
@@ -62,7 +61,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespNotifyDataResponse**](ApiRespNotifyDataResponse.md)
+void (empty response body)
 
 ### Authorization
 
@@ -76,7 +75,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getNotifyLogs**
-> ApiRespListNotifyLogResponse getNotifyLogs(notifyLogsQueryDTO)
+> getNotifyLogs(notifyLogsQueryDTO)
 
 获取通知日志
 
@@ -106,8 +105,7 @@ final api_instance = NotifyDataAppApi();
 final notifyLogsQueryDTO = NotifyLogsQueryDTO(); // NotifyLogsQueryDTO | 
 
 try {
-    final result = api_instance.getNotifyLogs(notifyLogsQueryDTO);
-    print(result);
+    api_instance.getNotifyLogs(notifyLogsQueryDTO);
 } catch (e) {
     print('Exception when calling NotifyDataAppApi->getNotifyLogs: $e\n');
 }
@@ -121,7 +119,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespListNotifyLogResponse**](ApiRespListNotifyLogResponse.md)
+void (empty response body)
 
 ### Authorization
 
@@ -135,7 +133,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **queryNotifyData**
-> ApiRespMapStringObject queryNotifyData(notifyQueryDTO)
+> queryNotifyData(notifyQueryDTO)
 
 查询通知数据
 
@@ -165,8 +163,7 @@ final api_instance = NotifyDataAppApi();
 final notifyQueryDTO = NotifyQueryDTO(); // NotifyQueryDTO | 
 
 try {
-    final result = api_instance.queryNotifyData(notifyQueryDTO);
-    print(result);
+    api_instance.queryNotifyData(notifyQueryDTO);
 } catch (e) {
     print('Exception when calling NotifyDataAppApi->queryNotifyData: $e\n');
 }
@@ -180,7 +177,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespMapStringObject**](ApiRespMapStringObject.md)
+void (empty response body)
 
 ### Authorization
 
@@ -194,7 +191,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **receiveNotifyData**
-> ApiRespString receiveNotifyData(notifyDataRequest)
+> receiveNotifyData(notifyDataRequest)
 
 接收异步通知数据
 
@@ -224,8 +221,7 @@ final api_instance = NotifyDataAppApi();
 final notifyDataRequest = NotifyDataRequest(); // NotifyDataRequest | 
 
 try {
-    final result = api_instance.receiveNotifyData(notifyDataRequest);
-    print(result);
+    api_instance.receiveNotifyData(notifyDataRequest);
 } catch (e) {
     print('Exception when calling NotifyDataAppApi->receiveNotifyData: $e\n');
 }
@@ -239,7 +235,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespString**](ApiRespString.md)
+void (empty response body)
 
 ### Authorization
 
@@ -253,7 +249,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **triggerNotify**
-> ApiRespString triggerNotify(triggerNotifyDTO)
+> triggerNotify(triggerNotifyDTO)
 
 手动触发通知
 
@@ -283,8 +279,7 @@ final api_instance = NotifyDataAppApi();
 final triggerNotifyDTO = TriggerNotifyDTO(); // TriggerNotifyDTO | 
 
 try {
-    final result = api_instance.triggerNotify(triggerNotifyDTO);
-    print(result);
+    api_instance.triggerNotify(triggerNotifyDTO);
 } catch (e) {
     print('Exception when calling NotifyDataAppApi->triggerNotify: $e\n');
 }
@@ -298,7 +293,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespString**](ApiRespString.md)
+void (empty response body)
 
 ### Authorization
 

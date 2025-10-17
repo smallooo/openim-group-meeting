@@ -21,6 +21,7 @@ lib/auth/authentication.dart
 lib/auth/http_basic_auth.dart
 lib/auth/http_bearer_auth.dart
 lib/auth/oauth.dart
+lib/model/api_resp_order_create_response_dto.dart
 lib/model/api_resp_order_detail_vo.dart
 lib/model/api_resp_order_page_vo.dart
 lib/model/api_resp_payment_cancel_response.dart
@@ -29,7 +30,11 @@ lib/model/api_resp_payment_vo.dart
 lib/model/api_resp_void.dart
 lib/model/buyer_info_vo.dart
 lib/model/customer_service_info_vo.dart
+lib/model/order_create_dto.dart
+lib/model/order_create_response_dto.dart
+lib/model/order_create_vo.dart
 lib/model/order_detail_vo.dart
+lib/model/order_item_dto.dart
 lib/model/order_item_vo.dart
 lib/model/order_list_vo.dart
 lib/model/order_page_vo.dart

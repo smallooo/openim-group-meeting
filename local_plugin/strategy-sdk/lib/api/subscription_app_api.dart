@@ -16,75 +16,6 @@ class SubscriptionAppApi {
 
   final ApiClient apiClient;
 
-  /// 检查是否已订阅指定策略类型
-  ///
-  /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [int] traderId (required):
-  ///
-  /// * [String] strategyType (required):
-  Future<Response> call1WithHttpInfo(
-    int traderId,
-    String strategyType,
-  ) async {
-    // ignore: prefer_const_declarations
-    final path = r'/api/subscribe/{traderId}/status/{strategyType}'
-        .replaceAll('{traderId}', traderId.toString())
-        .replaceAll('{strategyType}', strategyType);
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// 检查是否已订阅指定策略类型
-  ///
-  /// Parameters:
-  ///
-  /// * [int] traderId (required):
-  ///
-  /// * [String] strategyType (required):
-  Future<ApiRespMapStringObject?> call1(
-    int traderId,
-    String strategyType,
-  ) async {
-    final response = await call1WithHttpInfo(
-      traderId,
-      strategyType,
-    );
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespMapStringObject',
-      ) as ApiRespMapStringObject;
-    }
-    return null;
-  }
-
   /// 检查用户订阅状态（Feign调用）
   ///
   /// Note: This method returns the HTTP [Response].
@@ -96,7 +27,7 @@ class SubscriptionAppApi {
     SubscriptionCheckDTO checkDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/subscription/check';
+    final path = r'/app/api/subscription/check';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -158,7 +89,7 @@ class SubscriptionAppApi {
     int traderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/subscribe/{traderId}/status'
+    final path = r'/app/api/subscribe/{traderId}/status'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -208,6 +139,75 @@ class SubscriptionAppApi {
     return null;
   }
 
+  /// 检查是否已订阅指定策略类型
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [int] traderId (required):
+  ///
+  /// * [String] strategyType (required):
+  Future<Response> checkSubscriptionStatusByStrategyTypeWithHttpInfo(
+    int traderId,
+    String strategyType,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/app/api/subscribe/{traderId}/status/{strategyType}'
+        .replaceAll('{traderId}', traderId.toString())
+        .replaceAll('{strategyType}', strategyType);
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// 检查是否已订阅指定策略类型
+  ///
+  /// Parameters:
+  ///
+  /// * [int] traderId (required):
+  ///
+  /// * [String] strategyType (required):
+  Future<ApiRespMapStringObject?> checkSubscriptionStatusByStrategyType(
+    int traderId,
+    String strategyType,
+  ) async {
+    final response = await checkSubscriptionStatusByStrategyTypeWithHttpInfo(
+      traderId,
+      strategyType,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'ApiRespMapStringObject',
+      ) as ApiRespMapStringObject;
+    }
+    return null;
+  }
+
   /// 查询我的支付订单
   ///
   /// Note: This method returns the HTTP [Response].
@@ -219,7 +219,7 @@ class SubscriptionAppApi {
     PaymentOrderQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/my-payment-orders';
+    final path = r'/app/api/my-payment-orders';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -281,7 +281,7 @@ class SubscriptionAppApi {
     RefundOrderQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/my-refund-orders';
+    final path = r'/app/api/my-refund-orders';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -343,7 +343,7 @@ class SubscriptionAppApi {
     SubscriptionQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/my-subscriptions';
+    final path = r'/app/api/my-subscriptions';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -405,7 +405,7 @@ class SubscriptionAppApi {
     String paymentOrderNo,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/payment-orders/{paymentOrderNo}'
+    final path = r'/app/api/payment-orders/{paymentOrderNo}'
         .replaceAll('{paymentOrderNo}', paymentOrderNo);
 
     // ignore: prefer_final_locals
@@ -466,7 +466,7 @@ class SubscriptionAppApi {
     String paymentOrderNo,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/payment-order-status/{paymentOrderNo}'
+    final path = r'/app/api/payment-order-status/{paymentOrderNo}'
         .replaceAll('{paymentOrderNo}', paymentOrderNo);
 
     // ignore: prefer_final_locals
@@ -527,7 +527,7 @@ class SubscriptionAppApi {
     String refundOrderNo,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/refund-orders/{refundOrderNo}'
+    final path = r'/app/api/refund-orders/{refundOrderNo}'
         .replaceAll('{refundOrderNo}', refundOrderNo);
 
     // ignore: prefer_final_locals
@@ -591,7 +591,7 @@ class SubscriptionAppApi {
     RefundRequestDTO refundRequestDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/subscriptions/{subscriptionId}/refund'
+    final path = r'/app/api/subscriptions/{subscriptionId}/refund'
         .replaceAll('{subscriptionId}', subscriptionId.toString());
 
     // ignore: prefer_final_locals
@@ -659,7 +659,7 @@ class SubscriptionAppApi {
     SubscribeTraderDTO subscribeTraderDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/subscribe/{traderId}'
+    final path = r'/app/api/subscribe/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals

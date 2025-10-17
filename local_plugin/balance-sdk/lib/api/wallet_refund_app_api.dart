@@ -29,7 +29,7 @@ class WalletRefundAppApi {
     RefundProcessDTO refundProcessDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-refund/process';
+    final path = r'/app/wallet-refund/process';
 
     // ignore: prefer_final_locals
     Object? postBody = refundProcessDTO;
@@ -93,7 +93,7 @@ class WalletRefundAppApi {
     RefundPasswordVerifyDTO refundPasswordVerifyDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-refund/verify';
+    final path = r'/app/wallet-refund/verify';
 
     // ignore: prefer_final_locals
     Object? postBody = refundPasswordVerifyDTO;

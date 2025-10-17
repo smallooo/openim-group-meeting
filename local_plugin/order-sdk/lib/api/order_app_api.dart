@@ -29,7 +29,7 @@ class OrderAppApi {
     PaymentCancelRequest paymentCancelRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/payment/cancel';
+    final path = r'/app/order/payment/cancel';
 
     // ignore: prefer_final_locals
     Object? postBody = paymentCancelRequest;
@@ -94,7 +94,7 @@ class OrderAppApi {
     int orderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/{orderId}/confirm-receive'
+    final path = r'/app/order/{orderId}/confirm-receive'
         .replaceAll('{orderId}', orderId.toString());
 
     // ignore: prefer_final_locals
@@ -147,6 +147,70 @@ class OrderAppApi {
     return null;
   }
 
+  /// 创建订单
+  ///
+  /// 用户创建新订单
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [OrderCreateDTO] orderCreateDTO (required):
+  Future<Response> createOrderWithHttpInfo(
+    OrderCreateDTO orderCreateDTO,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/app/order/create';
+
+    // ignore: prefer_final_locals
+    Object? postBody = orderCreateDTO;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// 创建订单
+  ///
+  /// 用户创建新订单
+  ///
+  /// Parameters:
+  ///
+  /// * [OrderCreateDTO] orderCreateDTO (required):
+  Future<OrderCreateVO?> createOrder(
+    OrderCreateDTO orderCreateDTO,
+  ) async {
+    final response = await createOrderWithHttpInfo(
+      orderCreateDTO,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'OrderCreateVO',
+      ) as OrderCreateVO;
+    }
+    return null;
+  }
+
   /// 创建支付
   ///
   /// 为订单创建支付
@@ -161,7 +225,8 @@ class OrderAppApi {
     String orderNo,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/{orderNo}/payment'.replaceAll('{orderNo}', orderNo);
+    final path =
+        r'/app/order/{orderNo}/payment'.replaceAll('{orderNo}', orderNo);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -227,8 +292,8 @@ class OrderAppApi {
     int orderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path =
-        r'/order/{orderId}/delete'.replaceAll('{orderId}', orderId.toString());
+    final path = r'/app/order/{orderId}/delete'
+        .replaceAll('{orderId}', orderId.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -295,7 +360,7 @@ class OrderAppApi {
   ) async {
     // ignore: prefer_const_declarations
     final path =
-        r'/order/{orderId}'.replaceAll('{orderId}', orderId.toString());
+        r'/app/order/{orderId}'.replaceAll('{orderId}', orderId.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -361,7 +426,8 @@ class OrderAppApi {
     String orderNo,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/detail/{orderNo}'.replaceAll('{orderNo}', orderNo);
+    final path =
+        r'/app/order/detail/{orderNo}'.replaceAll('{orderNo}', orderNo);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -447,7 +513,7 @@ class OrderAppApi {
     int? size,
   }) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/list';
+    final path = r'/app/order/list';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -557,7 +623,7 @@ class OrderAppApi {
     String paymentId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/payment/{paymentId}/status'
+    final path = r'/app/order/payment/{paymentId}/status'
         .replaceAll('{paymentId}', paymentId);
 
     // ignore: prefer_final_locals
@@ -623,7 +689,7 @@ class OrderAppApi {
     PaymentQueryRequest paymentQueryRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/payment/query';
+    final path = r'/app/order/payment/query';
 
     // ignore: prefer_final_locals
     Object? postBody = paymentQueryRequest;

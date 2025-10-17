@@ -26,7 +26,7 @@ dependencies:
   lpinyin: ^2.0.3
   rxdart: ^0.27.7
   permission_handler: ^11.0.1
-  wechat_assets_picker:
+  wechat_assets_picker: ^9.5.0
   wechat_camera_picker: 
   extended_image: ^8.2.0
   country_picker: ^2.0.20

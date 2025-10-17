@@ -29,7 +29,7 @@ class RedPacketAppApi {
     CreateRedPacketDTO createRedPacketDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-red-packet/create';
+    final path = r'/app/wallet-red-packet/create';
 
     // ignore: prefer_final_locals
     Object? postBody = createRedPacketDTO;
@@ -93,7 +93,7 @@ class RedPacketAppApi {
     RedPacketDetailQueryDTO redPacketDetailQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-red-packet/detail';
+    final path = r'/app/wallet-red-packet/detail';
 
     // ignore: prefer_final_locals
     Object? postBody = redPacketDetailQueryDTO;
@@ -157,7 +157,7 @@ class RedPacketAppApi {
     ReceiveRedPacketDTO receiveRedPacketDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-red-packet/receive';
+    final path = r'/app/wallet-red-packet/receive';
 
     // ignore: prefer_final_locals
     Object? postBody = receiveRedPacketDTO;

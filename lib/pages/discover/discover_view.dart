@@ -87,7 +87,7 @@ class DiscoverPage extends StatelessWidget {
                 icon: ImageRes.tkFind1,
                 title: '频道',
                 onTap: () {
-                  // logic.goToStrategyPage();
+                  logic.goToChannelPage();
                 },
               ),
               // 分割线
@@ -100,7 +100,7 @@ class DiscoverPage extends StatelessWidget {
                 icon: ImageRes.tkFind2,
                 title: '担保',
                 onTap: () {
-                  // logic.goToStrategyPage();
+                  logic.goToGuaranteePage();
                 },
               ),
             ],

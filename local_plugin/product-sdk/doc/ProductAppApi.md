@@ -5,19 +5,18 @@
 import 'package:toklink_product_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9994/v1*
+All URIs are relative to *http://localhost:9994*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**brandList**](ProductAppApi.md#brandlist) | **POST** /product/brand/list | 获取品牌列表
-[**categoryTree**](ProductAppApi.md#categorytree) | **POST** /product/category/tree | 获取分类树
-[**channelCategoryTree**](ProductAppApi.md#channelcategorytree) | **POST** /product/channel-category/tree | 获取频道分类树
-[**channelList**](ProductAppApi.md#channellist) | **POST** /product/channel/list | 获取频道列表
-[**detail**](ProductAppApi.md#detail) | **POST** /product/detail | 获取商品详情
-[**getChannelCategories**](ProductAppApi.md#getchannelcategories) | **POST** /product/channel/categories | 获取频道下的分类列表
-[**getSearchSuggestions**](ProductAppApi.md#getsearchsuggestions) | **POST** /product/search/suggestions | 获取搜索建议
-[**list**](ProductAppApi.md#list) | **POST** /product/list | 获取商品列表
-[**search**](ProductAppApi.md#search) | **POST** /product/product/search | 搜索商品
+[**brandList**](ProductAppApi.md#brandlist) | **POST** /app/product/brand/list | 获取品牌列表
+[**channelCategoryTree**](ProductAppApi.md#channelcategorytree) | **POST** /app/product/channel-category/tree | 获取频道分类树
+[**channelList**](ProductAppApi.md#channellist) | **POST** /app/product/channel/list | 获取频道列表
+[**detail**](ProductAppApi.md#detail) | **POST** /app/product/detail | 获取商品详情
+[**getSearchSuggestions**](ProductAppApi.md#getsearchsuggestions) | **POST** /app/product/search/suggestions | 获取搜索建议
+[**list**](ProductAppApi.md#list) | **POST** /app/product/list | 获取商品列表
+[**search**](ProductAppApi.md#search) | **POST** /app/product/product/search | 搜索商品
+[**sellerList**](ProductAppApi.md#sellerlist) | **POST** /app/product/seller/list | 获取所有商家列表
 
 
 # **brandList**
@@ -75,63 +74,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **categoryTree**
-> CategoryListDTO categoryTree()
-
-获取分类树
-
-获取所有启用的分类树形结构
-
-### Example
-```dart
-import 'package:toklink_product_sdk/api.dart';
-// TODO Configure API key authorization: X-Timestamp
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: Access-Token
-//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: X-Signature
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: X-Nonce
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
-
-final api_instance = ProductAppApi();
-
-try {
-    final result = api_instance.categoryTree();
-    print(result);
-} catch (e) {
-    print('Exception when calling ProductAppApi->categoryTree: $e\n');
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**CategoryListDTO**](CategoryListDTO.md)
-
-### Authorization
-
-[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **channelCategoryTree**
-> ChannelCategoryTreeDTO channelCategoryTree()
+> ChannelCategoryTreeDTO channelCategoryTree(sellerIdRequest)
 
 获取频道分类树
 
@@ -158,9 +102,10 @@ import 'package:toklink_product_sdk/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
 
 final api_instance = ProductAppApi();
+final sellerIdRequest = SellerIdRequest(); // SellerIdRequest | 
 
 try {
-    final result = api_instance.channelCategoryTree();
+    final result = api_instance.channelCategoryTree(sellerIdRequest);
     print(result);
 } catch (e) {
     print('Exception when calling ProductAppApi->channelCategoryTree: $e\n');
@@ -168,7 +113,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sellerIdRequest** | [**SellerIdRequest**](SellerIdRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -180,17 +128,17 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **channelList**
-> PageResultDTO channelList(pageChannelQueryDTO)
+> ChannelListDTO channelList(channelListQueryDTO)
 
 获取频道列表
 
-获取所有频道列表，支持分页和状态筛选
+获取所有频道列表，支持状态筛选，包含分类数据
 
 ### Example
 ```dart
@@ -213,10 +161,10 @@ import 'package:toklink_product_sdk/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
 
 final api_instance = ProductAppApi();
-final pageChannelQueryDTO = PageChannelQueryDTO(); // PageChannelQueryDTO | 
+final channelListQueryDTO = ChannelListQueryDTO(); // ChannelListQueryDTO | 
 
 try {
-    final result = api_instance.channelList(pageChannelQueryDTO);
+    final result = api_instance.channelList(channelListQueryDTO);
     print(result);
 } catch (e) {
     print('Exception when calling ProductAppApi->channelList: $e\n');
@@ -227,11 +175,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pageChannelQueryDTO** | [**PageChannelQueryDTO**](PageChannelQueryDTO.md)|  | 
+ **channelListQueryDTO** | [**ChannelListQueryDTO**](ChannelListQueryDTO.md)|  | 
 
 ### Return type
 
-[**PageResultDTO**](PageResultDTO.md)
+[**ChannelListDTO**](ChannelListDTO.md)
 
 ### Authorization
 
@@ -291,65 +239,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ProductDetailDTO**](ProductDetailDTO.md)
-
-### Authorization
-
-[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getChannelCategories**
-> CategoryListDTO getChannelCategories(channelCategoryQueryDTO)
-
-获取频道下的分类列表
-
-获取指定频道下的所有分类，支持树形结构
-
-### Example
-```dart
-import 'package:toklink_product_sdk/api.dart';
-// TODO Configure API key authorization: X-Timestamp
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: Access-Token
-//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: X-Signature
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: X-Nonce
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
-
-final api_instance = ProductAppApi();
-final channelCategoryQueryDTO = ChannelCategoryQueryDTO(); // ChannelCategoryQueryDTO | 
-
-try {
-    final result = api_instance.getChannelCategories(channelCategoryQueryDTO);
-    print(result);
-} catch (e) {
-    print('Exception when calling ProductAppApi->getChannelCategories: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **channelCategoryQueryDTO** | [**ChannelCategoryQueryDTO**](ChannelCategoryQueryDTO.md)|  | 
-
-### Return type
-
-[**CategoryListDTO**](CategoryListDTO.md)
 
 ### Authorization
 
@@ -535,6 +424,61 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **sellerList**
+> MchSellerDTO sellerList()
+
+获取所有商家列表
+
+获取所有商家及其店铺信息
+
+### Example
+```dart
+import 'package:toklink_product_sdk/api.dart';
+// TODO Configure API key authorization: X-Timestamp
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: Access-Token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Signature
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Nonce
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
+
+final api_instance = ProductAppApi();
+
+try {
+    final result = api_instance.sellerList();
+    print(result);
+} catch (e) {
+    print('Exception when calling ProductAppApi->sellerList: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**MchSellerDTO**](MchSellerDTO.md)
+
+### Authorization
+
+[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -29,7 +29,7 @@ class MemberAddressAppApi {
     MemberAddressDeleteCommand memberAddressDeleteCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/address/delete';
+    final path = r'/app/address/delete';
 
     // ignore: prefer_final_locals
     Object? postBody = memberAddressDeleteCommand;
@@ -93,7 +93,7 @@ class MemberAddressAppApi {
     Object body,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/address/list';
+    final path = r'/app/address/list';
 
     // ignore: prefer_final_locals
     Object? postBody = body;
@@ -157,7 +157,7 @@ class MemberAddressAppApi {
     MemberAddressSaveCommand memberAddressSaveCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/address/save';
+    final path = r'/app/address/save';
 
     // ignore: prefer_final_locals
     Object? postBody = memberAddressSaveCommand;
@@ -221,7 +221,7 @@ class MemberAddressAppApi {
     MemberAddressUpdateCommand memberAddressUpdateCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/address/update';
+    final path = r'/app/address/update';
 
     // ignore: prefer_final_locals
     Object? postBody = memberAddressUpdateCommand;

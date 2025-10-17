@@ -124,6 +124,11 @@ dependencies:
     path: local_plugin/pay-sdk
   toklink_strategy_sdk:
     path: local_plugin/strategy-sdk
+  toklink_product_sdk:
+    path: local_plugin/product-sdk
+  toklink_order_sdk:
+    path: local_plugin/order-sdk
+
 
 dependency_overrides:
   scrollable_positioned_list: ^0.3.8

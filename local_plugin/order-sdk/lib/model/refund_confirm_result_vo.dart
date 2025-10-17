@@ -26,6 +26,7 @@ class RefundConfirmResultVO {
     this.confirmRemark,
     this.result,
     this.message,
+    this.thirdPartyRefundNo,
   });
 
   /// 退款申请ID
@@ -145,6 +146,15 @@ class RefundConfirmResultVO {
   ///
   String? message;
 
+  /// 第三方退款订单号
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? thirdPartyRefundNo;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -161,7 +171,8 @@ class RefundConfirmResultVO {
           other.confirmTime == confirmTime &&
           other.confirmRemark == confirmRemark &&
           other.result == result &&
-          other.message == message;
+          other.message == message &&
+          other.thirdPartyRefundNo == thirdPartyRefundNo;
 
   @override
   int get hashCode =>
@@ -178,11 +189,12 @@ class RefundConfirmResultVO {
       (confirmTime == null ? 0 : confirmTime!.hashCode) +
       (confirmRemark == null ? 0 : confirmRemark!.hashCode) +
       (result == null ? 0 : result!.hashCode) +
-      (message == null ? 0 : message!.hashCode);
+      (message == null ? 0 : message!.hashCode) +
+      (thirdPartyRefundNo == null ? 0 : thirdPartyRefundNo!.hashCode);
 
   @override
   String toString() =>
-      'RefundConfirmResultVO[refundId=$refundId, refundNo=$refundNo, orderNo=$orderNo, refundStatus=$refundStatus, refundStatusText=$refundStatusText, orderStatus=$orderStatus, orderStatusText=$orderStatusText, refundAmount=$refundAmount, paymentRefundId=$paymentRefundId, confirmTime=$confirmTime, confirmRemark=$confirmRemark, result=$result, message=$message]';
+      'RefundConfirmResultVO[refundId=$refundId, refundNo=$refundNo, orderNo=$orderNo, refundStatus=$refundStatus, refundStatusText=$refundStatusText, orderStatus=$orderStatus, orderStatusText=$orderStatusText, refundAmount=$refundAmount, paymentRefundId=$paymentRefundId, confirmTime=$confirmTime, confirmRemark=$confirmRemark, result=$result, message=$message, thirdPartyRefundNo=$thirdPartyRefundNo]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -251,6 +263,11 @@ class RefundConfirmResultVO {
     } else {
       json[r'message'] = null;
     }
+    if (this.thirdPartyRefundNo != null) {
+      json[r'thirdPartyRefundNo'] = this.thirdPartyRefundNo;
+    } else {
+      json[r'thirdPartyRefundNo'] = null;
+    }
     return json;
   }
 
@@ -290,6 +307,7 @@ class RefundConfirmResultVO {
         confirmRemark: mapValueOfType<String>(json, r'confirmRemark'),
         result: mapValueOfType<String>(json, r'result'),
         message: mapValueOfType<String>(json, r'message'),
+        thirdPartyRefundNo: mapValueOfType<String>(json, r'thirdPartyRefundNo'),
       );
     }
     return null;

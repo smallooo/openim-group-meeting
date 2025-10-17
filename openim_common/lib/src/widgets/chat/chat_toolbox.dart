@@ -7,9 +7,11 @@ class ChatToolBox extends StatelessWidget {
     super.key,
     this.onTapAlbum,
     this.onTapCall,
+    this.onTapCreateOrder,
   });
   final Function()? onTapAlbum;
   final Function()? onTapCall;
+  final Function()? onTapCreateOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,12 @@ class ChatToolBox extends StatelessWidget {
           text: StrRes.toolboxCall,
           icon: ImageRes.toolboxCall,
           onTap: () => Permissions.cameraAndMicrophone(onTapCall),
+        ),
+      if (onTapCreateOrder != null)
+        ToolboxItemInfo(
+          text: '创建订单',
+          icon: ImageRes.toolboxCard,
+          onTap: onTapCreateOrder,
         ),
     ];
 

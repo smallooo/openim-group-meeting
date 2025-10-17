@@ -12,7 +12,7 @@ part of openapi.api;
 
 class ApiClient {
   ApiClient({
-    this.basePath = 'http://localhost:9994/v1',
+    this.basePath = 'http://localhost:9994',
     this.authentication,
   });
 
@@ -227,12 +227,12 @@ class ApiClient {
           return value is DateTime ? value : DateTime.tryParse(value);
         case 'ApiRespListBrandDTO':
           return ApiRespListBrandDTO.fromJson(value);
-        case 'ApiRespListCategoryListDTO':
-          return ApiRespListCategoryListDTO.fromJson(value);
         case 'ApiRespListChannelCategoryTreeDTO':
           return ApiRespListChannelCategoryTreeDTO.fromJson(value);
-        case 'ApiRespPageResultDTOChannelListDTO':
-          return ApiRespPageResultDTOChannelListDTO.fromJson(value);
+        case 'ApiRespListChannelListDTO':
+          return ApiRespListChannelListDTO.fromJson(value);
+        case 'ApiRespListMchSellerDTO':
+          return ApiRespListMchSellerDTO.fromJson(value);
         case 'ApiRespPageResultDTOProductListItemDTO':
           return ApiRespPageResultDTOProductListItemDTO.fromJson(value);
         case 'ApiRespProductDetailDTO':
@@ -241,24 +241,26 @@ class ApiClient {
           return ApiRespSearchSuggestionsDTO.fromJson(value);
         case 'BrandDTO':
           return BrandDTO.fromJson(value);
-        case 'CategoryListDTO':
-          return CategoryListDTO.fromJson(value);
+        case 'CategoryDTO':
+          return CategoryDTO.fromJson(value);
         case 'CategoryTreeDTO':
           return CategoryTreeDTO.fromJson(value);
-        case 'ChannelCategoryQueryDTO':
-          return ChannelCategoryQueryDTO.fromJson(value);
         case 'ChannelCategoryTreeDTO':
           return ChannelCategoryTreeDTO.fromJson(value);
+        case 'ChannelListDTO':
+          return ChannelListDTO.fromJson(value);
+        case 'ChannelListQueryDTO':
+          return ChannelListQueryDTO.fromJson(value);
         case 'HotKeywordDTO':
           return HotKeywordDTO.fromJson(value);
         case 'IdRequest':
           return IdRequest.fromJson(value);
-        case 'PageChannelQueryDTO':
-          return PageChannelQueryDTO.fromJson(value);
+        case 'MchSellerDTO':
+          return MchSellerDTO.fromJson(value);
+        case 'MchShopDTO':
+          return MchShopDTO.fromJson(value);
         case 'PageResultDTO':
           return PageResultDTO.fromJson(value);
-        case 'PageResultDTOChannelListDTO':
-          return PageResultDTOChannelListDTO.fromJson(value);
         case 'PageResultDTOProductListItemDTO':
           return PageResultDTOProductListItemDTO.fromJson(value);
         case 'ProductDetailDTO':
@@ -269,6 +271,8 @@ class ApiClient {
           return SearchSuggestionItemDTO.fromJson(value);
         case 'SearchSuggestionsDTO':
           return SearchSuggestionsDTO.fromJson(value);
+        case 'SellerIdRequest':
+          return SellerIdRequest.fromJson(value);
         case 'SkuItem':
           return SkuItem.fromJson(value);
         case 'Specification':

@@ -1,5 +1,11 @@
-import 'package:get/get.dart';
+import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:toklink_strategy_sdk/api.dart';
+
+import '../../../api_sdk/strategy_sdk_adapter.dart';
 import '../../../features/strategy/data/repositories/strategy_repository.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../shared/models/strategy/trader_pricing_model.dart';
@@ -111,8 +117,117 @@ class StrategySubscriptionLogic extends GetxController {
     // TODO: 跳转到服务详情页面
   }
 
-  // 订阅服务
+  // // 订阅服务
   void subscribe() {
     Get.toNamed(AppRoutes.verifyPassword);
+  }
+
+    // 订阅服务（点击底部订阅按钮）
+  Future<void> subscribe1() async {
+    try {
+      // 1) 校验 traderId
+      final traderIdInt = int.tryParse(_traderId);
+      if (traderIdInt == null) {
+        Get.snackbar('错误', '交易员ID无效');
+        return;
+      }
+
+      // 2) 读取当前登录 token（按你的项目实际实现替换）
+      final accessToken = await _getAccessToken();
+      if (accessToken == null || accessToken.isEmpty) {
+        Get.snackbar('错误', '未登录或缺少令牌');
+        return;
+      }
+
+      // 3) 构建适配器与 API（网关地址按环境调整为你的真实地址）
+      final adapter = StrategySdkAdapter(
+        baseUrl: 'https://gw.trunk.toklink.io/api/strategy', // 或本地如 http://localhost:9994/v1
+        accessToken: accessToken,
+      );
+      // 统一 JSON 头
+      adapter.addDefaultHeader('Content-Type', 'application/json');
+      adapter.addDefaultHeader('Accept', 'application/json');
+
+      final api = adapter.subscription();
+
+      // 4) 将页面选择的时长索引映射到订阅类型 1/2/3
+      final selectedIndex = state.selectedDurationIndex.value;
+      final subscriptionType = _mapDurationIndexToType(selectedIndex);
+
+      // 5) 构建订阅请求 DTO（其他固定参数按你的要求）
+      final dto = SubscribeTraderDTO(
+        strategyType: 'FUTURES',              // SPOT 或 FUTURES
+        subscriptionType: subscriptionType,   // 1=月, 2=季, 3=年
+        paymentMethod: 'WALLET',
+        autoRenew: state.autoRenewal.value,   // 页面自动续订开关
+        clientIp: '127.0.0.1',
+        returnUrl: 'https://example.com/return',
+      );
+
+      // 6) 调用订阅接口，并处理返回
+      Get.dialog(const Center(child: CircularProgressIndicator()),
+          barrierDismissible: false);
+
+      // 如果你想用已反序列化的返回体，替换成：final resp = await api.subscribeTrader(traderIdInt, dto);
+      final response = await api.subscribeTraderWithHttpInfo(traderIdInt, dto);
+
+      // 关闭加载
+      if (Get.isDialogOpen == true) Get.back();
+
+      // 解析原始返回体，兼容 {"ok":false, "code":1, "message":"..."} 结构
+      Map<String, dynamic> body = {};
+      try {
+        body = jsonDecode(response.body) as Map<String, dynamic>;
+      } catch (_) {
+        // 非 JSON 返回
+      }
+
+      final ok = (body['ok'] as bool?) ?? false;
+      final code = body['code'] ?? 0;
+      final message = (body['message'] as String?) ?? '订阅失败';
+
+      if (!ok || code != 0) {
+        Get.snackbar('错误', message);
+        return;
+      }
+
+      // 成功提示
+      Get.snackbar('成功', '订阅已提交');
+
+      // TODO: 成功后按需要跳转，如订单支付页或订阅详情
+      // Get.toNamed(AppRoutes.subscriptionDetail, arguments: {...});
+    } catch (e) {
+      if (Get.isDialogOpen == true) Get.back();
+      Get.snackbar('错误', '订阅异常: $e');
+    }
+  }
+
+  // 按页面选择的时长索引映射订阅类型
+  int _mapDurationIndexToType(int index) {
+    switch (index) {
+      case 0: return 1; // 1月
+      case 1: return 2; // 1季
+      case 2: return 3; // 1年
+      default: return 1;
+    }
+  }
+
+  // 获取当前 Access-Token（按你的项目实际替换）
+  Future<String?> _getAccessToken() async {
+    // 示例：如果你有 AuthService
+    // final auth = Get.find<AuthService>();
+    // return auth.accessToken;
+
+    // 示例：如果存储在 SharedPreferences / SecureStorage，请按实际读取
+    // final prefs = await SharedPreferences.getInstance();
+    // return prefs.getString('access_token');
+
+    // 占位
+
+
+
+    return 'YOUR_ACCESS_TOKEN';
+
+
   }
 }

@@ -5,14 +5,14 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete**](MemberAddressAppApi.md#delete) | **POST** /address/delete | 删除收货地址
-[**list**](MemberAddressAppApi.md#list) | **POST** /address/list | 查询当前用户的收货地址列表
-[**save**](MemberAddressAppApi.md#save) | **POST** /address/save | 新增收货地址
-[**update**](MemberAddressAppApi.md#update) | **POST** /address/update | 更新收货地址
+[**delete**](MemberAddressAppApi.md#delete) | **POST** /app/address/delete | 删除收货地址
+[**list**](MemberAddressAppApi.md#list) | **POST** /app/address/list | 查询当前用户的收货地址列表
+[**save**](MemberAddressAppApi.md#save) | **POST** /app/address/save | 新增收货地址
+[**update**](MemberAddressAppApi.md#update) | **POST** /app/address/update | 更新收货地址
 
 
 # **delete**

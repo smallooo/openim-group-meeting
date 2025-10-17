@@ -30,7 +30,7 @@ class StrategyCommentAppApi {
     StrategyCommentDTO strategyCommentDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}/comment'
+    final path = r'/app/strategies/{strategyId}/comment'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals
@@ -98,7 +98,7 @@ class StrategyCommentAppApi {
     StrategyCommentQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}/comments'
+    final path = r'/app/strategies/{strategyId}/comments'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals

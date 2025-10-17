@@ -5,19 +5,20 @@
 import 'package:toklink_order_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9995/v1*
+All URIs are relative to *http://localhost:9995*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**cancelPayment**](OrderAppApi.md#cancelpayment) | **POST** /order/payment/cancel | 取消支付订单
-[**confirmReceive**](OrderAppApi.md#confirmreceive) | **POST** /order/{orderId}/confirm-receive | 确认收货
-[**createPayment**](OrderAppApi.md#createpayment) | **POST** /order/{orderNo}/payment | 创建支付
-[**deleteOrder**](OrderAppApi.md#deleteorder) | **GET** /order/{orderId}/delete | 删除订单
-[**getOrderDetail**](OrderAppApi.md#getorderdetail) | **GET** /order/{orderId} | 获取订单详情
-[**getOrderDetailByOrderNo**](OrderAppApi.md#getorderdetailbyorderno) | **GET** /order/detail/{orderNo} | 根据订单号获取订单详情
-[**getOrderList**](OrderAppApi.md#getorderlist) | **GET** /order/list | 分页查询订单列表
-[**getPaymentStatus**](OrderAppApi.md#getpaymentstatus) | **GET** /order/payment/{paymentId}/status | 获取支付状态
-[**queryPayment**](OrderAppApi.md#querypayment) | **POST** /order/payment/query | 查询支付订单状态
+[**cancelPayment**](OrderAppApi.md#cancelpayment) | **POST** /app/order/payment/cancel | 取消支付订单
+[**confirmReceive**](OrderAppApi.md#confirmreceive) | **POST** /app/order/{orderId}/confirm-receive | 确认收货
+[**createOrder**](OrderAppApi.md#createorder) | **POST** /app/order/create | 创建订单
+[**createPayment**](OrderAppApi.md#createpayment) | **POST** /app/order/{orderNo}/payment | 创建支付
+[**deleteOrder**](OrderAppApi.md#deleteorder) | **GET** /app/order/{orderId}/delete | 删除订单
+[**getOrderDetail**](OrderAppApi.md#getorderdetail) | **GET** /app/order/{orderId} | 获取订单详情
+[**getOrderDetailByOrderNo**](OrderAppApi.md#getorderdetailbyorderno) | **GET** /app/order/detail/{orderNo} | 根据订单号获取订单详情
+[**getOrderList**](OrderAppApi.md#getorderlist) | **GET** /app/order/list | 分页查询订单列表
+[**getPaymentStatus**](OrderAppApi.md#getpaymentstatus) | **GET** /app/order/payment/{paymentId}/status | 获取支付状态
+[**queryPayment**](OrderAppApi.md#querypayment) | **POST** /app/order/payment/query | 查询支付订单状态
 
 
 # **cancelPayment**
@@ -134,6 +135,65 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createOrder**
+> OrderCreateVO createOrder(orderCreateDTO)
+
+创建订单
+
+用户创建新订单
+
+### Example
+```dart
+import 'package:toklink_order_sdk/api.dart';
+// TODO Configure API key authorization: X-Timestamp
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: Access-Token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Signature
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Nonce
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
+
+final api_instance = OrderAppApi();
+final orderCreateDTO = OrderCreateDTO(); // OrderCreateDTO | 
+
+try {
+    final result = api_instance.createOrder(orderCreateDTO);
+    print(result);
+} catch (e) {
+    print('Exception when calling OrderAppApi->createOrder: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orderCreateDTO** | [**OrderCreateDTO**](OrderCreateDTO.md)|  | 
+
+### Return type
+
+[**OrderCreateVO**](OrderCreateVO.md)
+
+### Authorization
+
+[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

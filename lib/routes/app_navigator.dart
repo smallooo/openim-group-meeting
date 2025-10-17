@@ -353,4 +353,8 @@ class AppNavigator {
       });
 
   static startSelectContactsFromTag() => Get.toNamed(AppRoutes.selectContactsFromTag);
+
+  static void startTkGuaranteeCreateOrder() {
+    Get.toNamed(AppRoutes.tkGuaranteeCreateOrder);
+  }
 }

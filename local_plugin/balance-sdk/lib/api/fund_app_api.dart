@@ -29,7 +29,7 @@ class FundAppApi {
     CurrencyBalanceQueryDTO currencyBalanceQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-fund/currency';
+    final path = r'/app/wallet-fund/currency';
 
     // ignore: prefer_final_locals
     Object? postBody = currencyBalanceQueryDTO;
@@ -93,7 +93,7 @@ class FundAppApi {
     BalanceQueryDTO balanceQueryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-fund/list';
+    final path = r'/app/wallet-fund/list';
 
     // ignore: prefer_final_locals
     Object? postBody = balanceQueryDTO;
@@ -151,7 +151,7 @@ class FundAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> getMyBalanceSummaryWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/wallet-fund/summary';
+    final path = r'/app/wallet-fund/summary';
 
     // ignore: prefer_final_locals
     Object? postBody;

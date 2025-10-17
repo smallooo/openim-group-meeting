@@ -29,7 +29,7 @@ class OrderReviewAppApi {
     OrderReviewRequest orderReviewRequest,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order-review/create';
+    final path = r'/app/order-review/create';
 
     // ignore: prefer_final_locals
     Object? postBody = orderReviewRequest;
@@ -94,7 +94,7 @@ class OrderReviewAppApi {
     int orderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order-review/order/{orderId}'
+    final path = r'/app/order-review/order/{orderId}'
         .replaceAll('{orderId}', orderId.toString());
 
     // ignore: prefer_final_locals
@@ -161,7 +161,7 @@ class OrderReviewAppApi {
     int reviewId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order-review/{reviewId}'
+    final path = r'/app/order-review/{reviewId}'
         .replaceAll('{reviewId}', reviewId.toString());
 
     // ignore: prefer_final_locals

@@ -70,35 +70,37 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:9995/v1*
+All URIs are relative to *http://localhost:9995*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*OrderAppApi* | [**cancelPayment**](doc//OrderAppApi.md#cancelpayment) | **POST** /order/payment/cancel | 取消支付订单
-*OrderAppApi* | [**confirmReceive**](doc//OrderAppApi.md#confirmreceive) | **POST** /order/{orderId}/confirm-receive | 确认收货
-*OrderAppApi* | [**createPayment**](doc//OrderAppApi.md#createpayment) | **POST** /order/{orderNo}/payment | 创建支付
-*OrderAppApi* | [**deleteOrder**](doc//OrderAppApi.md#deleteorder) | **GET** /order/{orderId}/delete | 删除订单
-*OrderAppApi* | [**getOrderDetail**](doc//OrderAppApi.md#getorderdetail) | **GET** /order/{orderId} | 获取订单详情
-*OrderAppApi* | [**getOrderDetailByOrderNo**](doc//OrderAppApi.md#getorderdetailbyorderno) | **GET** /order/detail/{orderNo} | 根据订单号获取订单详情
-*OrderAppApi* | [**getOrderList**](doc//OrderAppApi.md#getorderlist) | **GET** /order/list | 分页查询订单列表
-*OrderAppApi* | [**getPaymentStatus**](doc//OrderAppApi.md#getpaymentstatus) | **GET** /order/payment/{paymentId}/status | 获取支付状态
-*OrderAppApi* | [**queryPayment**](doc//OrderAppApi.md#querypayment) | **POST** /order/payment/query | 查询支付订单状态
-*OrderReviewAppApi* | [**createOrderReview**](doc//OrderReviewAppApi.md#createorderreview) | **POST** /order-review/create | 创建订单评价
-*OrderReviewAppApi* | [**getOrderReviewByOrderId**](doc//OrderReviewAppApi.md#getorderreviewbyorderid) | **GET** /order-review/order/{orderId} | 根据订单ID获取评价
-*OrderReviewAppApi* | [**getOrderReviewDetail**](doc//OrderReviewAppApi.md#getorderreviewdetail) | **GET** /order-review/{reviewId} | 获取订单评价详情
-*PaymentCallbackAppApi* | [**paymentCallback**](doc//PaymentCallbackAppApi.md#paymentcallback) | **POST** /order/pay/callback | 支付回调
-*RefundAppApi* | [**applyRefund**](doc//RefundAppApi.md#applyrefund) | **POST** /refund/apply | 申请退款
-*RefundAppApi* | [**approveRefund**](doc//RefundAppApi.md#approverefund) | **POST** /refund/approve | 审核退款申请
-*RefundAppApi* | [**cancelRefund**](doc//RefundAppApi.md#cancelrefund) | **POST** /refund/{refundNo}/cancel | 撤销退款申请
-*RefundAppApi* | [**confirmRefund**](doc//RefundAppApi.md#confirmrefund) | **POST** /refund/confirm | 确认退款
-*RefundAppApi* | [**getRefundByOrderId**](doc//RefundAppApi.md#getrefundbyorderid) | **GET** /refund/order/{orderId} | 根据订单ID获取退款申请
-*RefundAppApi* | [**getRefundDetail**](doc//RefundAppApi.md#getrefunddetail) | **GET** /refund/{refundNo} | 获取退款申请详情
-*RefundAppApi* | [**getRefundList**](doc//RefundAppApi.md#getrefundlist) | **GET** /refund/list | 分页查询退款申请列表
-*RefundAppApi* | [**queryRefund**](doc//RefundAppApi.md#queryrefund) | **POST** /refund/refund/query | 查询退款订单状态
+*OrderAppApi* | [**cancelPayment**](doc//OrderAppApi.md#cancelpayment) | **POST** /app/order/payment/cancel | 取消支付订单
+*OrderAppApi* | [**confirmReceive**](doc//OrderAppApi.md#confirmreceive) | **POST** /app/order/{orderId}/confirm-receive | 确认收货
+*OrderAppApi* | [**createOrder**](doc//OrderAppApi.md#createorder) | **POST** /app/order/create | 创建订单
+*OrderAppApi* | [**createPayment**](doc//OrderAppApi.md#createpayment) | **POST** /app/order/{orderNo}/payment | 创建支付
+*OrderAppApi* | [**deleteOrder**](doc//OrderAppApi.md#deleteorder) | **GET** /app/order/{orderId}/delete | 删除订单
+*OrderAppApi* | [**getOrderDetail**](doc//OrderAppApi.md#getorderdetail) | **GET** /app/order/{orderId} | 获取订单详情
+*OrderAppApi* | [**getOrderDetailByOrderNo**](doc//OrderAppApi.md#getorderdetailbyorderno) | **GET** /app/order/detail/{orderNo} | 根据订单号获取订单详情
+*OrderAppApi* | [**getOrderList**](doc//OrderAppApi.md#getorderlist) | **GET** /app/order/list | 分页查询订单列表
+*OrderAppApi* | [**getPaymentStatus**](doc//OrderAppApi.md#getpaymentstatus) | **GET** /app/order/payment/{paymentId}/status | 获取支付状态
+*OrderAppApi* | [**queryPayment**](doc//OrderAppApi.md#querypayment) | **POST** /app/order/payment/query | 查询支付订单状态
+*OrderReviewAppApi* | [**createOrderReview**](doc//OrderReviewAppApi.md#createorderreview) | **POST** /app/order-review/create | 创建订单评价
+*OrderReviewAppApi* | [**getOrderReviewByOrderId**](doc//OrderReviewAppApi.md#getorderreviewbyorderid) | **GET** /app/order-review/order/{orderId} | 根据订单ID获取评价
+*OrderReviewAppApi* | [**getOrderReviewDetail**](doc//OrderReviewAppApi.md#getorderreviewdetail) | **GET** /app/order-review/{reviewId} | 获取订单评价详情
+*PaymentCallbackAppApi* | [**paymentCallback**](doc//PaymentCallbackAppApi.md#paymentcallback) | **POST** /app/order/pay/callback | 支付回调
+*RefundAppApi* | [**applyRefund**](doc//RefundAppApi.md#applyrefund) | **POST** /app/refund/apply | 申请退款
+*RefundAppApi* | [**approveRefund**](doc//RefundAppApi.md#approverefund) | **POST** /app/refund/approve | 审核退款申请
+*RefundAppApi* | [**cancelRefund**](doc//RefundAppApi.md#cancelrefund) | **POST** /app/refund/{refundNo}/cancel | 撤销退款申请
+*RefundAppApi* | [**confirmRefund**](doc//RefundAppApi.md#confirmrefund) | **POST** /app/refund/confirm | 确认退款
+*RefundAppApi* | [**getRefundByOrderId**](doc//RefundAppApi.md#getrefundbyorderid) | **GET** /app/refund/order/{orderId} | 根据订单ID获取退款申请
+*RefundAppApi* | [**getRefundDetail**](doc//RefundAppApi.md#getrefunddetail) | **GET** /app/refund/{refundNo} | 获取退款申请详情
+*RefundAppApi* | [**getRefundList**](doc//RefundAppApi.md#getrefundlist) | **GET** /app/refund/list | 分页查询退款申请列表
+*RefundAppApi* | [**queryRefund**](doc//RefundAppApi.md#queryrefund) | **POST** /app/refund/refund/query | 查询退款订单状态
 
 
 ## Documentation For Models
 
+ - [ApiRespOrderCreateResponseDTO](doc//ApiRespOrderCreateResponseDTO.md)
  - [ApiRespOrderDetailVO](doc//ApiRespOrderDetailVO.md)
  - [ApiRespOrderPageVO](doc//ApiRespOrderPageVO.md)
  - [ApiRespPaymentCancelResponse](doc//ApiRespPaymentCancelResponse.md)
@@ -107,7 +109,11 @@ Class | Method | HTTP request | Description
  - [ApiRespVoid](doc//ApiRespVoid.md)
  - [BuyerInfoVO](doc//BuyerInfoVO.md)
  - [CustomerServiceInfoVO](doc//CustomerServiceInfoVO.md)
+ - [OrderCreateDTO](doc//OrderCreateDTO.md)
+ - [OrderCreateResponseDTO](doc//OrderCreateResponseDTO.md)
+ - [OrderCreateVO](doc//OrderCreateVO.md)
  - [OrderDetailVO](doc//OrderDetailVO.md)
+ - [OrderItemDTO](doc//OrderItemDTO.md)
  - [OrderItemVO](doc//OrderItemVO.md)
  - [OrderListVO](doc//OrderListVO.md)
  - [OrderPageVO](doc//OrderPageVO.md)

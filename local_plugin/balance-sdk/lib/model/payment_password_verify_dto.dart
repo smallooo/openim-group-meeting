@@ -14,7 +14,7 @@ class PaymentPasswordVerifyDTO {
   /// Returns a new [PaymentPasswordVerifyDTO] instance.
   PaymentPasswordVerifyDTO({
     required this.paymentPassword,
-    required this.partnerOrderNo,
+    required this.walletOrderNo,
     this.amount = 0,
     this.currencyId,
   });
@@ -22,8 +22,8 @@ class PaymentPasswordVerifyDTO {
   /// 支付密码
   String paymentPassword;
 
-  /// 合作方订单号
-  String partnerOrderNo;
+  /// 钱包订单号
+  String walletOrderNo;
 
   /// 支付金额
   num amount;
@@ -42,7 +42,7 @@ class PaymentPasswordVerifyDTO {
       identical(this, other) ||
       other is PaymentPasswordVerifyDTO &&
           other.paymentPassword == paymentPassword &&
-          other.partnerOrderNo == partnerOrderNo &&
+          other.walletOrderNo == walletOrderNo &&
           other.amount == amount &&
           other.currencyId == currencyId;
 
@@ -50,18 +50,18 @@ class PaymentPasswordVerifyDTO {
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (paymentPassword.hashCode) +
-      (partnerOrderNo.hashCode) +
+      (walletOrderNo.hashCode) +
       (amount.hashCode) +
       (currencyId == null ? 0 : currencyId!.hashCode);
 
   @override
   String toString() =>
-      'PaymentPasswordVerifyDTO[paymentPassword=$paymentPassword, partnerOrderNo=$partnerOrderNo, amount=$amount, currencyId=$currencyId]';
+      'PaymentPasswordVerifyDTO[paymentPassword=$paymentPassword, walletOrderNo=$walletOrderNo, amount=$amount, currencyId=$currencyId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json[r'paymentPassword'] = this.paymentPassword;
-    json[r'partnerOrderNo'] = this.partnerOrderNo;
+    json[r'walletOrderNo'] = this.walletOrderNo;
     json[r'amount'] = this.amount;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
@@ -93,7 +93,7 @@ class PaymentPasswordVerifyDTO {
 
       return PaymentPasswordVerifyDTO(
         paymentPassword: mapValueOfType<String>(json, r'paymentPassword')!,
-        partnerOrderNo: mapValueOfType<String>(json, r'partnerOrderNo')!,
+        walletOrderNo: mapValueOfType<String>(json, r'walletOrderNo')!,
         amount:
             json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
         currencyId: mapValueOfType<int>(json, r'currencyId'),
@@ -154,7 +154,7 @@ class PaymentPasswordVerifyDTO {
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
     'paymentPassword',
-    'partnerOrderNo',
+    'walletOrderNo',
     'amount',
   };
 }

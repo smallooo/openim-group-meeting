@@ -23767,6 +23767,8 @@ com.mr.flutter.plugin.filepicker.FileUtils:
     public static boolean isGooglePhotosUri(android.net.Uri)
     public static boolean isMediaDocument(android.net.Uri)
 com.mr.flutter.plugin.filepicker.R
+com.openim.flutter_openim_sdk.BuildConfig
+com.openim.flutter_openim_sdk.R
 com.otaliastudios.opengl.BuildConfig
 com.otaliastudios.opengl.R
 com.otaliastudios.opengl.buffer.GlBuffer

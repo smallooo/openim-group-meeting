@@ -13,19 +13,15 @@ part of openapi.api;
 class RefundPasswordVerifyDTO {
   /// Returns a new [RefundPasswordVerifyDTO] instance.
   RefundPasswordVerifyDTO({
-    required this.walletOrderNo,
-    required this.partnerRefundNo,
+    required this.walletRefundNo,
     this.refundAmount = 0,
     required this.reason,
     this.notifyUrl,
     required this.paymentPassword,
   });
 
-  /// 原钱包订单号
-  String walletOrderNo;
-
-  /// 支付系统退款单号
-  String partnerRefundNo;
+  /// 钱包退款单号
+  String walletRefundNo;
 
   /// 退款金额(元)
   num refundAmount;
@@ -49,8 +45,7 @@ class RefundPasswordVerifyDTO {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is RefundPasswordVerifyDTO &&
-          other.walletOrderNo == walletOrderNo &&
-          other.partnerRefundNo == partnerRefundNo &&
+          other.walletRefundNo == walletRefundNo &&
           other.refundAmount == refundAmount &&
           other.reason == reason &&
           other.notifyUrl == notifyUrl &&
@@ -59,8 +54,7 @@ class RefundPasswordVerifyDTO {
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (walletOrderNo.hashCode) +
-      (partnerRefundNo.hashCode) +
+      (walletRefundNo.hashCode) +
       (refundAmount.hashCode) +
       (reason.hashCode) +
       (notifyUrl == null ? 0 : notifyUrl!.hashCode) +
@@ -68,12 +62,11 @@ class RefundPasswordVerifyDTO {
 
   @override
   String toString() =>
-      'RefundPasswordVerifyDTO[walletOrderNo=$walletOrderNo, partnerRefundNo=$partnerRefundNo, refundAmount=$refundAmount, reason=$reason, notifyUrl=$notifyUrl, paymentPassword=$paymentPassword]';
+      'RefundPasswordVerifyDTO[walletRefundNo=$walletRefundNo, refundAmount=$refundAmount, reason=$reason, notifyUrl=$notifyUrl, paymentPassword=$paymentPassword]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    json[r'walletOrderNo'] = this.walletOrderNo;
-    json[r'partnerRefundNo'] = this.partnerRefundNo;
+    json[r'walletRefundNo'] = this.walletRefundNo;
     json[r'refundAmount'] = this.refundAmount;
     json[r'reason'] = this.reason;
     if (this.notifyUrl != null) {
@@ -106,8 +99,7 @@ class RefundPasswordVerifyDTO {
       }());
 
       return RefundPasswordVerifyDTO(
-        walletOrderNo: mapValueOfType<String>(json, r'walletOrderNo')!,
-        partnerRefundNo: mapValueOfType<String>(json, r'partnerRefundNo')!,
+        walletRefundNo: mapValueOfType<String>(json, r'walletRefundNo')!,
         refundAmount: json[r'refundAmount'] == null
             ? 0
             : num.parse(json[r'refundAmount'].toString()),
@@ -170,8 +162,7 @@ class RefundPasswordVerifyDTO {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'walletOrderNo',
-    'partnerRefundNo',
+    'walletRefundNo',
     'refundAmount',
     'reason',
     'paymentPassword',

@@ -5,17 +5,17 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**applyTrader**](TraderAppApi.md#applytrader) | **POST** /trader/apply | 申请成为交易员
-[**checkTraderStatus**](TraderAppApi.md#checktraderstatus) | **GET** /trader/status | 检查当前用户是否为交易员
-[**getTraderDetail**](TraderAppApi.md#gettraderdetail) | **GET** /trader/{traderId} | 获取交易员详情
-[**getTraderList**](TraderAppApi.md#gettraderlist) | **GET** /trader/list | 获取交易员列表
-[**getTraderStats**](TraderAppApi.md#gettraderstats) | **GET** /trader/stats | 获取交易员统计数据
-[**syncTraderStats**](TraderAppApi.md#synctraderstats) | **POST** /trader/sync-stats | 手动同步交易员统计数据
-[**updateTraderProfile**](TraderAppApi.md#updatetraderprofile) | **PUT** /trader/profile | 更新交易员资料
+[**applyTrader**](TraderAppApi.md#applytrader) | **POST** /app/trader/apply | 申请成为交易员
+[**checkTraderStatus**](TraderAppApi.md#checktraderstatus) | **GET** /app/trader/status | 检查当前用户是否为交易员
+[**getTraderDetail**](TraderAppApi.md#gettraderdetail) | **GET** /app/trader/{traderId} | 获取交易员详情
+[**getTraderList**](TraderAppApi.md#gettraderlist) | **GET** /app/trader/list | 获取交易员列表
+[**getTraderStats**](TraderAppApi.md#gettraderstats) | **GET** /app/trader/stats | 获取交易员统计数据
+[**syncTraderStats**](TraderAppApi.md#synctraderstats) | **POST** /app/trader/sync-stats | 手动同步交易员统计数据
+[**updateTraderProfile**](TraderAppApi.md#updatetraderprofile) | **PUT** /app/trader/profile | 更新交易员资料
 
 
 # **applyTrader**

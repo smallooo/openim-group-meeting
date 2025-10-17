@@ -5,12 +5,12 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addStrategyComment**](StrategyCommentAppApi.md#addstrategycomment) | **POST** /strategies/{strategyId}/comment | 添加策略评论（交易员追加）
-[**getStrategyComments**](StrategyCommentAppApi.md#getstrategycomments) | **GET** /strategies/{strategyId}/comments | 获取策略评论列表
+[**addStrategyComment**](StrategyCommentAppApi.md#addstrategycomment) | **POST** /app/strategies/{strategyId}/comment | 添加策略评论（交易员追加）
+[**getStrategyComments**](StrategyCommentAppApi.md#getstrategycomments) | **GET** /app/strategies/{strategyId}/comments | 获取策略评论列表
 
 
 # **addStrategyComment**

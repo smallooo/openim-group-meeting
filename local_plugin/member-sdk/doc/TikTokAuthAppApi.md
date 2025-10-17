@@ -5,76 +5,17 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**callback**](TikTokAuthAppApi.md#callback) | **POST** /oauth2/tiktok/callback | TikTok OAuth2回调
-[**getAuthUrl**](TikTokAuthAppApi.md#getauthurl) | **POST** /oauth2/tiktok/auth-url | 获取TikTok授权URL
-[**login**](TikTokAuthAppApi.md#login) | **POST** /oauth2/tiktok/login | TikTok授权登录
+[**getTikTokAuthUrl**](TikTokAuthAppApi.md#gettiktokauthurl) | **POST** /app/auth/oauth2/tiktok/auth-url | 获取TikTok授权URL
+[**tiktokCallback**](TikTokAuthAppApi.md#tiktokcallback) | **POST** /app/auth/oauth2/tiktok/callback | TikTok OAuth2回调
+[**tiktokLogin**](TikTokAuthAppApi.md#tiktoklogin) | **POST** /app/auth/oauth2/tiktok/login | TikTok授权登录
 
 
-# **callback**
-> ApiRespTikTokLoginResponse callback(tikTokCallbackCommand)
-
-TikTok OAuth2回调
-
-TikTok OAuth2授权回调处理。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
-
-### Example
-```dart
-import 'package:toklink_member_sdk/api.dart';
-// TODO Configure API key authorization: X-Timestamp
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: Access-Token
-//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: X-Signature
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: X-Nonce
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
-
-final api_instance = TikTokAuthAppApi();
-final tikTokCallbackCommand = TikTokCallbackCommand(); // TikTokCallbackCommand | 
-
-try {
-    final result = api_instance.callback(tikTokCallbackCommand);
-    print(result);
-} catch (e) {
-    print('Exception when calling TikTokAuthAppApi->callback: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tikTokCallbackCommand** | [**TikTokCallbackCommand**](TikTokCallbackCommand.md)|  | 
-
-### Return type
-
-[**ApiRespTikTokLoginResponse**](ApiRespTikTokLoginResponse.md)
-
-### Authorization
-
-[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getAuthUrl**
-> ApiRespString getAuthUrl(tikTokAuthUrlCommand)
+# **getTikTokAuthUrl**
+> ApiRespString getTikTokAuthUrl(tikTokAuthUrlCommand)
 
 获取TikTok授权URL
 
@@ -104,10 +45,10 @@ final api_instance = TikTokAuthAppApi();
 final tikTokAuthUrlCommand = TikTokAuthUrlCommand(); // TikTokAuthUrlCommand | 
 
 try {
-    final result = api_instance.getAuthUrl(tikTokAuthUrlCommand);
+    final result = api_instance.getTikTokAuthUrl(tikTokAuthUrlCommand);
     print(result);
 } catch (e) {
-    print('Exception when calling TikTokAuthAppApi->getAuthUrl: $e\n');
+    print('Exception when calling TikTokAuthAppApi->getTikTokAuthUrl: $e\n');
 }
 ```
 
@@ -132,8 +73,67 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **login**
-> ApiRespTikTokLoginResponse login(tikTokLoginCommand)
+# **tiktokCallback**
+> ApiRespTikTokLoginResponse tiktokCallback(tikTokCallbackCommand)
+
+TikTok OAuth2回调
+
+TikTok OAuth2授权回调处理。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
+
+### Example
+```dart
+import 'package:toklink_member_sdk/api.dart';
+// TODO Configure API key authorization: X-Timestamp
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Timestamp').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: Access-Token
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('Access-Token').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Signature
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Signature').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: X-Nonce
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('X-Nonce').apiKeyPrefix = 'Bearer';
+
+final api_instance = TikTokAuthAppApi();
+final tikTokCallbackCommand = TikTokCallbackCommand(); // TikTokCallbackCommand | 
+
+try {
+    final result = api_instance.tiktokCallback(tikTokCallbackCommand);
+    print(result);
+} catch (e) {
+    print('Exception when calling TikTokAuthAppApi->tiktokCallback: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tikTokCallbackCommand** | [**TikTokCallbackCommand**](TikTokCallbackCommand.md)|  | 
+
+### Return type
+
+[**ApiRespTikTokLoginResponse**](ApiRespTikTokLoginResponse.md)
+
+### Authorization
+
+[X-Timestamp](../README.md#X-Timestamp), [Access-Token](../README.md#Access-Token), [X-Signature](../README.md#X-Signature), [X-Nonce](../README.md#X-Nonce)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **tiktokLogin**
+> ApiRespTikTokLoginResponse tiktokLogin(tikTokLoginCommand)
 
 TikTok授权登录
 
@@ -163,10 +163,10 @@ final api_instance = TikTokAuthAppApi();
 final tikTokLoginCommand = TikTokLoginCommand(); // TikTokLoginCommand | 
 
 try {
-    final result = api_instance.login(tikTokLoginCommand);
+    final result = api_instance.tiktokLogin(tikTokLoginCommand);
     print(result);
 } catch (e) {
-    print('Exception when calling TikTokAuthAppApi->login: $e\n');
+    print('Exception when calling TikTokAuthAppApi->tiktokLogin: $e\n');
 }
 ```
 

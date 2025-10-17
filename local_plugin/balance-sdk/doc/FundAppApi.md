@@ -5,13 +5,13 @@
 import 'package:toklink_balance_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9998/v1*
+All URIs are relative to *http://localhost:9998*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getMyBalance**](FundAppApi.md#getmybalance) | **POST** /wallet-fund/currency | 查询我的指定币种余额
-[**getMyBalanceList**](FundAppApi.md#getmybalancelist) | **POST** /wallet-fund/list | 查询我的余额列表
-[**getMyBalanceSummary**](FundAppApi.md#getmybalancesummary) | **POST** /wallet-fund/summary | 获取我的余额总览
+[**getMyBalance**](FundAppApi.md#getmybalance) | **POST** /app/wallet-fund/currency | 查询我的指定币种余额
+[**getMyBalanceList**](FundAppApi.md#getmybalancelist) | **POST** /app/wallet-fund/list | 查询我的余额列表
+[**getMyBalanceSummary**](FundAppApi.md#getmybalancesummary) | **POST** /app/wallet-fund/summary | 获取我的余额总览
 
 
 # **getMyBalance**

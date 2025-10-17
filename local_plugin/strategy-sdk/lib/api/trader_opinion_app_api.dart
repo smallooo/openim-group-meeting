@@ -30,7 +30,7 @@ class TraderOpinionAppApi {
     int? publishStatus,
   }) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion/count/trader/{traderId}'
+    final path = r'/app/trader-opinion/count/trader/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -99,7 +99,7 @@ class TraderOpinionAppApi {
     TraderOpinionCreateDTO traderOpinionCreateDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion';
+    final path = r'/app/trader-opinion';
 
     // ignore: prefer_final_locals
     Object? postBody = traderOpinionCreateDTO;
@@ -159,7 +159,7 @@ class TraderOpinionAppApi {
     int opinionId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion/{opinionId}'
+    final path = r'/app/trader-opinion/{opinionId}'
         .replaceAll('{opinionId}', opinionId.toString());
 
     // ignore: prefer_final_locals
@@ -226,7 +226,7 @@ class TraderOpinionAppApi {
     int? publishStatus,
   }) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion/my-opinions';
+    final path = r'/app/trader-opinion/my-opinions';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -310,7 +310,7 @@ class TraderOpinionAppApi {
     int? size,
   }) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion/trader/{traderId}'
+    final path = r'/app/trader-opinion/trader/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -386,7 +386,7 @@ class TraderOpinionAppApi {
     int opinionId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion/{opinionId}/like'
+    final path = r'/app/trader-opinion/{opinionId}/like'
         .replaceAll('{opinionId}', opinionId.toString());
 
     // ignore: prefer_final_locals
@@ -447,7 +447,7 @@ class TraderOpinionAppApi {
     int opinionId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion/{opinionId}/like'
+    final path = r'/app/trader-opinion/{opinionId}/like'
         .replaceAll('{opinionId}', opinionId.toString());
 
     // ignore: prefer_final_locals
@@ -508,7 +508,7 @@ class TraderOpinionAppApi {
     TraderOpinionUpdateDTO traderOpinionUpdateDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader-opinion';
+    final path = r'/app/trader-opinion';
 
     // ignore: prefer_final_locals
     Object? postBody = traderOpinionUpdateDTO;

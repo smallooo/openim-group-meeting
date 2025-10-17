@@ -70,24 +70,24 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:9998/v1*
+All URIs are relative to *http://localhost:9998*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*FundAppApi* | [**getMyBalance**](doc//FundAppApi.md#getmybalance) | **POST** /wallet-fund/currency | 查询我的指定币种余额
-*FundAppApi* | [**getMyBalanceList**](doc//FundAppApi.md#getmybalancelist) | **POST** /wallet-fund/list | 查询我的余额列表
-*FundAppApi* | [**getMyBalanceSummary**](doc//FundAppApi.md#getmybalancesummary) | **POST** /wallet-fund/summary | 获取我的余额总览
-*PaymentPasswordAppApi* | [**changeMyPaymentPassword**](doc//PaymentPasswordAppApi.md#changemypaymentpassword) | **POST** /wallet-password/change | 修改我的支付密码
-*PaymentPasswordAppApi* | [**getMyPaymentPasswordStatus**](doc//PaymentPasswordAppApi.md#getmypaymentpasswordstatus) | **POST** /wallet-password/status | 查询我的支付密码状态
-*PaymentPasswordAppApi* | [**setMyPaymentPassword**](doc//PaymentPasswordAppApi.md#setmypaymentpassword) | **POST** /wallet-password/set | 设置我的支付密码
-*PaymentPasswordAppApi* | [**verifyMyPaymentPassword**](doc//PaymentPasswordAppApi.md#verifymypaymentpassword) | **POST** /wallet-password/verify | 验证我的支付密码
-*RedPacketAppApi* | [**createRedPacket**](doc//RedPacketAppApi.md#createredpacket) | **POST** /wallet-red-packet/create | 创建红包
-*RedPacketAppApi* | [**getRedPacketDetail**](doc//RedPacketAppApi.md#getredpacketdetail) | **POST** /wallet-red-packet/detail | 查询红包详情
-*RedPacketAppApi* | [**receiveRedPacket**](doc//RedPacketAppApi.md#receiveredpacket) | **POST** /wallet-red-packet/receive | 领取红包
-*WalletPaymentAppApi* | [**processMyPayment**](doc//WalletPaymentAppApi.md#processmypayment) | **POST** /wallet-payment/process | 处理我的支付订单
-*WalletPaymentAppApi* | [**verifyPasswordAndPay**](doc//WalletPaymentAppApi.md#verifypasswordandpay) | **POST** /wallet-payment/verify | 验证支付密码并支付
-*WalletRefundAppApi* | [**processMyRefund**](doc//WalletRefundAppApi.md#processmyrefund) | **POST** /wallet-refund/process | 处理我的退款订单
-*WalletRefundAppApi* | [**verifyPasswordAndRefund**](doc//WalletRefundAppApi.md#verifypasswordandrefund) | **POST** /wallet-refund/verify | 验证支付密码并退款
+*FundAppApi* | [**getMyBalance**](doc//FundAppApi.md#getmybalance) | **POST** /app/wallet-fund/currency | 查询我的指定币种余额
+*FundAppApi* | [**getMyBalanceList**](doc//FundAppApi.md#getmybalancelist) | **POST** /app/wallet-fund/list | 查询我的余额列表
+*FundAppApi* | [**getMyBalanceSummary**](doc//FundAppApi.md#getmybalancesummary) | **POST** /app/wallet-fund/summary | 获取我的余额总览
+*PaymentPasswordAppApi* | [**changeMyPaymentPassword**](doc//PaymentPasswordAppApi.md#changemypaymentpassword) | **POST** /app/wallet-password/change | 修改我的支付密码
+*PaymentPasswordAppApi* | [**getMyPaymentPasswordStatus**](doc//PaymentPasswordAppApi.md#getmypaymentpasswordstatus) | **POST** /app/wallet-password/status | 查询我的支付密码状态
+*PaymentPasswordAppApi* | [**setMyPaymentPassword**](doc//PaymentPasswordAppApi.md#setmypaymentpassword) | **POST** /app/wallet-password/set | 设置我的支付密码
+*PaymentPasswordAppApi* | [**verifyMyPaymentPassword**](doc//PaymentPasswordAppApi.md#verifymypaymentpassword) | **POST** /app/wallet-password/verify | 验证我的支付密码
+*RedPacketAppApi* | [**createRedPacket**](doc//RedPacketAppApi.md#createredpacket) | **POST** /app/wallet-red-packet/create | 创建红包
+*RedPacketAppApi* | [**getRedPacketDetail**](doc//RedPacketAppApi.md#getredpacketdetail) | **POST** /app/wallet-red-packet/detail | 查询红包详情
+*RedPacketAppApi* | [**receiveRedPacket**](doc//RedPacketAppApi.md#receiveredpacket) | **POST** /app/wallet-red-packet/receive | 领取红包
+*WalletPaymentAppApi* | [**processMyPayment**](doc//WalletPaymentAppApi.md#processmypayment) | **POST** /app/wallet-payment/process | 处理我的支付订单
+*WalletPaymentAppApi* | [**verifyPasswordAndPay**](doc//WalletPaymentAppApi.md#verifypasswordandpay) | **POST** /app/wallet-payment/verify | 验证支付密码并支付
+*WalletRefundAppApi* | [**processMyRefund**](doc//WalletRefundAppApi.md#processmyrefund) | **POST** /app/wallet-refund/process | 处理我的退款订单
+*WalletRefundAppApi* | [**verifyPasswordAndRefund**](doc//WalletRefundAppApi.md#verifypasswordandrefund) | **POST** /app/wallet-refund/verify | 验证支付密码并退款
 
 
 ## Documentation For Models

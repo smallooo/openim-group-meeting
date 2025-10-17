@@ -5,14 +5,14 @@
 import 'package:toklink_balance_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9998/v1*
+All URIs are relative to *http://localhost:9998*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**changeMyPaymentPassword**](PaymentPasswordAppApi.md#changemypaymentpassword) | **POST** /wallet-password/change | 修改我的支付密码
-[**getMyPaymentPasswordStatus**](PaymentPasswordAppApi.md#getmypaymentpasswordstatus) | **POST** /wallet-password/status | 查询我的支付密码状态
-[**setMyPaymentPassword**](PaymentPasswordAppApi.md#setmypaymentpassword) | **POST** /wallet-password/set | 设置我的支付密码
-[**verifyMyPaymentPassword**](PaymentPasswordAppApi.md#verifymypaymentpassword) | **POST** /wallet-password/verify | 验证我的支付密码
+[**changeMyPaymentPassword**](PaymentPasswordAppApi.md#changemypaymentpassword) | **POST** /app/wallet-password/change | 修改我的支付密码
+[**getMyPaymentPasswordStatus**](PaymentPasswordAppApi.md#getmypaymentpasswordstatus) | **POST** /app/wallet-password/status | 查询我的支付密码状态
+[**setMyPaymentPassword**](PaymentPasswordAppApi.md#setmypaymentpassword) | **POST** /app/wallet-password/set | 设置我的支付密码
+[**verifyMyPaymentPassword**](PaymentPasswordAppApi.md#verifymypaymentpassword) | **POST** /app/wallet-password/verify | 验证我的支付密码
 
 
 # **changeMyPaymentPassword**

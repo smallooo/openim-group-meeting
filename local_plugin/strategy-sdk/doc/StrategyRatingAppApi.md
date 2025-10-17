@@ -5,12 +5,12 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getStrategyRatings**](StrategyRatingAppApi.md#getstrategyratings) | **GET** /strategies/{strategyId}/ratings | 获取策略评价列表
-[**rateStrategy**](StrategyRatingAppApi.md#ratestrategy) | **POST** /strategies/{strategyId}/rating | 评价策略
+[**getStrategyRatings**](StrategyRatingAppApi.md#getstrategyratings) | **GET** /app/strategies/{strategyId}/ratings | 获取策略评价列表
+[**rateStrategy**](StrategyRatingAppApi.md#ratestrategy) | **POST** /app/strategies/{strategyId}/rating | 评价策略
 
 
 # **getStrategyRatings**

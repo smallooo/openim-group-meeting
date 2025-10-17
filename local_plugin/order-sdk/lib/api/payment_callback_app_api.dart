@@ -29,7 +29,7 @@ class PaymentCallbackAppApi {
     Map<String, Object> requestBody,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/order/pay/callback';
+    final path = r'/app/order/pay/callback';
 
     // ignore: prefer_final_locals
     Object? postBody = requestBody;

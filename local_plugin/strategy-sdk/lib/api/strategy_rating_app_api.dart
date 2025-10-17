@@ -30,7 +30,7 @@ class StrategyRatingAppApi {
     StrategyRatingQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}/ratings'
+    final path = r'/app/strategies/{strategyId}/ratings'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals
@@ -100,7 +100,7 @@ class StrategyRatingAppApi {
     StrategyRatingDTO strategyRatingDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}/rating'
+    final path = r'/app/strategies/{strategyId}/rating'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals

@@ -27,7 +27,7 @@ class TraderSubscriptionPricingAppApi {
     int id,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/{id}'.replaceAll('{id}', id.toString());
+    final path = r'/app/trader/pricing/{id}'.replaceAll('{id}', id.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -87,7 +87,7 @@ class TraderSubscriptionPricingAppApi {
     String strategyType,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/strategy/{strategyType}'
+    final path = r'/app/trader/pricing/strategy/{strategyType}'
         .replaceAll('{strategyType}', strategyType);
 
     // ignore: prefer_final_locals
@@ -143,7 +143,7 @@ class TraderSubscriptionPricingAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> getMyActivePricingWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/my/active';
+    final path = r'/app/trader/pricing/my/active';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -189,7 +189,7 @@ class TraderSubscriptionPricingAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> getMyPricingWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/my';
+    final path = r'/app/trader/pricing/my';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -241,7 +241,7 @@ class TraderSubscriptionPricingAppApi {
     int traderId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/trader/{traderId}'
+    final path = r'/app/trader/pricing/trader/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -305,9 +305,10 @@ class TraderSubscriptionPricingAppApi {
     String strategyType,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/trader/{traderId}/strategy/{strategyType}'
-        .replaceAll('{traderId}', traderId.toString())
-        .replaceAll('{strategyType}', strategyType);
+    final path =
+        r'/app/trader/pricing/trader/{traderId}/strategy/{strategyType}'
+            .replaceAll('{traderId}', traderId.toString())
+            .replaceAll('{strategyType}', strategyType);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -371,7 +372,7 @@ class TraderSubscriptionPricingAppApi {
     TraderSubscriptionPricingDTO traderSubscriptionPricingDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/pricing/set';
+    final path = r'/app/trader/pricing/set';
 
     // ignore: prefer_final_locals
     Object? postBody = traderSubscriptionPricingDTO;
@@ -435,7 +436,7 @@ class TraderSubscriptionPricingAppApi {
   ) async {
     // ignore: prefer_const_declarations
     final path =
-        r'/trader/pricing/toggle/{id}'.replaceAll('{id}', id.toString());
+        r'/app/trader/pricing/toggle/{id}'.replaceAll('{id}', id.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -505,7 +506,7 @@ class TraderSubscriptionPricingAppApi {
   ) async {
     // ignore: prefer_const_declarations
     final path =
-        r'/trader/pricing/update/{id}'.replaceAll('{id}', id.toString());
+        r'/app/trader/pricing/update/{id}'.replaceAll('{id}', id.toString());
 
     // ignore: prefer_final_locals
     Object? postBody = traderSubscriptionPricingDTO;

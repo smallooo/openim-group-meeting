@@ -5,12 +5,12 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**attention**](MemberRelationAppApi.md#attention) | **POST** /member/relation/attention/{memberId} | 关注一个用户
-[**unattention**](MemberRelationAppApi.md#unattention) | **POST** /member/relation/unattention/{memberId} | 取消关注一个用户
+[**attention**](MemberRelationAppApi.md#attention) | **POST** /app/member/relation/attention/{memberId} | 关注一个用户
+[**unattention**](MemberRelationAppApi.md#unattention) | **POST** /app/member/relation/unattention/{memberId} | 取消关注一个用户
 
 
 # **attention**

@@ -16,8 +16,8 @@ class IPagePublicStrategyResponse {
     this.size,
     this.total,
     this.pages,
-    this.records = const [],
     this.current,
+    this.records = const [],
   });
 
   ///
@@ -44,8 +44,6 @@ class IPagePublicStrategyResponse {
   ///
   int? pages;
 
-  List<PublicStrategyResponse> records;
-
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -54,6 +52,8 @@ class IPagePublicStrategyResponse {
   ///
   int? current;
 
+  List<PublicStrategyResponse> records;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -61,8 +61,8 @@ class IPagePublicStrategyResponse {
           other.size == size &&
           other.total == total &&
           other.pages == pages &&
-          other.records == records &&
-          other.current == current;
+          other.current == current &&
+          other.records == records;
 
   @override
   int get hashCode =>
@@ -70,12 +70,12 @@ class IPagePublicStrategyResponse {
       (size == null ? 0 : size!.hashCode) +
       (total == null ? 0 : total!.hashCode) +
       (pages == null ? 0 : pages!.hashCode) +
-      (records.hashCode) +
-      (current == null ? 0 : current!.hashCode);
+      (current == null ? 0 : current!.hashCode) +
+      (records.hashCode);
 
   @override
   String toString() =>
-      'IPagePublicStrategyResponse[size=$size, total=$total, pages=$pages, records=$records, current=$current]';
+      'IPagePublicStrategyResponse[size=$size, total=$total, pages=$pages, current=$current, records=$records]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -94,12 +94,12 @@ class IPagePublicStrategyResponse {
     } else {
       json[r'pages'] = null;
     }
-    json[r'records'] = this.records;
     if (this.current != null) {
       json[r'current'] = this.current;
     } else {
       json[r'current'] = null;
     }
+    json[r'records'] = this.records;
     return json;
   }
 
@@ -127,8 +127,8 @@ class IPagePublicStrategyResponse {
         size: mapValueOfType<int>(json, r'size'),
         total: mapValueOfType<int>(json, r'total'),
         pages: mapValueOfType<int>(json, r'pages'),
-        records: PublicStrategyResponse.listFromJson(json[r'records']),
         current: mapValueOfType<int>(json, r'current'),
+        records: PublicStrategyResponse.listFromJson(json[r'records']),
       );
     }
     return null;

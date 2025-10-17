@@ -70,61 +70,61 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*FollowAppApi* | [**checkFollowStatus**](doc//FollowAppApi.md#checkfollowstatus) | **GET** /follow/follow/{traderId}/status | 检查是否已关注
-*FollowAppApi* | [**followTrader**](doc//FollowAppApi.md#followtrader) | **POST** /follow/follow/{traderId} | 关注交易员
-*FollowAppApi* | [**getMyFollows**](doc//FollowAppApi.md#getmyfollows) | **GET** /follow/my-follows | 我的关注列表
-*FollowAppApi* | [**unfollowTrader**](doc//FollowAppApi.md#unfollowtrader) | **DELETE** /follow/follow/{traderId} | 取消关注交易员
-*StrategyAppApi* | [**getMyStrategies**](doc//StrategyAppApi.md#getmystrategies) | **GET** /strategies/my | 我的策略列表
-*StrategyAppApi* | [**getPublicStrategies**](doc//StrategyAppApi.md#getpublicstrategies) | **GET** /strategies/public | 公用策略看板
-*StrategyAppApi* | [**getStrategiesByTrader**](doc//StrategyAppApi.md#getstrategiesbytrader) | **GET** /strategies/trader/{traderId} | 根据交易员ID获取策略列表
-*StrategyAppApi* | [**getStrategyDetail**](doc//StrategyAppApi.md#getstrategydetail) | **GET** /strategies/{strategyId} | 获取策略详情
-*StrategyAppApi* | [**getTrendingStrategies**](doc//StrategyAppApi.md#gettrendingstrategies) | **GET** /strategies/trending | 热门策略排行
-*StrategyAppApi* | [**publishStrategy**](doc//StrategyAppApi.md#publishstrategy) | **POST** /strategies | 发布策略
-*StrategyAppApi* | [**recordStrategyView**](doc//StrategyAppApi.md#recordstrategyview) | **POST** /strategies/{strategyId}/view | 记录策略浏览
-*StrategyAppApi* | [**updateStrategy**](doc//StrategyAppApi.md#updatestrategy) | **PUT** /strategies/{strategyId} | 更新策略
-*StrategyCommentAppApi* | [**addStrategyComment**](doc//StrategyCommentAppApi.md#addstrategycomment) | **POST** /strategies/{strategyId}/comment | 添加策略评论（交易员追加）
-*StrategyCommentAppApi* | [**getStrategyComments**](doc//StrategyCommentAppApi.md#getstrategycomments) | **GET** /strategies/{strategyId}/comments | 获取策略评论列表
-*StrategyRatingAppApi* | [**getStrategyRatings**](doc//StrategyRatingAppApi.md#getstrategyratings) | **GET** /strategies/{strategyId}/ratings | 获取策略评价列表
-*StrategyRatingAppApi* | [**rateStrategy**](doc//StrategyRatingAppApi.md#ratestrategy) | **POST** /strategies/{strategyId}/rating | 评价策略
-*SubscriptionAppApi* | [**call1**](doc//SubscriptionAppApi.md#call1) | **GET** /api/subscribe/{traderId}/status/{strategyType} | 检查是否已订阅指定策略类型
-*SubscriptionAppApi* | [**checkSubscription**](doc//SubscriptionAppApi.md#checksubscription) | **GET** /api/subscription/check | 检查用户订阅状态（Feign调用）
-*SubscriptionAppApi* | [**checkSubscriptionStatus**](doc//SubscriptionAppApi.md#checksubscriptionstatus) | **GET** /api/subscribe/{traderId}/status | 检查是否已订阅
-*SubscriptionAppApi* | [**getMyPaymentOrders**](doc//SubscriptionAppApi.md#getmypaymentorders) | **GET** /api/my-payment-orders | 查询我的支付订单
-*SubscriptionAppApi* | [**getMyRefundOrders**](doc//SubscriptionAppApi.md#getmyrefundorders) | **GET** /api/my-refund-orders | 查询我的退款订单
-*SubscriptionAppApi* | [**getMySubscriptions**](doc//SubscriptionAppApi.md#getmysubscriptions) | **GET** /api/my-subscriptions | 我的订阅列表
-*SubscriptionAppApi* | [**getPaymentOrderDetail**](doc//SubscriptionAppApi.md#getpaymentorderdetail) | **GET** /api/payment-orders/{paymentOrderNo} | 查询支付订单详情
-*SubscriptionAppApi* | [**getPaymentOrderStatus**](doc//SubscriptionAppApi.md#getpaymentorderstatus) | **GET** /api/payment-order-status/{paymentOrderNo} | 查询支付订单支付状态
-*SubscriptionAppApi* | [**getRefundOrderDetail**](doc//SubscriptionAppApi.md#getrefundorderdetail) | **GET** /api/refund-orders/{refundOrderNo} | 查询退款订单详情
-*SubscriptionAppApi* | [**requestRefund**](doc//SubscriptionAppApi.md#requestrefund) | **POST** /api/subscriptions/{subscriptionId}/refund | 申请退款
-*SubscriptionAppApi* | [**subscribeTrader**](doc//SubscriptionAppApi.md#subscribetrader) | **POST** /api/subscribe/{traderId} | 订阅交易员
-*TraderAppApi* | [**applyTrader**](doc//TraderAppApi.md#applytrader) | **POST** /trader/apply | 申请成为交易员
-*TraderAppApi* | [**checkTraderStatus**](doc//TraderAppApi.md#checktraderstatus) | **GET** /trader/status | 检查当前用户是否为交易员
-*TraderAppApi* | [**getTraderDetail**](doc//TraderAppApi.md#gettraderdetail) | **GET** /trader/{traderId} | 获取交易员详情
-*TraderAppApi* | [**getTraderList**](doc//TraderAppApi.md#gettraderlist) | **GET** /trader/list | 获取交易员列表
-*TraderAppApi* | [**getTraderStats**](doc//TraderAppApi.md#gettraderstats) | **GET** /trader/stats | 获取交易员统计数据
-*TraderAppApi* | [**syncTraderStats**](doc//TraderAppApi.md#synctraderstats) | **POST** /trader/sync-stats | 手动同步交易员统计数据
-*TraderAppApi* | [**updateTraderProfile**](doc//TraderAppApi.md#updatetraderprofile) | **PUT** /trader/profile | 更新交易员资料
-*TraderOpinionAppApi* | [**countOpinionsByTraderId**](doc//TraderOpinionAppApi.md#countopinionsbytraderid) | **GET** /trader-opinion/count/trader/{traderId} | 统计交易员观点数量
-*TraderOpinionAppApi* | [**createOpinion**](doc//TraderOpinionAppApi.md#createopinion) | **POST** /trader-opinion | 创建观点
-*TraderOpinionAppApi* | [**deleteOpinion**](doc//TraderOpinionAppApi.md#deleteopinion) | **DELETE** /trader-opinion/{opinionId} | 删除观点
-*TraderOpinionAppApi* | [**getMyOpinions**](doc//TraderOpinionAppApi.md#getmyopinions) | **GET** /trader-opinion/my-opinions | 我的观点列表
-*TraderOpinionAppApi* | [**getOpinionsByTraderId**](doc//TraderOpinionAppApi.md#getopinionsbytraderid) | **GET** /trader-opinion/trader/{traderId} | 根据交易员ID查询观点列表
-*TraderOpinionAppApi* | [**likeOpinion**](doc//TraderOpinionAppApi.md#likeopinion) | **POST** /trader-opinion/{opinionId}/like | 点赞观点
-*TraderOpinionAppApi* | [**unlikeOpinion**](doc//TraderOpinionAppApi.md#unlikeopinion) | **DELETE** /trader-opinion/{opinionId}/like | 取消点赞观点
-*TraderOpinionAppApi* | [**updateOpinion**](doc//TraderOpinionAppApi.md#updateopinion) | **PUT** /trader-opinion | 更新观点
-*TraderSubscriptionPricingAppApi* | [**deletePricing**](doc//TraderSubscriptionPricingAppApi.md#deletepricing) | **DELETE** /trader/pricing/{id} | 删除价格配置
-*TraderSubscriptionPricingAppApi* | [**getActivePricingByStrategyType**](doc//TraderSubscriptionPricingAppApi.md#getactivepricingbystrategytype) | **GET** /trader/pricing/strategy/{strategyType} | 根据策略类型获取所有激活的价格配置
-*TraderSubscriptionPricingAppApi* | [**getMyActivePricing**](doc//TraderSubscriptionPricingAppApi.md#getmyactivepricing) | **GET** /trader/pricing/my/active | 获取我的激活订阅价格列表
-*TraderSubscriptionPricingAppApi* | [**getMyPricing**](doc//TraderSubscriptionPricingAppApi.md#getmypricing) | **GET** /trader/pricing/my | 获取我的订阅价格列表
-*TraderSubscriptionPricingAppApi* | [**getTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#gettraderpricing) | **GET** /trader/pricing/trader/{traderId} | 获取交易员的订阅价格
-*TraderSubscriptionPricingAppApi* | [**getTraderStrategyPricing**](doc//TraderSubscriptionPricingAppApi.md#gettraderstrategypricing) | **GET** /trader/pricing/trader/{traderId}/strategy/{strategyType} | 获取指定交易员和策略类型的价格
-*TraderSubscriptionPricingAppApi* | [**setTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#settraderpricing) | **POST** /trader/pricing/set | 设置交易员订阅价格
-*TraderSubscriptionPricingAppApi* | [**togglePricingActive**](doc//TraderSubscriptionPricingAppApi.md#togglepricingactive) | **PUT** /trader/pricing/toggle/{id} | 启用/禁用价格配置
-*TraderSubscriptionPricingAppApi* | [**updateTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#updatetraderpricing) | **PUT** /trader/pricing/update/{id} | 更新交易员订阅价格
+*FollowAppApi* | [**checkFollowStatus**](doc//FollowAppApi.md#checkfollowstatus) | **GET** /app/follow/follow/{traderId}/status | 检查是否已关注
+*FollowAppApi* | [**followTrader**](doc//FollowAppApi.md#followtrader) | **POST** /app/follow/follow/{traderId} | 关注交易员
+*FollowAppApi* | [**getMyFollows**](doc//FollowAppApi.md#getmyfollows) | **GET** /app/follow/my-follows | 我的关注列表
+*FollowAppApi* | [**unfollowTrader**](doc//FollowAppApi.md#unfollowtrader) | **DELETE** /app/follow/follow/{traderId} | 取消关注交易员
+*StrategyAppApi* | [**getMyStrategies**](doc//StrategyAppApi.md#getmystrategies) | **GET** /app/strategies/my | 我的策略列表
+*StrategyAppApi* | [**getPublicStrategies**](doc//StrategyAppApi.md#getpublicstrategies) | **GET** /app/strategies/public | 公用策略看板
+*StrategyAppApi* | [**getStrategiesByTrader**](doc//StrategyAppApi.md#getstrategiesbytrader) | **GET** /app/strategies/trader/{traderId} | 根据交易员ID获取策略列表
+*StrategyAppApi* | [**getStrategyDetail**](doc//StrategyAppApi.md#getstrategydetail) | **GET** /app/strategies/{strategyId} | 获取策略详情
+*StrategyAppApi* | [**getTrendingStrategies**](doc//StrategyAppApi.md#gettrendingstrategies) | **GET** /app/strategies/trending | 热门策略排行
+*StrategyAppApi* | [**publishStrategy**](doc//StrategyAppApi.md#publishstrategy) | **POST** /app/strategies | 发布策略
+*StrategyAppApi* | [**recordStrategyView**](doc//StrategyAppApi.md#recordstrategyview) | **POST** /app/strategies/{strategyId}/view | 记录策略浏览
+*StrategyAppApi* | [**updateStrategy**](doc//StrategyAppApi.md#updatestrategy) | **PUT** /app/strategies/{strategyId} | 更新策略
+*StrategyCommentAppApi* | [**addStrategyComment**](doc//StrategyCommentAppApi.md#addstrategycomment) | **POST** /app/strategies/{strategyId}/comment | 添加策略评论（交易员追加）
+*StrategyCommentAppApi* | [**getStrategyComments**](doc//StrategyCommentAppApi.md#getstrategycomments) | **GET** /app/strategies/{strategyId}/comments | 获取策略评论列表
+*StrategyRatingAppApi* | [**getStrategyRatings**](doc//StrategyRatingAppApi.md#getstrategyratings) | **GET** /app/strategies/{strategyId}/ratings | 获取策略评价列表
+*StrategyRatingAppApi* | [**rateStrategy**](doc//StrategyRatingAppApi.md#ratestrategy) | **POST** /app/strategies/{strategyId}/rating | 评价策略
+*SubscriptionAppApi* | [**checkSubscription**](doc//SubscriptionAppApi.md#checksubscription) | **GET** /app/api/subscription/check | 检查用户订阅状态（Feign调用）
+*SubscriptionAppApi* | [**checkSubscriptionStatus**](doc//SubscriptionAppApi.md#checksubscriptionstatus) | **GET** /app/api/subscribe/{traderId}/status | 检查是否已订阅
+*SubscriptionAppApi* | [**checkSubscriptionStatusByStrategyType**](doc//SubscriptionAppApi.md#checksubscriptionstatusbystrategytype) | **GET** /app/api/subscribe/{traderId}/status/{strategyType} | 检查是否已订阅指定策略类型
+*SubscriptionAppApi* | [**getMyPaymentOrders**](doc//SubscriptionAppApi.md#getmypaymentorders) | **GET** /app/api/my-payment-orders | 查询我的支付订单
+*SubscriptionAppApi* | [**getMyRefundOrders**](doc//SubscriptionAppApi.md#getmyrefundorders) | **GET** /app/api/my-refund-orders | 查询我的退款订单
+*SubscriptionAppApi* | [**getMySubscriptions**](doc//SubscriptionAppApi.md#getmysubscriptions) | **GET** /app/api/my-subscriptions | 我的订阅列表
+*SubscriptionAppApi* | [**getPaymentOrderDetail**](doc//SubscriptionAppApi.md#getpaymentorderdetail) | **GET** /app/api/payment-orders/{paymentOrderNo} | 查询支付订单详情
+*SubscriptionAppApi* | [**getPaymentOrderStatus**](doc//SubscriptionAppApi.md#getpaymentorderstatus) | **GET** /app/api/payment-order-status/{paymentOrderNo} | 查询支付订单支付状态
+*SubscriptionAppApi* | [**getRefundOrderDetail**](doc//SubscriptionAppApi.md#getrefundorderdetail) | **GET** /app/api/refund-orders/{refundOrderNo} | 查询退款订单详情
+*SubscriptionAppApi* | [**requestRefund**](doc//SubscriptionAppApi.md#requestrefund) | **POST** /app/api/subscriptions/{subscriptionId}/refund | 申请退款
+*SubscriptionAppApi* | [**subscribeTrader**](doc//SubscriptionAppApi.md#subscribetrader) | **POST** /app/api/subscribe/{traderId} | 订阅交易员
+*TraderAppApi* | [**applyTrader**](doc//TraderAppApi.md#applytrader) | **POST** /app/trader/apply | 申请成为交易员
+*TraderAppApi* | [**checkTraderStatus**](doc//TraderAppApi.md#checktraderstatus) | **GET** /app/trader/status | 检查当前用户是否为交易员
+*TraderAppApi* | [**getTraderDetail**](doc//TraderAppApi.md#gettraderdetail) | **GET** /app/trader/{traderId} | 获取交易员详情
+*TraderAppApi* | [**getTraderList**](doc//TraderAppApi.md#gettraderlist) | **GET** /app/trader/list | 获取交易员列表
+*TraderAppApi* | [**getTraderStats**](doc//TraderAppApi.md#gettraderstats) | **GET** /app/trader/stats | 获取交易员统计数据
+*TraderAppApi* | [**syncTraderStats**](doc//TraderAppApi.md#synctraderstats) | **POST** /app/trader/sync-stats | 手动同步交易员统计数据
+*TraderAppApi* | [**updateTraderProfile**](doc//TraderAppApi.md#updatetraderprofile) | **PUT** /app/trader/profile | 更新交易员资料
+*TraderOpinionAppApi* | [**countOpinionsByTraderId**](doc//TraderOpinionAppApi.md#countopinionsbytraderid) | **GET** /app/trader-opinion/count/trader/{traderId} | 统计交易员观点数量
+*TraderOpinionAppApi* | [**createOpinion**](doc//TraderOpinionAppApi.md#createopinion) | **POST** /app/trader-opinion | 创建观点
+*TraderOpinionAppApi* | [**deleteOpinion**](doc//TraderOpinionAppApi.md#deleteopinion) | **DELETE** /app/trader-opinion/{opinionId} | 删除观点
+*TraderOpinionAppApi* | [**getMyOpinions**](doc//TraderOpinionAppApi.md#getmyopinions) | **GET** /app/trader-opinion/my-opinions | 我的观点列表
+*TraderOpinionAppApi* | [**getOpinionsByTraderId**](doc//TraderOpinionAppApi.md#getopinionsbytraderid) | **GET** /app/trader-opinion/trader/{traderId} | 根据交易员ID查询观点列表
+*TraderOpinionAppApi* | [**likeOpinion**](doc//TraderOpinionAppApi.md#likeopinion) | **POST** /app/trader-opinion/{opinionId}/like | 点赞观点
+*TraderOpinionAppApi* | [**unlikeOpinion**](doc//TraderOpinionAppApi.md#unlikeopinion) | **DELETE** /app/trader-opinion/{opinionId}/like | 取消点赞观点
+*TraderOpinionAppApi* | [**updateOpinion**](doc//TraderOpinionAppApi.md#updateopinion) | **PUT** /app/trader-opinion | 更新观点
+*TraderSubscriptionPricingAppApi* | [**deletePricing**](doc//TraderSubscriptionPricingAppApi.md#deletepricing) | **DELETE** /app/trader/pricing/{id} | 删除价格配置
+*TraderSubscriptionPricingAppApi* | [**getActivePricingByStrategyType**](doc//TraderSubscriptionPricingAppApi.md#getactivepricingbystrategytype) | **GET** /app/trader/pricing/strategy/{strategyType} | 根据策略类型获取所有激活的价格配置
+*TraderSubscriptionPricingAppApi* | [**getMyActivePricing**](doc//TraderSubscriptionPricingAppApi.md#getmyactivepricing) | **GET** /app/trader/pricing/my/active | 获取我的激活订阅价格列表
+*TraderSubscriptionPricingAppApi* | [**getMyPricing**](doc//TraderSubscriptionPricingAppApi.md#getmypricing) | **GET** /app/trader/pricing/my | 获取我的订阅价格列表
+*TraderSubscriptionPricingAppApi* | [**getTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#gettraderpricing) | **GET** /app/trader/pricing/trader/{traderId} | 获取交易员的订阅价格
+*TraderSubscriptionPricingAppApi* | [**getTraderStrategyPricing**](doc//TraderSubscriptionPricingAppApi.md#gettraderstrategypricing) | **GET** /app/trader/pricing/trader/{traderId}/strategy/{strategyType} | 获取指定交易员和策略类型的价格
+*TraderSubscriptionPricingAppApi* | [**setTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#settraderpricing) | **POST** /app/trader/pricing/set | 设置交易员订阅价格
+*TraderSubscriptionPricingAppApi* | [**togglePricingActive**](doc//TraderSubscriptionPricingAppApi.md#togglepricingactive) | **PUT** /app/trader/pricing/toggle/{id} | 启用/禁用价格配置
+*TraderSubscriptionPricingAppApi* | [**updateTraderPricing**](doc//TraderSubscriptionPricingAppApi.md#updatetraderpricing) | **PUT** /app/trader/pricing/update/{id} | 更新交易员订阅价格
 
 
 ## Documentation For Models

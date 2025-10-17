@@ -5,13 +5,13 @@
 import 'package:toklink_member_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9999/v1*
+All URIs are relative to *http://localhost:9999*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**checkTokenStatus**](TokenAppApi.md#checktokenstatus) | **POST** /auth/status | 检查Token状态
-[**logout**](TokenAppApi.md#logout) | **POST** /auth/logout | 退出登录
-[**refreshToken**](TokenAppApi.md#refreshtoken) | **POST** /auth/refresh | 刷新AccessToken
+[**checkTokenStatus**](TokenAppApi.md#checktokenstatus) | **POST** /app/auth/token/status | 检查Token状态
+[**logout**](TokenAppApi.md#logout) | **POST** /app/auth/token/logout | 退出登录
+[**refreshToken**](TokenAppApi.md#refreshtoken) | **POST** /app/auth/token/refresh | 刷新AccessToken
 
 
 # **checkTokenStatus**

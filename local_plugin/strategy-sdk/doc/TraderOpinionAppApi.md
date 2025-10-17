@@ -5,18 +5,18 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**countOpinionsByTraderId**](TraderOpinionAppApi.md#countopinionsbytraderid) | **GET** /trader-opinion/count/trader/{traderId} | 统计交易员观点数量
-[**createOpinion**](TraderOpinionAppApi.md#createopinion) | **POST** /trader-opinion | 创建观点
-[**deleteOpinion**](TraderOpinionAppApi.md#deleteopinion) | **DELETE** /trader-opinion/{opinionId} | 删除观点
-[**getMyOpinions**](TraderOpinionAppApi.md#getmyopinions) | **GET** /trader-opinion/my-opinions | 我的观点列表
-[**getOpinionsByTraderId**](TraderOpinionAppApi.md#getopinionsbytraderid) | **GET** /trader-opinion/trader/{traderId} | 根据交易员ID查询观点列表
-[**likeOpinion**](TraderOpinionAppApi.md#likeopinion) | **POST** /trader-opinion/{opinionId}/like | 点赞观点
-[**unlikeOpinion**](TraderOpinionAppApi.md#unlikeopinion) | **DELETE** /trader-opinion/{opinionId}/like | 取消点赞观点
-[**updateOpinion**](TraderOpinionAppApi.md#updateopinion) | **PUT** /trader-opinion | 更新观点
+[**countOpinionsByTraderId**](TraderOpinionAppApi.md#countopinionsbytraderid) | **GET** /app/trader-opinion/count/trader/{traderId} | 统计交易员观点数量
+[**createOpinion**](TraderOpinionAppApi.md#createopinion) | **POST** /app/trader-opinion | 创建观点
+[**deleteOpinion**](TraderOpinionAppApi.md#deleteopinion) | **DELETE** /app/trader-opinion/{opinionId} | 删除观点
+[**getMyOpinions**](TraderOpinionAppApi.md#getmyopinions) | **GET** /app/trader-opinion/my-opinions | 我的观点列表
+[**getOpinionsByTraderId**](TraderOpinionAppApi.md#getopinionsbytraderid) | **GET** /app/trader-opinion/trader/{traderId} | 根据交易员ID查询观点列表
+[**likeOpinion**](TraderOpinionAppApi.md#likeopinion) | **POST** /app/trader-opinion/{opinionId}/like | 点赞观点
+[**unlikeOpinion**](TraderOpinionAppApi.md#unlikeopinion) | **DELETE** /app/trader-opinion/{opinionId}/like | 取消点赞观点
+[**updateOpinion**](TraderOpinionAppApi.md#updateopinion) | **PUT** /app/trader-opinion | 更新观点
 
 
 # **countOpinionsByTraderId**

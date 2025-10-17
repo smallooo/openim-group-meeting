@@ -16,8 +16,8 @@ class IPageStrSubscriptionPayment {
     this.size,
     this.total,
     this.pages,
-    this.records = const [],
     this.current,
+    this.records = const [],
   });
 
   ///
@@ -44,8 +44,6 @@ class IPageStrSubscriptionPayment {
   ///
   int? pages;
 
-  List<StrSubscriptionPayment> records;
-
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -54,6 +52,8 @@ class IPageStrSubscriptionPayment {
   ///
   int? current;
 
+  List<StrSubscriptionPayment> records;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -61,8 +61,8 @@ class IPageStrSubscriptionPayment {
           other.size == size &&
           other.total == total &&
           other.pages == pages &&
-          other.records == records &&
-          other.current == current;
+          other.current == current &&
+          other.records == records;
 
   @override
   int get hashCode =>
@@ -70,12 +70,12 @@ class IPageStrSubscriptionPayment {
       (size == null ? 0 : size!.hashCode) +
       (total == null ? 0 : total!.hashCode) +
       (pages == null ? 0 : pages!.hashCode) +
-      (records.hashCode) +
-      (current == null ? 0 : current!.hashCode);
+      (current == null ? 0 : current!.hashCode) +
+      (records.hashCode);
 
   @override
   String toString() =>
-      'IPageStrSubscriptionPayment[size=$size, total=$total, pages=$pages, records=$records, current=$current]';
+      'IPageStrSubscriptionPayment[size=$size, total=$total, pages=$pages, current=$current, records=$records]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -94,12 +94,12 @@ class IPageStrSubscriptionPayment {
     } else {
       json[r'pages'] = null;
     }
-    json[r'records'] = this.records;
     if (this.current != null) {
       json[r'current'] = this.current;
     } else {
       json[r'current'] = null;
     }
+    json[r'records'] = this.records;
     return json;
   }
 
@@ -127,8 +127,8 @@ class IPageStrSubscriptionPayment {
         size: mapValueOfType<int>(json, r'size'),
         total: mapValueOfType<int>(json, r'total'),
         pages: mapValueOfType<int>(json, r'pages'),
-        records: StrSubscriptionPayment.listFromJson(json[r'records']),
         current: mapValueOfType<int>(json, r'current'),
+        records: StrSubscriptionPayment.listFromJson(json[r'records']),
       );
     }
     return null;

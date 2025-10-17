@@ -12,7 +12,7 @@ part of openapi.api;
 
 class ApiClient {
   ApiClient({
-    this.basePath = 'http://localhost:9996/v1',
+    this.basePath = 'http://localhost:9996',
     this.authentication,
   });
 
@@ -225,26 +225,10 @@ class ApiClient {
           return valueString == 'true' || valueString == '1';
         case 'DateTime':
           return value is DateTime ? value : DateTime.tryParse(value);
-        case 'ApiRespChannelPayOrder':
-          return ApiRespChannelPayOrder.fromJson(value);
-        case 'ApiRespListNotifyLogResponse':
-          return ApiRespListNotifyLogResponse.fromJson(value);
-        case 'ApiRespMapStringObject':
-          return ApiRespMapStringObject.fromJson(value);
-        case 'ApiRespNotifyDataResponse':
-          return ApiRespNotifyDataResponse.fromJson(value);
-        case 'ApiRespString':
-          return ApiRespString.fromJson(value);
-        case 'ChannelPayOrder':
-          return ChannelPayOrder.fromJson(value);
         case 'NotifyDataRequest':
           return NotifyDataRequest.fromJson(value);
-        case 'NotifyDataResponse':
-          return NotifyDataResponse.fromJson(value);
         case 'NotifyDetailQueryDTO':
           return NotifyDetailQueryDTO.fromJson(value);
-        case 'NotifyLogResponse':
-          return NotifyLogResponse.fromJson(value);
         case 'NotifyLogsQueryDTO':
           return NotifyLogsQueryDTO.fromJson(value);
         case 'NotifyQueryDTO':

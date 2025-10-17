@@ -29,7 +29,7 @@ class SmsLoginAppApi {
     SendSmsCaptchaCommand sendSmsCaptchaCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/login/sms-captcha';
+    final path = r'/app/auth/login/sms-captcha';
 
     // ignore: prefer_final_locals
     Object? postBody = sendSmsCaptchaCommand;
@@ -93,7 +93,7 @@ class SmsLoginAppApi {
     SmsLoginCommand smsLoginCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/login/sms';
+    final path = r'/app/auth/login/sms';
 
     // ignore: prefer_final_locals
     Object? postBody = smsLoginCommand;

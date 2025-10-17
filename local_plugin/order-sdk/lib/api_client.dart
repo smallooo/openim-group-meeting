@@ -12,7 +12,7 @@ part of openapi.api;
 
 class ApiClient {
   ApiClient({
-    this.basePath = 'http://localhost:9995/v1',
+    this.basePath = 'http://localhost:9995',
     this.authentication,
   });
 
@@ -225,6 +225,8 @@ class ApiClient {
           return valueString == 'true' || valueString == '1';
         case 'DateTime':
           return value is DateTime ? value : DateTime.tryParse(value);
+        case 'ApiRespOrderCreateResponseDTO':
+          return ApiRespOrderCreateResponseDTO.fromJson(value);
         case 'ApiRespOrderDetailVO':
           return ApiRespOrderDetailVO.fromJson(value);
         case 'ApiRespOrderPageVO':
@@ -241,8 +243,16 @@ class ApiClient {
           return BuyerInfoVO.fromJson(value);
         case 'CustomerServiceInfoVO':
           return CustomerServiceInfoVO.fromJson(value);
+        case 'OrderCreateDTO':
+          return OrderCreateDTO.fromJson(value);
+        case 'OrderCreateResponseDTO':
+          return OrderCreateResponseDTO.fromJson(value);
+        case 'OrderCreateVO':
+          return OrderCreateVO.fromJson(value);
         case 'OrderDetailVO':
           return OrderDetailVO.fromJson(value);
+        case 'OrderItemDTO':
+          return OrderItemDTO.fromJson(value);
         case 'OrderItemVO':
           return OrderItemVO.fromJson(value);
         case 'OrderListVO':

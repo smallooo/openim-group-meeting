@@ -10,21 +10,24 @@
 
 part of openapi.api;
 
-class CategoryListDTO {
-  /// Returns a new [CategoryListDTO] instance.
-  CategoryListDTO({
+class CategoryDTO {
+  /// Returns a new [CategoryDTO] instance.
+  CategoryDTO({
     this.id,
+    this.sellerId,
     this.channelId,
     this.name,
+    this.description,
     this.parentId,
     this.level,
-    this.icon,
-    this.sort,
     this.status,
+    this.sort,
+    this.icon,
+    this.createdAt,
     this.children = const [],
   });
 
-  /// 分类ID
+  /// 分类id
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -32,6 +35,15 @@ class CategoryListDTO {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   int? id;
+
+  /// 商家ID，为NULL表示平台全局分类
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  int? sellerId;
 
   /// 频道ID
   ///
@@ -51,7 +63,16 @@ class CategoryListDTO {
   ///
   String? name;
 
-  /// 父分类ID
+  /// 分类描述
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? description;
+
+  /// 父类目的主键
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -60,7 +81,7 @@ class CategoryListDTO {
   ///
   int? parentId;
 
-  /// 分类级别
+  /// 分类级别:1->1级; 2->2级 3->3级
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -69,14 +90,14 @@ class CategoryListDTO {
   ///
   int? level;
 
-  /// 分类图标
+  /// 是否显示[0-不显示,1显示]
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? icon;
+  int? status;
 
   /// 排序
   ///
@@ -87,48 +108,63 @@ class CategoryListDTO {
   ///
   int? sort;
 
-  /// 状态
+  /// 图标地址
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? status;
+  String? icon;
+
+  /// 创建时间
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? createdAt;
 
   /// 子分类列表
-  List<CategoryListDTO> children;
+  List<CategoryDTO> children;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CategoryListDTO &&
+      other is CategoryDTO &&
           other.id == id &&
+          other.sellerId == sellerId &&
           other.channelId == channelId &&
           other.name == name &&
+          other.description == description &&
           other.parentId == parentId &&
           other.level == level &&
-          other.icon == icon &&
-          other.sort == sort &&
           other.status == status &&
+          other.sort == sort &&
+          other.icon == icon &&
+          other.createdAt == createdAt &&
           other.children == children;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
       (id == null ? 0 : id!.hashCode) +
+      (sellerId == null ? 0 : sellerId!.hashCode) +
       (channelId == null ? 0 : channelId!.hashCode) +
       (name == null ? 0 : name!.hashCode) +
+      (description == null ? 0 : description!.hashCode) +
       (parentId == null ? 0 : parentId!.hashCode) +
       (level == null ? 0 : level!.hashCode) +
-      (icon == null ? 0 : icon!.hashCode) +
-      (sort == null ? 0 : sort!.hashCode) +
       (status == null ? 0 : status!.hashCode) +
+      (sort == null ? 0 : sort!.hashCode) +
+      (icon == null ? 0 : icon!.hashCode) +
+      (createdAt == null ? 0 : createdAt!.hashCode) +
       (children.hashCode);
 
   @override
   String toString() =>
-      'CategoryListDTO[id=$id, channelId=$channelId, name=$name, parentId=$parentId, level=$level, icon=$icon, sort=$sort, status=$status, children=$children]';
+      'CategoryDTO[id=$id, sellerId=$sellerId, channelId=$channelId, name=$name, description=$description, parentId=$parentId, level=$level, status=$status, sort=$sort, icon=$icon, createdAt=$createdAt, children=$children]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -136,6 +172,11 @@ class CategoryListDTO {
       json[r'id'] = this.id;
     } else {
       json[r'id'] = null;
+    }
+    if (this.sellerId != null) {
+      json[r'sellerId'] = this.sellerId;
+    } else {
+      json[r'sellerId'] = null;
     }
     if (this.channelId != null) {
       json[r'channelId'] = this.channelId;
@@ -147,6 +188,11 @@ class CategoryListDTO {
     } else {
       json[r'name'] = null;
     }
+    if (this.description != null) {
+      json[r'description'] = this.description;
+    } else {
+      json[r'description'] = null;
+    }
     if (this.parentId != null) {
       json[r'parentId'] = this.parentId;
     } else {
@@ -157,29 +203,34 @@ class CategoryListDTO {
     } else {
       json[r'level'] = null;
     }
-    if (this.icon != null) {
-      json[r'icon'] = this.icon;
+    if (this.status != null) {
+      json[r'status'] = this.status;
     } else {
-      json[r'icon'] = null;
+      json[r'status'] = null;
     }
     if (this.sort != null) {
       json[r'sort'] = this.sort;
     } else {
       json[r'sort'] = null;
     }
-    if (this.status != null) {
-      json[r'status'] = this.status;
+    if (this.icon != null) {
+      json[r'icon'] = this.icon;
     } else {
-      json[r'status'] = null;
+      json[r'icon'] = null;
+    }
+    if (this.createdAt != null) {
+      json[r'createdAt'] = this.createdAt!.toUtc().toIso8601String();
+    } else {
+      json[r'createdAt'] = null;
     }
     json[r'children'] = this.children;
     return json;
   }
 
-  /// Returns a new [CategoryListDTO] instance and imports its values from
+  /// Returns a new [CategoryDTO] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static CategoryListDTO? fromJson(dynamic value) {
+  static CategoryDTO? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -189,36 +240,39 @@ class CategoryListDTO {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "CategoryListDTO[$key]" is missing from JSON.');
+              'Required key "CategoryDTO[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "CategoryListDTO[$key]" has a null value in JSON.');
+              'Required key "CategoryDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return CategoryListDTO(
+      return CategoryDTO(
         id: mapValueOfType<int>(json, r'id'),
+        sellerId: mapValueOfType<int>(json, r'sellerId'),
         channelId: mapValueOfType<int>(json, r'channelId'),
         name: mapValueOfType<String>(json, r'name'),
+        description: mapValueOfType<String>(json, r'description'),
         parentId: mapValueOfType<int>(json, r'parentId'),
         level: mapValueOfType<int>(json, r'level'),
-        icon: mapValueOfType<String>(json, r'icon'),
-        sort: mapValueOfType<int>(json, r'sort'),
         status: mapValueOfType<int>(json, r'status'),
-        children: CategoryListDTO.listFromJson(json[r'children']),
+        sort: mapValueOfType<int>(json, r'sort'),
+        icon: mapValueOfType<String>(json, r'icon'),
+        createdAt: mapDateTime(json, r'createdAt', ''),
+        children: CategoryDTO.listFromJson(json[r'children']),
       );
     }
     return null;
   }
 
-  static List<CategoryListDTO> listFromJson(
+  static List<CategoryDTO> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <CategoryListDTO>[];
+    final result = <CategoryDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = CategoryListDTO.fromJson(row);
+        final value = CategoryDTO.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -227,12 +281,12 @@ class CategoryListDTO {
     return result.toList(growable: growable);
   }
 
-  static Map<String, CategoryListDTO> mapFromJson(dynamic json) {
-    final map = <String, CategoryListDTO>{};
+  static Map<String, CategoryDTO> mapFromJson(dynamic json) {
+    final map = <String, CategoryDTO>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = CategoryListDTO.fromJson(entry.value);
+        final value = CategoryDTO.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -241,17 +295,17 @@ class CategoryListDTO {
     return map;
   }
 
-  // maps a json object with a list of CategoryListDTO-objects as value to a dart map
-  static Map<String, List<CategoryListDTO>> mapListFromJson(
+  // maps a json object with a list of CategoryDTO-objects as value to a dart map
+  static Map<String, List<CategoryDTO>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<CategoryListDTO>>{};
+    final map = <String, List<CategoryDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = CategoryListDTO.listFromJson(
+        map[entry.key] = CategoryDTO.listFromJson(
           entry.value,
           growable: growable,
         );

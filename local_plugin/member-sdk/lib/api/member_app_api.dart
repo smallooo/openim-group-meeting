@@ -29,7 +29,7 @@ class MemberAppApi {
     Object body,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/profile/me';
+    final path = r'/app/profile/me';
 
     // ignore: prefer_final_locals
     Object? postBody = body;

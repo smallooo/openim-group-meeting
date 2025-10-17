@@ -27,7 +27,7 @@ class TraderAppApi {
     TraderApplyDTO traderApplyDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/apply';
+    final path = r'/app/trader/apply';
 
     // ignore: prefer_final_locals
     Object? postBody = traderApplyDTO;
@@ -81,7 +81,7 @@ class TraderAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> checkTraderStatusWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/status';
+    final path = r'/app/trader/status';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -134,7 +134,7 @@ class TraderAppApi {
   ) async {
     // ignore: prefer_const_declarations
     final path =
-        r'/trader/{traderId}'.replaceAll('{traderId}', traderId.toString());
+        r'/app/trader/{traderId}'.replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -194,7 +194,7 @@ class TraderAppApi {
     TraderQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/list';
+    final path = r'/app/trader/list';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -250,7 +250,7 @@ class TraderAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> getTraderStatsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/stats';
+    final path = r'/app/trader/stats';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -296,7 +296,7 @@ class TraderAppApi {
   /// Note: This method returns the HTTP [Response].
   Future<Response> syncTraderStatsWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/sync-stats';
+    final path = r'/app/trader/sync-stats';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -348,7 +348,7 @@ class TraderAppApi {
     TraderUpdateDTO traderUpdateDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/trader/profile';
+    final path = r'/app/trader/profile';
 
     // ignore: prefer_final_locals
     Object? postBody = traderUpdateDTO;

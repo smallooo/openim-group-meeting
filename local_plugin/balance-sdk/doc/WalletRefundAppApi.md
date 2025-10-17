@@ -5,12 +5,12 @@
 import 'package:toklink_balance_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9998/v1*
+All URIs are relative to *http://localhost:9998*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**processMyRefund**](WalletRefundAppApi.md#processmyrefund) | **POST** /wallet-refund/process | 处理我的退款订单
-[**verifyPasswordAndRefund**](WalletRefundAppApi.md#verifypasswordandrefund) | **POST** /wallet-refund/verify | 验证支付密码并退款
+[**processMyRefund**](WalletRefundAppApi.md#processmyrefund) | **POST** /app/wallet-refund/process | 处理我的退款订单
+[**verifyPasswordAndRefund**](WalletRefundAppApi.md#verifypasswordandrefund) | **POST** /app/wallet-refund/verify | 验证支付密码并退款
 
 
 # **processMyRefund**

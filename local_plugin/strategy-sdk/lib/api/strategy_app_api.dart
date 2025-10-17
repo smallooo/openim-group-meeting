@@ -27,7 +27,7 @@ class StrategyAppApi {
     StrategyQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/my';
+    final path = r'/app/strategies/my';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -89,7 +89,7 @@ class StrategyAppApi {
     PublicStrategyQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/public';
+    final path = r'/app/strategies/public';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -154,7 +154,7 @@ class StrategyAppApi {
     TraderStrategyQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/trader/{traderId}'
+    final path = r'/app/strategies/trader/{traderId}'
         .replaceAll('{traderId}', traderId.toString());
 
     // ignore: prefer_final_locals
@@ -221,7 +221,7 @@ class StrategyAppApi {
     int strategyId,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}'
+    final path = r'/app/strategies/{strategyId}'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals
@@ -282,7 +282,7 @@ class StrategyAppApi {
     TrendingStrategyQueryDTO queryDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/trending';
+    final path = r'/app/strategies/trending';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -344,7 +344,7 @@ class StrategyAppApi {
     StrStrategy strStrategy,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies';
+    final path = r'/app/strategies';
 
     // ignore: prefer_final_locals
     Object? postBody = strStrategy;
@@ -407,7 +407,7 @@ class StrategyAppApi {
     StrategyViewRecordDTO strategyViewRecordDTO,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}/view'
+    final path = r'/app/strategies/{strategyId}/view'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals
@@ -475,7 +475,7 @@ class StrategyAppApi {
     StrStrategy strStrategy,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/strategies/{strategyId}'
+    final path = r'/app/strategies/{strategyId}'
         .replaceAll('{strategyId}', strategyId.toString());
 
     // ignore: prefer_final_locals

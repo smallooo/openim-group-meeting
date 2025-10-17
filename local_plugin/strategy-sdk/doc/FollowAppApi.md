@@ -5,14 +5,14 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**checkFollowStatus**](FollowAppApi.md#checkfollowstatus) | **GET** /follow/follow/{traderId}/status | 检查是否已关注
-[**followTrader**](FollowAppApi.md#followtrader) | **POST** /follow/follow/{traderId} | 关注交易员
-[**getMyFollows**](FollowAppApi.md#getmyfollows) | **GET** /follow/my-follows | 我的关注列表
-[**unfollowTrader**](FollowAppApi.md#unfollowtrader) | **DELETE** /follow/follow/{traderId} | 取消关注交易员
+[**checkFollowStatus**](FollowAppApi.md#checkfollowstatus) | **GET** /app/follow/follow/{traderId}/status | 检查是否已关注
+[**followTrader**](FollowAppApi.md#followtrader) | **POST** /app/follow/follow/{traderId} | 关注交易员
+[**getMyFollows**](FollowAppApi.md#getmyfollows) | **GET** /app/follow/my-follows | 我的关注列表
+[**unfollowTrader**](FollowAppApi.md#unfollowtrader) | **DELETE** /app/follow/follow/{traderId} | 取消关注交易员
 
 
 # **checkFollowStatus**

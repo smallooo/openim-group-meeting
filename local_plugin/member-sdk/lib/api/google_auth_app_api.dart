@@ -16,173 +16,6 @@ class GoogleAuthAppApi {
 
   final ApiClient apiClient;
 
-  /// 获取Google授权URL
-  ///
-  /// 重定向到Google授权页面
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> authorizeWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/oauth2/google/authorize';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// 获取Google授权URL
-  ///
-  /// 重定向到Google授权页面
-  Future<void> authorize() async {
-    final response = await authorizeWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-  }
-
-  /// Google登录
-  ///
-  /// 通过授权码进行Google登录。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
-  ///
-  /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [GoogleLoginCommand] googleLoginCommand (required):
-  Future<Response> call1WithHttpInfo(
-    GoogleLoginCommand googleLoginCommand,
-  ) async {
-    // ignore: prefer_const_declarations
-    final path = r'/oauth2/google/login';
-
-    // ignore: prefer_final_locals
-    Object? postBody = googleLoginCommand;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>['application/json'];
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Google登录
-  ///
-  /// 通过授权码进行Google登录。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
-  ///
-  /// Parameters:
-  ///
-  /// * [GoogleLoginCommand] googleLoginCommand (required):
-  Future<ApiRespGoogleLoginResponse?> call1(
-    GoogleLoginCommand googleLoginCommand,
-  ) async {
-    final response = await call1WithHttpInfo(
-      googleLoginCommand,
-    );
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespGoogleLoginResponse',
-      ) as ApiRespGoogleLoginResponse;
-    }
-    return null;
-  }
-
-  /// Google OAuth2回调
-  ///
-  /// 处理Google授权回调。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
-  ///
-  /// Note: This method returns the HTTP [Response].
-  ///
-  /// Parameters:
-  ///
-  /// * [GoogleLoginCommand] googleLoginCommand (required):
-  Future<Response> call1_1WithHttpInfo(
-    GoogleLoginCommand googleLoginCommand,
-  ) async {
-    // ignore: prefer_const_declarations
-    final path = r'/oauth2/google/callback';
-
-    // ignore: prefer_final_locals
-    Object? postBody = googleLoginCommand;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>['application/json'];
-
-    return apiClient.invokeAPI(
-      path,
-      'POST',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Google OAuth2回调
-  ///
-  /// 处理Google授权回调。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
-  ///
-  /// Parameters:
-  ///
-  /// * [GoogleLoginCommand] googleLoginCommand (required):
-  Future<ApiRespGoogleLoginResponse?> call1_1(
-    GoogleLoginCommand googleLoginCommand,
-  ) async {
-    final response = await call1_1WithHttpInfo(
-      googleLoginCommand,
-    );
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'ApiRespGoogleLoginResponse',
-      ) as ApiRespGoogleLoginResponse;
-    }
-    return null;
-  }
-
   /// 获取授权URL
   ///
   /// 获取Google OAuth2授权URL
@@ -192,11 +25,11 @@ class GoogleAuthAppApi {
   /// Parameters:
   ///
   /// * [GoogleAuthUrlCommand] googleAuthUrlCommand (required):
-  Future<Response> call1_2WithHttpInfo(
+  Future<Response> getGoogleAuthUrlWithHttpInfo(
     GoogleAuthUrlCommand googleAuthUrlCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/oauth2/google/auth-url';
+    final path = r'/app/auth/oauth2/google/auth-url';
 
     // ignore: prefer_final_locals
     Object? postBody = googleAuthUrlCommand;
@@ -225,10 +58,10 @@ class GoogleAuthAppApi {
   /// Parameters:
   ///
   /// * [GoogleAuthUrlCommand] googleAuthUrlCommand (required):
-  Future<ApiRespString?> call1_2(
+  Future<ApiRespString?> getGoogleAuthUrl(
     GoogleAuthUrlCommand googleAuthUrlCommand,
   ) async {
-    final response = await call1_2WithHttpInfo(
+    final response = await getGoogleAuthUrlWithHttpInfo(
       googleAuthUrlCommand,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
@@ -243,6 +76,173 @@ class GoogleAuthAppApi {
         await _decodeBodyBytes(response),
         'ApiRespString',
       ) as ApiRespString;
+    }
+    return null;
+  }
+
+  /// 获取Google授权URL
+  ///
+  /// 重定向到Google授权页面
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> googleAuthorizeWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/app/auth/oauth2/google/authorize';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// 获取Google授权URL
+  ///
+  /// 重定向到Google授权页面
+  Future<void> googleAuthorize() async {
+    final response = await googleAuthorizeWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+  }
+
+  /// Google OAuth2回调
+  ///
+  /// 处理Google授权回调。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [GoogleLoginCommand] googleLoginCommand (required):
+  Future<Response> googleCallbackWithHttpInfo(
+    GoogleLoginCommand googleLoginCommand,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/app/auth/oauth2/google/callback';
+
+    // ignore: prefer_final_locals
+    Object? postBody = googleLoginCommand;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Google OAuth2回调
+  ///
+  /// 处理Google授权回调。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
+  ///
+  /// Parameters:
+  ///
+  /// * [GoogleLoginCommand] googleLoginCommand (required):
+  Future<ApiRespGoogleLoginResponse?> googleCallback(
+    GoogleLoginCommand googleLoginCommand,
+  ) async {
+    final response = await googleCallbackWithHttpInfo(
+      googleLoginCommand,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'ApiRespGoogleLoginResponse',
+      ) as ApiRespGoogleLoginResponse;
+    }
+    return null;
+  }
+
+  /// Google登录
+  ///
+  /// 通过授权码进行Google登录。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [GoogleLoginCommand] googleLoginCommand (required):
+  Future<Response> googleLoginWithHttpInfo(
+    GoogleLoginCommand googleLoginCommand,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/app/auth/oauth2/google/login';
+
+    // ignore: prefer_final_locals
+    Object? postBody = googleLoginCommand;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Google登录
+  ///
+  /// 通过授权码进行Google登录。登录成功返回AccessToken（7天有效）和RefreshToken（30天有效）
+  ///
+  /// Parameters:
+  ///
+  /// * [GoogleLoginCommand] googleLoginCommand (required):
+  Future<ApiRespGoogleLoginResponse?> googleLogin(
+    GoogleLoginCommand googleLoginCommand,
+  ) async {
+    final response = await googleLoginWithHttpInfo(
+      googleLoginCommand,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'ApiRespGoogleLoginResponse',
+      ) as ApiRespGoogleLoginResponse;
     }
     return null;
   }

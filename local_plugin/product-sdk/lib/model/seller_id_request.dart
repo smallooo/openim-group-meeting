@@ -10,64 +10,48 @@
 
 part of openapi.api;
 
-class PageChannelQueryDTO {
-  /// Returns a new [PageChannelQueryDTO] instance.
-  PageChannelQueryDTO({
-    this.page = 1,
-    this.size = 10,
-    this.status,
+class SellerIdRequest {
+  /// Returns a new [SellerIdRequest] instance.
+  SellerIdRequest({
+    this.sellerId,
   });
 
-  /// 页码，默认1
-  int page;
-
-  /// 每页数量，默认10
-  int size;
-
-  /// 状态筛选，1-启用，0-禁用
+  /// 商家ID，为空则查询平台全局数据
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? status;
+  int? sellerId;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PageChannelQueryDTO &&
-          other.page == page &&
-          other.size == size &&
-          other.status == status;
+      other is SellerIdRequest && other.sellerId == sellerId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (page.hashCode) +
-      (size.hashCode) +
-      (status == null ? 0 : status!.hashCode);
+      (sellerId == null ? 0 : sellerId!.hashCode);
 
   @override
-  String toString() =>
-      'PageChannelQueryDTO[page=$page, size=$size, status=$status]';
+  String toString() => 'SellerIdRequest[sellerId=$sellerId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    json[r'page'] = this.page;
-    json[r'size'] = this.size;
-    if (this.status != null) {
-      json[r'status'] = this.status;
+    if (this.sellerId != null) {
+      json[r'sellerId'] = this.sellerId;
     } else {
-      json[r'status'] = null;
+      json[r'sellerId'] = null;
     }
     return json;
   }
 
-  /// Returns a new [PageChannelQueryDTO] instance and imports its values from
+  /// Returns a new [SellerIdRequest] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static PageChannelQueryDTO? fromJson(dynamic value) {
+  static SellerIdRequest? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -77,30 +61,28 @@ class PageChannelQueryDTO {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "PageChannelQueryDTO[$key]" is missing from JSON.');
+              'Required key "SellerIdRequest[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "PageChannelQueryDTO[$key]" has a null value in JSON.');
+              'Required key "SellerIdRequest[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return PageChannelQueryDTO(
-        page: mapValueOfType<int>(json, r'page') ?? 1,
-        size: mapValueOfType<int>(json, r'size') ?? 10,
-        status: mapValueOfType<int>(json, r'status'),
+      return SellerIdRequest(
+        sellerId: mapValueOfType<int>(json, r'sellerId'),
       );
     }
     return null;
   }
 
-  static List<PageChannelQueryDTO> listFromJson(
+  static List<SellerIdRequest> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <PageChannelQueryDTO>[];
+    final result = <SellerIdRequest>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = PageChannelQueryDTO.fromJson(row);
+        final value = SellerIdRequest.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -109,12 +91,12 @@ class PageChannelQueryDTO {
     return result.toList(growable: growable);
   }
 
-  static Map<String, PageChannelQueryDTO> mapFromJson(dynamic json) {
-    final map = <String, PageChannelQueryDTO>{};
+  static Map<String, SellerIdRequest> mapFromJson(dynamic json) {
+    final map = <String, SellerIdRequest>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = PageChannelQueryDTO.fromJson(entry.value);
+        final value = SellerIdRequest.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -123,17 +105,17 @@ class PageChannelQueryDTO {
     return map;
   }
 
-  // maps a json object with a list of PageChannelQueryDTO-objects as value to a dart map
-  static Map<String, List<PageChannelQueryDTO>> mapListFromJson(
+  // maps a json object with a list of SellerIdRequest-objects as value to a dart map
+  static Map<String, List<SellerIdRequest>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<PageChannelQueryDTO>>{};
+    final map = <String, List<SellerIdRequest>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = PageChannelQueryDTO.listFromJson(
+        map[entry.key] = SellerIdRequest.listFromJson(
           entry.value,
           growable: growable,
         );

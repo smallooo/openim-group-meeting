@@ -29,7 +29,7 @@ class EmailAuthAppApi {
     EmailCodeLoginCommand emailCodeLoginCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/code-login';
+    final path = r'/app/auth/email/code-login';
 
     // ignore: prefer_final_locals
     Object? postBody = emailCodeLoginCommand;
@@ -93,7 +93,7 @@ class EmailAuthAppApi {
     EmailAuthVerifyCommand emailAuthVerifyCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/login';
+    final path = r'/app/auth/email/login';
 
     // ignore: prefer_final_locals
     Object? postBody = emailAuthVerifyCommand;
@@ -157,7 +157,7 @@ class EmailAuthAppApi {
     EmailAuthVerifyCommand emailAuthVerifyCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/status';
+    final path = r'/app/auth/email/status';
 
     // ignore: prefer_final_locals
     Object? postBody = emailAuthVerifyCommand;
@@ -221,7 +221,7 @@ class EmailAuthAppApi {
     SendEmailCodeCommand sendEmailCodeCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/send-code';
+    final path = r'/app/auth/email/send-code';
 
     // ignore: prefer_final_locals
     Object? postBody = sendEmailCodeCommand;
@@ -285,7 +285,7 @@ class EmailAuthAppApi {
     EmailAuthRequestCommand emailAuthRequestCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/send-verification';
+    final path = r'/app/auth/email/send-verification';
 
     // ignore: prefer_final_locals
     Object? postBody = emailAuthRequestCommand;
@@ -349,7 +349,7 @@ class EmailAuthAppApi {
     EmailAuthVerifyCommand emailAuthVerifyCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/verify-code';
+    final path = r'/app/auth/email/verify-code';
 
     // ignore: prefer_final_locals
     Object? postBody = emailAuthVerifyCommand;
@@ -413,7 +413,7 @@ class EmailAuthAppApi {
     EmailAuthVerifyCommand emailAuthVerifyCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/email/verify';
+    final path = r'/app/auth/email/verify';
 
     // ignore: prefer_final_locals
     Object? postBody = emailAuthVerifyCommand;

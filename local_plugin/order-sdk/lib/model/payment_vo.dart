@@ -27,6 +27,7 @@ class PaymentVO {
     this.expireTime,
     this.createdAt,
     this.updatedAt,
+    this.thirdPartyOrderNo,
   });
 
   /// 支付ID
@@ -155,6 +156,15 @@ class PaymentVO {
   ///
   String? updatedAt;
 
+  /// 第三方支付订单号
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? thirdPartyOrderNo;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -172,7 +182,8 @@ class PaymentVO {
           other.payTime == payTime &&
           other.expireTime == expireTime &&
           other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+          other.updatedAt == updatedAt &&
+          other.thirdPartyOrderNo == thirdPartyOrderNo;
 
   @override
   int get hashCode =>
@@ -190,11 +201,12 @@ class PaymentVO {
       (payTime == null ? 0 : payTime!.hashCode) +
       (expireTime == null ? 0 : expireTime!.hashCode) +
       (createdAt == null ? 0 : createdAt!.hashCode) +
-      (updatedAt == null ? 0 : updatedAt!.hashCode);
+      (updatedAt == null ? 0 : updatedAt!.hashCode) +
+      (thirdPartyOrderNo == null ? 0 : thirdPartyOrderNo!.hashCode);
 
   @override
   String toString() =>
-      'PaymentVO[id=$id, paymentId=$paymentId, amount=$amount, payType=$payType, paymentMethod=$paymentMethod, status=$status, statusText=$statusText, transactionId=$transactionId, paymentUrl=$paymentUrl, qrCode=$qrCode, payTime=$payTime, expireTime=$expireTime, createdAt=$createdAt, updatedAt=$updatedAt]';
+      'PaymentVO[id=$id, paymentId=$paymentId, amount=$amount, payType=$payType, paymentMethod=$paymentMethod, status=$status, statusText=$statusText, transactionId=$transactionId, paymentUrl=$paymentUrl, qrCode=$qrCode, payTime=$payTime, expireTime=$expireTime, createdAt=$createdAt, updatedAt=$updatedAt, thirdPartyOrderNo=$thirdPartyOrderNo]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -268,6 +280,11 @@ class PaymentVO {
     } else {
       json[r'updatedAt'] = null;
     }
+    if (this.thirdPartyOrderNo != null) {
+      json[r'thirdPartyOrderNo'] = this.thirdPartyOrderNo;
+    } else {
+      json[r'thirdPartyOrderNo'] = null;
+    }
     return json;
   }
 
@@ -308,6 +325,7 @@ class PaymentVO {
         expireTime: mapValueOfType<String>(json, r'expireTime'),
         createdAt: mapValueOfType<String>(json, r'createdAt'),
         updatedAt: mapValueOfType<String>(json, r'updatedAt'),
+        thirdPartyOrderNo: mapValueOfType<String>(json, r'thirdPartyOrderNo'),
       );
     }
     return null;

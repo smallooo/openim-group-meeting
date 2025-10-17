@@ -5,11 +5,11 @@
 import 'package:toklink_order_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9995/v1*
+All URIs are relative to *http://localhost:9995*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**paymentCallback**](PaymentCallbackAppApi.md#paymentcallback) | **POST** /order/pay/callback | 支付回调
+[**paymentCallback**](PaymentCallbackAppApi.md#paymentcallback) | **POST** /app/order/pay/callback | 支付回调
 
 
 # **paymentCallback**

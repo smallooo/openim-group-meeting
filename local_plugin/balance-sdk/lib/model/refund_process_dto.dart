@@ -15,7 +15,7 @@ class RefundProcessDTO {
   RefundProcessDTO({
     required this.memberId,
     required this.walletOrderNo,
-    required this.partnerRefundNo,
+    required this.walletRefundNo,
     this.refundAmount = 0,
     this.currencyId,
     required this.reason,
@@ -27,8 +27,8 @@ class RefundProcessDTO {
   /// 原钱包订单号
   String walletOrderNo;
 
-  /// 支付系统退款单号
-  String partnerRefundNo;
+  /// 钱包退款单号
+  String walletRefundNo;
 
   /// 退款金额(元)
   num refundAmount;
@@ -51,7 +51,7 @@ class RefundProcessDTO {
       other is RefundProcessDTO &&
           other.memberId == memberId &&
           other.walletOrderNo == walletOrderNo &&
-          other.partnerRefundNo == partnerRefundNo &&
+          other.walletRefundNo == walletRefundNo &&
           other.refundAmount == refundAmount &&
           other.currencyId == currencyId &&
           other.reason == reason;
@@ -61,20 +61,20 @@ class RefundProcessDTO {
       // ignore: unnecessary_parenthesis
       (memberId.hashCode) +
       (walletOrderNo.hashCode) +
-      (partnerRefundNo.hashCode) +
+      (walletRefundNo.hashCode) +
       (refundAmount.hashCode) +
       (currencyId == null ? 0 : currencyId!.hashCode) +
       (reason.hashCode);
 
   @override
   String toString() =>
-      'RefundProcessDTO[memberId=$memberId, walletOrderNo=$walletOrderNo, partnerRefundNo=$partnerRefundNo, refundAmount=$refundAmount, currencyId=$currencyId, reason=$reason]';
+      'RefundProcessDTO[memberId=$memberId, walletOrderNo=$walletOrderNo, walletRefundNo=$walletRefundNo, refundAmount=$refundAmount, currencyId=$currencyId, reason=$reason]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json[r'memberId'] = this.memberId;
     json[r'walletOrderNo'] = this.walletOrderNo;
-    json[r'partnerRefundNo'] = this.partnerRefundNo;
+    json[r'walletRefundNo'] = this.walletRefundNo;
     json[r'refundAmount'] = this.refundAmount;
     if (this.currencyId != null) {
       json[r'currencyId'] = this.currencyId;
@@ -108,7 +108,7 @@ class RefundProcessDTO {
       return RefundProcessDTO(
         memberId: mapValueOfType<String>(json, r'memberId')!,
         walletOrderNo: mapValueOfType<String>(json, r'walletOrderNo')!,
-        partnerRefundNo: mapValueOfType<String>(json, r'partnerRefundNo')!,
+        walletRefundNo: mapValueOfType<String>(json, r'walletRefundNo')!,
         refundAmount: json[r'refundAmount'] == null
             ? 0
             : num.parse(json[r'refundAmount'].toString()),
@@ -172,7 +172,7 @@ class RefundProcessDTO {
   static const requiredKeys = <String>{
     'memberId',
     'walletOrderNo',
-    'partnerRefundNo',
+    'walletRefundNo',
     'refundAmount',
     'reason',
   };

@@ -60,8 +60,7 @@ final api_instance = NotifyDataAppApi();
 final notifyDetailQueryDTO = NotifyDetailQueryDTO(); // NotifyDetailQueryDTO | 
 
 try {
-    final result = api_instance.getNotifyDetail(notifyDetailQueryDTO);
-    print(result);
+    api_instance.getNotifyDetail(notifyDetailQueryDTO);
 } catch (e) {
     print('Exception when calling NotifyDataAppApi->getNotifyDetail: $e\n');
 }
@@ -70,33 +69,25 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:9996/v1*
+All URIs are relative to *http://localhost:9996*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*NotifyDataAppApi* | [**getNotifyDetail**](doc//NotifyDataAppApi.md#getnotifydetail) | **POST** /notify-data/detail | 获取通知详情
-*NotifyDataAppApi* | [**getNotifyLogs**](doc//NotifyDataAppApi.md#getnotifylogs) | **POST** /notify-data/logs | 获取通知日志
-*NotifyDataAppApi* | [**queryNotifyData**](doc//NotifyDataAppApi.md#querynotifydata) | **POST** /notify-data/query | 查询通知数据
-*NotifyDataAppApi* | [**receiveNotifyData**](doc//NotifyDataAppApi.md#receivenotifydata) | **POST** /notify-data/receive | 接收异步通知数据
-*NotifyDataAppApi* | [**triggerNotify**](doc//NotifyDataAppApi.md#triggernotify) | **POST** /notify-data/trigger | 手动触发通知
-*PersonalPayOrderAppApi* | [**getPersonalOrderByOrderNo**](doc//PersonalPayOrderAppApi.md#getpersonalorderbyorderno) | **POST** /personal/pay-order/query/order-no | 根据订单系统订单号查询个人订单
-*PersonalPayOrderAppApi* | [**getPersonalOrderByPaymentId**](doc//PersonalPayOrderAppApi.md#getpersonalorderbypaymentid) | **POST** /personal/pay-order/query/payment-id | 根据支付系统订单号查询个人订单
-*PersonalPayOrderAppApi* | [**getPersonalOrderStatistics**](doc//PersonalPayOrderAppApi.md#getpersonalorderstatistics) | **POST** /personal/pay-order/statistics | 查询个人订单统计
-*PersonalPayOrderAppApi* | [**getPersonalPayOrders**](doc//PersonalPayOrderAppApi.md#getpersonalpayorders) | **POST** /personal/pay-order/list | 查询个人支付订单列表
+*NotifyDataAppApi* | [**getNotifyDetail**](doc//NotifyDataAppApi.md#getnotifydetail) | **POST** /app/notify-data/detail | 获取通知详情
+*NotifyDataAppApi* | [**getNotifyLogs**](doc//NotifyDataAppApi.md#getnotifylogs) | **POST** /app/notify-data/logs | 获取通知日志
+*NotifyDataAppApi* | [**queryNotifyData**](doc//NotifyDataAppApi.md#querynotifydata) | **POST** /app/notify-data/query | 查询通知数据
+*NotifyDataAppApi* | [**receiveNotifyData**](doc//NotifyDataAppApi.md#receivenotifydata) | **POST** /app/notify-data/receive | 接收异步通知数据
+*NotifyDataAppApi* | [**triggerNotify**](doc//NotifyDataAppApi.md#triggernotify) | **POST** /app/notify-data/trigger | 手动触发通知
+*PersonalPayOrderAppApi* | [**getPersonalOrderByOrderNo**](doc//PersonalPayOrderAppApi.md#getpersonalorderbyorderno) | **POST** /app/personal/pay-order/query/order-no | 根据订单系统订单号查询个人订单
+*PersonalPayOrderAppApi* | [**getPersonalOrderByPaymentId**](doc//PersonalPayOrderAppApi.md#getpersonalorderbypaymentid) | **POST** /app/personal/pay-order/query/payment-id | 根据支付系统订单号查询个人订单
+*PersonalPayOrderAppApi* | [**getPersonalOrderStatistics**](doc//PersonalPayOrderAppApi.md#getpersonalorderstatistics) | **POST** /app/personal/pay-order/statistics | 查询个人订单统计
+*PersonalPayOrderAppApi* | [**getPersonalPayOrders**](doc//PersonalPayOrderAppApi.md#getpersonalpayorders) | **POST** /app/personal/pay-order/list | 查询个人支付订单列表
 
 
 ## Documentation For Models
 
- - [ApiRespChannelPayOrder](doc//ApiRespChannelPayOrder.md)
- - [ApiRespListNotifyLogResponse](doc//ApiRespListNotifyLogResponse.md)
- - [ApiRespMapStringObject](doc//ApiRespMapStringObject.md)
- - [ApiRespNotifyDataResponse](doc//ApiRespNotifyDataResponse.md)
- - [ApiRespString](doc//ApiRespString.md)
- - [ChannelPayOrder](doc//ChannelPayOrder.md)
  - [NotifyDataRequest](doc//NotifyDataRequest.md)
- - [NotifyDataResponse](doc//NotifyDataResponse.md)
  - [NotifyDetailQueryDTO](doc//NotifyDetailQueryDTO.md)
- - [NotifyLogResponse](doc//NotifyLogResponse.md)
  - [NotifyLogsQueryDTO](doc//NotifyLogsQueryDTO.md)
  - [NotifyQueryDTO](doc//NotifyQueryDTO.md)
  - [PersonalPayOrderListQueryDTO](doc//PersonalPayOrderListQueryDTO.md)

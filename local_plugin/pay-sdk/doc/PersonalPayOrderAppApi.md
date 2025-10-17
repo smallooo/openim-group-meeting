@@ -5,18 +5,18 @@
 import 'package:toklink_pay_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9996/v1*
+All URIs are relative to *http://localhost:9996*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getPersonalOrderByOrderNo**](PersonalPayOrderAppApi.md#getpersonalorderbyorderno) | **POST** /personal/pay-order/query/order-no | 根据订单系统订单号查询个人订单
-[**getPersonalOrderByPaymentId**](PersonalPayOrderAppApi.md#getpersonalorderbypaymentid) | **POST** /personal/pay-order/query/payment-id | 根据支付系统订单号查询个人订单
-[**getPersonalOrderStatistics**](PersonalPayOrderAppApi.md#getpersonalorderstatistics) | **POST** /personal/pay-order/statistics | 查询个人订单统计
-[**getPersonalPayOrders**](PersonalPayOrderAppApi.md#getpersonalpayorders) | **POST** /personal/pay-order/list | 查询个人支付订单列表
+[**getPersonalOrderByOrderNo**](PersonalPayOrderAppApi.md#getpersonalorderbyorderno) | **POST** /app/personal/pay-order/query/order-no | 根据订单系统订单号查询个人订单
+[**getPersonalOrderByPaymentId**](PersonalPayOrderAppApi.md#getpersonalorderbypaymentid) | **POST** /app/personal/pay-order/query/payment-id | 根据支付系统订单号查询个人订单
+[**getPersonalOrderStatistics**](PersonalPayOrderAppApi.md#getpersonalorderstatistics) | **POST** /app/personal/pay-order/statistics | 查询个人订单统计
+[**getPersonalPayOrders**](PersonalPayOrderAppApi.md#getpersonalpayorders) | **POST** /app/personal/pay-order/list | 查询个人支付订单列表
 
 
 # **getPersonalOrderByOrderNo**
-> ApiRespChannelPayOrder getPersonalOrderByOrderNo(personalPayOrderOrderNoQueryDTO)
+> getPersonalOrderByOrderNo(personalPayOrderOrderNoQueryDTO)
 
 根据订单系统订单号查询个人订单
 
@@ -46,8 +46,7 @@ final api_instance = PersonalPayOrderAppApi();
 final personalPayOrderOrderNoQueryDTO = PersonalPayOrderOrderNoQueryDTO(); // PersonalPayOrderOrderNoQueryDTO | 
 
 try {
-    final result = api_instance.getPersonalOrderByOrderNo(personalPayOrderOrderNoQueryDTO);
-    print(result);
+    api_instance.getPersonalOrderByOrderNo(personalPayOrderOrderNoQueryDTO);
 } catch (e) {
     print('Exception when calling PersonalPayOrderAppApi->getPersonalOrderByOrderNo: $e\n');
 }
@@ -61,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespChannelPayOrder**](ApiRespChannelPayOrder.md)
+void (empty response body)
 
 ### Authorization
 
@@ -75,7 +74,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getPersonalOrderByPaymentId**
-> ApiRespChannelPayOrder getPersonalOrderByPaymentId(personalPayOrderPaymentIdQueryDTO)
+> getPersonalOrderByPaymentId(personalPayOrderPaymentIdQueryDTO)
 
 根据支付系统订单号查询个人订单
 
@@ -105,8 +104,7 @@ final api_instance = PersonalPayOrderAppApi();
 final personalPayOrderPaymentIdQueryDTO = PersonalPayOrderPaymentIdQueryDTO(); // PersonalPayOrderPaymentIdQueryDTO | 
 
 try {
-    final result = api_instance.getPersonalOrderByPaymentId(personalPayOrderPaymentIdQueryDTO);
-    print(result);
+    api_instance.getPersonalOrderByPaymentId(personalPayOrderPaymentIdQueryDTO);
 } catch (e) {
     print('Exception when calling PersonalPayOrderAppApi->getPersonalOrderByPaymentId: $e\n');
 }
@@ -120,7 +118,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespChannelPayOrder**](ApiRespChannelPayOrder.md)
+void (empty response body)
 
 ### Authorization
 
@@ -134,7 +132,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getPersonalOrderStatistics**
-> ApiRespMapStringObject getPersonalOrderStatistics()
+> getPersonalOrderStatistics()
 
 查询个人订单统计
 
@@ -163,8 +161,7 @@ import 'package:toklink_pay_sdk/api.dart';
 final api_instance = PersonalPayOrderAppApi();
 
 try {
-    final result = api_instance.getPersonalOrderStatistics();
-    print(result);
+    api_instance.getPersonalOrderStatistics();
 } catch (e) {
     print('Exception when calling PersonalPayOrderAppApi->getPersonalOrderStatistics: $e\n');
 }
@@ -175,7 +172,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**ApiRespMapStringObject**](ApiRespMapStringObject.md)
+void (empty response body)
 
 ### Authorization
 
@@ -189,7 +186,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getPersonalPayOrders**
-> ApiRespMapStringObject getPersonalPayOrders(personalPayOrderListQueryDTO)
+> getPersonalPayOrders(personalPayOrderListQueryDTO)
 
 查询个人支付订单列表
 
@@ -219,8 +216,7 @@ final api_instance = PersonalPayOrderAppApi();
 final personalPayOrderListQueryDTO = PersonalPayOrderListQueryDTO(); // PersonalPayOrderListQueryDTO | 
 
 try {
-    final result = api_instance.getPersonalPayOrders(personalPayOrderListQueryDTO);
-    print(result);
+    api_instance.getPersonalPayOrders(personalPayOrderListQueryDTO);
 } catch (e) {
     print('Exception when calling PersonalPayOrderAppApi->getPersonalPayOrders: $e\n');
 }
@@ -234,7 +230,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiRespMapStringObject**](ApiRespMapStringObject.md)
+void (empty response body)
 
 ### Authorization
 

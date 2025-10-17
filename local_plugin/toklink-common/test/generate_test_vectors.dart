@@ -6,7 +6,7 @@ void main() {
   print('=== Test Vectors for Java Backend Verification ===\n');
 
   final secret = 'taowu_payment_secret_key_2024'; // Should match Java backend configuration
-  final memberId = '1973018638679584770'; // Long type member ID as string
+  final memberId = '1969282597516636161'; // Long type member ID as string
 
   // Test cases with real-time timestamps and nonces
   final testCases = [
@@ -114,7 +114,7 @@ void main() {
     print('X-Timestamp: $timestamp');
     print('X-Nonce: $nonce');
     print('Content-Type: application/json');
-    print('Access-Token: cccf42b4-5f6d-4bb3-8439-434d9526e89b');
+    print('Access-Token: 22fb3277-72f8-4aa9-bde5-63666463d0f5');
     print('');
 
     if (endpoint != null && endpoint.startsWith('/wallet-fund/')) {
@@ -124,7 +124,7 @@ void main() {
       print('  -H "X-Signature: $signature" \\');
       print('  -H "X-Timestamp: $timestamp" \\');
       print('  -H "X-Nonce: $nonce" \\');
-      print('  -H "Access-Token: cccf42b4-5f6d-4bb3-8439-434d9526e89b" \\');
+      print('  -H "Access-Token: 22fb3277-72f8-4aa9-bde5-63666463d0f5" \\');
       print('  -d \'${_toJsonString(data)}\'');
       print('');
       print('CURL command for signature validation:');
@@ -138,7 +138,7 @@ void main() {
     print('  -H "X-Signature: $signature" \\');
     print('  -H "X-Timestamp: $timestamp" \\');
     print('  -H "X-Nonce: $nonce" \\');
-    print('  -H "Access-Token: cccf42b4-5f6d-4bb3-8439-434d9526e89b" \\');
+    print('  -H "Access-Token: 22fb3277-72f8-4aa9-bde5-63666463d0f5" \\');
     print('  -d \'${_toJsonString(data)}\'');
     print('');
     print('Expected Result: {"data":{"valid":true,"message":"签名验证成功"}}');

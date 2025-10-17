@@ -16,8 +16,8 @@ class IPageStrStrategyComment {
     this.size,
     this.total,
     this.pages,
-    this.records = const [],
     this.current,
+    this.records = const [],
   });
 
   ///
@@ -44,8 +44,6 @@ class IPageStrStrategyComment {
   ///
   int? pages;
 
-  List<StrStrategyComment> records;
-
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -54,6 +52,8 @@ class IPageStrStrategyComment {
   ///
   int? current;
 
+  List<StrStrategyComment> records;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -61,8 +61,8 @@ class IPageStrStrategyComment {
           other.size == size &&
           other.total == total &&
           other.pages == pages &&
-          other.records == records &&
-          other.current == current;
+          other.current == current &&
+          other.records == records;
 
   @override
   int get hashCode =>
@@ -70,12 +70,12 @@ class IPageStrStrategyComment {
       (size == null ? 0 : size!.hashCode) +
       (total == null ? 0 : total!.hashCode) +
       (pages == null ? 0 : pages!.hashCode) +
-      (records.hashCode) +
-      (current == null ? 0 : current!.hashCode);
+      (current == null ? 0 : current!.hashCode) +
+      (records.hashCode);
 
   @override
   String toString() =>
-      'IPageStrStrategyComment[size=$size, total=$total, pages=$pages, records=$records, current=$current]';
+      'IPageStrStrategyComment[size=$size, total=$total, pages=$pages, current=$current, records=$records]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -94,12 +94,12 @@ class IPageStrStrategyComment {
     } else {
       json[r'pages'] = null;
     }
-    json[r'records'] = this.records;
     if (this.current != null) {
       json[r'current'] = this.current;
     } else {
       json[r'current'] = null;
     }
+    json[r'records'] = this.records;
     return json;
   }
 
@@ -127,8 +127,8 @@ class IPageStrStrategyComment {
         size: mapValueOfType<int>(json, r'size'),
         total: mapValueOfType<int>(json, r'total'),
         pages: mapValueOfType<int>(json, r'pages'),
-        records: StrStrategyComment.listFromJson(json[r'records']),
         current: mapValueOfType<int>(json, r'current'),
+        records: StrStrategyComment.listFromJson(json[r'records']),
       );
     }
     return null;

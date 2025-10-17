@@ -30,16 +30,8 @@ part 'auth/http_bearer_auth.dart';
 part 'api/notify_data_app_api.dart';
 part 'api/personal_pay_order_app_api.dart';
 
-part 'model/api_resp_channel_pay_order.dart';
-part 'model/api_resp_list_notify_log_response.dart';
-part 'model/api_resp_map_string_object.dart';
-part 'model/api_resp_notify_data_response.dart';
-part 'model/api_resp_string.dart';
-part 'model/channel_pay_order.dart';
 part 'model/notify_data_request.dart';
-part 'model/notify_data_response.dart';
 part 'model/notify_detail_query_dto.dart';
-part 'model/notify_log_response.dart';
 part 'model/notify_logs_query_dto.dart';
 part 'model/notify_query_dto.dart';
 part 'model/personal_pay_order_list_query_dto.dart';

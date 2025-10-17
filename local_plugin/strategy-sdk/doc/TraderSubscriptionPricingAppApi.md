@@ -5,19 +5,19 @@
 import 'package:toklink_strategy_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9997/v1*
+All URIs are relative to *http://localhost:9997*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deletePricing**](TraderSubscriptionPricingAppApi.md#deletepricing) | **DELETE** /trader/pricing/{id} | 删除价格配置
-[**getActivePricingByStrategyType**](TraderSubscriptionPricingAppApi.md#getactivepricingbystrategytype) | **GET** /trader/pricing/strategy/{strategyType} | 根据策略类型获取所有激活的价格配置
-[**getMyActivePricing**](TraderSubscriptionPricingAppApi.md#getmyactivepricing) | **GET** /trader/pricing/my/active | 获取我的激活订阅价格列表
-[**getMyPricing**](TraderSubscriptionPricingAppApi.md#getmypricing) | **GET** /trader/pricing/my | 获取我的订阅价格列表
-[**getTraderPricing**](TraderSubscriptionPricingAppApi.md#gettraderpricing) | **GET** /trader/pricing/trader/{traderId} | 获取交易员的订阅价格
-[**getTraderStrategyPricing**](TraderSubscriptionPricingAppApi.md#gettraderstrategypricing) | **GET** /trader/pricing/trader/{traderId}/strategy/{strategyType} | 获取指定交易员和策略类型的价格
-[**setTraderPricing**](TraderSubscriptionPricingAppApi.md#settraderpricing) | **POST** /trader/pricing/set | 设置交易员订阅价格
-[**togglePricingActive**](TraderSubscriptionPricingAppApi.md#togglepricingactive) | **PUT** /trader/pricing/toggle/{id} | 启用/禁用价格配置
-[**updateTraderPricing**](TraderSubscriptionPricingAppApi.md#updatetraderpricing) | **PUT** /trader/pricing/update/{id} | 更新交易员订阅价格
+[**deletePricing**](TraderSubscriptionPricingAppApi.md#deletepricing) | **DELETE** /app/trader/pricing/{id} | 删除价格配置
+[**getActivePricingByStrategyType**](TraderSubscriptionPricingAppApi.md#getactivepricingbystrategytype) | **GET** /app/trader/pricing/strategy/{strategyType} | 根据策略类型获取所有激活的价格配置
+[**getMyActivePricing**](TraderSubscriptionPricingAppApi.md#getmyactivepricing) | **GET** /app/trader/pricing/my/active | 获取我的激活订阅价格列表
+[**getMyPricing**](TraderSubscriptionPricingAppApi.md#getmypricing) | **GET** /app/trader/pricing/my | 获取我的订阅价格列表
+[**getTraderPricing**](TraderSubscriptionPricingAppApi.md#gettraderpricing) | **GET** /app/trader/pricing/trader/{traderId} | 获取交易员的订阅价格
+[**getTraderStrategyPricing**](TraderSubscriptionPricingAppApi.md#gettraderstrategypricing) | **GET** /app/trader/pricing/trader/{traderId}/strategy/{strategyType} | 获取指定交易员和策略类型的价格
+[**setTraderPricing**](TraderSubscriptionPricingAppApi.md#settraderpricing) | **POST** /app/trader/pricing/set | 设置交易员订阅价格
+[**togglePricingActive**](TraderSubscriptionPricingAppApi.md#togglepricingactive) | **PUT** /app/trader/pricing/toggle/{id} | 启用/禁用价格配置
+[**updateTraderPricing**](TraderSubscriptionPricingAppApi.md#updatetraderpricing) | **PUT** /app/trader/pricing/update/{id} | 更新交易员订阅价格
 
 
 # **deletePricing**

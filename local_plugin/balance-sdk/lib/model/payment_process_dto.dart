@@ -13,14 +13,14 @@ part of openapi.api;
 class PaymentProcessDTO {
   /// Returns a new [PaymentProcessDTO] instance.
   PaymentProcessDTO({
-    required this.partnerOrderNo,
+    required this.walletOrderNo,
     required this.memberId,
     this.amount = 0,
     this.currencyId,
   });
 
-  /// 合作方订单号
-  String partnerOrderNo;
+  /// 钱包订单号
+  String walletOrderNo;
 
   /// 用户ID
   int memberId;
@@ -41,7 +41,7 @@ class PaymentProcessDTO {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is PaymentProcessDTO &&
-          other.partnerOrderNo == partnerOrderNo &&
+          other.walletOrderNo == walletOrderNo &&
           other.memberId == memberId &&
           other.amount == amount &&
           other.currencyId == currencyId;
@@ -49,18 +49,18 @@ class PaymentProcessDTO {
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (partnerOrderNo.hashCode) +
+      (walletOrderNo.hashCode) +
       (memberId.hashCode) +
       (amount.hashCode) +
       (currencyId == null ? 0 : currencyId!.hashCode);
 
   @override
   String toString() =>
-      'PaymentProcessDTO[partnerOrderNo=$partnerOrderNo, memberId=$memberId, amount=$amount, currencyId=$currencyId]';
+      'PaymentProcessDTO[walletOrderNo=$walletOrderNo, memberId=$memberId, amount=$amount, currencyId=$currencyId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    json[r'partnerOrderNo'] = this.partnerOrderNo;
+    json[r'walletOrderNo'] = this.walletOrderNo;
     json[r'memberId'] = this.memberId;
     json[r'amount'] = this.amount;
     if (this.currencyId != null) {
@@ -92,7 +92,7 @@ class PaymentProcessDTO {
       }());
 
       return PaymentProcessDTO(
-        partnerOrderNo: mapValueOfType<String>(json, r'partnerOrderNo')!,
+        walletOrderNo: mapValueOfType<String>(json, r'walletOrderNo')!,
         memberId: mapValueOfType<int>(json, r'memberId')!,
         amount:
             json[r'amount'] == null ? 0 : num.parse(json[r'amount'].toString()),
@@ -153,7 +153,7 @@ class PaymentProcessDTO {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'partnerOrderNo',
+    'walletOrderNo',
     'memberId',
     'amount',
   };

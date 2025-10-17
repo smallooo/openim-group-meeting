@@ -10,13 +10,13 @@
 
 part of openapi.api;
 
-class ApiRespNotifyDataResponse {
-  /// Returns a new [ApiRespNotifyDataResponse] instance.
-  ApiRespNotifyDataResponse({
+class ApiRespListChannelListDTO {
+  /// Returns a new [ApiRespListChannelListDTO] instance.
+  ApiRespListChannelListDTO({
     this.errCode,
     this.errMsg,
     this.errDlt,
-    this.data,
+    this.data = const [],
   });
 
   ///
@@ -43,18 +43,12 @@ class ApiRespNotifyDataResponse {
   ///
   String? errDlt;
 
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  NotifyDataResponse? data;
+  List<ChannelListDTO> data;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ApiRespNotifyDataResponse &&
+      other is ApiRespListChannelListDTO &&
           other.errCode == errCode &&
           other.errMsg == errMsg &&
           other.errDlt == errDlt &&
@@ -66,11 +60,11 @@ class ApiRespNotifyDataResponse {
       (errCode == null ? 0 : errCode!.hashCode) +
       (errMsg == null ? 0 : errMsg!.hashCode) +
       (errDlt == null ? 0 : errDlt!.hashCode) +
-      (data == null ? 0 : data!.hashCode);
+      (data.hashCode);
 
   @override
   String toString() =>
-      'ApiRespNotifyDataResponse[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
+      'ApiRespListChannelListDTO[errCode=$errCode, errMsg=$errMsg, errDlt=$errDlt, data=$data]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -89,18 +83,14 @@ class ApiRespNotifyDataResponse {
     } else {
       json[r'errDlt'] = null;
     }
-    if (this.data != null) {
-      json[r'data'] = this.data;
-    } else {
-      json[r'data'] = null;
-    }
+    json[r'data'] = this.data;
     return json;
   }
 
-  /// Returns a new [ApiRespNotifyDataResponse] instance and imports its values from
+  /// Returns a new [ApiRespListChannelListDTO] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static ApiRespNotifyDataResponse? fromJson(dynamic value) {
+  static ApiRespListChannelListDTO? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -110,31 +100,31 @@ class ApiRespNotifyDataResponse {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "ApiRespNotifyDataResponse[$key]" is missing from JSON.');
+              'Required key "ApiRespListChannelListDTO[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "ApiRespNotifyDataResponse[$key]" has a null value in JSON.');
+              'Required key "ApiRespListChannelListDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return ApiRespNotifyDataResponse(
+      return ApiRespListChannelListDTO(
         errCode: mapValueOfType<int>(json, r'errCode'),
         errMsg: mapValueOfType<String>(json, r'errMsg'),
         errDlt: mapValueOfType<String>(json, r'errDlt'),
-        data: NotifyDataResponse.fromJson(json[r'data']),
+        data: ChannelListDTO.listFromJson(json[r'data']),
       );
     }
     return null;
   }
 
-  static List<ApiRespNotifyDataResponse> listFromJson(
+  static List<ApiRespListChannelListDTO> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <ApiRespNotifyDataResponse>[];
+    final result = <ApiRespListChannelListDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = ApiRespNotifyDataResponse.fromJson(row);
+        final value = ApiRespListChannelListDTO.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -143,12 +133,12 @@ class ApiRespNotifyDataResponse {
     return result.toList(growable: growable);
   }
 
-  static Map<String, ApiRespNotifyDataResponse> mapFromJson(dynamic json) {
-    final map = <String, ApiRespNotifyDataResponse>{};
+  static Map<String, ApiRespListChannelListDTO> mapFromJson(dynamic json) {
+    final map = <String, ApiRespListChannelListDTO>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = ApiRespNotifyDataResponse.fromJson(entry.value);
+        final value = ApiRespListChannelListDTO.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -157,17 +147,17 @@ class ApiRespNotifyDataResponse {
     return map;
   }
 
-  // maps a json object with a list of ApiRespNotifyDataResponse-objects as value to a dart map
-  static Map<String, List<ApiRespNotifyDataResponse>> mapListFromJson(
+  // maps a json object with a list of ApiRespListChannelListDTO-objects as value to a dart map
+  static Map<String, List<ApiRespListChannelListDTO>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<ApiRespNotifyDataResponse>>{};
+    final map = <String, List<ApiRespListChannelListDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ApiRespNotifyDataResponse.listFromJson(
+        map[entry.key] = ApiRespListChannelListDTO.listFromJson(
           entry.value,
           growable: growable,
         );

@@ -3,8 +3,8 @@
 # min_api: 24
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: d7bd226
-# pg_map_hash: SHA-256 d7bd226dacccea536c352a5369737aa42febe42fa0cf93b612d49e32872e1003
+# pg_map_id: 64c43f3
+# pg_map_hash: SHA-256 64c43f3441fec23ff709c814187330ffbcf75d9579ea0677e24d8fc52c738841
 IsEnabledMessage -> a:
 # {"id":"sourceFile","fileName":"WakelockPlusMessages.g.kt"}
     java.lang.Boolean enabled -> a
@@ -114999,8 +114999,6 @@ io.livekit.plugin.LiveKitPlugin -> ud.a:
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lqc/a$b;)V"}
     1:14:void onMethodCall(io.flutter.plugin.common.MethodCall,io.flutter.plugin.common.MethodChannel$Result):0:0 -> onMethodCall
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lyc/i;Lyc/j$d;)V"}
-io.openim.flutter_openim_sdk.BuildConfig -> io.openim.flutter_openim_sdk.BuildConfig:
-# {"id":"sourceFile","fileName":"BuildConfig.java"}
 io.openim.flutter_openim_sdk.FlutterOpenimSdkPlugin -> io.openim.flutter_openim_sdk.FlutterOpenimSdkPlugin:
 # {"id":"sourceFile","fileName":"FlutterOpenimSdkPlugin.java"}
     io.flutter.plugin.common.MethodChannel channel -> channel

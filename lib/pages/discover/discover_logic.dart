@@ -7,6 +7,7 @@ import 'package:toklink/tk_app/pages/tk_strategy/strategy_home/strategy_home_pag
 
 import '../../tk_app/pages/tk_quantification/quantification_home/logic.dart';
 import '../../tk_app/pages/tk_quantification/quantification_home/view.dart';
+import 'package:toklink/routes/app_pages.dart';
 
 class DiscoverLogic extends GetxController {
   final refreshCtrl = RefreshController();
@@ -50,5 +51,17 @@ class DiscoverLogic extends GetxController {
     Get.to(() =>  QuantificationHomePage());
 
   }
+
+  /// 跳转到担保页面
+  void goToGuaranteePage() {
+    Get.toNamed(AppRoutes.tkGuaranteeOrder);
+  }
+
+  /// 跳转到频道页面
+  void goToChannelPage() {
+    Get.toNamed(AppRoutes.tkChannelHome);
+  }
+
+
 
 }

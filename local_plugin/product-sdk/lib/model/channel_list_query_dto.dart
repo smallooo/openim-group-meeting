@@ -10,56 +10,67 @@
 
 part of openapi.api;
 
-class ChannelCategoryQueryDTO {
-  /// Returns a new [ChannelCategoryQueryDTO] instance.
-  ChannelCategoryQueryDTO({
-    required this.channelId,
-    this.level,
+class ChannelListQueryDTO {
+  /// Returns a new [ChannelListQueryDTO] instance.
+  ChannelListQueryDTO({
+    this.status,
+    this.sellerId,
   });
 
-  /// 频道ID
-  int channelId;
-
-  /// 分类级别筛选，1-一级分类，2-二级分类，3-三级分类
+  /// 状态筛选，1-启用，0-禁用
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? level;
+  int? status;
+
+  /// 商家ID，为空则查询平台全局频道
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  int? sellerId;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ChannelCategoryQueryDTO &&
-          other.channelId == channelId &&
-          other.level == level;
+      other is ChannelListQueryDTO &&
+          other.status == status &&
+          other.sellerId == sellerId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (channelId.hashCode) + (level == null ? 0 : level!.hashCode);
+      (status == null ? 0 : status!.hashCode) +
+      (sellerId == null ? 0 : sellerId!.hashCode);
 
   @override
   String toString() =>
-      'ChannelCategoryQueryDTO[channelId=$channelId, level=$level]';
+      'ChannelListQueryDTO[status=$status, sellerId=$sellerId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    json[r'channelId'] = this.channelId;
-    if (this.level != null) {
-      json[r'level'] = this.level;
+    if (this.status != null) {
+      json[r'status'] = this.status;
     } else {
-      json[r'level'] = null;
+      json[r'status'] = null;
+    }
+    if (this.sellerId != null) {
+      json[r'sellerId'] = this.sellerId;
+    } else {
+      json[r'sellerId'] = null;
     }
     return json;
   }
 
-  /// Returns a new [ChannelCategoryQueryDTO] instance and imports its values from
+  /// Returns a new [ChannelListQueryDTO] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static ChannelCategoryQueryDTO? fromJson(dynamic value) {
+  static ChannelListQueryDTO? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -69,29 +80,29 @@ class ChannelCategoryQueryDTO {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "ChannelCategoryQueryDTO[$key]" is missing from JSON.');
+              'Required key "ChannelListQueryDTO[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "ChannelCategoryQueryDTO[$key]" has a null value in JSON.');
+              'Required key "ChannelListQueryDTO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return ChannelCategoryQueryDTO(
-        channelId: mapValueOfType<int>(json, r'channelId')!,
-        level: mapValueOfType<int>(json, r'level'),
+      return ChannelListQueryDTO(
+        status: mapValueOfType<int>(json, r'status'),
+        sellerId: mapValueOfType<int>(json, r'sellerId'),
       );
     }
     return null;
   }
 
-  static List<ChannelCategoryQueryDTO> listFromJson(
+  static List<ChannelListQueryDTO> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <ChannelCategoryQueryDTO>[];
+    final result = <ChannelListQueryDTO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = ChannelCategoryQueryDTO.fromJson(row);
+        final value = ChannelListQueryDTO.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -100,12 +111,12 @@ class ChannelCategoryQueryDTO {
     return result.toList(growable: growable);
   }
 
-  static Map<String, ChannelCategoryQueryDTO> mapFromJson(dynamic json) {
-    final map = <String, ChannelCategoryQueryDTO>{};
+  static Map<String, ChannelListQueryDTO> mapFromJson(dynamic json) {
+    final map = <String, ChannelListQueryDTO>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = ChannelCategoryQueryDTO.fromJson(entry.value);
+        final value = ChannelListQueryDTO.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -114,17 +125,17 @@ class ChannelCategoryQueryDTO {
     return map;
   }
 
-  // maps a json object with a list of ChannelCategoryQueryDTO-objects as value to a dart map
-  static Map<String, List<ChannelCategoryQueryDTO>> mapListFromJson(
+  // maps a json object with a list of ChannelListQueryDTO-objects as value to a dart map
+  static Map<String, List<ChannelListQueryDTO>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<ChannelCategoryQueryDTO>>{};
+    final map = <String, List<ChannelListQueryDTO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ChannelCategoryQueryDTO.listFromJson(
+        map[entry.key] = ChannelListQueryDTO.listFromJson(
           entry.value,
           growable: growable,
         );
@@ -134,7 +145,5 @@ class ChannelCategoryQueryDTO {
   }
 
   /// The list of required keys that must be present in a JSON.
-  static const requiredKeys = <String>{
-    'channelId',
-  };
+  static const requiredKeys = <String>{};
 }

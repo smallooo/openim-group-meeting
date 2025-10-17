@@ -5,13 +5,13 @@
 import 'package:toklink_order_sdk/api.dart';
 ```
 
-All URIs are relative to *http://localhost:9995/v1*
+All URIs are relative to *http://localhost:9995*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createOrderReview**](OrderReviewAppApi.md#createorderreview) | **POST** /order-review/create | 创建订单评价
-[**getOrderReviewByOrderId**](OrderReviewAppApi.md#getorderreviewbyorderid) | **GET** /order-review/order/{orderId} | 根据订单ID获取评价
-[**getOrderReviewDetail**](OrderReviewAppApi.md#getorderreviewdetail) | **GET** /order-review/{reviewId} | 获取订单评价详情
+[**createOrderReview**](OrderReviewAppApi.md#createorderreview) | **POST** /app/order-review/create | 创建订单评价
+[**getOrderReviewByOrderId**](OrderReviewAppApi.md#getorderreviewbyorderid) | **GET** /app/order-review/order/{orderId} | 根据订单ID获取评价
+[**getOrderReviewDetail**](OrderReviewAppApi.md#getorderreviewdetail) | **GET** /app/order-review/{reviewId} | 获取订单评价详情
 
 
 # **createOrderReview**

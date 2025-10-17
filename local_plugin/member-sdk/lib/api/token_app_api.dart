@@ -29,7 +29,7 @@ class TokenAppApi {
     Object body,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/status';
+    final path = r'/app/auth/token/status';
 
     // ignore: prefer_final_locals
     Object? postBody = body;
@@ -93,7 +93,7 @@ class TokenAppApi {
     TokenLogoutCommand tokenLogoutCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/logout';
+    final path = r'/app/auth/token/logout';
 
     // ignore: prefer_final_locals
     Object? postBody = tokenLogoutCommand;
@@ -157,7 +157,7 @@ class TokenAppApi {
     TokenRefreshCommand tokenRefreshCommand,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/auth/refresh';
+    final path = r'/app/auth/token/refresh';
 
     // ignore: prefer_final_locals
     Object? postBody = tokenRefreshCommand;

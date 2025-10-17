@@ -10,81 +10,91 @@
 
 part of openapi.api;
 
-class NotifyLogResponse {
-  /// Returns a new [NotifyLogResponse] instance.
-  NotifyLogResponse({
-    this.logId,
-    this.notifyId,
-    this.requestData,
-    this.responseData,
-    this.responseCode,
-    this.responseMessage,
-    this.duration,
-    this.createTime,
+class OrderCreateVO {
+  /// Returns a new [OrderCreateVO] instance.
+  OrderCreateVO({
+    this.orderId,
+    this.orderNo,
+    this.totalAmount,
+    this.payAmount,
+    this.payType,
+    this.paymentMethod,
+    this.orderStatus,
+    this.orderStatusText,
+    this.createdAt,
   });
 
-  /// 日志ID
+  /// 订单ID
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? logId;
+  int? orderId;
 
-  /// 通知ID
+  /// 订单编号
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? notifyId;
+  String? orderNo;
 
-  /// 请求数据
+  /// 订单总金额
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? requestData;
+  num? totalAmount;
 
-  /// 响应数据
+  /// 实付金额
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? responseData;
+  num? payAmount;
 
-  /// 响应状态码
+  /// 支付方式：1-支付宝，2-微信，3-数字货币
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? responseCode;
+  int? payType;
 
-  /// 响应消息
+  /// 支付方法:USDT->USDT;BTC->比特币;ETH->以太坊
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? responseMessage;
+  String? paymentMethod;
 
-  /// 请求耗时(毫秒)
+  /// 订单状态：1-待付款,2-已取消,3-待发货,4-待收货,5-已完成,6-售后中-退货申请待审核,7-交易关闭-退货审核不通过,8-交易中-待寄送退货商品,9-售后中-退货商品待收货,10-售后中-退货待入库,11-售后中-退货已入库,12-交易关闭-完成退款
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? duration;
+  int? orderStatus;
+
+  /// 订单状态描述
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? orderStatusText;
 
   /// 创建时间
   ///
@@ -93,86 +103,93 @@ class NotifyLogResponse {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? createTime;
+  String? createdAt;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NotifyLogResponse &&
-          other.logId == logId &&
-          other.notifyId == notifyId &&
-          other.requestData == requestData &&
-          other.responseData == responseData &&
-          other.responseCode == responseCode &&
-          other.responseMessage == responseMessage &&
-          other.duration == duration &&
-          other.createTime == createTime;
+      other is OrderCreateVO &&
+          other.orderId == orderId &&
+          other.orderNo == orderNo &&
+          other.totalAmount == totalAmount &&
+          other.payAmount == payAmount &&
+          other.payType == payType &&
+          other.paymentMethod == paymentMethod &&
+          other.orderStatus == orderStatus &&
+          other.orderStatusText == orderStatusText &&
+          other.createdAt == createdAt;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (logId == null ? 0 : logId!.hashCode) +
-      (notifyId == null ? 0 : notifyId!.hashCode) +
-      (requestData == null ? 0 : requestData!.hashCode) +
-      (responseData == null ? 0 : responseData!.hashCode) +
-      (responseCode == null ? 0 : responseCode!.hashCode) +
-      (responseMessage == null ? 0 : responseMessage!.hashCode) +
-      (duration == null ? 0 : duration!.hashCode) +
-      (createTime == null ? 0 : createTime!.hashCode);
+      (orderId == null ? 0 : orderId!.hashCode) +
+      (orderNo == null ? 0 : orderNo!.hashCode) +
+      (totalAmount == null ? 0 : totalAmount!.hashCode) +
+      (payAmount == null ? 0 : payAmount!.hashCode) +
+      (payType == null ? 0 : payType!.hashCode) +
+      (paymentMethod == null ? 0 : paymentMethod!.hashCode) +
+      (orderStatus == null ? 0 : orderStatus!.hashCode) +
+      (orderStatusText == null ? 0 : orderStatusText!.hashCode) +
+      (createdAt == null ? 0 : createdAt!.hashCode);
 
   @override
   String toString() =>
-      'NotifyLogResponse[logId=$logId, notifyId=$notifyId, requestData=$requestData, responseData=$responseData, responseCode=$responseCode, responseMessage=$responseMessage, duration=$duration, createTime=$createTime]';
+      'OrderCreateVO[orderId=$orderId, orderNo=$orderNo, totalAmount=$totalAmount, payAmount=$payAmount, payType=$payType, paymentMethod=$paymentMethod, orderStatus=$orderStatus, orderStatusText=$orderStatusText, createdAt=$createdAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    if (this.logId != null) {
-      json[r'logId'] = this.logId;
+    if (this.orderId != null) {
+      json[r'orderId'] = this.orderId;
     } else {
-      json[r'logId'] = null;
+      json[r'orderId'] = null;
     }
-    if (this.notifyId != null) {
-      json[r'notifyId'] = this.notifyId;
+    if (this.orderNo != null) {
+      json[r'orderNo'] = this.orderNo;
     } else {
-      json[r'notifyId'] = null;
+      json[r'orderNo'] = null;
     }
-    if (this.requestData != null) {
-      json[r'requestData'] = this.requestData;
+    if (this.totalAmount != null) {
+      json[r'totalAmount'] = this.totalAmount;
     } else {
-      json[r'requestData'] = null;
+      json[r'totalAmount'] = null;
     }
-    if (this.responseData != null) {
-      json[r'responseData'] = this.responseData;
+    if (this.payAmount != null) {
+      json[r'payAmount'] = this.payAmount;
     } else {
-      json[r'responseData'] = null;
+      json[r'payAmount'] = null;
     }
-    if (this.responseCode != null) {
-      json[r'responseCode'] = this.responseCode;
+    if (this.payType != null) {
+      json[r'payType'] = this.payType;
     } else {
-      json[r'responseCode'] = null;
+      json[r'payType'] = null;
     }
-    if (this.responseMessage != null) {
-      json[r'responseMessage'] = this.responseMessage;
+    if (this.paymentMethod != null) {
+      json[r'paymentMethod'] = this.paymentMethod;
     } else {
-      json[r'responseMessage'] = null;
+      json[r'paymentMethod'] = null;
     }
-    if (this.duration != null) {
-      json[r'duration'] = this.duration;
+    if (this.orderStatus != null) {
+      json[r'orderStatus'] = this.orderStatus;
     } else {
-      json[r'duration'] = null;
+      json[r'orderStatus'] = null;
     }
-    if (this.createTime != null) {
-      json[r'createTime'] = this.createTime;
+    if (this.orderStatusText != null) {
+      json[r'orderStatusText'] = this.orderStatusText;
     } else {
-      json[r'createTime'] = null;
+      json[r'orderStatusText'] = null;
+    }
+    if (this.createdAt != null) {
+      json[r'createdAt'] = this.createdAt;
+    } else {
+      json[r'createdAt'] = null;
     }
     return json;
   }
 
-  /// Returns a new [NotifyLogResponse] instance and imports its values from
+  /// Returns a new [OrderCreateVO] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static NotifyLogResponse? fromJson(dynamic value) {
+  static OrderCreateVO? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -182,35 +199,40 @@ class NotifyLogResponse {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "NotifyLogResponse[$key]" is missing from JSON.');
+              'Required key "OrderCreateVO[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "NotifyLogResponse[$key]" has a null value in JSON.');
+              'Required key "OrderCreateVO[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return NotifyLogResponse(
-        logId: mapValueOfType<int>(json, r'logId'),
-        notifyId: mapValueOfType<int>(json, r'notifyId'),
-        requestData: mapValueOfType<String>(json, r'requestData'),
-        responseData: mapValueOfType<String>(json, r'responseData'),
-        responseCode: mapValueOfType<String>(json, r'responseCode'),
-        responseMessage: mapValueOfType<String>(json, r'responseMessage'),
-        duration: mapValueOfType<int>(json, r'duration'),
-        createTime: mapValueOfType<int>(json, r'createTime'),
+      return OrderCreateVO(
+        orderId: mapValueOfType<int>(json, r'orderId'),
+        orderNo: mapValueOfType<String>(json, r'orderNo'),
+        totalAmount: json[r'totalAmount'] == null
+            ? null
+            : num.parse(json[r'totalAmount'].toString()),
+        payAmount: json[r'payAmount'] == null
+            ? null
+            : num.parse(json[r'payAmount'].toString()),
+        payType: mapValueOfType<int>(json, r'payType'),
+        paymentMethod: mapValueOfType<String>(json, r'paymentMethod'),
+        orderStatus: mapValueOfType<int>(json, r'orderStatus'),
+        orderStatusText: mapValueOfType<String>(json, r'orderStatusText'),
+        createdAt: mapValueOfType<String>(json, r'createdAt'),
       );
     }
     return null;
   }
 
-  static List<NotifyLogResponse> listFromJson(
+  static List<OrderCreateVO> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <NotifyLogResponse>[];
+    final result = <OrderCreateVO>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = NotifyLogResponse.fromJson(row);
+        final value = OrderCreateVO.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -219,12 +241,12 @@ class NotifyLogResponse {
     return result.toList(growable: growable);
   }
 
-  static Map<String, NotifyLogResponse> mapFromJson(dynamic json) {
-    final map = <String, NotifyLogResponse>{};
+  static Map<String, OrderCreateVO> mapFromJson(dynamic json) {
+    final map = <String, OrderCreateVO>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = NotifyLogResponse.fromJson(entry.value);
+        final value = OrderCreateVO.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -233,17 +255,17 @@ class NotifyLogResponse {
     return map;
   }
 
-  // maps a json object with a list of NotifyLogResponse-objects as value to a dart map
-  static Map<String, List<NotifyLogResponse>> mapListFromJson(
+  // maps a json object with a list of OrderCreateVO-objects as value to a dart map
+  static Map<String, List<OrderCreateVO>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<NotifyLogResponse>>{};
+    final map = <String, List<OrderCreateVO>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = NotifyLogResponse.listFromJson(
+        map[entry.key] = OrderCreateVO.listFromJson(
           entry.value,
           growable: growable,
         );
