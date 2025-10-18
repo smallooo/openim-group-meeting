@@ -28,11 +28,16 @@ lib/tk_app/**/*.md
 # Android 相关
 android/.gradle/
 android/captures/
-android/gradlew
-android/gradlew.bat
 android/**/GeneratedPluginRegistrant.java
 android/key.properties
+android/local.properties
+.env
+.env.*
 *.jks
+*.keystore
+*.p12
+*.mobileprovision
+
 
 # iOS 相关
 ios/.symlinks/
@@ -76,3 +81,11 @@ linux/CMakeFiles/
 
 # Web 相关
 web/flutter_service_worker.js
+
+
+# Flutter plugins index (generated)
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# iOS build id (generated)
+ios/Flutter/.last_build_id
