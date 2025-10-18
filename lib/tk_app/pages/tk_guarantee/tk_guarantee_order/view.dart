@@ -5,15 +5,21 @@ import 'package:toklink/routes/app_pages.dart';
 import 'package:openim_common/openim_common.dart';
 
 import 'logic.dart';
-import 'state.dart';
+import 'model/order_list_models.dart';
 
 class TkGuaranteeOrderPage extends StatelessWidget {
-  TkGuaranteeOrderPage({Key? key}) : super(key: key);
+  TkGuaranteeOrderPage({super.key});
 
   final logic = Get.find<TkGuaranteeOrderLogic>();
   final state = Get.find<TkGuaranteeOrderLogic>().state;
 
-  final List<String> tabs = const ['全部', '进行中', '待付款', '待发货', '已完成'];
+  final List<OrderStatusFilter> tabFilters = const [
+    OrderStatusFilter.all,
+    OrderStatusFilter.inProgress,
+    OrderStatusFilter.pendingPay,
+    OrderStatusFilter.pendingShip,
+    OrderStatusFilter.completed,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class TkGuaranteeOrderPage extends StatelessWidget {
             children: [
               _buildHeader(context),
               _buildTabs(),
-              Expanded(child: Obx(() => _buildOrderList())),
+              Expanded(child: _buildOrderList()),
             ],
           );
         },
@@ -110,13 +116,16 @@ class TkGuaranteeOrderPage extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: List.generate(tabs.length, (index) {
+            children: List.generate(tabFilters.length, (index) {
               return Obx(() {
                 final selected = state.selectedTabIndex.value == index;
                 return Padding(
                   padding: EdgeInsets.only(right: 8.w),
                   child: GestureDetector(
-                    onTap: () => state.selectedTabIndex.value = index,
+                    onTap: () {
+                      state.selectedTabIndex.value = index;
+                      logic.filterOrdersByStatus(tabFilters[index]);
+                    },
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       padding: EdgeInsets.symmetric(horizontal: isNarrow ? 12.w : 16.w, vertical: 8.h),
@@ -127,7 +136,7 @@ class TkGuaranteeOrderPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
-                        tabs[index],
+                        tabFilters[index].text,
                         style: TextStyle(
                           fontSize: (isNarrow ? 12.sp : 13.sp),
                           fontWeight: FontWeight.w500,
@@ -146,80 +155,105 @@ class TkGuaranteeOrderPage extends StatelessWidget {
   }
 
   Widget _buildOrderList() {
-    final idx = state.selectedTabIndex.value;
-    final tabStatus = [
-      GuaranteeStatus.all,
-      GuaranteeStatus.inProgress,
-      GuaranteeStatus.pendingPay,
-      GuaranteeStatus.pendingShip,
-      GuaranteeStatus.completed,
-    ][idx];
+    return Obx(() {
+      if (state.isLoading.value && state.orderRecords.isEmpty) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-    final data = tabStatus == GuaranteeStatus.all
-        ? state.orders
-        : state.orders.where((e) => e.status == tabStatus).toList();
+      // 直接在Obx中访问可观察变量
+      final filter = state.currentFilter.value;
+      final allOrders = state.orderRecords;
+      
+      List<OrderRecord> data;
+      if (filter == OrderStatusFilter.all) {
+        data = allOrders;
+      } else {
+        final statusValues = filter.statusValues;
+        if (statusValues == null || statusValues.isEmpty) {
+          data = allOrders;
+        } else {
+          data = allOrders.where((order) => statusValues.contains(order.orderStatus)).toList();
+        }
+      }
 
-    if (data.isEmpty) {
-      return Center(
-        child: Text('暂无订单', style: TextStyle(fontSize: 14.sp, color: Colors.black54)),
+      if (data.isEmpty) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('暂无订单', style: TextStyle(fontSize: 14.sp, color: Colors.black54)),
+              SizedBox(height: 16.h),
+              ElevatedButton(
+                onPressed: () => logic.refreshOrderList(),
+                child: const Text('刷新'),
+              ),
+            ],
+          ),
+        );
+      }
+
+      return RefreshIndicator(
+        onRefresh: () => logic.refreshOrderList(),
+        child: ListView.builder(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          itemCount: data.length + (state.hasMore.value ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index == data.length) {
+              // 加载更多指示器
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.h),
+                child: Center(
+                  child: state.isLoading.value
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: () => logic.loadMoreOrders(),
+                          child: const Text('加载更多'),
+                        ),
+                ),
+              );
+            }
+            return _OrderCard(order: data[index]);
+          },
+        ),
       );
-    }
-
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return _OrderCard(order: data[index]);
-      },
-    );
+    });
   }
 }
 
 class _OrderCard extends StatelessWidget {
-  final GuaranteeOrder order;
+  final OrderRecord order;
   const _OrderCard({required this.order});
 
   Color get statusColor {
-    switch (order.status) {
-      case GuaranteeStatus.inProgress:
-        return const Color(0xFFCFF7E9);
-      case GuaranteeStatus.pendingPay:
+    final status = OrderStatus.fromValue(order.orderStatus);
+    switch (status) {
+      case OrderStatus.pendingPayment:
         return const Color(0xFFFFE8D1);
-      case GuaranteeStatus.pendingShip:
+      case OrderStatus.pendingShipment:
         return const Color(0xFFFFF5CC);
-      case GuaranteeStatus.completed:
+      case OrderStatus.shipped:
+        return const Color(0xFFCFF7E9);
+      case OrderStatus.completed:
         return const Color(0xFFE5F2FF);
-      case GuaranteeStatus.all:
+      case OrderStatus.cancelled:
+      case OrderStatus.refunded:
         return const Color(0xFFF2F2F2);
     }
   }
 
-  String get statusText {
-    switch (order.status) {
-      case GuaranteeStatus.inProgress:
-        return '进行中';
-      case GuaranteeStatus.pendingPay:
-        return '待付款';
-      case GuaranteeStatus.pendingShip:
-        return '待发货';
-      case GuaranteeStatus.completed:
-        return '已完成';
-      case GuaranteeStatus.all:
-        return '全部';
-    }
-  }
-
   Widget get statusImage {   
-    switch (order.status) {
-      case GuaranteeStatus.inProgress:
-        return ImageRes.tkGuarantee3.toImage;
-      case GuaranteeStatus.pendingPay:
+    final status = OrderStatus.fromValue(order.orderStatus);
+    switch (status) {
+      case OrderStatus.pendingPayment:
         return ImageRes.tkGuarantee4.toImage;
-      case GuaranteeStatus.pendingShip:
+      case OrderStatus.pendingShipment:
         return ImageRes.tkGuarantee5.toImage;
-      case GuaranteeStatus.completed:
+      case OrderStatus.shipped:
+        return ImageRes.tkGuarantee3.toImage;
+      case OrderStatus.completed:
         return ImageRes.tkGuarantee6.toImage;
-      case GuaranteeStatus.all:
+      case OrderStatus.cancelled:
+      case OrderStatus.refunded:
         return const SizedBox.shrink();
     }
   }
@@ -247,29 +281,89 @@ class _OrderCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        '订单ID：${order.id}',
+                        '订单号：${order.orderNo}',
                         style: TextStyle(fontSize: 13.sp, color: const Color(0xFF333333)),
                       ),
                     ),
-                    // IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz, color: Colors.black54)),
                   ],
                 ),
-                SizedBox(height: 6.h),
-                Text('买家：${order.buyer}', style: TextStyle(fontSize: 13.sp, color: Colors.black87)),
-                SizedBox(height: 4.h),
-                Text('卖家：${order.seller}', style: TextStyle(fontSize: 13.sp, color: Colors.black87)),
+                SizedBox(height: 8.h),
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.r),
+                      child: Image.network(
+                        order.productPic,
+                        width: 60.w,
+                        height: 60.w,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: 60.w,
+                            height: 60.w,
+                            color: Colors.grey[200],
+                            child: const Icon(Icons.image, color: Colors.grey),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            order.productName,
+                            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, color: const Color(0xFF333333)),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 4.h),
+                          Text('数量：${order.productCount}', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                          if (order.buyerName.isNotEmpty) ...[
+                            SizedBox(height: 4.h),
+                            Text('买家：${order.buyerName}', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                          ],
+                          if (order.sellerName.isNotEmpty) ...[
+                            SizedBox(height: 4.h),
+                            Text('卖家：${order.sellerName}', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 12.h),
-                Text('¥ ${order.amount.toStringAsFixed(2)}', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: const Color(0xFFEB2F2F))),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('实付金额', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                        Text('¥ ${order.payAmount.toStringAsFixed(2)}', 
+                             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: const Color(0xFFEB2F2F))),
+                      ],
+                    ),
+                    if (order.totalAmount != order.payAmount)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('总金额', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                          Text('¥ ${order.totalAmount.toStringAsFixed(2)}', 
+                               style: TextStyle(fontSize: 14.sp, color: Colors.black54, decoration: TextDecoration.lineThrough)),
+                        ],
+                      ),
+                  ],
+                ),
                 SizedBox(height: 8.h),
-                Text(order.description, style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
-                SizedBox(height: 8.h),
-                Text('创建日期：${_formatDate(order.createdAt)}', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
+                Text('创建时间：${order.createdAt}', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
                 SizedBox(height: 12.h),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.tkGuaranteeOrderDetail, arguments: {'orderId': order.id});
+                      Get.toNamed(AppRoutes.tkGuaranteeOrderDetail, arguments: {'orderId': order.orderId});
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF9E13F7),
@@ -290,9 +384,5 @@ class _OrderCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatDate(DateTime dt) {
-    return '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
   }
 }

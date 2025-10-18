@@ -58,7 +58,7 @@ class TkPaySetLogic extends GetxController {
   Future<void> onModifyPasswordTap() async {
     print('TkPaySetLogic: 用户点击修改支付密码'); // 调试信息
 
-    return;
+    // return;
     // 检查钱包仓库是否已初始化
     if (_walletRepository == null) {
       print('TkPaySetLogic: 钱包仓库未初始化，尝试重新初始化'); // 调试信息

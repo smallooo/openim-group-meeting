@@ -105,6 +105,8 @@ import '../tk_app/pages/tk_subscription/order_refund_submit/binding.dart';
 import '../tk_app/pages/tk_subscription/order_refund_submit/view.dart';
 import '../tk_app/pages/tk_subscription/order_after_detail/binding.dart';
 import '../tk_app/pages/tk_subscription/order_after_detail/view.dart';
+import '../tk_app/pages/tk_pay/tk_pay_home/binding.dart';
+import '../tk_app/pages/tk_pay/tk_pay_home/view.dart';
 import '../tk_app/pages/tk_pay/tk_pay_wallet/binding.dart';
 import '../tk_app/pages/tk_pay/tk_pay_wallet/view.dart';
 import '../tk_app/pages/tk_pay/tk_pay_bill_page/binding.dart';
@@ -123,8 +125,14 @@ import '../tk_app/pages/tk_guarantee/tk_guarantee_order_detail/binding.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_order_detail/view.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_create_order/binding.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_create_order/view.dart';
+import '../tk_app/pages/tk_guarantee/t_k_order_to_pay/binding.dart';
+import '../tk_app/pages/tk_guarantee/t_k_order_to_pay/view.dart';
 import '../tk_app/pages/tk_channel/tk_channel_home/binding.dart';
 import '../tk_app/pages/tk_channel/tk_channel_home/view.dart';
+import '../tk_app/pages/tk_channel/tk_channel_content/binding.dart';
+import '../tk_app/pages/tk_channel/tk_channel_content/view.dart';
+import '../tk_app/pages/tk_channel/tk_product_detail/binding.dart';
+import '../tk_app/pages/tk_channel/tk_product_detail/view.dart';
 
 part 'app_routes.dart';
 
@@ -414,6 +422,11 @@ class AppPages {
       binding: OrderAfterDetailBinding(),
     ),
     _pageBuilder(
+      name: AppRoutes.tkPayHome,
+      page: () => TkPayHomePage(),
+      binding: TkPayHomeBinding(),
+    ),
+    _pageBuilder(
       name: AppRoutes.tkPayWallet,
       page: () => TkPayWalletPage(),
       binding: TkPayWalletBinding(),
@@ -459,9 +472,24 @@ class AppPages {
       binding: TkGuaranteeCreateOrderBinding(),
     ),
     _pageBuilder(
+      name: AppRoutes.tkOrderToPay,
+      page: () => TKOrderToPayPage(),
+      binding: TKOrderToPayBinding(),
+    ),
+    _pageBuilder(
       name: AppRoutes.tkChannelHome,
       page: () => TkChannelHomePage(),
       binding: TkChannelHomeBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkChannelContent,
+      page: () => TkChannelContentPage(),
+      binding: TkChannelContentBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkProductDetail,
+      page: () => TkProductDetailPage(),
+      binding: TkProductDetailBinding(),
     ),
   ];
 }

@@ -2,99 +2,146 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
+import 'models/seller_models.dart';
+import 'models/channel_models.dart';
 
 class TkChannelHomePage extends StatelessWidget {
-  TkChannelHomePage({Key? key}) : super(key: key);
-
-  final logic = Get.find<TkChannelHomeLogic>();
+  final logic = Get.put(TkChannelHomeLogic());
   final state = Get.find<TkChannelHomeLogic>().state;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEAEDF4),
-      appBar: AppBar(
-        title: const Text('频道'),
-        backgroundColor:  const Color(0xFFEAEDF4),
-        centerTitle: true,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        surfaceTintColor: Colors.transparent,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Icon(Icons.search_rounded),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Icon(Icons.share_outlined),
-          ),
-        ],
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final bool isNarrow = constraints.maxWidth < 380;
-          final double sideWidth = isNarrow ? 72 : 84;
-          final double contentHPadding = isNarrow ? 12 : 24;
-
+      appBar: AppBar(title: const Text('')),
+      body: Obx(() {
+        if (logic.state.sellerList.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
           return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SideBar(width: sideWidth),
+              // 左侧商家头像列表
+              _SideBar(
+                width: 80,
+                sellerList: logic.state.sellerList,
+              ),
+              // 右侧频道内容
               Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
-                  child: Container(
-                    color: const Color(0xFFF5F6FA),
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: contentHPadding,
-                        vertical: 16,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 12),
-                          _GroupHeader(),
-                          const SizedBox(height: 16),
-                          const _SectionHeader(title: '信息'),
-                          const SizedBox(height: 8),
-                          const _CardChannelItem(title: '欢迎'),
-                          const SizedBox(height: 12),
-                          const _CardChannelItem(title: '公告'),
-                          const SizedBox(height: 20),
-                          const _SectionHeader(title: '综合'),
-                          const SizedBox(height: 8),
-                          const _ListChannelItem(title: '中文交流'),
-                          const _ListChannelItem(title: '英语交流'),
-                          const _ListChannelItem(title: '数据科学', selected: true),
-                          const _ListChannelItem(title: 'Dune讨论'),
-                          const _ListChannelItem(title: 'SQL讨论'),
-                          const _ListChannelItem(title: '教程讨论'),
-                          const _ListChannelItem(title: '招聘信息'),
-                          const SizedBox(height: 20),
-                          const _SectionHeader(title: '语音频道'),
-                          const SizedBox(height: 8),
-                          const _VoiceChannelItem(title: '休息室'),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
-                    ),
-                  ),
+                child: Container(
+                  color: const Color(0xFFF5F5F5),
+                  child: Obx(() {
+                    if (logic.state.isLoadingChannels.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    
+                    if (logic.state.channelList.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          '暂无频道数据',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
+                      );
+                    }
+                    
+                    return Column(
+                      children: [
+                        // 群组头部
+                        Container(
+                          margin: const EdgeInsets.all(16),
+                          child: Obx(() => _GroupHeader(
+                            sellerName: logic.selectedSeller?.name ?? '',
+                          )),
+                        ),
+                        // 动态频道列表
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            child: ListView.builder(
+                              itemCount: logic.state.channelList.length,
+                              itemBuilder: (context, channelIndex) {
+                                final channel = logic.state.channelList[channelIndex];
+                                return _ChannelSection(channel: channel);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
               ),
             ],
           );
-        },
-      ),
+        }
+      }),
+    );
+  }
+}
+
+class _ChannelSection extends StatelessWidget {
+  final ChannelModel channel;
+  const _ChannelSection({required this.channel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 频道标题
+        _SectionHeader(title: channel.channelName),
+        const SizedBox(height: 8),
+        
+        // 频道分类列表
+        ...channel.categories.map((category) {
+          // 根据频道名称判断显示样式
+          if (channel.channelName.contains('语音')) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: _VoiceChannelItem(title: category.name),
+            );
+          } else if (channel.channelName.contains('信息')) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: _CardChannelItem(title: category.name),
+            );
+          } else if (channel.channelName.contains('综合')) {
+            // 只有综合频道下的列表项支持选中状态
+            return Obx(() {
+              final logic = Get.find<TkChannelHomeLogic>();
+              final bool isSelected = logic.state.selectedCategoryId.value == category.id;
+              return GestureDetector(
+                onTap: () {
+                  logic.selectCategory(category.id, category.name);
+                  // 跳转到频道内容页面
+                  logic.navigateToChannelContent(
+                    category.id, 
+                    category.name, 
+                    channel.channelName,
+                  );
+                },
+                child: _ListChannelItem(
+                  title: category.name,
+                  selected: isSelected,
+                ),
+              );
+            });
+          } else {
+            return _ListChannelItem(
+              title: category.name,
+              selected: false, // 其他频道的分类不支持选中
+            );
+          }
+        }).toList(),
+        
+        const SizedBox(height: 16),
+      ],
     );
   }
 }
 
 class _GroupHeader extends StatelessWidget {
+  final String sellerName;
+  const _GroupHeader({required this.sellerName});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -105,9 +152,9 @@ class _GroupHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
-          const Text(
-            'Sixdegree',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          Text(
+            sellerName.isNotEmpty ? sellerName : 'Sixdegree',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           const Spacer(),
           IconButton(
@@ -204,11 +251,10 @@ class _ListChannelItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color baseColor = selected ? Colors.white : Colors.transparent;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
-        color: baseColor,
+        color: selected ? Colors.white : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         boxShadow: selected
             ? [
@@ -221,13 +267,21 @@ class _ListChannelItem extends StatelessWidget {
             : null,
       ),
       child: ListTile(
-        leading: const Icon(Icons.tag_rounded, size: 20, color: Colors.black54),
-        title: Text(title),
+        leading: Icon(
+          Icons.tag_rounded, 
+          size: 20, 
+          color: selected ? Colors.black87 : Colors.black54,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: selected ? Colors.black : Colors.black,
+            fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+          ),
+        ),
         dense: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        tileColor: baseColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        onTap: () {},
       ),
     );
   }
@@ -257,7 +311,8 @@ class _VoiceChannelItem extends StatelessWidget {
 
 class _SideBar extends StatelessWidget {
   final double width;
-  const _SideBar({required this.width});
+  final List<MchSellerModel> sellerList;
+  const _SideBar({required this.width, required this.sellerList});
 
   @override
   Widget build(BuildContext context) {
@@ -273,12 +328,25 @@ class _SideBar extends StatelessWidget {
           const SizedBox(height: 12),
           Expanded(
             child: ListView.separated(
-              itemCount: 8,
+              itemCount: sellerList.length,
               separatorBuilder: (_, __) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
-                final bool selected = index == 2; // 示例选中项
-                final bool showDot = index == 2; // 选中项显示红点
-                return _AvatarItem(selected: selected, showDot: showDot);
+                final seller = sellerList[index];
+                final shop = seller.shops.isNotEmpty ? seller.shops.first : null;
+                return Obx(() {
+                  final logic = Get.find<TkChannelHomeLogic>();
+                  final bool selected = logic.state.selectedSellerIndex.value == index;
+                  final bool showDot = selected; // 选中的显示红点
+                  return GestureDetector(
+                    onTap: () => logic.selectSeller(index),
+                    child: _AvatarItem(
+                      selected: selected, 
+                      showDot: showDot,
+                      seller: seller,
+                      shop: shop,
+                    ),
+                  );
+                });
               },
             ),
           ),
@@ -293,7 +361,14 @@ class _SideBar extends StatelessWidget {
 class _AvatarItem extends StatelessWidget {
   final bool selected;
   final bool showDot;
-  const _AvatarItem({this.selected = false, this.showDot = false});
+  final MchSellerModel? seller;
+  final ShopModel? shop;
+  const _AvatarItem({
+    this.selected = false, 
+    this.showDot = false,
+    this.seller,
+    this.shop,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -306,11 +381,11 @@ class _AvatarItem extends StatelessWidget {
         children: [
           if (selected)
             Positioned(
-              left: -6,
+              left: -8,
               top: 10,
               bottom: 10,
               child: Container(
-                width: 10,
+                width: 5,
                 decoration: BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(8),
@@ -319,17 +394,29 @@ class _AvatarItem extends StatelessWidget {
             ),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(8),
               border: selected
                   ? Border.all(color: Colors.green, width: 4)
                   : null,
             ),
             clipBehavior: Clip.hardEdge,
-            child: Container(
-              color: Colors.grey.shade300,
-              alignment: Alignment.center,
-              child: const Icon(Icons.person, color: Colors.black54, size: 32),
-            ),
+            child: shop?.logo.isNotEmpty == true
+                ? Image.network(
+                    shop!.logo,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey.shade300,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.store, color: Colors.black54, size: 32),
+                      );
+                    },
+                  )
+                : Container(
+                    color: Colors.grey.shade300,
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.store, color: Colors.black54, size: 32),
+                  ),
           ),
           if (showDot)
             Positioned(

@@ -71,9 +71,9 @@ class TkPayHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildTopCardItem(ImageRes.tkPayHome1.toImage, '收付款'),
-            _buildTopCardItem(ImageRes.tkPayHome2.toImage, '钱包', subText: '¥ 0.00', onTap: () {
+            Obx(() => _buildTopCardItem(ImageRes.tkPayHome2.toImage, '钱包', subText: '¥${state.availableAmount.value.toStringAsFixed(2)}', onTap: () {
               logic.navigateToWalletPage();
-            }),
+            })),
           ],
         ),
       ),

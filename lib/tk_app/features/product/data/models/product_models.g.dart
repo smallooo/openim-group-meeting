@@ -1,0 +1,105 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'product_models.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$ProductListRequestImpl _$$ProductListRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProductListRequestImpl(
+      categoryId: (json['categoryId'] as num).toInt(),
+      page: (json['page'] as num).toInt(),
+      size: (json['size'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$ProductListRequestImplToJson(
+        _$ProductListRequestImpl instance) =>
+    <String, dynamic>{
+      'categoryId': instance.categoryId,
+      'page': instance.page,
+      'size': instance.size,
+    };
+
+_$ProductListResponseImpl _$$ProductListResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProductListResponseImpl(
+      errCode: (json['errCode'] as num?)?.toInt() ?? 0,
+      errMsg: json['errMsg'] as String? ?? '',
+      data: ProductListData.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$ProductListResponseImplToJson(
+        _$ProductListResponseImpl instance) =>
+    <String, dynamic>{
+      'errCode': instance.errCode,
+      'errMsg': instance.errMsg,
+      'data': instance.data,
+    };
+
+_$ProductListDataImpl _$$ProductListDataImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProductListDataImpl(
+      total: json['total'] as String,
+      list: (json['list'] as List<dynamic>)
+          .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      page: (json['page'] as num?)?.toInt() ?? 1,
+      size: (json['size'] as num?)?.toInt() ?? 20,
+      totalPages: json['totalPages'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$$ProductListDataImplToJson(
+        _$ProductListDataImpl instance) =>
+    <String, dynamic>{
+      'total': instance.total,
+      'list': instance.list,
+      'page': instance.page,
+      'size': instance.size,
+      'totalPages': instance.totalPages,
+    };
+
+_$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
+    _$ProductModelImpl(
+      id: json['id'] as String,
+      channelId: json['channelId'] as String? ?? '',
+      name: json['name'] as String,
+      subName: json['subName'] as String,
+      defaultPrice: (json['defaultPrice'] as num?)?.toDouble() ?? 0.0,
+      defaultPic: json['defaultPic'] as String,
+      categoryId: json['categoryId'] as String,
+      categoryName: json['categoryName'] as String,
+      parentCategoryId: json['parentCategoryId'] as String? ?? '',
+      parentCategoryName: json['parentCategoryName'] as String? ?? '',
+      brandId: json['brandId'] as String,
+      brandName: json['brandName'] as String,
+      publishStatus: (json['publishStatus'] as num?)?.toInt() ?? 0,
+      verifyStatus: (json['verifyStatus'] as num?)?.toInt() ?? 0,
+      salesCount: (json['salesCount'] as num?)?.toInt() ?? 0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      reviewCount: (json['reviewCount'] as num?)?.toInt() ?? 0,
+      createdAt: json['createdAt'] as String,
+    );
+
+Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'channelId': instance.channelId,
+      'name': instance.name,
+      'subName': instance.subName,
+      'defaultPrice': instance.defaultPrice,
+      'defaultPic': instance.defaultPic,
+      'categoryId': instance.categoryId,
+      'categoryName': instance.categoryName,
+      'parentCategoryId': instance.parentCategoryId,
+      'parentCategoryName': instance.parentCategoryName,
+      'brandId': instance.brandId,
+      'brandName': instance.brandName,
+      'publishStatus': instance.publishStatus,
+      'verifyStatus': instance.verifyStatus,
+      'salesCount': instance.salesCount,
+      'rating': instance.rating,
+      'reviewCount': instance.reviewCount,
+      'createdAt': instance.createdAt,
+    };

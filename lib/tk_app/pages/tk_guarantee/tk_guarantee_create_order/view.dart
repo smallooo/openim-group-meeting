@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'logic.dart';
 
 class TkGuaranteeCreateOrderPage extends StatefulWidget {
-  const TkGuaranteeCreateOrderPage({Key? key}) : super(key: key);
+  const TkGuaranteeCreateOrderPage({super.key});
 
   @override
   State<TkGuaranteeCreateOrderPage> createState() =>
@@ -17,6 +17,16 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
   final state = Get.find<TkGuaranteeCreateOrderLogic>().state;
 
   late TabController _tabController;
+  
+  // 表单控制器
+  final _productNameController = TextEditingController();
+  final _productDescriptionController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _priceController = TextEditingController();
+  
+  // 表单验证key - 为每个Tab创建独立的key
+  final _guaranteeFormKey = GlobalKey<FormState>();
+  final _productFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -27,6 +37,10 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
   @override
   void dispose() {
     _tabController.dispose();
+    _productNameController.dispose();
+    _productDescriptionController.dispose();
+    _categoryController.dispose();
+    _priceController.dispose();
     super.dispose();
   }
 
@@ -73,24 +87,26 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         child: TabBarView(
           controller: _tabController,
           children: [
-            _buildOrderForm(),
-            _buildOrderForm(),
+            _buildOrderForm(isGuaranteeOrder: true),
+            _buildOrderForm(isGuaranteeOrder: false),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOrderForm() {
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: [
+  Widget _buildOrderForm({required bool isGuaranteeOrder}) {
+    return Form(
+      key: isGuaranteeOrder ? _guaranteeFormKey : _productFormKey,
+      child: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
         const Text('商品详情', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400,color: Color(0xFF333333))),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.1),
+            color: Colors.red.withValues(alpha: 0.1),
             border: Border.all(color: Colors.red),
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -110,7 +126,14 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         const SizedBox(height: 16),
         const Text('商品名称', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFF333333))),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          controller: _productNameController,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return '请输入商品名称';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintStyle: const TextStyle(
               fontSize: 14,
@@ -128,8 +151,15 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         const SizedBox(height: 16),
         const Text('商品描述', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFF333333)),),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          controller: _productDescriptionController,
           maxLines: 5,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return '请输入商品描述';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintText: '详细描述您的虚拟商品特点和用途',
             filled: true,
@@ -147,7 +177,14 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         const SizedBox(height: 16),
         const Text('商品类别', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFF333333)),),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          controller: _categoryController,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return '请输入商品类别';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintText: '例如:游戏道具,虚拟货币,数字艺术品',
             hintStyle: const TextStyle(
@@ -165,7 +202,18 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         const SizedBox(height: 16),
         const Text('价格', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Color(0xFF333333)),),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          controller: _priceController,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return '请输入价格';
+            }
+            final price = double.tryParse(value.trim());
+            if (price == null || price <= 0) {
+              return '请输入有效的价格';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintStyle: const TextStyle(
               fontSize: 14,
@@ -184,7 +232,7 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         ),
         const SizedBox(height: 32),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: _handleCreateAndSend,
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.purple,
             minimumSize: const Size(double.infinity, 48),
@@ -196,13 +244,61 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         ),
         const SizedBox(height: 16),
         OutlinedButton(
-          onPressed: () {},
+          onPressed: _handleSaveDraft,
           style: OutlinedButton.styleFrom(
             minimumSize: const Size(double.infinity, 48),
           ),
           child: const Text('保存草稿'),
         ),
       ],
+        ),
+      );
+  }
+
+  /// 验证表单数据
+  bool _validateForm() {
+    final currentIndex = _tabController.index;
+    final formKey = currentIndex == 0 ? _guaranteeFormKey : _productFormKey;
+    return formKey.currentState?.validate() ?? false;
+  }
+
+  /// 获取表单数据
+  Map<String, dynamic> _getFormData() {
+    return {
+      'productName': _productNameController.text.trim(),
+      'productDescription': _productDescriptionController.text.trim(),
+      'category': _categoryController.text.trim(),
+      'price': double.tryParse(_priceController.text.trim()) ?? 0.0,
+    };
+  }
+
+  /// 处理保存草稿
+  void _handleSaveDraft() {
+    if (!_validateForm()) {
+      return;
+    }
+
+    final formData = _getFormData();
+    logic.saveDraft(
+      productName: formData['productName'],
+      productDescription: formData['productDescription'],
+      category: formData['category'],
+      price: formData['price'],
+    );
+  }
+
+  /// 处理创建并发送
+  void _handleCreateAndSend() {
+    if (!_validateForm()) {
+      return;
+    }
+
+    final formData = _getFormData();
+    logic.createAndSend(
+      productName: formData['productName'],
+      productDescription: formData['productDescription'],
+      category: formData['category'],
+      price: formData['price'],
     );
   }
 }

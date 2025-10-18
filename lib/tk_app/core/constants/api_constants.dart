@@ -2,8 +2,8 @@
 class ApiConstants {
   /// 基础 URL
   // static const String baseUrl = 'http://47.76.136.240:10000';
-  static const String baseUrl = 'https://gw.trunk.toklink.io';
-
+  // static const String baseUrl = 'https://gw.trunk.toklink.io';
+  static const String baseUrl = 'https://gateway.trunk.toklink.io';
 
   /// API 版本
   static const String apiVersion = 'v1';
@@ -69,12 +69,46 @@ class ApiConstants {
   // 获取交易员价格
   static const String traderPricing = '/strategy/app/trader/pricing/trader/{traderId}';
 
+
+// 订阅交易员
+  static const String subscribe = '/strategy/app/api/subscribe/{traderId}';
+
+
+
   /// 钱包相关 API
   // 获取钱包密码状态
   static const String walletPasswordStatus = '/balance/app/wallet-password/status';
   
   // 设置钱包密码
   static const String setWalletPassword = '/balance/app/wallet-password/set';
+  
+  // 修改钱包密码
+  static const String changeWalletPassword = '/balance/app/wallet-password/change';
+  
+  // 支付验证
+  static const String paymentVerify = '/balance/app/wallet-payment/verify';
+  
+  // 钱包资金查询
+  static const String walletFundCurrency = '/balance/app/wallet-fund/currency';
+
+  // 商家列表
+  static const String sellerList = '/product/app/product/seller/list';
+
+  // 频道分类树
+  static const String channelCategoryTree = '/product/app/product/channel-category/tree';
+
+  // 商品详情
+  static const String productDetail = '/product/app/product/detail';
+
+  // 商品列表
+  static const String productList = '/product/app/product/list';
+
+  /// 订单相关 API
+  // 订单列表
+  static const String orderList = '/order/app/purchase/list';
+  
+  // 订单详情
+  static const String orderDetail = '/order/app/purchase';
 
   // 默认分页大小
   static const int defaultPageSize = 10;

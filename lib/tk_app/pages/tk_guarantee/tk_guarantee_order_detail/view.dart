@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:toklink/routes/app_pages.dart';
 
 import 'logic.dart';
 import 'state.dart';
 
 class TkGuaranteeOrderDetailPage extends StatelessWidget {
-  TkGuaranteeOrderDetailPage({Key? key}) : super(key: key);
+  TkGuaranteeOrderDetailPage({super.key});
 
   final logic = Get.find<TkGuaranteeOrderDetailLogic>();
   final TkGuaranteeOrderDetailState state = Get.find<TkGuaranteeOrderDetailLogic>().state;
@@ -23,20 +24,30 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
             children: [
               _buildHeader(context),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(12.w),
-                    child: Column(
-                      children: [
-                        Obx(() => _buildOrderSummary()),
-                        SizedBox(height: 12.h),
-                        Obx(() => _buildStatusCard()),
-                        SizedBox(height: 12.h),
-                        Obx(() => _buildItemsCard()),
-                      ],
+                child: Obx(() {
+                  if (state.isLoading.value && state.orderDetail.value == null) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  
+                  return RefreshIndicator(
+                    onRefresh: () => logic.refreshOrderDetail(),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: EdgeInsets.all(12.w),
+                        child: Column(
+                          children: [
+                            Obx(() => _buildOrderSummary()),
+                            SizedBox(height: 12.h),
+                            Obx(() => _buildStatusCard()),
+                            SizedBox(height: 12.h),
+                            Obx(() => _buildItemsCard()),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ],
           );
@@ -165,30 +176,82 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12.h),
-          Container(
-            width: double.infinity,
-            height: 45.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: const Color(0xFF9E13F7), width: 1),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12.r),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFFFFF),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
-                  side: BorderSide.none,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  surfaceTintColor: Colors.transparent,
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
+          // 根据订单状态显示不同的按钮
+          Obx(() {
+            final orderDetail = state.orderDetail.value;
+            if (orderDetail != null && orderDetail.orderStatus == 1) {
+              // 待付款状态，显示支付按钮
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 45.h,
+                    child: ElevatedButton(
+                      onPressed: () => _navigateToPayment(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF9E13F7),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                        elevation: 0,
+                        padding: EdgeInsets.symmetric(vertical: 12.h),
+                      ),
+                      child: Text('立即支付', style: TextStyle(fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Container(
+                    width: double.infinity,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(color: const Color(0xFF9E13F7), width: 1),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFFFFFFF),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
+                          side: BorderSide.none,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          surfaceTintColor: Colors.transparent,
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                        ),
+                        child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              // 其他状态，只显示联系客服按钮
+              return Container(
+                width: double.infinity,
+                height: 45.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(color: const Color(0xFF9E13F7), width: 1),
                 ),
-                child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
-              ),
-            ),
-          ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFFFFFF),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
+                      side: BorderSide.none,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                    ),
+                    child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
+                  ),
+                ),
+              );
+            }
+          }),
         ]),
       ),
     );
@@ -313,5 +376,50 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
       decoration: BoxDecoration(color: const Color(0xFF3DF7CF).withOpacity(0.3), borderRadius: BorderRadius.circular(15.r)),
       child: Text(text, style: TextStyle(fontSize: 12.sp, color: const Color(0xFF0AC7BF))),
     );
+  }
+
+  /// 导航到支付页面
+  void _navigateToPayment() {
+    final orderDetail = state.orderDetail.value;
+    if (orderDetail == null) {
+      Get.snackbar('错误', '订单信息不完整');
+      return;
+    }
+
+    // 准备传递给支付页面的数据
+    final paymentData = {
+      'orderNo': orderDetail.orderNo,
+      'orderItems': orderDetail.orderItems.map((item) => {
+        'id': item.id,
+        'productId': item.productId,
+        'skuId': item.skuId,
+        'productName': item.productName,
+        'productPic': item.productPic,
+        'productSpecs': item.productSpecs,
+        'quantity': item.quantity,
+        'unitPrice': item.unitPrice,
+        'totalPrice': item.totalPrice,
+      }).toList(),
+      'payment': orderDetail.payment != null ? {
+        'id': orderDetail.payment!.id,
+        'paymentId': orderDetail.payment!.paymentId,
+        'amount': orderDetail.payment!.amount,
+        'payType': orderDetail.payment!.payType,
+        'paymentMethod': orderDetail.payment!.paymentMethod,
+        'status': orderDetail.payment!.status,
+        'statusText': orderDetail.payment!.statusText,
+        'transactionId': orderDetail.payment!.transactionId,
+        'paymentUrl': orderDetail.payment!.paymentUrl,
+        'qrCode': orderDetail.payment!.qrCode,
+        'payTime': orderDetail.payment!.payTime,
+        'expireTime': orderDetail.payment!.expireTime,
+        'createdAt': orderDetail.payment!.createdAt,
+        'updatedAt': orderDetail.payment!.updatedAt,
+        'thirdPartyOrderNo': orderDetail.payment!.thirdPartyOrderNo,
+      } : null,
+    };
+
+    // 跳转到支付页面
+    Get.toNamed(AppRoutes.tkOrderToPay, arguments: paymentData);
   }
 }

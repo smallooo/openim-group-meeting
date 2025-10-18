@@ -28,6 +28,7 @@ abstract class AppRoutes {
   static const groupQrcode = _Paths.groupQrcode;
   static const friendRequests = _Paths.friendRequests;
   static const tkLogin = _Paths.tkLogin;
+  static const tkPayHome = _Paths.tkPayHome;
   static const tkPayWallet = _Paths.tkPayWallet;
   static const tkPayBill = _Paths.tkPayBill;
   static const tkPaySet = _Paths.tkPaySet;
@@ -67,7 +68,10 @@ abstract class AppRoutes {
   static const tkGuaranteeOrder = _Paths.tkGuaranteeOrder;
   static const tkGuaranteeOrderDetail = _Paths.tkGuaranteeOrderDetail;
   static const tkGuaranteeCreateOrder = _Paths.tkGuaranteeCreateOrder;
+  static const tkOrderToPay = _Paths.tkOrderToPay;
   static const tkChannelHome = _Paths.tkChannelHome;
+  static const tkChannelContent = _Paths.tkChannelContent;
+  static const tkProductDetail = _Paths.tkProductDetail;
 }
 
 abstract class _Paths {
@@ -98,6 +102,7 @@ abstract class _Paths {
   static const groupQrcode = '/group_qrcode';
   static const friendRequests = '/friend_requests';
   static const tkLogin = '/tk_login';
+  static const tkPayHome = '/tk_pay_home';
   static const tkPayWallet = '/tk_pay_wallet';
   static const tkPayBill = '/tk_pay_bill';
   static const tkPaySet = '/tk_pay_set';
@@ -137,7 +142,10 @@ abstract class _Paths {
   static const tkGuaranteeOrder = '/tk_guarantee_order';
   static const tkGuaranteeOrderDetail = '/tk_guarantee_order_detail';
   static const tkGuaranteeCreateOrder = '/tk_guarantee_create_order';
+  static const tkOrderToPay = '/tk_order_to_pay';
   static const tkChannelHome = '/tk_channel_home';
+  static const tkChannelContent = '/tk_channel_content';
+  static const tkProductDetail = '/tk_product_detail';
 }
 
 extension RoutesExtension on String {

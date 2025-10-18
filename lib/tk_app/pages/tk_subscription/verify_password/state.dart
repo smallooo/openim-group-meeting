@@ -13,6 +13,11 @@ class VerifyPasswordState {
   // 验证状态
   final RxBool isVerifying = false.obs;
   final RxString errorMessage = ''.obs;
+  
+  // 支付信息
+  final RxString walletOrderNo = ''.obs;
+  final RxDouble paymentAmount = 0.0.obs;
+  final RxInt currencyId = 7.obs;
 
   VerifyPasswordState() {
     ///Initialize variables
@@ -56,5 +61,11 @@ class VerifyPasswordState {
   
   void clearError() {
     errorMessage.value = '';
+  }
+  
+  void setPaymentInfo(String orderNo, double amount, int currency) {
+    walletOrderNo.value = orderNo;
+    paymentAmount.value = amount;
+    currencyId.value = currency;
   }
 }

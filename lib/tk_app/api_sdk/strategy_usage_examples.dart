@@ -104,7 +104,7 @@ Future<void> main() async {
     baseUrl: 'https://gw.trunk.toklink.io/strategy',
     defaultHeaders: const {
       // 认证头（二选一或同时）
-      'Access-Token': '82739364-2a68-4efd-9980-f1cae98f41e8',
+      'Access-Token': '96b856c9-13ea-45f6-a6e2-b184735dc539',
       // 'Authorization': 'Bearer your_jwt_token',
     },
   );
@@ -135,7 +135,7 @@ Future<void> main() async {
   // await exampleCheckSubscription(subscriptionApi, traderId: 1973017414652776449);
   // await exampleCheckSubscriptionStatus(subscriptionApi, traderId: 2001);
   // await exampleCheckSubscriptionByType(subscriptionApi, traderId: 2001, strategyType: 'grid');
-  await exampleSubscribeTrader(subscriptionApi,traderId: 1973017414652776449);
+  await exampleSubscribeTraderWithHttpInfo(subscriptionApi,traderId: 1977659186978529282);
 
   //
   // // 交易员观点模块

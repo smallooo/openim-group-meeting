@@ -22,6 +22,7 @@ class TkPaySetPassWordPage extends StatelessWidget {
             color: Colors.black,
           ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -81,7 +82,7 @@ class TkPaySetPassWordPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: state.canSubmit.value ? logic.onSubmitPassword : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: state.canSubmit.value ? Colors.blue : Colors.grey[300],
+                  backgroundColor: state.canSubmit.value ? const Color(0xFF9E13F7) : Colors.grey[300],
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

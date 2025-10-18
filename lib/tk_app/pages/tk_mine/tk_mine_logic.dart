@@ -11,8 +11,7 @@ import 'package:toklink/tk_app/pages/tk_mine/tk_account_setup/tk_account_setup_v
 import '../../../core/controller/im_controller.dart';
 import '../../../routes/app_navigator.dart';
 import '../../../routes/app_pages.dart';
-import '../tk_pay/tk_pay_home/logic.dart';
-import '../tk_pay/tk_pay_home/view.dart';
+
 
 
 
@@ -68,8 +67,7 @@ class TkMineLogic extends GetxController {
   }
 
   void toPayPage() {
-    Get.put(TkPayHomeLogic());
-    Get.to(() =>  TkPayHomePage());
+    Get.toNamed(AppRoutes.tkPayHome);
   }
 
   @override

@@ -8,6 +8,22 @@ import 'state.dart';
 class PaymentSuccessPage extends StatelessWidget {
   const PaymentSuccessPage({Key? key}) : super(key: key);
 
+  /// 格式化余额显示
+  String _formatBalance(String balance) {
+    try {
+      final double balanceValue = double.parse(balance);
+      if (balanceValue >= 1000000) {
+        return '${(balanceValue / 1000000).toStringAsFixed(2)}M';
+      } else if (balanceValue >= 1000) {
+        return '${(balanceValue / 1000).toStringAsFixed(2)}K';
+      } else {
+        return balanceValue.toStringAsFixed(2);
+      }
+    } catch (e) {
+      return balance;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // 确保控制器被注册
@@ -16,24 +32,14 @@ class PaymentSuccessPage extends StatelessWidget {
     
     // 从路由参数获取支付信息
     final Map<String, dynamic> arguments = Get.arguments ?? {};
-    final String amount = arguments['amount'] ?? '50.00';
+    final String amount = arguments['amount'] ?? '0';
     final String currency = arguments['currency'] ?? 'USDT';
-    final String transactionId = arguments['transactionId'] ?? 'TXN20240726123456789';
-    final String transactionTime = arguments['transactionTime'] ?? '2024年07月26日14:30:15';
-    final List<Map<String, dynamic>> items = arguments['items'] ?? [
-      {
-        'name': '高级会员订阅',
-        'quantity': 1,
-        'price': '30.00',
-        'icon': Icons.workspace_premium,
-      },
-      {
-        'name': '代币套餐包',
-        'quantity': 1,
-        'price': '20.00',
-        'icon': Icons.toll,
-      },
-    ];
+    final String transactionId = arguments['transactionId'] ?? '';
+    final String transactionTime = arguments['transactionTime'] ?? '';
+    final String userBalance = arguments['userBalance'] ?? '0';
+    final String status = arguments['status'] ?? '';
+    final String partnerOrderNo = arguments['partnerOrderNo'] ?? '';
+    final String createTime = arguments['createTime'] ?? '';
     
     return Scaffold(
       backgroundColor: Colors.white,
@@ -58,7 +64,7 @@ class PaymentSuccessPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: _buildBody(context, logic, state, amount, currency, transactionId, transactionTime, items),
+      body: _buildBody(context, logic, state, amount, currency, transactionId, transactionTime, userBalance, status, partnerOrderNo, createTime),
     );
   }
   
@@ -70,7 +76,10 @@ class PaymentSuccessPage extends StatelessWidget {
     String currency,
     String transactionId,
     String transactionTime,
-    List<Map<String, dynamic>> items,
+    String userBalance,
+    String status,
+    String partnerOrderNo,
+    String createTime,
   ) {
     return SingleChildScrollView(
       padding: EdgeInsets.only(
@@ -106,7 +115,7 @@ class PaymentSuccessPage extends StatelessWidget {
             const SizedBox(height: 40),
             
             // 订单详情
-            _buildOrderDetails(context, items, amount, currency, transactionId, transactionTime),
+            _buildOrderDetails(context, amount, currency, transactionId, transactionTime, userBalance, status, partnerOrderNo, createTime),
             
             const SizedBox(height: 40),
             
@@ -162,11 +171,14 @@ class PaymentSuccessPage extends StatelessWidget {
   
   Widget _buildOrderDetails(
     BuildContext context,
-    List<Map<String, dynamic>> items,
     String amount,
     String currency,
     String transactionId,
     String transactionTime,
+    String userBalance,
+    String status,
+    String partnerOrderNo,
+    String createTime,
   ) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
@@ -179,7 +191,7 @@ class PaymentSuccessPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '订单详情',
+            '支付详情',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -188,22 +200,8 @@ class PaymentSuccessPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           
-          // 订单项列表
-          if (items.isNotEmpty) ...[
-            ...items.map((item) => _buildOrderItem(
-              item['name'] ?? '',
-              item['quantity'] ?? 1,
-              item['price'] ?? '0.00',
-              currency,
-              item['icon'],
-            )),
-            const SizedBox(height: 20),
-            const Divider(color: Color(0xFFE0E0E0)),
-            const SizedBox(height: 20),
-          ],
-          
-          // 总计
-          _buildDetailRow('总计', '$amount$currency', true),
+          // 支付状态
+          _buildDetailRow('支付状态', status, false),
           
           const SizedBox(height: 12),
           
@@ -212,13 +210,34 @@ class PaymentSuccessPage extends StatelessWidget {
           
           const SizedBox(height: 12),
           
-          // 交易时间
-          _buildDetailRow('交易时间', transactionTime, false),
+          // 合作伙伴订单号
+          if (partnerOrderNo.isNotEmpty) ...[
+            _buildDetailRow('合作伙伴订单号', partnerOrderNo, false),
+            const SizedBox(height: 12),
+          ],
+          
+          // 支付时间
+          if (transactionTime.isNotEmpty) ...[
+            _buildDetailRow('支付时间', transactionTime, false),
+            const SizedBox(height: 12),
+          ],
+          
+          // 创建时间
+          if (createTime.isNotEmpty) ...[
+            _buildDetailRow('创建时间', createTime, false),
+            const SizedBox(height: 12),
+          ],
+          
+          const Divider(color: Color(0xFFE0E0E0)),
+          const SizedBox(height: 12),
+          
+          // 支付金额
+          _buildDetailRow('支付金额', '$amount $currency', true),
           
           const SizedBox(height: 12),
           
-          // 交易金额
-          _buildDetailRow('交易金额', '$amount $currency', false),
+          // 用户余额
+          _buildDetailRow('当前余额', '${_formatBalance(userBalance)} $currency', false),
         ],
       ),
     );

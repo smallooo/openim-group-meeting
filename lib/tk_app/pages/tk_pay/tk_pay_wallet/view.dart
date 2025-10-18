@@ -45,20 +45,28 @@ class TkPayWalletPage extends StatelessWidget {
             children: [
               // Placeholder for list items
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await logic.refreshWalletFunds();
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
                     children: [
                       SizedBox(height: 10.h),
                       Container(
                         color: Colors.white,
                         child: Column(
                           children: [
-                            _buildListItem(
+                            Obx(() => _buildListItem(
                               icon: Icons.money, // 替换为实际图标
                               iconColor: Colors.orange, // 替换为实际颜色
                               title: '零钱',
-                              amount: '¥0.0',
-                            ),
+                              amount: state.isLoading.value 
+                                  ? '加载中...' 
+                                  : state.errorMessage.value.isNotEmpty 
+                                      ? '查询失败' 
+                                      : '¥${state.availableAmount.value.toStringAsFixed(2)}',
+                            )),
                             _buildDivider(),
                             _buildListItem(
                               icon: Icons.account_balance_wallet, // 替换为实际图标
@@ -101,6 +109,7 @@ class TkPayWalletPage extends StatelessWidget {
                       SizedBox(height: 20.h), // 底部留白
                     ],
                   ),
+                ),
                 ),
               ),
               _buildBottomLinks(),
