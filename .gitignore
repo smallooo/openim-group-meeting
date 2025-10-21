@@ -31,6 +31,14 @@ android/captures/
 android/**/GeneratedPluginRegistrant.java
 android/key.properties
 android/local.properties
+android/app/*.apk
+android/app/*.aab
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/app/proguard/
+*.iml
+.gradle/
 .env
 .env.*
 *.jks
@@ -44,11 +52,17 @@ ios/.symlinks/
 ios/Flutter/flutter_export_environment.sh
 ios/Flutter/Generated.xcconfig
 ios/Flutter/ephemeral/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
 ios/Pods/
 ios/Runner.xcworkspace/
 ios/Runner.xcodeproj/project.xcworkspace/
 ios/Runner.xcodeproj/xcuserdata/
 ios/Runner.xcworkspace/xcuserdata/
+*.ipa
+*.dSYM.zip
+*.dSYM
 
 # macOS 相关
 macos/Flutter/ephemeral/
