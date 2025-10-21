@@ -46,6 +46,11 @@ android/app/proguard/
 *.p12
 *.mobileprovision
 
+# 保留 media_kit 本地 jar 包
+!android/app/libs/
+!android/app/libs/media_kit/
+!android/app/libs/media_kit/*.jar
+
 
 # iOS 相关
 ios/.symlinks/
