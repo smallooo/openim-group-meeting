@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/api_constants.dart';
@@ -142,4 +143,6 @@ class TkGuaranteeOrderDetailLogic extends GetxController {
       await loadOrderDetail(_orderId!);
     }
   }
+
+  // String? userID = OpenIMHelper.getCurrentUserID();
 }
