@@ -29,7 +29,6 @@ lib/tk_app/**/*.md
 android/.gradle/
 android/captures/
 android/**/GeneratedPluginRegistrant.java
-android/key.properties
 android/local.properties
 android/app/*.apk
 android/app/*.aab
@@ -45,6 +44,10 @@ android/app/proguard/
 *.keystore
 *.p12
 *.mobileprovision
+
+# 开发环境密钥配置（允许提交）
+!android/key.properties
+!android/app/toklink.jks
 
 # 保留 media_kit 本地 jar 包
 !android/app/libs/
@@ -68,6 +71,11 @@ ios/Runner.xcworkspace/xcuserdata/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# iOS 开发环境证书（允许提交到 Git，用于团队开发）
+!ios/certificates/*.p12
+!ios/certificates/*.mobileprovision
+!ios/certificates/README.md
 
 # macOS 相关
 macos/Flutter/ephemeral/

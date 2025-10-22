@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>development</string>
+    <key>teamID</key>
+    <string>3CUCH9D3BV</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>io.toklink.trunk</key>
+        <string>3311108f-0490-452c-acf0-233913bdecde</string>
+        <key>io.toklink.trunk.NotificationService</key>
+        <string>6e485537-fb72-4f25-9a58-958c725d8457</string>
+    </dict>
+    <key>signingStyle</key>
+    <string>manual</string>
+</dict>
+</plist>
+

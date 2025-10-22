@@ -204,3 +204,10 @@
 #getui
 -dontwarn com.igexin.**
 -keep class com.igexin.** { *; }
+
+# AndroidX DataStore
+-keepclassmembers class * extends androidx.datastore.core.DataStore {
+    *;
+}
+-keep class androidx.datastore.** { *; }
+-dontwarn androidx.datastore.**

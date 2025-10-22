@@ -1,13 +1,21 @@
-.PHONY: help build-apk build-ios clean setup-jars check-jars copy-jars clean-gradle
+.PHONY: help build-apk build-ios clean setup-jars check-jars copy-jars clean-gradle setup-ios-certs build-ipa update-profiles
 
 # 默认目标
 help:
 	@echo "可用命令:"
+	@echo ""
+	@echo "Android:"
 	@echo "  make setup-jars    - 下载并设置 media_kit jar 包到本地"
 	@echo "  make check-jars    - 检查本地 jar 包是否存在"
 	@echo "  make copy-jars     - 复制本地 jar 包到构建目标目录"
 	@echo "  make build-apk     - 构建 Android APK (使用本地 jar)"
-	@echo "  make build-ios     - 构建 iOS IPA"
+	@echo ""
+	@echo "iOS:"
+	@echo "  make setup-ios-certs - 配置 iOS 签名证书"
+	@echo "  make update-profiles - 更新 Provisioning Profile UUID"
+	@echo "  make build-ipa       - 构建 iOS IPA (自动配置证书)"
+	@echo ""
+	@echo "通用:"
 	@echo "  make clean         - 清理构建文件"
 	@echo "  make clean-gradle  - 清理 Gradle 缓存（解决 Kotlin 版本问题）"
 	@echo "  make flutter-clean - Flutter clean + 清理 jar 缓存"
@@ -61,10 +69,47 @@ build-apk: clean copy-jars
 	@echo "构建 Android APK (使用本地 jar 包)..."
 	@flutter build apk --release
 
-# 构建 iOS IPA
-build-ios:
+# 更新 Provisioning Profile UUID
+update-profiles:
+	@echo "更新 Provisioning Profile UUID..."
+	@if [ -f "scripts/update_profiles.sh" ]; then \
+		bash scripts/update_profiles.sh; \
+	else \
+		echo "❌ 未找到 scripts/update_profiles.sh"; \
+		exit 1; \
+	fi
+
+# 设置 iOS 证书
+setup-ios-certs:
+	@echo "配置 iOS 签名证书..."
+	@if [ -f "scripts/setup_ios_certificates.sh" ]; then \
+		bash scripts/setup_ios_certificates.sh; \
+	else \
+		echo "⚠️  未找到证书配置脚本"; \
+		echo "请确保 ios/certificates/development.p12 和 development.mobileprovision 存在"; \
+	fi
+
+# 构建 iOS IPA（开发版本，用于测试分发）
+build-ipa: setup-ios-certs fix-ios-target
 	@echo "构建 iOS IPA..."
-	@flutter build ipa --release
+	@flutter build ios --release --no-codesign
+	@xcodebuild -workspace ios/Runner.xcworkspace \
+		-scheme Runner \
+		-configuration Release \
+		-archivePath build/ios/archive/Runner.xcarchive \
+		-destination generic/platform=iOS \
+		CODE_SIGN_STYLE=Manual \
+		DEVELOPMENT_TEAM=3CUCH9D3BV \
+		archive
+	@mkdir -p build/ios
+	@cp ios/exportOptions.plist.template build/ios/exportOptions.plist
+	@xcodebuild -exportArchive \
+		-archivePath build/ios/archive/Runner.xcarchive \
+		-exportPath build/ios/ipa \
+		-exportOptionsPlist build/ios/exportOptions.plist
+	@echo "✅ IPA 构建完成"
+
+
 
 # 清理构建文件（保留本地 jar 包）
 clean:
@@ -95,3 +140,16 @@ verify-jars: check-jars
 	echo "armeabi-v7a: $$(md5 -q default-armeabi-v7a.jar) (期望: 08d500ca1116c13e9c1296cc6f2207b0)" && \
 	echo "x86_64: $$(md5 -q default-x86_64.jar) (期望: 0880d5fbc3ff0053409704617f54cb55)" && \
 	echo "x86: $$(md5 -q default-x86.jar) (期望: f6f51aa42b30d747099506cdc3277352)"
+
+fix-ios-target:
+	@echo "修正 iOS Pod 目标版本..."
+	@cd ios && \
+	if ! grep -q "platform :ios" Podfile; then \
+		echo "platform :ios, '12.0'" >> Podfile; \
+	fi && \
+	echo "应用 post_install 补丁..." && \
+	if ! grep -q "post_install do" Podfile; then \
+		echo "\npost_install do |installer|\n  installer.pods_project.targets.each do |target|\n    target.build_configurations.each do |config|\n      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'\n    end\n  end\nend" >> Podfile; \
+	fi && \
+	pod install --repo-update
+
