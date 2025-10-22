@@ -3,6 +3,7 @@ const Map<String, String> en_US = {
   "userID": "user id",
   "phoneNumber": "Phone Number",
   "plsEnterPhoneNumber": "Please enter your phone number",
+  "pleaseSelectCallUser": "Please select at least one user to call",
   "plsEnterEmail": "Please enter your email",
   "password": "Password",
   "plsEnterPassword": "Please enter your password",

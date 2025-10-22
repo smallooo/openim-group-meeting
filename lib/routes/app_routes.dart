@@ -46,6 +46,7 @@ abstract class AppRoutes {
   static const groupList = _Paths.groupList;
   static const selectContacts = _Paths.selectContacts;
   static const selectContactsFromFriends = _Paths.selectContactsFromFriends;
+  static const selectContactsFromGroupMember = _Paths.selectContactsFromGroupMember;
   static const selectContactsFromGroup = _Paths.selectContactsFromGroup;
   static const selectContactsFromSearch = _Paths.selectContactsFromSearch;
   static const createGroup = _Paths.createGroup;
@@ -121,6 +122,7 @@ abstract class _Paths {
   static const groupList = '/group_list';
   static const selectContacts = '/select_contacts';
   static const selectContactsFromFriends = '/select_contacts_from_friends';
+  static const selectContactsFromGroupMember = '/select_contacts_from_group_member';
   static const selectContactsFromGroup = '/select_contacts_from_group';
   static const selectContactsFromSearch = '/select_contacts_from_search';
   static const createGroup = '/create_group';

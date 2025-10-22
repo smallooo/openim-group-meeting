@@ -990,6 +990,132 @@ class ChatLogic extends SuperController {
     });
   }
 
+  Future<List<String>> selectContactsFromGroupMember() async {
+    final result = await AppNavigator.startSelectContactsFromGroupMember(groupInfo!.groupID);
+
+    // result 可能是 List<GroupMembersInfo> 或 List<dynamic>
+    final members = (result as List?)?.cast<GroupMembersInfo>() ?? [];
+
+    final userIdList = members
+        .map((m) => m.userID)
+        .where((id) => id != null && id.isNotEmpty && id != OpenIM.iMManager.userID)
+        .map((id) => id!)
+        .toList();
+
+    return userIdList;
+  }
+
+  Future<void> groupCall() async {
+    if (rtcIsBusy) {
+      IMViews.showToast(StrRes.callingBusy);
+      return;
+    }
+
+    // get roomID
+    String roomID = groupInfo!.groupID;
+
+    // get inviterUserID
+    String inviterUserID = OpenIM.iMManager.userID;
+
+    //get groupID
+    String groupID = groupInfo!.groupID;
+
+
+
+    // _getGroupMembers().then((members) {
+    //   groupMembersList = members;
+    //   atUserMap.clear();
+    //   final userIdList = groupMembersList
+    //     .map((m) => m.userID)
+    //     .where((id) => id != null && id.isNotEmpty && id != OpenIM.iMManager.userID )
+    //     .toList();
+    // });
+
+    IMViews.openIMCallSheet(nickname.value, (index) async {
+      // final selectedMembers = groupMembersList
+      //   .where((element) => element.userID != OpenIM.iMManager.userID)
+      //   .map((element) => element.userID!)
+      //   .toList();
+
+
+      final selectedMembers = await selectContactsFromGroupMember();
+
+      if (selectedMembers.isEmpty) {
+        IMViews.showToast(StrRes.pleaseSelectCallUser);
+        return;
+      }
+
+      //创建SignalingInfo
+      final signal = SignalingInfo(
+        userID: inviterUserID,
+        invitation: InvitationInfo(
+          inviterUserID: inviterUserID,
+          inviteeUserIDList: selectedMembers,
+          roomID:  groupID,
+          timeout: 30,
+          mediaType: index == 0 ? 'audio' : 'video',
+          sessionType: 3,
+          platformID: IMUtils.getPlatform(),
+          groupID: groupID,
+        ),
+      );
+
+
+      // sendGroupNotification(
+      //   groupID,
+      //   "群通知",
+      // );
+      // 获取 SignalingCertificate? credentials,
+      SignalingCertificate credentials = await imLogic.onDialGroupPartial(signal, selectedMembers);
+
+      imLogic.call(
+        callObj: CallObj.group,
+        roomID: roomID,
+        inviterUserID: inviterUserID,
+        groupID: groupID,
+        callType: index == 0 ? CallType.audio : CallType.video,
+        inviteeUserIDList: selectedMembers,
+        credentials: credentials,
+        signal: signal,
+      );
+    });
+  }
+
+
+  // Future<void> sendGroupNotification(String groupID, String text) async {
+  //   final message = await OpenIM.iMManager.messageManager.createCustomMessage(
+  //     data: jsonEncode({
+  //       'customType': 'groupNotification',
+  //       'data': {'text': text},
+  //     }),
+  //     extension: '',
+  //     description: '群通知',
+  //   );
+  //   await OpenIM.iMManager.messageManager.sendMessage(
+  //     message: message,
+  //     offlinePushInfo: OfflinePushInfo(),
+  //     groupID: groupID,
+  //     isOnlineOnly: true,
+  //   );
+  // }
+
+
+  Future<List<GroupMembersInfo>> _getGroupMembers() {
+    final result = OpenIM.iMManager.groupManager.getGroupMemberList(
+      groupID: groupInfo!.groupID,
+      count: 1000,
+      offset: 0,
+      filter:  0,
+    );
+
+    return result;
+  }
+
+
+
+
+
+
   void onScrollToTop() {
     if (scrollingCacheMessageList.isNotEmpty) {
       messageList.addAll(scrollingCacheMessageList);

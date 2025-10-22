@@ -42,6 +42,12 @@ class ImageRes {
   static const toolboxAlbum = "$_dir/ic_toolbox_album.webp";
   static const toolboxCall = "$_dir/ic_toolbox_call.webp";
   static const toolboxCamera = "$_dir/ic_toolbox_camera.webp";
+  static const toolboxPhoto = "$_dir/ic_toolbox_photo.webp";
+  static const toolboxLocation2 = "$_dir/ic_toolbox_location2.webp";
+  static const toolboxRedPacket = "$_dir/ic_toolbox_red_packet.webp";
+  static const toolboxTransfer = "$_dir/ic_toolbox_transfer.webp";
+  static const toolboxVoiceInput = "$_dir/ic_toolbox_voice_input.webp";
+  static const toolboxGuaranteeOrder = "$_dir/ic_toolbox_guarantee_order.webp";
   static const toolboxCard = "$_dir/ic_toolbox_card.webp";
   static const toolboxFile = "$_dir/ic_toolbox_file.webp";
   static const toolboxLocation = "$_dir/ic_toolbox_location.webp";

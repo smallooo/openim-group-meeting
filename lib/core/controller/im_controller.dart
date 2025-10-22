@@ -90,6 +90,11 @@ class IMController extends GetxController with IMCallback, OpenIMLive {
 
               switch (customType) {
                 case CustomMessageType.callingInvite:
+                  if (signaling.invitation?.groupID != null &&
+                      signaling.invitation!.groupID!.isNotEmpty &&
+                      signaling.invitation!.inviterUserID == OpenIM.iMManager.userID) {
+                    break;
+                  }
                   receiveNewInvitation(signaling);
                   break;
                 case CustomMessageType.callingAccept:

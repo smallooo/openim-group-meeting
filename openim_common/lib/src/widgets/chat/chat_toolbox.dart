@@ -7,32 +7,69 @@ class ChatToolBox extends StatelessWidget {
     super.key,
     this.onTapAlbum,
     this.onTapCall,
+    this.onTapCamera,
+    this.onTapLocation,
+    this.onTapVoiceInput,
+    this.onTapRedPacket,
     this.onTapCreateOrder,
   });
   final Function()? onTapAlbum;
   final Function()? onTapCall;
+  final Function()? onTapCamera;
+  final Function()? onTapLocation;
+  final Function()? onTapVoiceInput;
+  final Function()? onTapRedPacket;
   final Function()? onTapCreateOrder;
 
   @override
   Widget build(BuildContext context) {
     final items = [
+      // ToolboxItemInfo(
+      //   text: StrRes.toolboxAlbum,
+      //   icon: ImageRes.toolboxAlbum,
+      //   onTap: () => Permissions.photos(onTapAlbum),
+      // ),
+
       ToolboxItemInfo(
-        text: StrRes.toolboxAlbum,
-        icon: ImageRes.toolboxAlbum,
+        text: '照片',
+        icon: ImageRes.toolboxPhoto,
         onTap: () => Permissions.photos(onTapAlbum),
+      ),
+    
+      ToolboxItemInfo(
+        text: '拍摄',
+        icon: ImageRes.toolboxCamera,
+        onTap: () => Permissions.camera(onTapCamera),
       ),
       if (onTapCall != null)
         ToolboxItemInfo(
           text: StrRes.toolboxCall,
           icon: ImageRes.toolboxCall,
-          onTap: () => Permissions.cameraAndMicrophone(onTapCall),
+         
         ),
-      if (onTapCreateOrder != null)
-        ToolboxItemInfo(
-          text: '创建订单',
-          icon: ImageRes.toolboxCard,
-          onTap: onTapCreateOrder,
-        ),
+      ToolboxItemInfo(
+        text: '位置',
+        icon: ImageRes.toolboxLocation2,
+
+      ),
+      ToolboxItemInfo(
+        text: '红包',
+        icon: ImageRes.toolboxRedPacket,
+        // onTap: () => Permissions.redPacket(onTapRedPacket),
+        onTap: () => onTapRedPacket?.call(),
+      ),
+      ToolboxItemInfo(
+        text: '转账',
+        icon: ImageRes.toolboxTransfer,
+      ),
+      ToolboxItemInfo(
+        text: '语音输入',
+        icon: ImageRes.toolboxVoiceInput,
+      ),
+      ToolboxItemInfo(
+        text: '担保订单',
+        icon: ImageRes.toolboxGuaranteeOrder,
+      ),
     ];
 
     return Container(
