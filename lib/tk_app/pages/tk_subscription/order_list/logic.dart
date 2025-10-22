@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../order_detail/view.dart';
+import '../../../../routes/app_pages.dart';
 import 'state.dart';
 
 class OrderListLogic extends GetxController {
@@ -40,10 +40,8 @@ class OrderListLogic extends GetxController {
   
   // 查看订单详情
   void viewOrderDetails(OrderItem order) {
-    // TODO: 跳转到订单详情页面
-    // Get.snackbar('提示', '查看订单详情功能正在开发中');
-    Get.to(() => const OrderDetailPage());
-
+    // 跳转到售后详情页面并传递订单数据
+    Get.toNamed(AppRoutes.orderAfterDetail, arguments: order);
   }
   
   // 更多操作

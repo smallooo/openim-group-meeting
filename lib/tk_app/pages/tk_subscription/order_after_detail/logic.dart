@@ -45,8 +45,18 @@ class OrderAfterDetailLogic extends GetxController {
   
   // 申请退款 - 跳转到退款申请页面
   void submitAfterSales() {
-    // 跳转到退款申请页面
-    Get.toNamed('/order_request_refund');
+    // 获取订单ID
+    final orderId = state.orderItem.value?.orderId;
+    if (orderId == null) {
+      Get.snackbar('错误', '订单信息不完整');
+      return;
+    }
+    
+    // 跳转到退款申请页面，传递订单ID和总金额
+    Get.toNamed('/order_request_refund', arguments: {
+      'orderId': orderId,
+      'totalAmount': state.orderItem.value?.totalAmount ?? 0.0,
+    });
   }
   
   // 返回上一页

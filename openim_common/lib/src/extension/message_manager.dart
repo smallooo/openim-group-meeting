@@ -112,6 +112,10 @@ class CustomMessageType {
   static const deletedByFriend = 911;
   static const removedFromGroup = 912;
   static const groupDisbanded = 913;
+  
+  // 商品相关消息类型
+  static const productShare = 920;  // 商品分享
+  static const productInquiry = 921; // 商品咨询
 }
 
 extension PublicUserInfoExt on PublicUserInfo {

@@ -1,10 +1,14 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/api_constants.dart';
 import '../../../core/utils/access_token_helper.dart';
+import '../../tk_subscription/order_list/state.dart' as order_list_state;
 import 'model/order_detail_models.dart';
 import 'state.dart';
 
@@ -144,5 +148,56 @@ class TkGuaranteeOrderDetailLogic extends GetxController {
     }
   }
 
-  // String? userID = OpenIMHelper.getCurrentUserID();
+  /// 跳转到售后详情页面
+  void navigateToAfterSalesDetail() {
+    final orderDetail = state.orderDetail.value;
+    if (orderDetail != null) {
+      // 将担保订单数据转换为售后详情页面需要的格式
+      final orderItem = _convertToOrderItem(orderDetail);
+      Get.toNamed('/order_after_detail', arguments: orderItem);
+    } else {
+      Get.snackbar('错误', '订单数据不完整');
+    }
+  }
+
+  /// 将担保订单数据转换为售后详情页面需要的格式
+  order_list_state.OrderItem _convertToOrderItem(OrderDetailData orderDetail) {
+    // 创建商品列表
+    final List<order_list_state.OrderProduct> products = orderDetail.orderItems.map((item) {
+      return order_list_state.OrderProduct(
+        name: item.productName,
+        quantity: item.quantity,
+        price: item.unitPrice,
+        icon: Icons.workspace_premium,
+        iconColor: const Color(0xFF2B6CB0),
+      );
+    }).toList();
+    
+    // 确定订单状态
+    order_list_state.OrderStatus status;
+    switch (orderDetail.orderStatus) {
+      case 1:
+        status = order_list_state.OrderStatus.pending;
+        break;
+      case 2:
+        status = order_list_state.OrderStatus.paid;
+        break;
+      case 3:
+        status = order_list_state.OrderStatus.refunded;
+        break;
+      default:
+        status = order_list_state.OrderStatus.cancelled;
+    }
+    
+    // 创建订单项
+    return order_list_state.OrderItem(
+      orderId: orderDetail.orderId,
+      transactionId: orderDetail.orderNo,
+      status: status,
+      items: products,
+      totalAmount: orderDetail.totalAmount,
+      createTime: DateTime.parse(orderDetail.createdAt),
+    );
+  }
+
 }

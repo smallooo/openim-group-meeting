@@ -1183,3 +1183,1046 @@ abstract class _ProductModel implements ProductModel {
   _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RefundApplyRequest _$RefundApplyRequestFromJson(Map<String, dynamic> json) {
+  return _RefundApplyRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RefundApplyRequest {
+  int get orderId => throw _privateConstructorUsedError;
+  String get refundType => throw _privateConstructorUsedError;
+  String get refundAmount => throw _privateConstructorUsedError;
+  String get refundReason => throw _privateConstructorUsedError;
+
+  /// Serializes this RefundApplyRequest to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RefundApplyRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RefundApplyRequestCopyWith<RefundApplyRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefundApplyRequestCopyWith<$Res> {
+  factory $RefundApplyRequestCopyWith(
+          RefundApplyRequest value, $Res Function(RefundApplyRequest) then) =
+      _$RefundApplyRequestCopyWithImpl<$Res, RefundApplyRequest>;
+  @useResult
+  $Res call(
+      {int orderId,
+      String refundType,
+      String refundAmount,
+      String refundReason});
+}
+
+/// @nodoc
+class _$RefundApplyRequestCopyWithImpl<$Res, $Val extends RefundApplyRequest>
+    implements $RefundApplyRequestCopyWith<$Res> {
+  _$RefundApplyRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RefundApplyRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orderId = null,
+    Object? refundType = null,
+    Object? refundAmount = null,
+    Object? refundReason = null,
+  }) {
+    return _then(_value.copyWith(
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as int,
+      refundType: null == refundType
+          ? _value.refundType
+          : refundType // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundAmount: null == refundAmount
+          ? _value.refundAmount
+          : refundAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundReason: null == refundReason
+          ? _value.refundReason
+          : refundReason // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RefundApplyRequestImplCopyWith<$Res>
+    implements $RefundApplyRequestCopyWith<$Res> {
+  factory _$$RefundApplyRequestImplCopyWith(_$RefundApplyRequestImpl value,
+          $Res Function(_$RefundApplyRequestImpl) then) =
+      __$$RefundApplyRequestImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int orderId,
+      String refundType,
+      String refundAmount,
+      String refundReason});
+}
+
+/// @nodoc
+class __$$RefundApplyRequestImplCopyWithImpl<$Res>
+    extends _$RefundApplyRequestCopyWithImpl<$Res, _$RefundApplyRequestImpl>
+    implements _$$RefundApplyRequestImplCopyWith<$Res> {
+  __$$RefundApplyRequestImplCopyWithImpl(_$RefundApplyRequestImpl _value,
+      $Res Function(_$RefundApplyRequestImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RefundApplyRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orderId = null,
+    Object? refundType = null,
+    Object? refundAmount = null,
+    Object? refundReason = null,
+  }) {
+    return _then(_$RefundApplyRequestImpl(
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as int,
+      refundType: null == refundType
+          ? _value.refundType
+          : refundType // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundAmount: null == refundAmount
+          ? _value.refundAmount
+          : refundAmount // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundReason: null == refundReason
+          ? _value.refundReason
+          : refundReason // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RefundApplyRequestImpl implements _RefundApplyRequest {
+  const _$RefundApplyRequestImpl(
+      {required this.orderId,
+      required this.refundType,
+      required this.refundAmount,
+      required this.refundReason});
+
+  factory _$RefundApplyRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RefundApplyRequestImplFromJson(json);
+
+  @override
+  final int orderId;
+  @override
+  final String refundType;
+  @override
+  final String refundAmount;
+  @override
+  final String refundReason;
+
+  @override
+  String toString() {
+    return 'RefundApplyRequest(orderId: $orderId, refundType: $refundType, refundAmount: $refundAmount, refundReason: $refundReason)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefundApplyRequestImpl &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.refundType, refundType) ||
+                other.refundType == refundType) &&
+            (identical(other.refundAmount, refundAmount) ||
+                other.refundAmount == refundAmount) &&
+            (identical(other.refundReason, refundReason) ||
+                other.refundReason == refundReason));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, orderId, refundType, refundAmount, refundReason);
+
+  /// Create a copy of RefundApplyRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefundApplyRequestImplCopyWith<_$RefundApplyRequestImpl> get copyWith =>
+      __$$RefundApplyRequestImplCopyWithImpl<_$RefundApplyRequestImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RefundApplyRequestImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RefundApplyRequest implements RefundApplyRequest {
+  const factory _RefundApplyRequest(
+      {required final int orderId,
+      required final String refundType,
+      required final String refundAmount,
+      required final String refundReason}) = _$RefundApplyRequestImpl;
+
+  factory _RefundApplyRequest.fromJson(Map<String, dynamic> json) =
+      _$RefundApplyRequestImpl.fromJson;
+
+  @override
+  int get orderId;
+  @override
+  String get refundType;
+  @override
+  String get refundAmount;
+  @override
+  String get refundReason;
+
+  /// Create a copy of RefundApplyRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RefundApplyRequestImplCopyWith<_$RefundApplyRequestImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RefundApplyResponse _$RefundApplyResponseFromJson(Map<String, dynamic> json) {
+  return _RefundApplyResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RefundApplyResponse {
+  @JsonKey(name: 'code')
+  int get errCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'message')
+  String get errMsg => throw _privateConstructorUsedError;
+  bool get ok => throw _privateConstructorUsedError;
+  @JsonKey(name: 'data', fromJson: _dataFromJson)
+  RefundApplyData? get data => throw _privateConstructorUsedError;
+
+  /// Serializes this RefundApplyResponse to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RefundApplyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RefundApplyResponseCopyWith<RefundApplyResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefundApplyResponseCopyWith<$Res> {
+  factory $RefundApplyResponseCopyWith(
+          RefundApplyResponse value, $Res Function(RefundApplyResponse) then) =
+      _$RefundApplyResponseCopyWithImpl<$Res, RefundApplyResponse>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'code') int errCode,
+      @JsonKey(name: 'message') String errMsg,
+      bool ok,
+      @JsonKey(name: 'data', fromJson: _dataFromJson) RefundApplyData? data});
+
+  $RefundApplyDataCopyWith<$Res>? get data;
+}
+
+/// @nodoc
+class _$RefundApplyResponseCopyWithImpl<$Res, $Val extends RefundApplyResponse>
+    implements $RefundApplyResponseCopyWith<$Res> {
+  _$RefundApplyResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RefundApplyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errCode = null,
+    Object? errMsg = null,
+    Object? ok = null,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      errCode: null == errCode
+          ? _value.errCode
+          : errCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      errMsg: null == errMsg
+          ? _value.errMsg
+          : errMsg // ignore: cast_nullable_to_non_nullable
+              as String,
+      ok: null == ok
+          ? _value.ok
+          : ok // ignore: cast_nullable_to_non_nullable
+              as bool,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as RefundApplyData?,
+    ) as $Val);
+  }
+
+  /// Create a copy of RefundApplyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RefundApplyDataCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $RefundApplyDataCopyWith<$Res>(_value.data!, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$RefundApplyResponseImplCopyWith<$Res>
+    implements $RefundApplyResponseCopyWith<$Res> {
+  factory _$$RefundApplyResponseImplCopyWith(_$RefundApplyResponseImpl value,
+          $Res Function(_$RefundApplyResponseImpl) then) =
+      __$$RefundApplyResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'code') int errCode,
+      @JsonKey(name: 'message') String errMsg,
+      bool ok,
+      @JsonKey(name: 'data', fromJson: _dataFromJson) RefundApplyData? data});
+
+  @override
+  $RefundApplyDataCopyWith<$Res>? get data;
+}
+
+/// @nodoc
+class __$$RefundApplyResponseImplCopyWithImpl<$Res>
+    extends _$RefundApplyResponseCopyWithImpl<$Res, _$RefundApplyResponseImpl>
+    implements _$$RefundApplyResponseImplCopyWith<$Res> {
+  __$$RefundApplyResponseImplCopyWithImpl(_$RefundApplyResponseImpl _value,
+      $Res Function(_$RefundApplyResponseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RefundApplyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errCode = null,
+    Object? errMsg = null,
+    Object? ok = null,
+    Object? data = freezed,
+  }) {
+    return _then(_$RefundApplyResponseImpl(
+      errCode: null == errCode
+          ? _value.errCode
+          : errCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      errMsg: null == errMsg
+          ? _value.errMsg
+          : errMsg // ignore: cast_nullable_to_non_nullable
+              as String,
+      ok: null == ok
+          ? _value.ok
+          : ok // ignore: cast_nullable_to_non_nullable
+              as bool,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as RefundApplyData?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RefundApplyResponseImpl implements _RefundApplyResponse {
+  const _$RefundApplyResponseImpl(
+      {@JsonKey(name: 'code') this.errCode = 0,
+      @JsonKey(name: 'message') this.errMsg = '',
+      this.ok = true,
+      @JsonKey(name: 'data', fromJson: _dataFromJson) this.data});
+
+  factory _$RefundApplyResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RefundApplyResponseImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'code')
+  final int errCode;
+  @override
+  @JsonKey(name: 'message')
+  final String errMsg;
+  @override
+  @JsonKey()
+  final bool ok;
+  @override
+  @JsonKey(name: 'data', fromJson: _dataFromJson)
+  final RefundApplyData? data;
+
+  @override
+  String toString() {
+    return 'RefundApplyResponse(errCode: $errCode, errMsg: $errMsg, ok: $ok, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefundApplyResponseImpl &&
+            (identical(other.errCode, errCode) || other.errCode == errCode) &&
+            (identical(other.errMsg, errMsg) || other.errMsg == errMsg) &&
+            (identical(other.ok, ok) || other.ok == ok) &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, errCode, errMsg, ok, data);
+
+  /// Create a copy of RefundApplyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefundApplyResponseImplCopyWith<_$RefundApplyResponseImpl> get copyWith =>
+      __$$RefundApplyResponseImplCopyWithImpl<_$RefundApplyResponseImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RefundApplyResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RefundApplyResponse implements RefundApplyResponse {
+  const factory _RefundApplyResponse(
+      {@JsonKey(name: 'code') final int errCode,
+      @JsonKey(name: 'message') final String errMsg,
+      final bool ok,
+      @JsonKey(name: 'data', fromJson: _dataFromJson)
+      final RefundApplyData? data}) = _$RefundApplyResponseImpl;
+
+  factory _RefundApplyResponse.fromJson(Map<String, dynamic> json) =
+      _$RefundApplyResponseImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'code')
+  int get errCode;
+  @override
+  @JsonKey(name: 'message')
+  String get errMsg;
+  @override
+  bool get ok;
+  @override
+  @JsonKey(name: 'data', fromJson: _dataFromJson)
+  RefundApplyData? get data;
+
+  /// Create a copy of RefundApplyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RefundApplyResponseImplCopyWith<_$RefundApplyResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RefundApplyData _$RefundApplyDataFromJson(Map<String, dynamic> json) {
+  return _RefundApplyData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RefundApplyData {
+  String get id => throw _privateConstructorUsedError;
+  String get refundNo => throw _privateConstructorUsedError;
+  String get orderId => throw _privateConstructorUsedError;
+  String get orderNo => throw _privateConstructorUsedError;
+  String get refundType => throw _privateConstructorUsedError;
+  double get refundAmount => throw _privateConstructorUsedError;
+  String get refundReason => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String get evidenceImages => throw _privateConstructorUsedError;
+  String get evidenceVideos => throw _privateConstructorUsedError;
+  String get evidenceFiles => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String get statusText => throw _privateConstructorUsedError;
+  String get reviewTime => throw _privateConstructorUsedError;
+  String get reviewerName => throw _privateConstructorUsedError;
+  String get reviewRemark => throw _privateConstructorUsedError;
+  String get reviewComment => throw _privateConstructorUsedError;
+  String get completeTime => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this RefundApplyData to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RefundApplyData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RefundApplyDataCopyWith<RefundApplyData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefundApplyDataCopyWith<$Res> {
+  factory $RefundApplyDataCopyWith(
+          RefundApplyData value, $Res Function(RefundApplyData) then) =
+      _$RefundApplyDataCopyWithImpl<$Res, RefundApplyData>;
+  @useResult
+  $Res call(
+      {String id,
+      String refundNo,
+      String orderId,
+      String orderNo,
+      String refundType,
+      double refundAmount,
+      String refundReason,
+      String description,
+      String evidenceImages,
+      String evidenceVideos,
+      String evidenceFiles,
+      String status,
+      String statusText,
+      String reviewTime,
+      String reviewerName,
+      String reviewRemark,
+      String reviewComment,
+      String completeTime,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class _$RefundApplyDataCopyWithImpl<$Res, $Val extends RefundApplyData>
+    implements $RefundApplyDataCopyWith<$Res> {
+  _$RefundApplyDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RefundApplyData
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? refundNo = null,
+    Object? orderId = null,
+    Object? orderNo = null,
+    Object? refundType = null,
+    Object? refundAmount = null,
+    Object? refundReason = null,
+    Object? description = null,
+    Object? evidenceImages = null,
+    Object? evidenceVideos = null,
+    Object? evidenceFiles = null,
+    Object? status = null,
+    Object? statusText = null,
+    Object? reviewTime = null,
+    Object? reviewerName = null,
+    Object? reviewRemark = null,
+    Object? reviewComment = null,
+    Object? completeTime = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundNo: null == refundNo
+          ? _value.refundNo
+          : refundNo // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderNo: null == orderNo
+          ? _value.orderNo
+          : orderNo // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundType: null == refundType
+          ? _value.refundType
+          : refundType // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundAmount: null == refundAmount
+          ? _value.refundAmount
+          : refundAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      refundReason: null == refundReason
+          ? _value.refundReason
+          : refundReason // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      evidenceImages: null == evidenceImages
+          ? _value.evidenceImages
+          : evidenceImages // ignore: cast_nullable_to_non_nullable
+              as String,
+      evidenceVideos: null == evidenceVideos
+          ? _value.evidenceVideos
+          : evidenceVideos // ignore: cast_nullable_to_non_nullable
+              as String,
+      evidenceFiles: null == evidenceFiles
+          ? _value.evidenceFiles
+          : evidenceFiles // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusText: null == statusText
+          ? _value.statusText
+          : statusText // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewTime: null == reviewTime
+          ? _value.reviewTime
+          : reviewTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewerName: null == reviewerName
+          ? _value.reviewerName
+          : reviewerName // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewRemark: null == reviewRemark
+          ? _value.reviewRemark
+          : reviewRemark // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewComment: null == reviewComment
+          ? _value.reviewComment
+          : reviewComment // ignore: cast_nullable_to_non_nullable
+              as String,
+      completeTime: null == completeTime
+          ? _value.completeTime
+          : completeTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RefundApplyDataImplCopyWith<$Res>
+    implements $RefundApplyDataCopyWith<$Res> {
+  factory _$$RefundApplyDataImplCopyWith(_$RefundApplyDataImpl value,
+          $Res Function(_$RefundApplyDataImpl) then) =
+      __$$RefundApplyDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String refundNo,
+      String orderId,
+      String orderNo,
+      String refundType,
+      double refundAmount,
+      String refundReason,
+      String description,
+      String evidenceImages,
+      String evidenceVideos,
+      String evidenceFiles,
+      String status,
+      String statusText,
+      String reviewTime,
+      String reviewerName,
+      String reviewRemark,
+      String reviewComment,
+      String completeTime,
+      String createdAt,
+      String updatedAt});
+}
+
+/// @nodoc
+class __$$RefundApplyDataImplCopyWithImpl<$Res>
+    extends _$RefundApplyDataCopyWithImpl<$Res, _$RefundApplyDataImpl>
+    implements _$$RefundApplyDataImplCopyWith<$Res> {
+  __$$RefundApplyDataImplCopyWithImpl(
+      _$RefundApplyDataImpl _value, $Res Function(_$RefundApplyDataImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RefundApplyData
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? refundNo = null,
+    Object? orderId = null,
+    Object? orderNo = null,
+    Object? refundType = null,
+    Object? refundAmount = null,
+    Object? refundReason = null,
+    Object? description = null,
+    Object? evidenceImages = null,
+    Object? evidenceVideos = null,
+    Object? evidenceFiles = null,
+    Object? status = null,
+    Object? statusText = null,
+    Object? reviewTime = null,
+    Object? reviewerName = null,
+    Object? reviewRemark = null,
+    Object? reviewComment = null,
+    Object? completeTime = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_$RefundApplyDataImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundNo: null == refundNo
+          ? _value.refundNo
+          : refundNo // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderNo: null == orderNo
+          ? _value.orderNo
+          : orderNo // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundType: null == refundType
+          ? _value.refundType
+          : refundType // ignore: cast_nullable_to_non_nullable
+              as String,
+      refundAmount: null == refundAmount
+          ? _value.refundAmount
+          : refundAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      refundReason: null == refundReason
+          ? _value.refundReason
+          : refundReason // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      evidenceImages: null == evidenceImages
+          ? _value.evidenceImages
+          : evidenceImages // ignore: cast_nullable_to_non_nullable
+              as String,
+      evidenceVideos: null == evidenceVideos
+          ? _value.evidenceVideos
+          : evidenceVideos // ignore: cast_nullable_to_non_nullable
+              as String,
+      evidenceFiles: null == evidenceFiles
+          ? _value.evidenceFiles
+          : evidenceFiles // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusText: null == statusText
+          ? _value.statusText
+          : statusText // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewTime: null == reviewTime
+          ? _value.reviewTime
+          : reviewTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewerName: null == reviewerName
+          ? _value.reviewerName
+          : reviewerName // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewRemark: null == reviewRemark
+          ? _value.reviewRemark
+          : reviewRemark // ignore: cast_nullable_to_non_nullable
+              as String,
+      reviewComment: null == reviewComment
+          ? _value.reviewComment
+          : reviewComment // ignore: cast_nullable_to_non_nullable
+              as String,
+      completeTime: null == completeTime
+          ? _value.completeTime
+          : completeTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RefundApplyDataImpl implements _RefundApplyData {
+  const _$RefundApplyDataImpl(
+      {required this.id,
+      required this.refundNo,
+      required this.orderId,
+      required this.orderNo,
+      required this.refundType,
+      required this.refundAmount,
+      required this.refundReason,
+      this.description = '',
+      this.evidenceImages = '',
+      this.evidenceVideos = '',
+      this.evidenceFiles = '',
+      required this.status,
+      required this.statusText,
+      this.reviewTime = '',
+      this.reviewerName = '',
+      this.reviewRemark = '',
+      this.reviewComment = '',
+      this.completeTime = '',
+      required this.createdAt,
+      required this.updatedAt});
+
+  factory _$RefundApplyDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RefundApplyDataImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String refundNo;
+  @override
+  final String orderId;
+  @override
+  final String orderNo;
+  @override
+  final String refundType;
+  @override
+  final double refundAmount;
+  @override
+  final String refundReason;
+  @override
+  @JsonKey()
+  final String description;
+  @override
+  @JsonKey()
+  final String evidenceImages;
+  @override
+  @JsonKey()
+  final String evidenceVideos;
+  @override
+  @JsonKey()
+  final String evidenceFiles;
+  @override
+  final String status;
+  @override
+  final String statusText;
+  @override
+  @JsonKey()
+  final String reviewTime;
+  @override
+  @JsonKey()
+  final String reviewerName;
+  @override
+  @JsonKey()
+  final String reviewRemark;
+  @override
+  @JsonKey()
+  final String reviewComment;
+  @override
+  @JsonKey()
+  final String completeTime;
+  @override
+  final String createdAt;
+  @override
+  final String updatedAt;
+
+  @override
+  String toString() {
+    return 'RefundApplyData(id: $id, refundNo: $refundNo, orderId: $orderId, orderNo: $orderNo, refundType: $refundType, refundAmount: $refundAmount, refundReason: $refundReason, description: $description, evidenceImages: $evidenceImages, evidenceVideos: $evidenceVideos, evidenceFiles: $evidenceFiles, status: $status, statusText: $statusText, reviewTime: $reviewTime, reviewerName: $reviewerName, reviewRemark: $reviewRemark, reviewComment: $reviewComment, completeTime: $completeTime, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefundApplyDataImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.refundNo, refundNo) ||
+                other.refundNo == refundNo) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.orderNo, orderNo) || other.orderNo == orderNo) &&
+            (identical(other.refundType, refundType) ||
+                other.refundType == refundType) &&
+            (identical(other.refundAmount, refundAmount) ||
+                other.refundAmount == refundAmount) &&
+            (identical(other.refundReason, refundReason) ||
+                other.refundReason == refundReason) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.evidenceImages, evidenceImages) ||
+                other.evidenceImages == evidenceImages) &&
+            (identical(other.evidenceVideos, evidenceVideos) ||
+                other.evidenceVideos == evidenceVideos) &&
+            (identical(other.evidenceFiles, evidenceFiles) ||
+                other.evidenceFiles == evidenceFiles) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.statusText, statusText) ||
+                other.statusText == statusText) &&
+            (identical(other.reviewTime, reviewTime) ||
+                other.reviewTime == reviewTime) &&
+            (identical(other.reviewerName, reviewerName) ||
+                other.reviewerName == reviewerName) &&
+            (identical(other.reviewRemark, reviewRemark) ||
+                other.reviewRemark == reviewRemark) &&
+            (identical(other.reviewComment, reviewComment) ||
+                other.reviewComment == reviewComment) &&
+            (identical(other.completeTime, completeTime) ||
+                other.completeTime == completeTime) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        refundNo,
+        orderId,
+        orderNo,
+        refundType,
+        refundAmount,
+        refundReason,
+        description,
+        evidenceImages,
+        evidenceVideos,
+        evidenceFiles,
+        status,
+        statusText,
+        reviewTime,
+        reviewerName,
+        reviewRemark,
+        reviewComment,
+        completeTime,
+        createdAt,
+        updatedAt
+      ]);
+
+  /// Create a copy of RefundApplyData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefundApplyDataImplCopyWith<_$RefundApplyDataImpl> get copyWith =>
+      __$$RefundApplyDataImplCopyWithImpl<_$RefundApplyDataImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RefundApplyDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RefundApplyData implements RefundApplyData {
+  const factory _RefundApplyData(
+      {required final String id,
+      required final String refundNo,
+      required final String orderId,
+      required final String orderNo,
+      required final String refundType,
+      required final double refundAmount,
+      required final String refundReason,
+      final String description,
+      final String evidenceImages,
+      final String evidenceVideos,
+      final String evidenceFiles,
+      required final String status,
+      required final String statusText,
+      final String reviewTime,
+      final String reviewerName,
+      final String reviewRemark,
+      final String reviewComment,
+      final String completeTime,
+      required final String createdAt,
+      required final String updatedAt}) = _$RefundApplyDataImpl;
+
+  factory _RefundApplyData.fromJson(Map<String, dynamic> json) =
+      _$RefundApplyDataImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get refundNo;
+  @override
+  String get orderId;
+  @override
+  String get orderNo;
+  @override
+  String get refundType;
+  @override
+  double get refundAmount;
+  @override
+  String get refundReason;
+  @override
+  String get description;
+  @override
+  String get evidenceImages;
+  @override
+  String get evidenceVideos;
+  @override
+  String get evidenceFiles;
+  @override
+  String get status;
+  @override
+  String get statusText;
+  @override
+  String get reviewTime;
+  @override
+  String get reviewerName;
+  @override
+  String get reviewRemark;
+  @override
+  String get reviewComment;
+  @override
+  String get completeTime;
+  @override
+  String get createdAt;
+  @override
+  String get updatedAt;
+
+  /// Create a copy of RefundApplyData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RefundApplyDataImplCopyWith<_$RefundApplyDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

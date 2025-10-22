@@ -71,3 +71,72 @@ class ProductModel with _$ProductModel {
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);
 }
+
+/// 退款申请请求参数
+@freezed
+class RefundApplyRequest with _$RefundApplyRequest {
+  const factory RefundApplyRequest({
+    required int orderId,
+    required String refundType,
+    required String refundAmount,
+    required String refundReason,
+  }) = _RefundApplyRequest;
+
+  factory RefundApplyRequest.fromJson(Map<String, dynamic> json) =>
+      _$RefundApplyRequestFromJson(json);
+}
+
+/// 退款申请响应
+@freezed
+class RefundApplyResponse with _$RefundApplyResponse {
+  const factory RefundApplyResponse({
+    @JsonKey(name: 'code') @Default(0) int errCode,
+    @JsonKey(name: 'message') @Default('') String errMsg,
+    @Default(true) bool ok,
+    @JsonKey(name: 'data', fromJson: _dataFromJson) RefundApplyData? data,
+  }) = _RefundApplyResponse;
+
+  factory RefundApplyResponse.fromJson(Map<String, dynamic> json) =>
+      _$RefundApplyResponseFromJson(json);
+}
+
+/// 自定义 data 字段解析函数
+RefundApplyData? _dataFromJson(dynamic json) {
+  if (json == null || json == '' || json is String) {
+    return null;
+  }
+  if (json is Map<String, dynamic>) {
+    return RefundApplyData.fromJson(json);
+  }
+  return null;
+}
+
+/// 退款申请数据
+@freezed
+class RefundApplyData with _$RefundApplyData {
+  const factory RefundApplyData({
+    required String id,
+    required String refundNo,
+    required String orderId,
+    required String orderNo,
+    required String refundType,
+    required double refundAmount,
+    required String refundReason,
+    @Default('') String description,
+    @Default('') String evidenceImages,
+    @Default('') String evidenceVideos,
+    @Default('') String evidenceFiles,
+    required String status,
+    required String statusText,
+    @Default('') String reviewTime,
+    @Default('') String reviewerName,
+    @Default('') String reviewRemark,
+    @Default('') String reviewComment,
+    @Default('') String completeTime,
+    required String createdAt,
+    required String updatedAt,
+  }) = _RefundApplyData;
+
+  factory RefundApplyData.fromJson(Map<String, dynamic> json) =>
+      _$RefundApplyDataFromJson(json);
+}

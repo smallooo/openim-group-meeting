@@ -61,6 +61,7 @@ abstract class AppRoutes {
   static const tkMyInfo = _Paths.tkMyInfo;
   static const orderRequestRefund = _Paths.orderRequestRefund;
   static const orderAfterDetail = _Paths.orderAfterDetail;
+  static const orderDetail = _Paths.orderDetail;
   static const editMyInfo = _Paths.editMyInfo;
   static const searchGroupMember = _Paths.searchGroupMember;
   static const expandChatHistory = _Paths.expandChatHistory;
@@ -136,6 +137,7 @@ abstract class _Paths {
   static const tkMyInfo = '/tk_my_info';
   static const orderRequestRefund = '/order_request_refund';
   static const orderAfterDetail = '/order_after_detail';
+  static const orderDetail = '/order_detail';
   static const editMyInfo = '/edit_my_info';
   static const searchGroupMember = '/search_group_member';
   static const expandChatHistory = '/expand_chat_history';

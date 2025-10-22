@@ -769,6 +769,12 @@ class IMUtils {
             case CustomMessageType.groupDisbanded:
               content = StrRes.groupDisbanded;
               break;
+            case CustomMessageType.productShare:
+              content = '[商品]';
+              break;
+            case CustomMessageType.productInquiry:
+              content = '[商品咨询]';
+              break;
             default:
               content = '[${StrRes.unsupportedMessage}]';
               Logger.print('parseMsg - 不支持的自定义消息类型: customType=$customType');
@@ -789,17 +795,24 @@ class IMUtils {
 
   static dynamic parseCustomMessage(Message message) {
     try {
-      Logger.print('parseCustomMessage - 开始解析: contentType=${message.contentType}');
+      Logger.print('🔍 parseCustomMessage - 开始解析: contentType=${message.contentType}');
+      Logger.print('🔍 parseCustomMessage - 消息ID: ${message.clientMsgID}');
+      
       switch (message.contentType) {
         case MessageType.custom:
         case 110:
           {
             var data = message.customElem!.data;
-            Logger.print('parseCustomMessage - 原始数据: $data');
+            Logger.print('🔍 parseCustomMessage - 原始数据: $data');
             var map = json.decode(data!);
-            Logger.print('parseCustomMessage - 解析后: $map');
+            Logger.print('🔍 parseCustomMessage - 解析后: $map');
             var customType = map['customType'];
-            Logger.print('parseCustomMessage - customType: $customType');
+            Logger.print('🔍 parseCustomMessage - customType: $customType');
+            Logger.print('🔍 parseCustomMessage - customType类型: ${customType.runtimeType}');
+            Logger.print('🔍 parseCustomMessage - map[\'data\']: ${map['data']}');
+            Logger.print('🔍 parseCustomMessage - CustomMessageType.productShare: ${CustomMessageType.productShare}');
+            Logger.print('🔍 parseCustomMessage - 类型匹配: ${customType == CustomMessageType.productShare}');
+            
             switch (customType) {
               case CustomMessageType.call:
                 {
@@ -856,11 +869,36 @@ class IMUtils {
               case CustomMessageType.meeting:
                 map['data']['viewType'] = CustomMessageType.meeting;
                 return map['data'];
+              case CustomMessageType.productShare:
+                Logger.print('🔍 parseCustomMessage - 进入productShare分支');
+                if (map['data'] != null) {
+                  Logger.print('🔍 parseCustomMessage - productShare data不为空');
+                  map['data']['viewType'] = CustomMessageType.productShare;
+                  Logger.print('🔍 parseCustomMessage - 设置viewType后: ${map['data']}');
+                  return map['data'];
+                } else {
+                  Logger.print('🔍 parseCustomMessage - productShare data为空');
+                  return {'viewType': CustomMessageType.productShare};
+                }
+              case CustomMessageType.productInquiry:
+                Logger.print('🔍 parseCustomMessage - 进入productInquiry分支');
+                if (map['data'] != null) {
+                  Logger.print('🔍 parseCustomMessage - productInquiry data不为空');
+                  map['data']['viewType'] = CustomMessageType.productInquiry;
+                  Logger.print('🔍 parseCustomMessage - 设置viewType后: ${map['data']}');
+                  return map['data'];
+                } else {
+                  Logger.print('🔍 parseCustomMessage - productInquiry data为空');
+                  return {'viewType': CustomMessageType.productInquiry};
+                }
               case CustomMessageType.deletedByFriend:
               case CustomMessageType.blockedByFriend:
               case CustomMessageType.removedFromGroup:
               case CustomMessageType.groupDisbanded:
                 return {'viewType': customType};
+              default:
+                Logger.print('parseCustomMessage - 未识别的消息类型: $customType');
+                return {'viewType': customType, 'data': map['data']};
             }
           }
       }

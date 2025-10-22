@@ -46,4 +46,40 @@ class ProductRepository {
       rethrow;
     }
   }
+
+  /// 申请退款
+  /// 
+  /// 调用 /order/app/refund/apply 接口
+  /// 提交退款申请
+  /// 
+  /// 参数说明：
+  /// - request: 退款申请请求参数，包含订单ID、退款类型、退款金额、退款原因
+  /// 
+  /// 返回值说明：
+  /// - errCode: 0表示成功，其他值表示错误
+  /// - errMsg: 错误信息，成功时为"success"
+  /// - data: 退款申请数据，包含退款单号、状态等信息
+  Future<RefundApplyResponse> applyRefund(RefundApplyRequest request) async {
+    print('ProductRepository: 开始调用API申请退款...'); // 调试信息
+    
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.post<Map<String, dynamic>>(
+        ApiConstants.refundApply,
+        data: request.toJson(),
+      );
+      
+      print('ProductRepository: 原始API响应: $rawResponse'); // 调试信息
+      
+      // 手动解析响应
+      final response = RefundApplyResponse.fromJson(rawResponse);
+      
+      print('ProductRepository: 解析后的响应 - errCode: ${response.errCode}, errMsg: ${response.errMsg}'); // 调试信息
+      
+      return response;
+    } catch (e) {
+      print('ProductRepository: 申请退款失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
 }

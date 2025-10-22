@@ -103,3 +103,89 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'reviewCount': instance.reviewCount,
       'createdAt': instance.createdAt,
     };
+
+_$RefundApplyRequestImpl _$$RefundApplyRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RefundApplyRequestImpl(
+      orderId: (json['orderId'] as num).toInt(),
+      refundType: json['refundType'] as String,
+      refundAmount: json['refundAmount'] as String,
+      refundReason: json['refundReason'] as String,
+    );
+
+Map<String, dynamic> _$$RefundApplyRequestImplToJson(
+        _$RefundApplyRequestImpl instance) =>
+    <String, dynamic>{
+      'orderId': instance.orderId,
+      'refundType': instance.refundType,
+      'refundAmount': instance.refundAmount,
+      'refundReason': instance.refundReason,
+    };
+
+_$RefundApplyResponseImpl _$$RefundApplyResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RefundApplyResponseImpl(
+      errCode: (json['code'] as num?)?.toInt() ?? 0,
+      errMsg: json['message'] as String? ?? '',
+      ok: json['ok'] as bool? ?? true,
+      data: _dataFromJson(json['data']),
+    );
+
+Map<String, dynamic> _$$RefundApplyResponseImplToJson(
+        _$RefundApplyResponseImpl instance) =>
+    <String, dynamic>{
+      'code': instance.errCode,
+      'message': instance.errMsg,
+      'ok': instance.ok,
+      'data': instance.data,
+    };
+
+_$RefundApplyDataImpl _$$RefundApplyDataImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RefundApplyDataImpl(
+      id: json['id'] as String,
+      refundNo: json['refundNo'] as String,
+      orderId: json['orderId'] as String,
+      orderNo: json['orderNo'] as String,
+      refundType: json['refundType'] as String,
+      refundAmount: (json['refundAmount'] as num).toDouble(),
+      refundReason: json['refundReason'] as String,
+      description: json['description'] as String? ?? '',
+      evidenceImages: json['evidenceImages'] as String? ?? '',
+      evidenceVideos: json['evidenceVideos'] as String? ?? '',
+      evidenceFiles: json['evidenceFiles'] as String? ?? '',
+      status: json['status'] as String,
+      statusText: json['statusText'] as String,
+      reviewTime: json['reviewTime'] as String? ?? '',
+      reviewerName: json['reviewerName'] as String? ?? '',
+      reviewRemark: json['reviewRemark'] as String? ?? '',
+      reviewComment: json['reviewComment'] as String? ?? '',
+      completeTime: json['completeTime'] as String? ?? '',
+      createdAt: json['createdAt'] as String,
+      updatedAt: json['updatedAt'] as String,
+    );
+
+Map<String, dynamic> _$$RefundApplyDataImplToJson(
+        _$RefundApplyDataImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'refundNo': instance.refundNo,
+      'orderId': instance.orderId,
+      'orderNo': instance.orderNo,
+      'refundType': instance.refundType,
+      'refundAmount': instance.refundAmount,
+      'refundReason': instance.refundReason,
+      'description': instance.description,
+      'evidenceImages': instance.evidenceImages,
+      'evidenceVideos': instance.evidenceVideos,
+      'evidenceFiles': instance.evidenceFiles,
+      'status': instance.status,
+      'statusText': instance.statusText,
+      'reviewTime': instance.reviewTime,
+      'reviewerName': instance.reviewerName,
+      'reviewRemark': instance.reviewRemark,
+      'reviewComment': instance.reviewComment,
+      'completeTime': instance.completeTime,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+    };

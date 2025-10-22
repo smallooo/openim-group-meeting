@@ -110,6 +110,9 @@ class ApiConstants {
   // 订单详情
   static const String orderDetail = '/order/app/purchase';
 
+  // 申请退款
+  static const String refundApply = '/order/app/refund/apply';
+
   // 默认分页大小
   static const int defaultPageSize = 10;
   static const int defaultPageNum = 1;

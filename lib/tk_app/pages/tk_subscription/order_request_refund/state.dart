@@ -7,6 +7,9 @@ class OrderRequestRefundState {
   // 退款类型：0-全额退款，1-部分退款
   RxInt refundType = 0.obs;
   
+  // 退款金额
+  RxDouble refundAmount = 0.0.obs;
+  
   // 上传的文件列表
   RxList<String> uploadedFiles = <String>[].obs;
   
@@ -25,6 +28,11 @@ class OrderRequestRefundState {
   // 设置退款类型
   void setRefundType(int type) {
     refundType.value = type;
+  }
+  
+  // 设置退款金额
+  void setRefundAmount(double amount) {
+    refundAmount.value = amount;
   }
   
   // 添加上传文件
