@@ -1065,6 +1065,7 @@ class ChatLogic extends SuperController {
       //   groupID,
       //   "群通知",
       // );
+      
       // 获取 SignalingCertificate? credentials,
       SignalingCertificate credentials = await imLogic.onDialGroupPartial(signal, selectedMembers);
 
@@ -1077,6 +1078,7 @@ class ChatLogic extends SuperController {
         inviteeUserIDList: selectedMembers,
         credentials: credentials,
         signal: signal,
+        groupMembersList: groupMembersList,
       );
     });
   }

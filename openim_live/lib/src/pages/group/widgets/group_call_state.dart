@@ -21,6 +21,8 @@ abstract class GroupSignalView extends StatefulWidget {
     required this.initState,
     this.roomID,
     required this.groupID,
+    required this.inviteeUserIDList,
+    required this.groupMembersList,
     required this.userID,
     required this.callEventSubject,
     this.onDial,
@@ -43,6 +45,8 @@ abstract class GroupSignalView extends StatefulWidget {
   final CallState initState;
   final String? roomID;
   final String groupID;
+  final List<String> inviteeUserIDList;
+  final List<GroupMembersInfo> groupMembersList;
   final String userID;
   final PublishSubject<CallEvent> callEventSubject;
   final Future<SignalingCertificate> Function()? onDial;
@@ -248,12 +252,12 @@ Widget _buildRemoteGrid() {
   }
   final crossAxisCount = _gridCountFor(count);
   return GridView.builder(
-    padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 220.h),
+    padding: EdgeInsets.fromLTRB(8.w, 24.h, 8.w, 220.h),
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: crossAxisCount,
       mainAxisSpacing: 4,
       crossAxisSpacing: 4,
-      childAspectRatio: 9 / 16,
+      childAspectRatio: 12 / 16,
     ),
     itemCount: count,
     itemBuilder: (context, index) {
@@ -309,35 +313,19 @@ Widget _buildRemoteGrid() {
                 child: _buildRemoteGrid(),
               ),
 
-              // // 本地小窗
-              // if (localParticipantTrack != null)
-              //   Positioned(
-              //     top: 97.h,
-              //     right: 12.w,
-              //     child: GestureDetector(
-              //       child: SizedBox(
-              //         width: 120.w,
-              //         height: 180.h,
-              //         // 群聊中小窗显示本地预览
-              //         child: ParticipantWidget.widgetFor(localParticipantTrack!),
-              //       ),
-              //       onTap: () {
-              //         // 可扩展：点击本地小窗进行操作（静音/摄像头开关/放大等）
-              //       },
-              //     ),
-              //   ),
-
               GroupControlsView(
                 callStateStream: callStateSubject.stream,
                 roomDidUpdateStream: roomDidUpdateSubject.stream,
                 initState: widget.initState,
                 callType: widget.callType,
                 groupID: widget.groupID,
-                // userInfo: userInfo,
+                userInfo: userInfo,
                 onMinimize: onTapMinimize,
                 onCallingDuration: callingDuration,
                 onEnabledMicrophone: onChangedMicStatus,
                 onEnabledSpeaker: onChangedSpeakerStatus,
+                inviteeUserIDList: widget.inviteeUserIDList,
+                groupMembersList:  widget.groupMembersList,
                 onHangUp: onTapHangup,
                 onPickUp: onTapPickup,
                 onReject: onTapReject,

@@ -30,10 +30,13 @@ class GroupControlsView extends StatefulWidget {
     this.callType = CallType.video,
     required this.callStateStream,
     required this.roomDidUpdateStream,
+    this.userInfo,
     this.onMinimize,
     this.onCallingDuration,
     this.onEnabledMicrophone,
     this.onEnabledSpeaker,
+    this.inviteeUserIDList,
+    this.groupMembersList,
     required this.groupID,
     this.onCancel,
     this.onHangUp,
@@ -45,12 +48,14 @@ class GroupControlsView extends StatefulWidget {
   final Stream<CallState> callStateStream;
   final CallState initState;
   final CallType callType;
+  final UserInfo? userInfo;
   final String groupID;
   final Function()? onMinimize;
   final Function(int duration)? onCallingDuration;
   final Function(bool enabled)? onEnabledMicrophone;
   final Function(bool enabled)? onEnabledSpeaker;
-
+  final List<String>? inviteeUserIDList;
+  final List<GroupMembersInfo>? groupMembersList;
   final Function()? onPickUp;
   final Function()? onCancel;
   final Function()? onReject;
@@ -185,6 +190,11 @@ class _GroupControlsViewState extends State<GroupControlsView> {
     await _lockAudio.synchronized(() async {
       _enabledMicrophone = !_enabledMicrophone;
       widget.onEnabledMicrophone?.call(_enabledMicrophone);
+      if (_enabledMicrophone) {
+        await _enableAudio();
+      } else {
+        await _disableAudio();
+      }
     });
   }
 
@@ -192,6 +202,11 @@ class _GroupControlsViewState extends State<GroupControlsView> {
     await _lockSpeaker.synchronized(() async {
       _enabledSpeaker = !_enabledSpeaker;
       widget.onEnabledSpeaker?.call(_enabledSpeaker);
+      if (_enabledSpeaker) {
+        await _enableSpeaker();
+      } else {
+        await _disableSpeaker();
+      }
       setState(() {});
     });
   }
@@ -252,8 +267,6 @@ class _GroupControlsViewState extends State<GroupControlsView> {
     // }
   }
 
-
-
   @override
   Widget build(BuildContext context) => SafeArea(
     child: Stack(
@@ -292,13 +305,12 @@ class _GroupControlsViewState extends State<GroupControlsView> {
           ),
 
 
-        // if (null != widget.userInfo)
-        Positioned(
-          top: 166.h,
-          width: 1.sw,
-          child: _userInfoView,
-        ),
-
+        if (null != widget.userInfo)
+          Positioned(
+            top: 166.h,
+            width: 1.sw,
+            child: _userInfoView,
+          ),
 
         Positioned(
           bottom: 32.h,
@@ -363,16 +375,16 @@ class _GroupControlsViewState extends State<GroupControlsView> {
       text = isVideo ? '' : _callingDurationStr;
     }
 
-    // String? nickname = IMUtils.emptyStrToNull(widget.userInfo!.remark) ?? widget.userInfo!.nickname;
-    // String? faceURL = widget.userInfo!.faceURL;
+    String? nickname = IMUtils.emptyStrToNull(widget.userInfo!.remark) ?? widget.userInfo!.nickname;
+    String? faceURL = widget.userInfo!.faceURL;
 
     return Visibility(
       visible: !(isVideo && isCalling),
       child: Column(
         children: [
-          // AvatarView(width: 70.w, height: 70.h, text: nickname, url: faceURL),
-          // 10.verticalSpace,
-          // (nickname ?? '').toText..style = Styles.ts_FFFFFF_20sp_medium,
+          AvatarView(width: 70.w, height: 70.h, text: nickname, url: faceURL),
+          10.verticalSpace,
+          (nickname ?? '').toText..style = Styles.ts_FFFFFF_20sp_medium,
           10.verticalSpace,
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.w),

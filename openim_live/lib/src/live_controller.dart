@@ -187,6 +187,7 @@ mixin OpenIMLive {
     String? groupID,
     SignalingCertificate? credentials,
     SignalingInfo? signal,
+    List<GroupMembersInfo> ? groupMembersList,
   }) async {
     final mediaType = callType == CallType.audio ? 'audio' : 'video';
     final sessionType = callObj == CallObj.single ? 1 : 3;
@@ -212,6 +213,7 @@ mixin OpenIMLive {
       inviterUserID: inviterUserID,
       groupID: groupID,
       inviteeUserIDList: inviteeUserIDList,
+      groupMembersList: groupMembersList,
       callObj: callObj,
       callType: callType,
       initState: callState,
