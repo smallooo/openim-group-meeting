@@ -169,7 +169,7 @@ class OpenIMLiveClient implements RTCBridge {
           groupID: groupID!,
           // inviterUserID: inviterUserID,
           inviteeUserIDList: inviteeUserIDList,
-          groupMembersList: groupMembersList!,
+          groupMembersList: groupMembersList ?? [],
           onJoinGroup: onJoinGroup,
           onTapCancel: onTapCancel,
           onTapHangup: onTapHangup,
