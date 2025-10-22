@@ -247,6 +247,10 @@ class AppNavigator {
 
   static startSelectContactsFromFriends() => Get.toNamed(AppRoutes.selectContactsFromFriends);
 
+  static startSelectContactsFromGroupMember(String groupId) => Get.toNamed(AppRoutes.selectContactsFromGroupMember, arguments: {
+    'groupID': groupId,
+  });
+
   static startSelectContactsFromGroup() => Get.toNamed(AppRoutes.selectContactsFromGroup);
 
   static startSelectContactsFromSearch() => Get.toNamed(AppRoutes.selectContactsFromSearch);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:openim_live/src/pages/group/group_room.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -67,6 +68,7 @@ class OpenIMLiveClient implements RTCBridge {
   String? currentRoomID;
   Future Function(int duration, bool isPositive)? onTapHangup;
 
+
   quitClose(String roomID) async {
     if (currentRoomID == roomID) {
       await onTapHangup?.call(0, true);
@@ -107,6 +109,7 @@ class OpenIMLiveClient implements RTCBridge {
     Future<SignalingCertificate> Function()? onTapPickup,
     Future Function()? onTapCancel,
     Future Function(int duration, bool isPositive)? onTapHangup,
+        Future Function(int duration, bool isPositive)? onTapGroupHangup,
     Future Function()? onTapReject,
     Future<UserInfo?> Function(String userID)? onSyncUserInfo,
     Future<GroupInfo?> Function(String groupID)? onSyncGroupInfo,
@@ -153,7 +156,41 @@ class OpenIMLiveClient implements RTCBridge {
                   close();
                 },
               ));
-    } else {}
+    } else if (callObj == CallObj.group) {
+      _holder = OverlayEntry(
+        builder: (context) => GroupRoomView(
+          roomID: roomID,
+          callType: callType,
+          initState: initState,
+          callEventSubject: callEventSubject,
+          userID: OpenIM.iMManager.userID,
+          onDial: onDialGroup,
+          groupID: groupID!,
+          // inviterUserID: inviterUserID,
+          // inviteeUserIDList: inviteeUserIDList,
+          onJoinGroup: onJoinGroup,
+          onTapCancel: onTapCancel,
+          onTapHangup: onTapHangup,
+          onTapGroupHangup: onTapGroupHangup,
+          onTapReject: onTapReject,
+          onTapPickup: onTapPickup,
+          autoPickup: false,
+          // onSyncGroupInfo: onSyncGroupInfo,
+          // onSyncGroupMemberInfo: onSyncGroupMemberInfo,
+          // autoPickup: autoPickup,
+          onBindRoomID: (roomID) => currentRoomID = roomID,
+          onWaitingAccept: onWaitingAccept,
+          onBusyLine: onBusyLine,
+          onStartCalling: onStartCalling,
+          onError: onError,
+          onRoomDisconnected: onRoomDisconnected,
+          onClose: () {
+            onClose?.call();
+            close();
+          },
+        ),
+      );
+    }
 
     Overlay.of(ctx).insert(_holder!);
     // The following line will enable the Android and iOS wakelock.

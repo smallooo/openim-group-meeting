@@ -165,7 +165,7 @@ class ChatPage extends StatelessWidget {
               member: logic.memberStr,
               onCloseMultiModel: logic.exit,
               onClickMoreBtn: logic.chatSetup,
-              onClickCallBtn: logic.isGroupChat ? null : logic.call,
+              onClickCallBtn: logic.isGroupChat ? logic.groupCall : logic.call,
             ),
             body: SafeArea(
               child: WaterMarkBgView(
@@ -188,7 +188,7 @@ class ChatPage extends StatelessWidget {
                   toolbox: ChatToolBox(
                     onTapAlbum: logic.onTapAlbum,
                     onTapCall: logic.isGroupChat ? null : logic.call,
-                    onTapCreateOrder: logic.isGroupChat ? null : logic.createOrder,
+                    onTapCreateOrder: logic.isGroupChat ? logic.groupCall : logic.createOrder,
                   ),
                   voiceRecordBar: const SizedBox(),
                 ),

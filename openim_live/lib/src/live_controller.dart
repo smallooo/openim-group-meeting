@@ -81,6 +81,7 @@ mixin OpenIMLive {
     });
 
     roomParticipantDisconnectedSubject.listen((info) {
+      Logger.print('当前房间成员: ${info.participant}');
       if (null == info.participant || info.participant!.length == 1) {
         OpenIMLiveClient().closeByRoomID(info.invitation!.roomID!);
       }
@@ -93,6 +94,13 @@ mixin OpenIMLive {
         (event) async {
           _beCalledEvent = null;
           if (event.state == CallState.beCalled) {
+
+            final inviterID = event.data.invitation?.inviterUserID;
+            if (inviterID == OpenIM.iMManager.userID) {
+              // 自己是主叫，忽略自己的 beCalled 信令
+              return;
+            }
+
             _playSound();
             final mediaType = event.data.invitation!.mediaType;
             final sessionType = event.data.invitation!.sessionType;
@@ -178,12 +186,13 @@ mixin OpenIMLive {
     required List<String> inviteeUserIDList,
     String? groupID,
     SignalingCertificate? credentials,
+    SignalingInfo? signal,
   }) async {
     final mediaType = callType == CallType.audio ? 'audio' : 'video';
     final sessionType = callObj == CallObj.single ? 1 : 3;
     inviterUserID ??= OpenIM.iMManager.userID;
 
-    final signal = SignalingInfo(
+    signal ??= SignalingInfo(
       userID: inviterUserID,
       invitation: InvitationInfo(
         inviterUserID: inviterUserID,
@@ -206,11 +215,11 @@ mixin OpenIMLive {
       callObj: callObj,
       callType: callType,
       initState: callState,
-      onDialSingle: () => onDialSingle(signal),
+      onDialSingle: () => onDialSingle(signal!),
       onJoinGroup: () => Future.value(credentials!),
-      onTapCancel: () => onTapCancel(signal),
+      onTapCancel: () => onTapCancel(signal!),
       onTapHangup: (duration, isPositive) => onTapHangup(
-        signal,
+        signal!,
         duration,
         isPositive,
       ),
@@ -225,7 +234,7 @@ mixin OpenIMLive {
         _stopSound();
       },
       onError: onError,
-      onRoomDisconnected: () => onRoomDisconnected(signal),
+      onRoomDisconnected: () => onRoomDisconnected(signal!),
       onClose: _stopSound,
     );
   }
@@ -240,7 +249,7 @@ mixin OpenIMLive {
         return;
       }
     }
-    IMViews.showToast(StrRes.networkError);
+    IMViews.showToast(StrRes.networkError + error.toString());
   }
 
   onRoomDisconnected(SignalingInfo signalingInfo) {}
@@ -256,6 +265,66 @@ mixin OpenIMLive {
         isOnlineOnly: true);
     final certificate = await Apis.getTokenForRTC(signaling.invitation!.roomID!, OpenIM.iMManager.userID);
 
+    return certificate;
+  }
+
+
+
+  Future<SignalingCertificate> onDialGroupPartial(
+      SignalingInfo signaling,
+      List<String> inviteeUserIDList,
+      ) async {
+    final data = {
+      'customType': CustomMessageType.callingInvite,
+      'data': signaling.invitation!.toJson(),
+    };
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
+      data: jsonEncode(data),
+      extension: '',
+      description: '',
+    );
+
+    // 只给指定成员发送邀请
+    for (final userID in inviteeUserIDList) {
+      await OpenIM.iMManager.messageManager.sendMessage(
+        message: message,
+        offlinePushInfo: OfflinePushInfo(),
+        userID: userID,
+        isOnlineOnly: true,
+      );
+    }
+
+    final certificate = await Apis.getTokenForRTC(
+      signaling.invitation!.roomID!,
+      OpenIM.iMManager.userID,
+    );
+    return certificate;
+  }
+
+
+
+  Future<SignalingCertificate> onDialGroup(SignalingInfo signaling) async {
+    final data = {
+      'customType': CustomMessageType.callingInvite,
+      'data': signaling.invitation!.toJson(),
+    };
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
+      data: jsonEncode(data),
+      extension: '',
+      description: '',
+    );
+    // 群组邀请，发送给 groupID
+    await OpenIM.iMManager.messageManager.sendMessage(
+      message: message,
+      offlinePushInfo: OfflinePushInfo(),
+      groupID: signaling.invitation!.groupID,
+      isOnlineOnly: true,
+    );
+
+    final certificate = await Apis.getTokenForRTC(
+      signaling.invitation!.roomID!,
+      OpenIM.iMManager.userID,
+    );
     return certificate;
   }
 
@@ -321,14 +390,21 @@ mixin OpenIMLive {
 
   onTapHangup(SignalingInfo signaling, int duration, bool isPositive) async {
     if (isPositive) {
-      final data = {'customType': CustomMessageType.callingHungup, 'data': signaling.invitation!.toJson()};
-      final message = await OpenIM.iMManager.messageManager
-          .createCustomMessage(data: jsonEncode(data), extension: '', description: '');
-      final recvUserID = signaling.invitation!.inviterUserID == OpenIM.iMManager.userID
-          ? signaling.invitation!.inviteeUserIDList!.first
-          : signaling.invitation!.inviterUserID;
-      OpenIM.iMManager.messageManager
-          .sendMessage(message: message, offlinePushInfo: OfflinePushInfo(), userID: recvUserID, isOnlineOnly: true);
+      // 如果是群聊，仅通知自己退出，不发 group 挂断消息
+      if (signaling.invitation?.groupID != null && signaling.invitation!.groupID!.isNotEmpty) {
+        // 可选：发送“成员已退出”自定义消息到群组
+        // 或者什么都不做，仅本地断开
+      } else {
+        // 单聊，原有逻辑
+        final data = {'customType': CustomMessageType.callingHungup, 'data': signaling.invitation!.toJson()};
+        final message = await OpenIM.iMManager.messageManager
+            .createCustomMessage(data: jsonEncode(data), extension: '', description: '');
+        final recvUserID = signaling.invitation!.inviterUserID == OpenIM.iMManager.userID
+            ? signaling.invitation!.inviteeUserIDList!.first
+            : signaling.invitation!.inviterUserID;
+        OpenIM.iMManager.messageManager
+            .sendMessage(message: message, offlinePushInfo: OfflinePushInfo(), userID: recvUserID, isOnlineOnly: true);
+      }
     }
     _stopSound();
 

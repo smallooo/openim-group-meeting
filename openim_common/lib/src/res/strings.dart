@@ -26,6 +26,8 @@ class StrRes {
 
   static String get plsEnterPhoneNumber => 'plsEnterPhoneNumber'.tr;
 
+  static String get pleaseSelectCallUser => 'pleaseSelectCallUser'.tr;
+
   static String get password => 'password'.tr;
 
   static String get plsEnterPassword => 'plsEnterPassword'.tr;

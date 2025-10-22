@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:toklink/pages/contacts/select_contacts/group_member_list/select_group_members_binding.dart';
+import 'package:toklink/pages/contacts/select_contacts/group_member_list/select_group_members_view.dart';
 
 import '../pages/chat/chat_binding.dart';
 import '../pages/chat/chat_setup/chat_setup_binding.dart';
@@ -325,6 +327,11 @@ class AppPages {
       name: AppRoutes.selectContactsFromFriends,
       page: () => SelectContactsFromFriendsPage(),
       binding: SelectContactsFromFriendsBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.selectContactsFromGroupMember,
+      page: () => SelectContactsFromGroupMemberPage(),
+      binding: SelectContactsFromGroupMemberBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.selectContactsFromGroup,
