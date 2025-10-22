@@ -216,6 +216,7 @@ mixin OpenIMLive {
       callType: callType,
       initState: callState,
       onDialSingle: () => onDialSingle(signal!),
+      onDialGroup: () => Future.value(credentials!),
       onJoinGroup: () => Future.value(credentials!),
       onTapCancel: () => onTapCancel(signal!),
       onTapHangup: (duration, isPositive) => onTapHangup(

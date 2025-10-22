@@ -130,6 +130,31 @@ class _LocalParticipantWidgetState extends _ParticipantWidgetState<LocalParticip
 
   @override
   VideoTrack? get activeVideoTrack => widget.videoTrack;
+
+    @override
+  Widget build(BuildContext ctx) => Stack(
+        children: [
+          super.build(ctx),
+          Positioned(
+            left: 8,
+            right: 8,
+            bottom: 8,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                '${widget.participant.identity} (You)',
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      );
+
 }
 
 class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemoteParticipantWidget> {
@@ -142,4 +167,28 @@ class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemotePartic
 
   @override
   VideoTrack? get activeVideoTrack => widget.videoTrack;
+
+    @override
+  Widget build(BuildContext ctx) => Stack(
+        children: [
+          super.build(ctx),
+          Positioned(
+            left: 8,
+            right: 8,
+            bottom: 8,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                '${widget.participant.identity}',
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      );
 }

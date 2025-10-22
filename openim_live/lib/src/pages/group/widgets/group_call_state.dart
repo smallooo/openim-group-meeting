@@ -236,27 +236,32 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
   }
 
   // 构建远端参与者网格
-  Widget _buildRemoteGrid() {
-    final count = remoteParticipantTracks.length;
-    if (count == 0) {
-      return const SizedBox.shrink();
-    }
-    final crossAxisCount = _gridCountFor(count);
-    return GridView.builder(
-      padding: EdgeInsets.only(bottom: 220.h),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        childAspectRatio: 9 / 16,
-      ),
-      itemCount: count,
-      itemBuilder: (context, index) {
-        final track = remoteParticipantTracks[index];
-        return ParticipantWidget.widgetFor(track);
-      },
-    );
+Widget _buildRemoteGrid() {
+  // 先构建一个包含本地和远端的列表
+  final List<GroupParticipantTrack> allTracks = [
+    if (localParticipantTrack != null) localParticipantTrack!,
+    ...remoteParticipantTracks,
+  ];
+  final count = allTracks.length;
+  if (count == 0) {
+    return const SizedBox.shrink();
   }
+  final crossAxisCount = _gridCountFor(count);
+  return GridView.builder(
+    padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 220.h),
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: crossAxisCount,
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+      childAspectRatio: 9 / 16,
+    ),
+    itemCount: count,
+    itemBuilder: (context, index) {
+      final track = allTracks[index];
+      return ParticipantWidget.widgetFor(track);
+    },
+  );
+}
 
   //Alignment(0.9, -0.9),
   double alignX = 0.9;
@@ -295,35 +300,32 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
               // 背景
               // ImageRes.liveBg...
 
-
-
-
               // 网格展示所有远端参与者
               Positioned(
-                top: 300.h,
+                top: 80.h,
                 left: 0,
                 right: 0,
                 bottom: 0,
                 child: _buildRemoteGrid(),
               ),
 
-              // 本地小窗
-              if (localParticipantTrack != null)
-                Positioned(
-                  top: 97.h,
-                  right: 12.w,
-                  child: GestureDetector(
-                    child: SizedBox(
-                      width: 120.w,
-                      height: 180.h,
-                      // 群聊中小窗显示本地预览
-                      child: ParticipantWidget.widgetFor(localParticipantTrack!),
-                    ),
-                    onTap: () {
-                      // 可扩展：点击本地小窗进行操作（静音/摄像头开关/放大等）
-                    },
-                  ),
-                ),
+              // // 本地小窗
+              // if (localParticipantTrack != null)
+              //   Positioned(
+              //     top: 97.h,
+              //     right: 12.w,
+              //     child: GestureDetector(
+              //       child: SizedBox(
+              //         width: 120.w,
+              //         height: 180.h,
+              //         // 群聊中小窗显示本地预览
+              //         child: ParticipantWidget.widgetFor(localParticipantTrack!),
+              //       ),
+              //       onTap: () {
+              //         // 可扩展：点击本地小窗进行操作（静音/摄像头开关/放大等）
+              //       },
+              //     ),
+              //   ),
 
               GroupControlsView(
                 callStateStream: callStateSubject.stream,
