@@ -66,10 +66,12 @@ class ChatToolBox extends StatelessWidget {
         text: '语音输入',
         icon: ImageRes.toolboxVoiceInput,
       ),
-      ToolboxItemInfo(
-        text: '担保订单',
-        icon: ImageRes.toolboxGuaranteeOrder,
-      ),
+      if (onTapCreateOrder != null)
+        ToolboxItemInfo(
+          text: '担保订单',
+          icon: ImageRes.toolboxGuaranteeOrder,
+          onTap: onTapCreateOrder,
+        ),
     ];
 
     return Container(

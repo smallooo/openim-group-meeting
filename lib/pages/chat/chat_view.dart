@@ -238,7 +238,7 @@ class ChatPage extends StatelessWidget {
                   toolbox: ChatToolBox(
                     onTapAlbum: logic.onTapAlbum,
                     onTapCall: logic.isGroupChat ? null : logic.call,
-                    onTapCreateOrder: logic.isGroupChat ? logic.groupCall : logic.createOrder,
+                    onTapCreateOrder: logic.isGroupChat ? null : logic.createOrder,
                   ),
                   voiceRecordBar: const SizedBox(),
                 ),
