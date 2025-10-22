@@ -16,6 +16,7 @@ class OrderListState {
   void _initSampleData() {
     orderList.value = [
       OrderItem(
+        orderId: "0",
         transactionId: 'TXN20240726A1B2C3D4E5',
         status: OrderStatus.paid,
         items: [
@@ -45,6 +46,7 @@ class OrderListState {
         createTime: DateTime(2024, 7, 26, 14, 30),
       ),
       OrderItem(
+        orderId: "0",
         transactionId: 'SG002000250905004572',
         status: OrderStatus.refunded,
         items: [
@@ -78,6 +80,8 @@ enum OrderStatus {
 }
 
 class OrderItem {
+
+  final String orderId;
   final String transactionId;
   final OrderStatus status;
   final List<OrderProduct> items;
@@ -85,6 +89,7 @@ class OrderItem {
   final DateTime createTime;
   
   OrderItem({
+    required this.orderId,
     required this.transactionId,
     required this.status,
     required this.items,

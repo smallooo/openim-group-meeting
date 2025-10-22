@@ -105,6 +105,8 @@ import '../tk_app/pages/tk_subscription/order_refund_submit/binding.dart';
 import '../tk_app/pages/tk_subscription/order_refund_submit/view.dart';
 import '../tk_app/pages/tk_subscription/order_after_detail/binding.dart';
 import '../tk_app/pages/tk_subscription/order_after_detail/view.dart';
+import '../tk_app/pages/tk_subscription/order_detail/binding.dart';
+import '../tk_app/pages/tk_subscription/order_detail/view.dart';
 import '../tk_app/pages/tk_pay/tk_pay_home/binding.dart';
 import '../tk_app/pages/tk_pay/tk_pay_home/view.dart';
 import '../tk_app/pages/tk_pay/tk_pay_wallet/binding.dart';
@@ -420,6 +422,11 @@ class AppPages {
       name: AppRoutes.orderAfterDetail,
       page: () => OrderAfterDetailPage(),
       binding: OrderAfterDetailBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.orderDetail,
+      page: () => OrderDetailPage(),
+      binding: OrderDetailBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.tkPayHome,

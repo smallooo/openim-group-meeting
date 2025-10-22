@@ -258,21 +258,27 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
   }
 
   Widget _buildItemsCard() {
-    return Container(
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12.r), border: Border.all(color: const Color(0xFFF6F6F6), width: 1),boxShadow: [
-        // BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8.r, offset: const Offset(0, 4)),
-      ]),
-      child: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('订单详情', style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: const Color(0xFF333333))),
-          SizedBox(height: 12.h),
-          Column(children: state.items.map((i) => _buildItemRow(i)).toList()),
-          SizedBox(height: 12.h),
-          // Divider(height: 1, color: Colors.grey[300]),
-          SizedBox(height: 12.h),
-          _buildSummary(),
+    return GestureDetector(
+      onTap: () {
+        // 调用逻辑层的方法处理跳转
+        logic.navigateToAfterSalesDetail();
+      },
+      child: Container(
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12.r), border: Border.all(color: const Color(0xFFF6F6F6), width: 1),boxShadow: [
+          // BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8.r, offset: const Offset(0, 4)),
         ]),
+        child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('订单详情', style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: const Color(0xFF333333))),
+            SizedBox(height: 12.h),
+            Column(children: state.items.map((i) => _buildItemRow(i)).toList()),
+            SizedBox(height: 12.h),
+            // Divider(height: 1, color: Colors.grey[300]),
+            SizedBox(height: 12.h),
+            _buildSummary(),
+          ]),
+        ),
       ),
     );
   }
@@ -422,4 +428,5 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
     // 跳转到支付页面
     Get.toNamed(AppRoutes.tkOrderToPay, arguments: paymentData);
   }
+
 }

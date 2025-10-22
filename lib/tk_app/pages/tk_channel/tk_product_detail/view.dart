@@ -40,9 +40,23 @@ class TkProductDetailPage extends StatelessWidget {
                 style: const TextStyle(color: Colors.black, fontSize: 18),
               ),
               actions: [
+                // IconButton(
+                //   icon: const Icon(Icons.bug_report, color: Colors.orange),
+                //   onPressed: () {
+                //     logic.quickTestMessageParsing();
+                //   },
+                // ),
+                // IconButton(
+                //   icon: const Icon(Icons.send, color: Colors.green),
+                //   onPressed: () {
+                //     logic.testSendSimpleMessage();
+                //   },
+                // ),
                 IconButton(
                   icon: const Icon(Icons.headset, color: Colors.black),
-                  onPressed: () {},
+                  onPressed: () {
+                    logic.toCustomer();
+                  },
                 ),
               ],
               flexibleSpace: FlexibleSpaceBar(
