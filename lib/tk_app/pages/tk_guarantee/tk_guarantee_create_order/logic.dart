@@ -213,8 +213,15 @@ class TkGuaranteeCreateOrderLogic extends GetxController {
         debugPrint('[SaveDraft] 订单创建成功: ${orderResponse.data.orderId}');
 
         if (from_model.orderItems.isNotEmpty) {
-          // 获取消息数据
-          final messageData = _handlePayMessage(from_model.userOpenimUserId,orderResponse.data.orderId);
+          // 获取消息数据，传递用户输入的新数据
+          final messageData = _handlePayMessage(
+            from_model.userOpenimUserId,
+            orderResponse.data.orderId,
+            productName: productName,
+            productDescription: productDescription,
+            category: category,
+            price: price,
+          );
 
           // 获取回调函数
           final arguments = Get.arguments as Map<String, dynamic>?;
@@ -301,7 +308,14 @@ class TkGuaranteeCreateOrderLogic extends GetxController {
 
 
   /// 处理支付订单消息（使用回调函数）
-  Map<String, dynamic>? _handlePayMessage(String customerServiceID,String orderId) {
+  Map<String, dynamic>? _handlePayMessage(
+    String customerServiceID,
+    String orderId, {
+    String? productName,
+    String? productDescription,
+    String? category,
+    double? price,
+  }) {
     try {
       debugPrint('📤 [HandlePayMessage] 开始构建订单消息数据');
 
@@ -309,22 +323,24 @@ class TkGuaranteeCreateOrderLogic extends GetxController {
       if (from_model != null) {
         userOpenimUserId = from_model.userOpenimUserId;
       }
-      // 构建订单消息数据
+      
+      // 使用传入的新数据，如果没有传入则使用旧数据作为后备
       final orderData = getOrderData();
       final productData = {
         "customType": CustomMessageType.productInquiry,
         "data": {
-          "productId": orderData?['productId']  ?? '',
-          "productName": orderData?['productName'] ?? '订单商品',
-          "price": orderData?['totalPrice'] ?? 0,
-          "category": orderData?['category'] ?? '',
-          "description": orderData?['productDescription'] ?? '',
+          "productId": orderData?['productId'] ?? '',
+          "productName": productName ?? orderData?['productName'] ?? '订单商品',
+          "price": price ?? orderData?['totalPrice'] ?? 0,
+          "category": category ?? orderData?['category'] ?? '',
+          "description": productDescription ?? orderData?['productDescription'] ?? '',
           "orderId": orderId,
-          "userOpenimUserId" : userOpenimUserId,
+          "userOpenimUserId": userOpenimUserId,
         }
       };
 
       debugPrint('🔍 [HandlePayMessage] 构建的消息数据: ${json.encode(productData)}');
+      debugPrint('🔍 [HandlePayMessage] 使用的新价格: $price');
 
       // 返回消息数据，让聊天页面发送
       return {
