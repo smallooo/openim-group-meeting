@@ -1735,6 +1735,7 @@ mixin _$OrderDetailData {
   String get orderId => throw _privateConstructorUsedError;
   String get orderNo => throw _privateConstructorUsedError;
   String get memberId => throw _privateConstructorUsedError;
+  String get buyerId => throw _privateConstructorUsedError;
   String get sellerId => throw _privateConstructorUsedError;
   String get sellerName => throw _privateConstructorUsedError;
   String get orderType => throw _privateConstructorUsedError;
@@ -1758,6 +1759,7 @@ mixin _$OrderDetailData {
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
   List<OrderItemDetail> get orderItems => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _paymentFromJson)
   PaymentInfo? get payment => throw _privateConstructorUsedError;
   String get refundApplication => throw _privateConstructorUsedError;
   String get conversationId => throw _privateConstructorUsedError;
@@ -1787,6 +1789,7 @@ abstract class $OrderDetailDataCopyWith<$Res> {
       {String orderId,
       String orderNo,
       String memberId,
+      String buyerId,
       String sellerId,
       String sellerName,
       String orderType,
@@ -1810,7 +1813,7 @@ abstract class $OrderDetailDataCopyWith<$Res> {
       String createdAt,
       String updatedAt,
       List<OrderItemDetail> orderItems,
-      PaymentInfo? payment,
+      @JsonKey(fromJson: _paymentFromJson) PaymentInfo? payment,
       String refundApplication,
       String conversationId,
       BuyerInfo? buyerInfo,
@@ -1842,6 +1845,7 @@ class _$OrderDetailDataCopyWithImpl<$Res, $Val extends OrderDetailData>
     Object? orderId = null,
     Object? orderNo = null,
     Object? memberId = null,
+    Object? buyerId = null,
     Object? sellerId = null,
     Object? sellerName = null,
     Object? orderType = null,
@@ -1885,6 +1889,10 @@ class _$OrderDetailDataCopyWithImpl<$Res, $Val extends OrderDetailData>
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      buyerId: null == buyerId
+          ? _value.buyerId
+          : buyerId // ignore: cast_nullable_to_non_nullable
               as String,
       sellerId: null == sellerId
           ? _value.sellerId
@@ -2079,6 +2087,7 @@ abstract class _$$OrderDetailDataImplCopyWith<$Res>
       {String orderId,
       String orderNo,
       String memberId,
+      String buyerId,
       String sellerId,
       String sellerName,
       String orderType,
@@ -2102,7 +2111,7 @@ abstract class _$$OrderDetailDataImplCopyWith<$Res>
       String createdAt,
       String updatedAt,
       List<OrderItemDetail> orderItems,
-      PaymentInfo? payment,
+      @JsonKey(fromJson: _paymentFromJson) PaymentInfo? payment,
       String refundApplication,
       String conversationId,
       BuyerInfo? buyerInfo,
@@ -2136,6 +2145,7 @@ class __$$OrderDetailDataImplCopyWithImpl<$Res>
     Object? orderId = null,
     Object? orderNo = null,
     Object? memberId = null,
+    Object? buyerId = null,
     Object? sellerId = null,
     Object? sellerName = null,
     Object? orderType = null,
@@ -2179,6 +2189,10 @@ class __$$OrderDetailDataImplCopyWithImpl<$Res>
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      buyerId: null == buyerId
+          ? _value.buyerId
+          : buyerId // ignore: cast_nullable_to_non_nullable
               as String,
       sellerId: null == sellerId
           ? _value.sellerId
@@ -2311,6 +2325,7 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
       {required this.orderId,
       required this.orderNo,
       required this.memberId,
+      required this.buyerId,
       required this.sellerId,
       this.sellerName = "",
       required this.orderType,
@@ -2334,7 +2349,7 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
       required this.createdAt,
       required this.updatedAt,
       required final List<OrderItemDetail> orderItems,
-      this.payment,
+      @JsonKey(fromJson: _paymentFromJson) this.payment,
       this.refundApplication = "",
       this.conversationId = "0",
       this.buyerInfo,
@@ -2353,6 +2368,8 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
   final String orderNo;
   @override
   final String memberId;
+  @override
+  final String buyerId;
   @override
   final String sellerId;
   @override
@@ -2418,6 +2435,7 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
   }
 
   @override
+  @JsonKey(fromJson: _paymentFromJson)
   final PaymentInfo? payment;
   @override
   @JsonKey()
@@ -2442,7 +2460,7 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
 
   @override
   String toString() {
-    return 'OrderDetailData(orderId: $orderId, orderNo: $orderNo, memberId: $memberId, sellerId: $sellerId, sellerName: $sellerName, orderType: $orderType, orderStatus: $orderStatus, orderStatusText: $orderStatusText, totalAmount: $totalAmount, payAmount: $payAmount, shippingFee: $shippingFee, discountAmount: $discountAmount, payType: $payType, paymentMethod: $paymentMethod, payTime: $payTime, deliveryTime: $deliveryTime, receiveTime: $receiveTime, cancelTime: $cancelTime, cancelReason: $cancelReason, remark: $remark, deliveryDays: $deliveryDays, guaranteeType: $guaranteeType, productType: $productType, createdAt: $createdAt, updatedAt: $updatedAt, orderItems: $orderItems, payment: $payment, refundApplication: $refundApplication, conversationId: $conversationId, buyerInfo: $buyerInfo, sellerInfo: $sellerInfo, customerServiceInfo: $customerServiceInfo, statusTimeline: $statusTimeline)';
+    return 'OrderDetailData(orderId: $orderId, orderNo: $orderNo, memberId: $memberId, buyerId: $buyerId, sellerId: $sellerId, sellerName: $sellerName, orderType: $orderType, orderStatus: $orderStatus, orderStatusText: $orderStatusText, totalAmount: $totalAmount, payAmount: $payAmount, shippingFee: $shippingFee, discountAmount: $discountAmount, payType: $payType, paymentMethod: $paymentMethod, payTime: $payTime, deliveryTime: $deliveryTime, receiveTime: $receiveTime, cancelTime: $cancelTime, cancelReason: $cancelReason, remark: $remark, deliveryDays: $deliveryDays, guaranteeType: $guaranteeType, productType: $productType, createdAt: $createdAt, updatedAt: $updatedAt, orderItems: $orderItems, payment: $payment, refundApplication: $refundApplication, conversationId: $conversationId, buyerInfo: $buyerInfo, sellerInfo: $sellerInfo, customerServiceInfo: $customerServiceInfo, statusTimeline: $statusTimeline)';
   }
 
   @override
@@ -2454,6 +2472,7 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
             (identical(other.orderNo, orderNo) || other.orderNo == orderNo) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
+            (identical(other.buyerId, buyerId) || other.buyerId == buyerId) &&
             (identical(other.sellerId, sellerId) ||
                 other.sellerId == sellerId) &&
             (identical(other.sellerName, sellerName) ||
@@ -2519,6 +2538,7 @@ class _$OrderDetailDataImpl implements _OrderDetailData {
         orderId,
         orderNo,
         memberId,
+        buyerId,
         sellerId,
         sellerName,
         orderType,
@@ -2573,6 +2593,7 @@ abstract class _OrderDetailData implements OrderDetailData {
       {required final String orderId,
       required final String orderNo,
       required final String memberId,
+      required final String buyerId,
       required final String sellerId,
       final String sellerName,
       required final String orderType,
@@ -2596,7 +2617,7 @@ abstract class _OrderDetailData implements OrderDetailData {
       required final String createdAt,
       required final String updatedAt,
       required final List<OrderItemDetail> orderItems,
-      final PaymentInfo? payment,
+      @JsonKey(fromJson: _paymentFromJson) final PaymentInfo? payment,
       final String refundApplication,
       final String conversationId,
       final BuyerInfo? buyerInfo,
@@ -2613,6 +2634,8 @@ abstract class _OrderDetailData implements OrderDetailData {
   String get orderNo;
   @override
   String get memberId;
+  @override
+  String get buyerId;
   @override
   String get sellerId;
   @override
@@ -2660,6 +2683,7 @@ abstract class _OrderDetailData implements OrderDetailData {
   @override
   List<OrderItemDetail> get orderItems;
   @override
+  @JsonKey(fromJson: _paymentFromJson)
   PaymentInfo? get payment;
   @override
   String get refundApplication;

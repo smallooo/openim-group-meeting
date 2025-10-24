@@ -157,7 +157,7 @@ PODS:
   - Mantle/extobjc (2.2.0)
   - map_launcher (0.0.1):
     - Flutter
-  - media_kit_libs_ios_video (1.0.4):
+  - media_kit_libs_ios_video (0.4.2):
     - Flutter
   - media_kit_native_event_loop (1.0.0):
     - Flutter
@@ -435,7 +435,7 @@ SPEC CHECKSUMS:
   local_auth_darwin: 553ce4f9b16d3fdfeafce9cf042e7c9f77c1c391
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   map_launcher: b429f5dc548985f011d7c840f269cd2ee3b5d45e
-  media_kit_libs_ios_video: 5a18affdb97d1f5d466dc79988b13eff6c5e2854
+  media_kit_libs_ios_video: aebf83963a65e53d244d501284d510e052a820e6
   media_kit_native_event_loop: 5fba1a849a6c87a34985f1e178a0de5bd444a0cf
   media_kit_video: 1746e198cb697d1ffb734b1d05ec429d1fcd1474
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb

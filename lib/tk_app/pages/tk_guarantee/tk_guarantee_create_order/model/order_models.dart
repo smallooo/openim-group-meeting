@@ -55,6 +55,8 @@ class CreateOrderRequest with _$CreateOrderRequest {
     @Default(0) int customerServiceId,
     required List<OrderItem> orderItems,
     @Default(0) int memberId,
+    @Default(0) int buyerId,
+
   }) = _CreateOrderRequest;
 
   factory CreateOrderRequest.fromJson(Map<String, dynamic> json) => _$CreateOrderRequestFromJson(json);

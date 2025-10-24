@@ -392,37 +392,9 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
       return;
     }
 
-    // 准备传递给支付页面的数据
+    // 只传递订单ID给支付页面
     final paymentData = {
-      'orderNo': orderDetail.orderNo,
-      'orderItems': orderDetail.orderItems.map((item) => {
-        'id': item.id,
-        'productId': item.productId,
-        'skuId': item.skuId,
-        'productName': item.productName,
-        'productPic': item.productPic,
-        'productSpecs': item.productSpecs,
-        'quantity': item.quantity,
-        'unitPrice': item.unitPrice,
-        'totalPrice': item.totalPrice,
-      }).toList(),
-      'payment': orderDetail.payment != null ? {
-        'id': orderDetail.payment!.id,
-        'paymentId': orderDetail.payment!.paymentId,
-        'amount': orderDetail.payment!.amount,
-        'payType': orderDetail.payment!.payType,
-        'paymentMethod': orderDetail.payment!.paymentMethod,
-        'status': orderDetail.payment!.status,
-        'statusText': orderDetail.payment!.statusText,
-        'transactionId': orderDetail.payment!.transactionId,
-        'paymentUrl': orderDetail.payment!.paymentUrl,
-        'qrCode': orderDetail.payment!.qrCode,
-        'payTime': orderDetail.payment!.payTime,
-        'expireTime': orderDetail.payment!.expireTime,
-        'createdAt': orderDetail.payment!.createdAt,
-        'updatedAt': orderDetail.payment!.updatedAt,
-        'thirdPartyOrderNo': orderDetail.payment!.thirdPartyOrderNo,
-      } : null,
+      'orderId': orderDetail.orderId,
     };
 
     // 跳转到支付页面

@@ -32,6 +32,18 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _initializeFormData();
+  }
+
+  /// 初始化表单数据
+  void _initializeFormData() {
+    final orderData = logic.getOrderData();
+    if (orderData != null) {
+      _categoryController.text = orderData['category']?.toString() ?? '';
+      _productNameController.text = orderData['productName']?.toString() ?? '';
+      _productDescriptionController.text = orderData['productDescription']?.toString() ?? '';
+      _priceController.text = orderData['totalPrice']?.toString() ?? '';
+    }
   }
 
   @override
@@ -128,6 +140,10 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         const SizedBox(height: 8),
         TextFormField(
           controller: _productNameController,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF333333), // 输入文字颜色
+          ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return '请输入商品名称';
@@ -154,6 +170,10 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         TextFormField(
           controller: _productDescriptionController,
           maxLines: 5,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF333333), // 输入文字颜色
+          ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return '请输入商品描述';
@@ -179,6 +199,10 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
         const SizedBox(height: 8),
         TextFormField(
           controller: _categoryController,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF333333), // 输入文字颜色
+          ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return '请输入商品类别';
@@ -231,24 +255,24 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
         const SizedBox(height: 32),
-        ElevatedButton(
-          onPressed: _handleCreateAndSend,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.purple,
-            minimumSize: const Size(double.infinity, 48),
-          ),
-          child: const Text(
-            '创建并发送',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
+        // ElevatedButton(
+        //   onPressed: _handleCreateAndSend,
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: Colors.purple,
+        //     minimumSize: const Size(double.infinity, 48),
+        //   ),
+        //   child: const Text(
+        //     '创建并发送',
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        // ),
         const SizedBox(height: 16),
         OutlinedButton(
           onPressed: _handleSaveDraft,
           style: OutlinedButton.styleFrom(
             minimumSize: const Size(double.infinity, 48),
           ),
-          child: const Text('保存草稿'),
+          child: const Text('创建并发送'),
         ),
       ],
         ),
@@ -301,4 +325,7 @@ class _TkGuaranteeCreateOrderPageState extends State<TkGuaranteeCreateOrderPage>
       price: formData['price'],
     );
   }
+
+
+
 }

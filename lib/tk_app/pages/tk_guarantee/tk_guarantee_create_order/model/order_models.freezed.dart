@@ -533,6 +533,7 @@ mixin _$CreateOrderRequest {
   int get customerServiceId => throw _privateConstructorUsedError;
   List<OrderItem> get orderItems => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
+  int get buyerId => throw _privateConstructorUsedError;
 
   /// Serializes this CreateOrderRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -573,7 +574,8 @@ abstract class $CreateOrderRequestCopyWith<$Res> {
       String conversationId,
       int customerServiceId,
       List<OrderItem> orderItems,
-      int memberId});
+      int memberId,
+      int buyerId});
 }
 
 /// @nodoc
@@ -614,6 +616,7 @@ class _$CreateOrderRequestCopyWithImpl<$Res, $Val extends CreateOrderRequest>
     Object? customerServiceId = null,
     Object? orderItems = null,
     Object? memberId = null,
+    Object? buyerId = null,
   }) {
     return _then(_value.copyWith(
       userOpenimUserId: null == userOpenimUserId
@@ -708,6 +711,10 @@ class _$CreateOrderRequestCopyWithImpl<$Res, $Val extends CreateOrderRequest>
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
               as int,
+      buyerId: null == buyerId
+          ? _value.buyerId
+          : buyerId // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -743,7 +750,8 @@ abstract class _$$CreateOrderRequestImplCopyWith<$Res>
       String conversationId,
       int customerServiceId,
       List<OrderItem> orderItems,
-      int memberId});
+      int memberId,
+      int buyerId});
 }
 
 /// @nodoc
@@ -782,6 +790,7 @@ class __$$CreateOrderRequestImplCopyWithImpl<$Res>
     Object? customerServiceId = null,
     Object? orderItems = null,
     Object? memberId = null,
+    Object? buyerId = null,
   }) {
     return _then(_$CreateOrderRequestImpl(
       userOpenimUserId: null == userOpenimUserId
@@ -876,6 +885,10 @@ class __$$CreateOrderRequestImplCopyWithImpl<$Res>
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
               as int,
+      buyerId: null == buyerId
+          ? _value.buyerId
+          : buyerId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -906,7 +919,8 @@ class _$CreateOrderRequestImpl implements _CreateOrderRequest {
       this.conversationId = "conv_123456789",
       this.customerServiceId = 0,
       required final List<OrderItem> orderItems,
-      this.memberId = 0})
+      this.memberId = 0,
+      this.buyerId = 0})
       : _orderItems = orderItems;
 
   factory _$CreateOrderRequestImpl.fromJson(Map<String, dynamic> json) =>
@@ -983,10 +997,13 @@ class _$CreateOrderRequestImpl implements _CreateOrderRequest {
   @override
   @JsonKey()
   final int memberId;
+  @override
+  @JsonKey()
+  final int buyerId;
 
   @override
   String toString() {
-    return 'CreateOrderRequest(userOpenimUserId: $userOpenimUserId, sellerId: $sellerId, sellerName: $sellerName, sellerOpenimUserId: $sellerOpenimUserId, serviceOpenimUserId: $serviceOpenimUserId, orderType: $orderType, payType: $payType, paymentMethod: $paymentMethod, currencyId: $currencyId, remark: $remark, deliveryDays: $deliveryDays, guaranteeType: $guaranteeType, productType: $productType, totalAmount: $totalAmount, payAmount: $payAmount, shippingFee: $shippingFee, discountAmount: $discountAmount, actualPaymentAmount: $actualPaymentAmount, priceAdjustmentId: $priceAdjustmentId, conversationId: $conversationId, customerServiceId: $customerServiceId, orderItems: $orderItems, memberId: $memberId)';
+    return 'CreateOrderRequest(userOpenimUserId: $userOpenimUserId, sellerId: $sellerId, sellerName: $sellerName, sellerOpenimUserId: $sellerOpenimUserId, serviceOpenimUserId: $serviceOpenimUserId, orderType: $orderType, payType: $payType, paymentMethod: $paymentMethod, currencyId: $currencyId, remark: $remark, deliveryDays: $deliveryDays, guaranteeType: $guaranteeType, productType: $productType, totalAmount: $totalAmount, payAmount: $payAmount, shippingFee: $shippingFee, discountAmount: $discountAmount, actualPaymentAmount: $actualPaymentAmount, priceAdjustmentId: $priceAdjustmentId, conversationId: $conversationId, customerServiceId: $customerServiceId, orderItems: $orderItems, memberId: $memberId, buyerId: $buyerId)';
   }
 
   @override
@@ -1037,7 +1054,8 @@ class _$CreateOrderRequestImpl implements _CreateOrderRequest {
             const DeepCollectionEquality()
                 .equals(other._orderItems, _orderItems) &&
             (identical(other.memberId, memberId) ||
-                other.memberId == memberId));
+                other.memberId == memberId) &&
+            (identical(other.buyerId, buyerId) || other.buyerId == buyerId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1066,7 +1084,8 @@ class _$CreateOrderRequestImpl implements _CreateOrderRequest {
         conversationId,
         customerServiceId,
         const DeepCollectionEquality().hash(_orderItems),
-        memberId
+        memberId,
+        buyerId
       ]);
 
   /// Create a copy of CreateOrderRequest
@@ -1110,7 +1129,8 @@ abstract class _CreateOrderRequest implements CreateOrderRequest {
       final String conversationId,
       final int customerServiceId,
       required final List<OrderItem> orderItems,
-      final int memberId}) = _$CreateOrderRequestImpl;
+      final int memberId,
+      final int buyerId}) = _$CreateOrderRequestImpl;
 
   factory _CreateOrderRequest.fromJson(Map<String, dynamic> json) =
       _$CreateOrderRequestImpl.fromJson;
@@ -1161,6 +1181,8 @@ abstract class _CreateOrderRequest implements CreateOrderRequest {
   List<OrderItem> get orderItems;
   @override
   int get memberId;
+  @override
+  int get buyerId;
 
   /// Create a copy of CreateOrderRequest
   /// with the given fields replaced by the non-null parameter values.

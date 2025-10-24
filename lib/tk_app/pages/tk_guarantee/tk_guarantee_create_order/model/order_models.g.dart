@@ -77,6 +77,7 @@ _$CreateOrderRequestImpl _$$CreateOrderRequestImplFromJson(
           .map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       memberId: (json['memberId'] as num?)?.toInt() ?? 0,
+      buyerId: (json['buyerId'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$CreateOrderRequestImplToJson(
@@ -105,6 +106,7 @@ Map<String, dynamic> _$$CreateOrderRequestImplToJson(
       'customerServiceId': instance.customerServiceId,
       'orderItems': instance.orderItems,
       'memberId': instance.memberId,
+      'buyerId': instance.buyerId,
     };
 
 _$OrderDataImpl _$$OrderDataImplFromJson(Map<String, dynamic> json) =>

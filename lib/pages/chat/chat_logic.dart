@@ -13,6 +13,7 @@ import 'package:openim_common/openim_common.dart';
 import 'package:pull_to_refresh_new/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:toklink/tk_app/core/utils/access_token_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -22,6 +23,9 @@ import '../../core/controller/app_controller.dart';
 import '../../core/controller/im_controller.dart';
 import '../../core/im_callback.dart';
 import '../../routes/app_navigator.dart';
+import '../../routes/app_pages.dart';
+import '../../tk_app/core/utils/openim_helper.dart';
+import '../../tk_app/pages/tk_guarantee/tk_guarantee_create_order/model/order_models.dart';
 import '../contacts/select_contacts/select_contacts_logic.dart';
 import '../conversation/conversation_logic.dart';
 import 'group_setup/group_member_list/group_member_list_logic.dart';
@@ -1428,6 +1432,114 @@ class ChatLogic extends SuperController {
         );
         viewUserInfo(userInfo);
       }
+    }
+  }
+
+  /// 处理商品分享卡片点击
+  Future<void> handleProductShareCardTap(Message message) async {
+    // Logger.print('🛍️ 商品分享卡片被点击');
+    // Logger.print('📱 消息ID: ${message.clientMsgID}');
+    // Logger.print('📝 消息内容: ${message.customElem?.data}');
+    //
+    try {
+      final data = IMUtils.parseCustomMessage(message);
+      if (data != null) {
+        Logger.print('🔍 解析后的商品数据: $data');
+        Logger.print('📦 商品名称: ${data['productName']}');
+        Logger.print('💰 商品价格: ${data['price']}');
+        Logger.print('🏪 品牌名称: ${data['brandName']}');
+        Logger.print('🏬 店铺名称: ${data['shopName']}');
+        Logger.print('🆔 商品ID: ${data['productId']}');
+        Logger.print('📄 商品描述: ${data['description']}');
+        Logger.print('🖼️ 商品图片: ${data['imageUrl']}');
+
+        Logger.print('🖼️ categoryName: ${data['categoryName']}');
+        Logger.print('🖼️ sellerId: ${data['sellerId']}');
+        Logger.print('🖼️ subName: ${data['subName']}');
+        Logger.print('🖼️ userOpenimUserId: ${data['userOpenimUserId']}');
+        Logger.print('🖼️ serviceOpenimUserId: ${data['serviceOpenimUserId']}');
+
+        String? userOpenimUserId = OpenIMHelper.getCurrentUserID();
+
+        if (userOpenimUserId == (data['serviceOpenimUserId'] as String)) {
+
+          double.parse(data['price'].toString());
+          String? memberId = await TokenAccessHelper.getUserId();
+
+          CreateOrderRequest model = CreateOrderRequest(
+              totalAmount: double.parse(data['price'].toString()),
+              payAmount: double.parse(data['price'].toString()),
+              actualPaymentAmount:  double.parse(data['price'].toString()),
+              userOpenimUserId: data['userOpenimUserId'].toString(),
+              sellerOpenimUserId: data['serviceOpenimUserId'].toString(),
+              sellerId: int.parse(data['sellerId'].toString()),
+              buyerId: int.parse(data['buyerId'].toString()),  // 买家 id
+              memberId: int.parse(memberId!), // 下单客服 id
+              orderItems: [OrderItem(
+                  productName: data['productName'].toString() ,
+                  productDescription: data['subName'].toString(),
+                  unitPrice: double.parse(data['price'].toString()) ,
+                  totalPrice: double.parse(data['price'].toString()),
+                  originalPrice: double.parse(data['price'].toString()),
+                  category: data['categoryName'].toString())]);
+
+
+          Get.toNamed(AppRoutes.tkGuaranteeCreateOrder, arguments: {
+            'orderData': model,
+            'onOrderCreated': (Map<String, dynamic> messageData) {
+              // 在聊天页面发送消息
+              sendCustomMsg(
+                data: json.encode(messageData['messageData']),
+                extension: messageData['extension'],
+                description: messageData['description'],
+              );
+            },
+          });
+        }else if (userOpenimUserId == data['userOpenimUserId']) {
+          // 跳转到商品详情页面，使用真实的产品ID
+          Get.toNamed(AppRoutes.tkProductDetail, arguments: {
+            'productId': data['productId'],
+          });
+        }
+
+        // 可以在这里添加更多处理逻辑，比如跳转到商品详情页
+        // AppNavigator.startProductDetail(productId: data['productId']);
+      } else {
+        Logger.print('❌ 无法解析商品数据');
+      }
+    } catch (e) {
+      Logger.print('❌ 解析商品数据时出错: $e');
+    }
+  }
+
+  /// 处理商品咨询卡片点击
+  void handleProductInquiryCardTap(Message message) {
+    Logger.print('💬 商品咨询卡片被点击');
+    Logger.print('📱 消息ID: ${message.clientMsgID}');
+    Logger.print('📝 消息内容: ${message.customElem?.data}');
+    
+    try {
+      final data = IMUtils.parseCustomMessage(message);
+      if (data != null) {
+        Logger.print('🔍 解析后的咨询数据: $data');
+        Logger.print('📦 商品名称: ${data['productName']}');
+        Logger.print('📄 咨询描述: ${data['description']}');
+        Logger.print('🆔 商品ID: ${data['productId']}');
+
+        String userOpenimUserId = data['userOpenimUserId'] ?? '';
+        if (userOpenimUserId == OpenIMHelper.getCurrentUserID()) {
+          final paymentData = {
+          'orderId': data['orderId'],};
+          Get.toNamed(AppRoutes.tkOrderToPay,arguments: paymentData);
+        }
+        Logger.print('🆔 userOpenimUserId: ${data['userOpenimUserId']}');
+        Logger.print('🆔 orderId: ${data['orderId']}');
+
+      } else {
+        Logger.print('❌ 无法解析咨询数据');
+      }
+    } catch (e) {
+      Logger.print('❌ 解析咨询数据时出错: $e');
     }
   }
 }

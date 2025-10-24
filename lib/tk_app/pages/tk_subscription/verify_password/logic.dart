@@ -154,7 +154,9 @@ class VerifyPasswordLogic extends GetxController {
           },
         ),
       );
-      
+      print(response.data);
+      print(response.data);
+
       // 解析响应
       final paymentResponse = PaymentVerifyResponse.fromJson(response.data);
       

@@ -773,7 +773,7 @@ class IMUtils {
               content = '[商品]';
               break;
             case CustomMessageType.productInquiry:
-              content = '[商品咨询]';
+              content = '[支付订单]';
               break;
             default:
               content = '[${StrRes.unsupportedMessage}]';

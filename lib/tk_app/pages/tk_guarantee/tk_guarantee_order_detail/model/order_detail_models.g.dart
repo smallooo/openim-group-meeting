@@ -150,6 +150,7 @@ _$OrderDetailDataImpl _$$OrderDetailDataImplFromJson(
       orderId: json['orderId'] as String,
       orderNo: json['orderNo'] as String,
       memberId: json['memberId'] as String,
+      buyerId: json['buyerId'] as String,
       sellerId: json['sellerId'] as String,
       sellerName: json['sellerName'] as String? ?? "",
       orderType: json['orderType'] as String,
@@ -175,9 +176,7 @@ _$OrderDetailDataImpl _$$OrderDetailDataImplFromJson(
       orderItems: (json['orderItems'] as List<dynamic>)
           .map((e) => OrderItemDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
-      payment: json['payment'] == null
-          ? null
-          : PaymentInfo.fromJson(json['payment'] as Map<String, dynamic>),
+      payment: _paymentFromJson(json['payment']),
       refundApplication: json['refundApplication'] as String? ?? "",
       conversationId: json['conversationId'] as String? ?? "0",
       buyerInfo: json['buyerInfo'] == null
@@ -202,6 +201,7 @@ Map<String, dynamic> _$$OrderDetailDataImplToJson(
       'orderId': instance.orderId,
       'orderNo': instance.orderNo,
       'memberId': instance.memberId,
+      'buyerId': instance.buyerId,
       'sellerId': instance.sellerId,
       'sellerName': instance.sellerName,
       'orderType': instance.orderType,
