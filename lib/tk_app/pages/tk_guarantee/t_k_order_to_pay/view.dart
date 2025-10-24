@@ -33,8 +33,26 @@ class TKOrderToPayPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Obx(() {
-        if (state.isLoading.value) {
+        if (state.isLoading.value && state.orderDetail.value == null) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state.orderDetail.value == null) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error_outline, size: 64.sp, color: Colors.grey),
+                SizedBox(height: 16.h),
+                Text('订单信息加载失败', style: TextStyle(fontSize: 16.sp, color: Colors.grey)),
+                SizedBox(height: 16.h),
+                ElevatedButton(
+                  onPressed: () => logic.loadOrderDetail(logic.orderId ?? ''),
+                  child: const Text('重新加载'),
+                ),
+              ],
+            ),
+          );
         }
 
         return Column(
@@ -265,7 +283,7 @@ class TKOrderToPayPage extends StatelessWidget {
           width: double.infinity,
           height: 48.h,
           child: ElevatedButton(
-            onPressed: () => logic.processPay(),
+            onPressed: () async => await logic.processPay(),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF9E13F7),
               shape: RoundedRectangleBorder(

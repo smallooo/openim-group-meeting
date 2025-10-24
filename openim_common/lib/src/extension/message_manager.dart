@@ -115,7 +115,7 @@ class CustomMessageType {
   
   // 商品相关消息类型
   static const productShare = 920;  // 商品分享
-  static const productInquiry = 921; // 商品咨询
+  static const productInquiry = 921; // 订单支付
 }
 
 extension PublicUserInfoExt on PublicUserInfo {

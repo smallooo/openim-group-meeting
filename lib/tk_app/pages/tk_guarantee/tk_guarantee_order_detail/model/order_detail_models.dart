@@ -106,6 +106,7 @@ class OrderDetailData with _$OrderDetailData {
     required String orderId,
     required String orderNo,
     required String memberId,
+    required String buyerId,
     required String sellerId,
     @Default("") String sellerName,
     required String orderType,
@@ -129,7 +130,7 @@ class OrderDetailData with _$OrderDetailData {
     required String createdAt,
     required String updatedAt,
     required List<OrderItemDetail> orderItems,
-    PaymentInfo? payment,
+    @JsonKey(fromJson: _paymentFromJson) PaymentInfo? payment,
     @Default("") String refundApplication,
     @Default("0") String conversationId,
     BuyerInfo? buyerInfo,
@@ -151,4 +152,15 @@ class OrderDetailResponse with _$OrderDetailResponse {
   }) = _OrderDetailResponse;
 
   factory OrderDetailResponse.fromJson(Map<String, dynamic> json) => _$OrderDetailResponseFromJson(json);
+}
+
+// 自定义转换函数，处理payment字段为空字符串的情况
+PaymentInfo? _paymentFromJson(dynamic json) {
+  if (json == null || json == "" || json is String) {
+    return null;
+  }
+  if (json is Map<String, dynamic>) {
+    return PaymentInfo.fromJson(json);
+  }
+  return null;
 }

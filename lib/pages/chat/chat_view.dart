@@ -7,6 +7,7 @@ import 'package:toklink/pages/chat/chat_emoji_view.dart';
 import 'package:toklink/pages/chat/chat_voice_record_layout.dart';
 
 import 'chat_logic.dart';
+import 'order_widget/order_custom_widgets.dart';
 
 class ChatPage extends StatelessWidget {
   final logic = Get.find<ChatLogic>(tag: GetTags.chat);
@@ -168,7 +169,11 @@ class ChatPage extends StatelessWidget {
         if (productData != null) {
           print('✅ productData 不为null，构建卡片');
           return CustomTypeInfo(
-            _buildProductShareCard(productData),
+            ProductShareCard(
+              data: productData,
+              message: message,
+              onTap: () => logic.handleProductShareCardTap(message),
+            ),
             true, // 显示在右侧
             true, // 显示时间
           );
@@ -183,7 +188,11 @@ class ChatPage extends StatelessWidget {
         if (inquiryData != null) {
           print('✅ inquiryData 不为null，构建卡片');
           return CustomTypeInfo(
-            _buildProductInquiryCard(inquiryData),
+            ProductInquiryCard(
+              data: inquiryData,
+              message: message,
+              onTap: () => logic.handleProductInquiryCardTap(message),
+            ),
             true,
             true,
           );
@@ -274,182 +283,4 @@ class ChatPage extends StatelessWidget {
     );
   }
 
-  /// 构建商品分享卡片
-  Widget _buildProductShareCard(Map<String, dynamic> data) {
-    print('🎨 构建商品分享卡片，数据: $data');
-    
-    return Container(
-      constraints: BoxConstraints(
-        maxWidth: 250.w, // 限制最大宽度
-      ),
-      margin: EdgeInsets.symmetric(vertical: 4.h),
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        // color: Colors.blue.shade50,
-        color: const Color(0xFFF9F9F9),
-        borderRadius: BorderRadius.circular(8.r),
-        // border: Border.all(color: Colors.blue.shade200, width: 1),
-        border: Border.all(color: const Color(0xFFF9F9F9), width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // 标题
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.shopping_bag,
-                color: Colors.purple,
-                size: 16.sp,
-              ),
-              SizedBox(width: 6.w),
-              Text(
-                '商品',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          
-          SizedBox(height: 8.h),
-          
-          // 商品名称
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              data['productName']?.toString() ?? '商品名称',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          
-          SizedBox(height: 4.h),
-          
-          // 价格
-          Text(
-            '¥${data['price']?.toString() ?? '0'}',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.red,
-            ),
-          ),
-          
-          // 品牌信息
-          if (data['brandName'] != null && data['brandName'].toString().isNotEmpty) ...[
-            SizedBox(height: 4.h),
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                '品牌: ${data['brandName'].toString()}',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.grey.shade600,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-          
-          // 店铺信息
-          if (data['shopName'] != null && data['shopName'].toString().isNotEmpty) ...[
-            SizedBox(height: 4.h),
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                '店铺: ${data['shopName'].toString()}',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.grey.shade600,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  /// 构建商品咨询卡片
-  Widget _buildProductInquiryCard(Map<String, dynamic> data) {
-    return Container(
-      constraints: BoxConstraints(
-        maxWidth: 250.w, // 限制最大宽度
-      ),
-      margin: EdgeInsets.symmetric(vertical: 4.h),
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: Colors.blue.shade200, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.shopping_bag,
-                color: Colors.blue.shade700,
-                size: 16.sp,
-              ),
-              SizedBox(width: 6.w),
-              Text(
-                '商品咨询',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue.shade700,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              data['productName']?.toString() ?? '商品咨询',
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.black87,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          if (data['description'] != null && data['description'].toString().isNotEmpty) ...[
-            SizedBox(height: 4.h),
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                data['description'].toString(),
-                style: TextStyle(
-                  fontSize: 11.sp,
-                  color: Colors.grey.shade600,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
 }

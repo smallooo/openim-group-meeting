@@ -242,7 +242,7 @@ class TkProductDetailLogic extends GetxController {
   String? _getCustomerServiceID() {
     // 这里可以从配置、API或固定值获取客服ID
     // 暂时返回一个固定的客服ID，实际使用时应该从配置中获取
-    return '8443303040'; // 替换为实际的客服ID
+    return '8193405756'; // 替换为实际的客服ID
 
     // xw  8193405756
   }
@@ -255,7 +255,10 @@ class TkProductDetailLogic extends GetxController {
         IMViews.showToast('商品信息获取失败');
         return;
       }
-      
+
+      String? userOpenimUserId = OpenIMHelper.getCurrentUserID();
+      String? buyerId = await TokenAccessHelper.getUserId();
+
       // 使用简化的消息数据，与测试数据保持一致
       final productData = {
         "customType": CustomMessageType.productShare,
@@ -266,9 +269,17 @@ class TkProductDetailLogic extends GetxController {
           "price": product.defaultPrice,
           "brandName": product.brandName,
           "shopName": product.shopName,
+
+          "categoryName": product.categoryName,
+          "sellerId": product.sellerId,
+          "subName": product.subName,
+          "userOpenimUserId": userOpenimUserId,
+          "serviceOpenimUserId": customerServiceID,
+          "buyerId": buyerId,
         }
       };
-      
+      print('🔍 getUserId: $buyerId');
+
       print('🔍 发送商品消息数据: ${json.encode(productData)}');
       print('🔍 消息类型: ${CustomMessageType.productShare}');
       
@@ -288,8 +299,8 @@ class TkProductDetailLogic extends GetxController {
         message: message,
         userID: customerServiceID,
         offlinePushInfo: OfflinePushInfo(
-          title: '商品咨询',
-          desc: '用户咨询商品：${product.name}',
+          title: '订单支付',
+          desc: '订单商品：${product.name}',
         ),
       );
       

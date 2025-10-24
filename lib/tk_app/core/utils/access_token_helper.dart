@@ -66,4 +66,17 @@ class TokenAccessHelper {
     }
     return {};
   }
+
+  /// 获取有效 UserId
+  static Future<String?> getUserId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final storage = TokenStorageService(prefs);
+      return storage.getUserId();
+    } catch (e) {
+      debugPrint('[TokenAccessHelper] 获取 UserId 失败: $e');
+      return null;
+    }
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../tk_guarantee/tk_guarantee_order_detail/model/order_detail_models.dart';
 
 // 订单项信息
 class OrderItemInfo {
@@ -101,6 +102,7 @@ class TKOrderToPayState {
   final isLoading = false.obs;
   
   // 订单信息
+  final orderDetail = Rxn<OrderDetailData>();
   final orderNo = ''.obs;
   final orderItems = <OrderItemInfo>[].obs;
   
