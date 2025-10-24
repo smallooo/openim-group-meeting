@@ -12,12 +12,30 @@ class GroupParticipantTrack {
 }
 
 abstract class ParticipantWidget extends StatefulWidget {
+  final String? nickname;
+  final String? faceURL;
   // Convenience method to return relevant widget for participant
-  static ParticipantWidget widgetFor(GroupParticipantTrack participantTrack) {
+  static ParticipantWidget widgetFor(
+    GroupParticipantTrack participantTrack,
+    String? nickname,
+    String? faceURL,
+  ) {
     if (participantTrack.participant is LocalParticipant) {
-      return LocalParticipantWidget(participantTrack.participant as LocalParticipant, participantTrack.videoTrack, participantTrack.isScreenShare);
+      return LocalParticipantWidget(
+        participantTrack.participant as LocalParticipant,
+        participantTrack.videoTrack,
+        participantTrack.isScreenShare,
+        nickname: nickname,
+        faceURL: faceURL,
+      );
     } else if (participantTrack.participant is RemoteParticipant) {
-      return RemoteParticipantWidget(participantTrack.participant as RemoteParticipant, participantTrack.videoTrack, participantTrack.isScreenShare);
+      return RemoteParticipantWidget(
+        participantTrack.participant as RemoteParticipant,
+        participantTrack.videoTrack,
+        participantTrack.isScreenShare,
+        nickname: nickname,
+        faceURL: faceURL,
+      );
     }
     throw UnimplementedError('Unknown participant type');
   }
@@ -31,6 +49,8 @@ abstract class ParticipantWidget extends StatefulWidget {
   const ParticipantWidget({
     this.quality = VideoQuality.MEDIUM,
     Key? key,
+    this.nickname,
+    this.faceURL,
   }) : super(key: key);
 }
 
@@ -43,11 +63,17 @@ class LocalParticipantWidget extends ParticipantWidget {
   final bool isScreenShare;
 
   const LocalParticipantWidget(
-      this.participant,
-      this.videoTrack,
-      this.isScreenShare, {
-        Key? key,
-      }) : super(key: key);
+    this.participant,
+    this.videoTrack,
+    this.isScreenShare, {
+    Key? key,
+    String? nickname,
+    String? faceURL,
+  }) : super(
+          key: key,
+          nickname: nickname,
+          faceURL: faceURL,
+        );
 
   @override
   State<StatefulWidget> createState() => _LocalParticipantWidgetState();
@@ -62,11 +88,17 @@ class RemoteParticipantWidget extends ParticipantWidget {
   final bool isScreenShare;
 
   const RemoteParticipantWidget(
-      this.participant,
-      this.videoTrack,
-      this.isScreenShare, {
-        Key? key,
-      }) : super(key: key);
+    this.participant,
+    this.videoTrack,
+    this.isScreenShare, {
+    Key? key,
+    String? nickname,
+    String? faceURL,
+  }) : super(
+          key: key,
+          nickname: nickname,
+          faceURL: faceURL,
+        );
 
   @override
   State<StatefulWidget> createState() => _RemoteParticipantWidgetState();
@@ -131,30 +163,53 @@ class _LocalParticipantWidgetState extends _ParticipantWidgetState<LocalParticip
   @override
   VideoTrack? get activeVideoTrack => widget.videoTrack;
 
-    @override
-  Widget build(BuildContext ctx) => Stack(
-        children: [
-          super.build(ctx),
-          Positioned(
-            left: 8,
-            right: 8,
-            bottom: 8,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(8),
+  @override
+  Widget build(BuildContext ctx) {
+    final isVideo = widget.videoTrack != null && !(widget.videoTrack?.muted ?? true);
+    return Stack(
+      children: [
+        // Text( "111", style: TextStyle(color: Colors.white)),
+        isVideo
+            ? VideoTrackRenderer(
+                widget.videoTrack!,
+                fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+              )
+            : Container(
+                color: Colors.black,
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  radius: 32,
+                  backgroundImage: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
+                      ? NetworkImage(widget.faceURL!)
+                      : null,
+                  backgroundColor: Colors.grey[300],
+                  child: (widget.faceURL == null || widget.faceURL!.isEmpty)
+                      ? Icon(Icons.person, size: 36, color: Colors.white)
+                      : null,
+                ),
               ),
-              child: Text(
-                '${widget.participant.identity} (You)',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-                overflow: TextOverflow.ellipsis,
-              ),
+        Positioned(
+          left: 8,
+          right: 8,
+          bottom: 8,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              widget is LocalParticipantWidget
+                  ? '${widget.nickname ?? widget.participant.identity} (You)'
+                  : widget.nickname ?? widget.participant.identity,
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-        ],
-      );
-
+        ),
+      ],
+    );
+  }
 }
 
 class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemoteParticipantWidget> {
@@ -168,27 +223,48 @@ class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemotePartic
   @override
   VideoTrack? get activeVideoTrack => widget.videoTrack;
 
-    @override
-  Widget build(BuildContext ctx) => Stack(
-        children: [
-          super.build(ctx),
-          Positioned(
-            left: 8,
-            right: 8,
-            bottom: 8,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(8),
+  @override
+  Widget build(BuildContext ctx) {
+    final isVideo = widget.videoTrack != null && !(widget.videoTrack?.muted ?? true);
+    return Stack(
+      children: [
+        isVideo
+            ? VideoTrackRenderer(
+                widget.videoTrack!,
+                fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+              )
+            : Container(
+                color: Colors.black,
+                alignment: Alignment.center,
+                child: CircleAvatar(
+                  radius: 32,
+                  backgroundImage: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
+                      ? NetworkImage(widget.faceURL!)
+                      : null,
+                  backgroundColor: Colors.grey[300],
+                  child: (widget.faceURL == null || widget.faceURL!.isEmpty)
+                      ? Icon(Icons.person, size: 36, color: Colors.white)
+                      : null,
+                ),
               ),
-              child: Text(
-                '${widget.participant.identity}',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-                overflow: TextOverflow.ellipsis,
-              ),
+        Positioned(
+          left: 8,
+          right: 8,
+          bottom: 8,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              widget.nickname ?? widget.participant.identity,
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 }

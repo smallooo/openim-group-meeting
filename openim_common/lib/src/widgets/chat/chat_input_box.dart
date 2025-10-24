@@ -11,6 +11,7 @@ class ChatInputBox extends StatefulWidget {
     Key? key,
     required this.toolbox,
     required this.voiceRecordBar,
+    required this.emojiView,
     this.controller,
     this.focusNode,
     this.style,
@@ -36,6 +37,7 @@ class ChatInputBox extends StatefulWidget {
   final bool isNotInGroup;
   final String? hintText;
   final Widget toolbox;
+  final Widget emojiView;
   final Widget voiceRecordBar;
   final Stream? forceCloseToolboxSub;
   final String? quoteContent;
@@ -55,7 +57,9 @@ class ChatInputBox extends StatefulWidget {
 
 class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateMixin */ {
   bool _toolsVisible = false;
+  bool _emojiVisible = false;
   bool _leftKeyboardButton = false;
+  bool _rightKeyboardButton = false;
   bool _sendButtonVisible = false;
 
   bool get _showQuoteView => IMUtils.isNotNullEmptyStr(widget.quoteContent);
@@ -109,6 +113,13 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
                 child: Row(
                   children: [
                     12.horizontalSpace,
+                    (_leftKeyboardButton
+                        ? (ImageRes.openKeyboard.toImage..onTap = onTapLeftKeyboard)
+                        : (ImageRes.openVoice.toImage..onTap = onTapSpeak))
+                      ..width = 24.w
+                      ..height = 24.h
+                      ..opacity = _opacity,
+                    8.horizontalSpace,
                     Expanded(
                       child: Stack(
                         children: [
@@ -123,10 +134,17 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
                         ],
                       ),
                     ),
-                    12.horizontalSpace,
+                    8.horizontalSpace,
+                    (_rightKeyboardButton
+                        ? (ImageRes.openKeyboard.toImage..onTap = onTapRightKeyboard)
+                        : (ImageRes.openEmoji.toImage..onTap = onTapEmoji))
+                      ..width = 24.w
+                      ..height = 24.h
+                      ..opacity = _opacity,
+                    8.horizontalSpace,
                     (_sendButtonVisible ? ImageRes.sendMessage : ImageRes.openToolbox).toImage
-                      ..width = 32.w
-                      ..height = 32.h
+                      ..width = 22.w
+                      ..height = 22.h
                       ..opacity = _opacity
                       ..onTap = _sendButtonVisible ? send : toggleToolbox,
                     12.horizontalSpace,
@@ -145,6 +163,13 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
                 child: FadeInUp(
                   duration: const Duration(milliseconds: 200),
                   child: widget.toolbox,
+                ),
+              ),
+              Visibility(
+                visible: _emojiVisible,
+                child: FadeInUp(
+                  duration: const Duration(milliseconds: 200),
+                  child: widget.emojiView,
                 ),
               ),
             ],
@@ -173,6 +198,7 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
 
   void send() {
     if (!widget.enabled) return;
+    if (!_emojiVisible) focus();
     if (null != widget.onSend && null != widget.controller) {
       widget.onSend!(widget.controller!.text.toString().trim());
     }
@@ -182,6 +208,8 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
     if (!widget.enabled) return;
     setState(() {
       _toolsVisible = !_toolsVisible;
+      _emojiVisible = false;
+      _rightKeyboardButton = false;
       _leftKeyboardButton = false;
       if (_toolsVisible) {
         unfocus();
@@ -196,6 +224,7 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
     setState(() {
       _leftKeyboardButton = false;
       _toolsVisible = false;
+      _emojiVisible = false;
       focus();
     });
   }
@@ -204,7 +233,31 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
     if (!widget.enabled) return;
     setState(() {
       _toolsVisible = false;
+      _rightKeyboardButton = false;
+      _emojiVisible = false;
       focus();
+    });
+  }
+
+   void onTapSpeak() {
+    if (!widget.enabled) return;
+    Permissions.microphone(() => setState(() {
+          _leftKeyboardButton = true;
+          _rightKeyboardButton = false;
+          _toolsVisible = false;
+          _emojiVisible = false;
+          unfocus();
+        }));
+  }
+
+  void onTapEmoji() {
+    if (!widget.enabled) return;
+    setState(() {
+      _rightKeyboardButton = true;
+      _leftKeyboardButton = false;
+      _emojiVisible = true;
+      _toolsVisible = false;
+      unfocus();
     });
   }
 

@@ -102,7 +102,7 @@ class OpenIMLiveClient implements RTCBridge {
     CallObj callObj = CallObj.single,
     required String inviterUserID,
     required List<String> inviteeUserIDList,
-    List<GroupMembersInfo>? groupMembersList,
+    List<GroupMembersInfo>? inviteeMembersList,
     String? groupID,
     Future<SignalingCertificate> Function()? onDialSingle,
     Future<SignalingCertificate> Function()? onDialGroup,
@@ -134,29 +134,29 @@ class OpenIMLiveClient implements RTCBridge {
     if (callObj == CallObj.single) {
       _holder = OverlayEntry(
           builder: (context) => SingleRoomView(
-                callType: callType,
-                initState: initState,
-                callEventSubject: callEventSubject,
-                roomID: roomID,
-                userID: initState == CallState.call ? inviteeUserIDList.first : inviterUserID,
-                onDial: onDialSingle,
-                onTapCancel: onTapCancel,
-                onTapHangup: onTapHangup,
-                onTapReject: onTapReject,
-                onTapPickup: onTapPickup,
-                onSyncUserInfo: onSyncUserInfo,
-                autoPickup: autoPickup,
-                onBindRoomID: (roomID) => currentRoomID = roomID,
-                onWaitingAccept: onWaitingAccept,
-                onBusyLine: onBusyLine,
-                onStartCalling: onStartCalling,
-                onError: onError,
-                onRoomDisconnected: onRoomDisconnected,
-                onClose: () {
-                  onClose?.call();
-                  close();
-                },
-              ));
+            callType: callType,
+            initState: initState,
+            callEventSubject: callEventSubject,
+            roomID: roomID,
+            userID: initState == CallState.call ? inviteeUserIDList.first : inviterUserID,
+            onDial: onDialSingle,
+            onTapCancel: onTapCancel,
+            onTapHangup: onTapHangup,
+            onTapReject: onTapReject,
+            onTapPickup: onTapPickup,
+            onSyncUserInfo: onSyncUserInfo,
+            autoPickup: autoPickup,
+            onBindRoomID: (roomID) => currentRoomID = roomID,
+            onWaitingAccept: onWaitingAccept,
+            onBusyLine: onBusyLine,
+            onStartCalling: onStartCalling,
+            onError: onError,
+            onRoomDisconnected: onRoomDisconnected,
+            onClose: () {
+              onClose?.call();
+              close();
+            },
+          ));
     } else if (callObj == CallObj.group) {
       _holder = OverlayEntry(
         builder: (context) => GroupRoomView(
@@ -167,9 +167,9 @@ class OpenIMLiveClient implements RTCBridge {
           userID: OpenIM.iMManager.userID,
           onDial: onDialGroup,
           groupID: groupID!,
-          // inviterUserID: inviterUserID,
+          inviterUserID: inviterUserID,
           inviteeUserIDList: inviteeUserIDList,
-          groupMembersList: groupMembersList ?? [],
+          inviteeMemberList: inviteeMembersList ?? [],
           onJoinGroup: onJoinGroup,
           onTapCancel: onTapCancel,
           onTapHangup: onTapHangup,
@@ -178,7 +178,7 @@ class OpenIMLiveClient implements RTCBridge {
           onTapPickup: onTapPickup,
           autoPickup: false,
           // onSyncGroupInfo: onSyncGroupInfo,
-          // onSyncGroupMemberInfo: onSyncGroupMemberInfo,
+          onSyncGroupMemberInfo: onSyncGroupMemberInfo,
           // autoPickup: autoPickup,
           
           onBindRoomID: (roomID) => currentRoomID = roomID,

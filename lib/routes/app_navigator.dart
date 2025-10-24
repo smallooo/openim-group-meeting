@@ -361,4 +361,7 @@ class AppNavigator {
   static void startTkGuaranteeCreateOrder() {
     Get.toNamed(AppRoutes.tkGuaranteeCreateOrder);
   }
+
+   static startRedPacket() => Get.toNamed(AppRoutes.redPacket);
+   static favoriteManage() => Get.toNamed(AppRoutes.favoriteManage);
 }

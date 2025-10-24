@@ -21,8 +21,10 @@ abstract class GroupSignalView extends StatefulWidget {
     required this.initState,
     this.roomID,
     required this.groupID,
+    required this.inviterUserID,
     required this.inviteeUserIDList,
-    required this.groupMembersList,
+    required this.inviteeMemberList,
+    required this.onSyncGroupMemberInfo,
     required this.userID,
     required this.callEventSubject,
     this.onDial,
@@ -45,8 +47,10 @@ abstract class GroupSignalView extends StatefulWidget {
   final CallState initState;
   final String? roomID;
   final String groupID;
+  final String inviterUserID;
   final List<String> inviteeUserIDList;
-  final List<GroupMembersInfo> groupMembersList;
+  final List<GroupMembersInfo> inviteeMemberList;
+  final Future<List<GroupMembersInfo>> Function(String groupID, List<String> memberIDList)? onSyncGroupMemberInfo;
   final String userID;
   final PublishSubject<CallEvent> callEventSubject;
   final Future<SignalingCertificate> Function()? onDial;
@@ -239,30 +243,98 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
     return 4;
   }
 
-  // 构建远端参与者网格
 Widget _buildRemoteGrid() {
-  // 先构建一个包含本地和远端的列表
-  final List<GroupParticipantTrack> allTracks = [
-    if (localParticipantTrack != null) localParticipantTrack!,
-    ...remoteParticipantTracks,
+  // 获取已接入的 userID
+  final connectedUserIDs = [
+    if (localParticipantTrack != null) localParticipantTrack!.participant.identity,
+    ...remoteParticipantTracks.map((e) => e.participant.identity),
   ];
-  final count = allTracks.length;
-  if (count == 0) {
-    return const SizedBox.shrink();
-  }
-  final crossAxisCount = _gridCountFor(count);
-  return GridView.builder(
-    padding: EdgeInsets.fromLTRB(8.w, 24.h, 8.w, 220.h),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: crossAxisCount,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      childAspectRatio: 12 / 16,
-    ),
-    itemCount: count,
-    itemBuilder: (context, index) {
-      final track = allTracks[index];
-      return ParticipantWidget.widgetFor(track);
+
+  final inviterUserID = widget.inviterUserID;
+  final inviteeUserIDList = widget.inviteeUserIDList;
+  final meetingUserIDs = [inviterUserID, ...inviteeUserIDList];
+
+  return FutureBuilder<List<GroupMembersInfo>>(
+    future: widget.onSyncGroupMemberInfo?.call(widget.groupID, meetingUserIDs),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      final members = snapshot.data!;
+
+       List<GroupMembersInfo> sortedMembers = [];
+      // 构建一个新的列表，把自己放在第一个
+      final selfIndex = members.indexWhere((m) => m.userID == widget.userID);
+      if (selfIndex != -1) {
+        sortedMembers.add(members[selfIndex]);
+        sortedMembers.addAll(members.where((m) => m.userID != widget.userID));
+      } else if (localParticipantTrack != null) {
+        // 如果成员列表没有自己，但 localParticipantTrack 有，手动添加
+        sortedMembers.add(GroupMembersInfo(
+          userID: localParticipantTrack!.participant.identity,
+          nickname: OpenIM.iMManager.userInfo.nickname,
+          faceURL: OpenIM.iMManager.userInfo.faceURL,
+        ));
+        sortedMembers.addAll(members);
+      } else {
+        sortedMembers = members;
+      }
+      
+      final crossAxisCount = _gridCountFor(sortedMembers.length);
+
+      return GridView.builder(
+        padding: EdgeInsets.fromLTRB(8.w, 24.h, 8.w, 220.h),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: 16.h,
+          crossAxisSpacing: 16.w,
+          childAspectRatio: 12 / 16,
+        ),
+        itemCount: sortedMembers.length,
+        itemBuilder: (context, index) {
+          final member = sortedMembers[index];
+          final nickname = member.nickname ?? member.userID ?? '';
+          final isConnected = connectedUserIDs.contains(member.userID);
+       
+          if (isConnected) {
+            final trackIndex = remoteParticipantTracks.indexWhere((e) => e.participant.identity == member.userID);
+            if (localParticipantTrack != null && localParticipantTrack!.participant.identity == member.userID) {
+              return ParticipantWidget.widgetFor(localParticipantTrack!, member.nickname, member.faceURL);
+            } else if (trackIndex != -1) {
+              return ParticipantWidget.widgetFor(remoteParticipantTracks[trackIndex],member.nickname, member.faceURL,);
+            } 
+          } else {
+            return AspectRatio(
+              aspectRatio: 12 / 16, 
+              child: Container(
+                color: Colors.black,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 28.w,
+                      backgroundImage: member.faceURL != null && member.faceURL!.isNotEmpty
+                          ? NetworkImage(member.faceURL!)
+                          : null,
+                      backgroundColor: Colors.grey[300],
+                      child: member.faceURL == null || member.faceURL!.isEmpty
+                          ? Icon(Icons.person, size: 32.w, color: Colors.white)
+                          : null,
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      nickname,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
+        },
+      );
     },
   );
 }
@@ -325,7 +397,7 @@ Widget _buildRemoteGrid() {
                 onEnabledMicrophone: onChangedMicStatus,
                 onEnabledSpeaker: onChangedSpeakerStatus,
                 inviteeUserIDList: widget.inviteeUserIDList,
-                groupMembersList:  widget.groupMembersList,
+                groupMembersList:  widget.inviteeMemberList,
                 onHangUp: onTapHangup,
                 onPickUp: onTapPickup,
                 onReject: onTapReject,
@@ -357,5 +429,88 @@ Widget _buildRemoteGrid() {
         ),
     ],
   );
+
+
+  Widget buildGroupMembersGridBySync() {
+  return FutureBuilder<List<GroupMembersInfo>>(
+    future: widget.onSyncGroupMemberInfo?.call(widget.groupID, widget.inviteeUserIDList),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      final members = snapshot.data!;
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.all(16.w),
+        itemCount: members.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          mainAxisSpacing: 16.h,
+          crossAxisSpacing: 16.w,
+          childAspectRatio: 0.7,
+        ),
+        itemBuilder: (context, index) {
+          final member = members[index];
+          final nickname = member.nickname ?? member.userID ?? '';
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 28.w,
+                backgroundImage: NetworkImage(member.faceURL ?? ''),
+                backgroundColor: Colors.grey[300],
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                nickname,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
+
+
+  Widget buildGroupMembersGrid() {
+  final members = widget.inviteeMemberList;
+  return GridView.builder(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    padding: EdgeInsets.all(16.w),
+    itemCount: members.length,
+    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 4,
+      mainAxisSpacing: 16.h,
+      crossAxisSpacing: 16.w,
+      childAspectRatio: 0.7,
+    ),
+    itemBuilder: (context, index) {
+      final member = members[index];
+      final nickname = member.nickname ?? member.userID ?? '';
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(
+            radius: 28.w,
+            backgroundImage: NetworkImage(member.faceURL ?? ''),
+            backgroundColor: Colors.grey[300],
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            nickname,
+            style: TextStyle(color: Colors.white, fontSize: 14),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      );
+    },
+  );
+}
 }
 

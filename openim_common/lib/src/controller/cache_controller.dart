@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:openim_common/src/models/emoji_info.dart';
 
 class CacheController extends GetxController {
   final callRecordList = <CallRecords>[].obs;
   Box? callRecordBox;
   bool _isInitCallRecords = false;
+  final favoriteList = <EmojiInfo>[].obs;
 
   String get userID => DataSp.getLoginCertificate()!.userID;
 
@@ -39,6 +41,9 @@ class CacheController extends GetxController {
     callRecordList.removeWhere((element) => element.userID == records.userID && element.date == records.date);
     await callRecordBox?.put(userID, callRecordList.value);
   }
+
+  List<String> get urlList => favoriteList.map((e) => e.url!).toList();
+
 
   @override
   void onClose() {

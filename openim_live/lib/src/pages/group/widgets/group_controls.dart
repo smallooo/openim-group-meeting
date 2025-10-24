@@ -95,7 +95,7 @@ class _GroupControlsViewState extends State<GroupControlsView> {
   final _lockAudio = Lock();
   final _lockSpeaker = Lock();
 
-  List<GroupMembersInfo> groupMembersList = [];
+  // List<GroupMembersInfo> groupMembersList = [];
 
   Future<List<GroupMembersInfo>> _getGroupMembers() {
     final result = OpenIM.iMManager.groupManager.getGroupMemberList(
@@ -130,12 +130,12 @@ class _GroupControlsViewState extends State<GroupControlsView> {
 
 
 
-    // 2. 获取群成员并处理
-    _getGroupMembers().then((members) {
-      groupMembersList = members; // 保存群成员信息
-      // 你可以在这里做后续处理，比如 setState 或业务逻辑
-      setState(() {});
-    });
+    // // 2. 获取群成员并处理
+    // _getGroupMembers().then((members) {
+    //   groupMembersList = members; // 保存群成员信息
+    //   // 你可以在这里做后续处理，比如 setState 或业务逻辑
+    //   setState(() {});
+    // });
 
 
     super.initState();
