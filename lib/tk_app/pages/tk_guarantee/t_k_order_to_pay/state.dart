@@ -115,6 +115,10 @@ class TKOrderToPayState {
   final feeAmount = 0.0.obs;
   final totalAmount = 0.0.obs;
   
+  // 支付状态显示
+  final paymentStatusText = '待支付'.obs;
+  final isPaymentCompleted = false.obs;
+  
   TKOrderToPayState() {
     ///Initialize variables
   }

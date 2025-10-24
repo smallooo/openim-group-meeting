@@ -116,6 +116,13 @@ class TKOrderToPayLogic extends GetxController {
               updatedAt: orderData.payment!.updatedAt,
               thirdPartyOrderNo: orderData.payment!.thirdPartyOrderNo,
             );
+            
+            // 根据支付状态设置显示文本
+            _updatePaymentStatusDisplay(orderData.payment!.status);
+          } else {
+            // 没有支付信息，显示待支付
+            state.paymentStatusText.value = '待支付';
+            state.isPaymentCompleted.value = false;
           }
           
           // 计算费用和总金额
@@ -153,6 +160,33 @@ class TKOrderToPayLogic extends GetxController {
     state.totalAmount.value = double.parse(total.toStringAsFixed(2));
     
     debugPrint('[TKOrderToPay] 商品总价: $subtotal, 手续费: ${state.feeAmount.value}, 总计: ${state.totalAmount.value}');
+  }
+
+  /// 更新支付状态显示
+  void _updatePaymentStatusDisplay(String status) {
+    switch (status.toUpperCase()) {
+      case 'PENDING':
+        state.paymentStatusText.value = '待支付';
+        state.isPaymentCompleted.value = false;
+        break;
+      case 'SUCCESS':
+        state.paymentStatusText.value = '支付成功';
+        state.isPaymentCompleted.value = true;
+        break;
+      case 'FAILED':
+        state.paymentStatusText.value = '支付失败';
+        state.isPaymentCompleted.value = false;
+        break;
+      case 'CANCELLED':
+        state.paymentStatusText.value = '已取消';
+        state.isPaymentCompleted.value = false;
+        break;
+      default:
+        state.paymentStatusText.value = '待支付';
+        state.isPaymentCompleted.value = false;
+        break;
+    }
+    debugPrint('[TKOrderToPay] 支付状态: $status -> ${state.paymentStatusText.value}');
   }
 
   /// 处理支付

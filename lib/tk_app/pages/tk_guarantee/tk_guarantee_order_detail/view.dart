@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:toklink/routes/app_pages.dart';
+import 'package:toklink/routes/app_navigator.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
+import 'package:toklink/tk_app/core/utils/openim_helper.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -179,6 +182,12 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
           // 根据订单状态显示不同的按钮
           Obx(() {
             final orderDetail = state.orderDetail.value;
+            final currentUserID = OpenIMHelper.getCurrentUserID();
+            const customerServiceID = '8193405756';
+            
+            // 如果当前用户就是客服，不显示联系客服按钮
+            final shouldShowCustomerService = currentUserID != customerServiceID;
+            
             if (orderDetail != null && orderDetail.orderStatus == 1) {
               // 待付款状态，显示支付按钮
               return Column(
@@ -197,59 +206,66 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
                       child: Text('立即支付', style: TextStyle(fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.w600)),
                     ),
                   ),
-                  SizedBox(height: 8.h),
-                  Container(
-                    width: double.infinity,
-                    height: 45.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: const Color(0xFF9E13F7), width: 1),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.r),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFFFFFF),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
-                          side: BorderSide.none,
-                          elevation: 0,
-                          shadowColor: Colors.transparent,
-                          surfaceTintColor: Colors.transparent,
-                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                  if (shouldShowCustomerService) ...[
+                    SizedBox(height: 8.h),
+                    Container(
+                      width: double.infinity,
+                      height: 45.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(color: const Color(0xFF9E13F7), width: 1),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: ElevatedButton(
+                          onPressed: () => _navigateToCustomerService(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFFFFFF),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
+                            side: BorderSide.none,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                            surfaceTintColor: Colors.transparent,
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                          ),
+                          child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
                         ),
-                        child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
                       ),
                     ),
-                  ),
+                  ],
                 ],
               );
             } else {
-              // 其他状态，只显示联系客服按钮
-              return Container(
-                width: double.infinity,
-                height: 45.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(color: const Color(0xFF9E13F7), width: 1),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFFFFF),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
-                      side: BorderSide.none,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      surfaceTintColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
-                    ),
-                    child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
+              // 其他状态，只显示联系客服按钮（如果当前用户不是客服）
+              if (shouldShowCustomerService) {
+                return Container(
+                  width: double.infinity,
+                  height: 45.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(color: const Color(0xFF9E13F7), width: 1),
                   ),
-                ),
-              );
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.r),
+                      child: ElevatedButton(
+                        onPressed: () => _navigateToCustomerService(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFFFFF),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide.none),
+                        side: BorderSide.none,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        surfaceTintColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(vertical: 12.h),
+                      ),
+                      child: Text('联系客服', style: TextStyle(fontSize: 14.sp, color: const Color(0xFF9E13F7))),
+                    ),
+                  ),
+                );
+              } else {
+                // 当前用户是客服，不显示任何按钮
+                return const SizedBox.shrink();
+              }
             }
           }),
         ]),
@@ -399,6 +415,35 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
 
     // 跳转到支付页面
     Get.toNamed(AppRoutes.tkOrderToPay, arguments: paymentData);
+  }
+
+  /// 导航到客服聊天页面
+  void _navigateToCustomerService() async {
+    try {
+      // 检查用户是否已登录
+      final currentUserID = OpenIMHelper.getCurrentUserID();
+      if (currentUserID == null) {
+        Get.snackbar('错误', '请先登录');
+        return;
+      }
+
+      // 客服ID
+      const customerServiceID = '8193405756';
+
+      // 创建与客服的单聊对话
+      final conversationInfo = await OpenIM.iMManager.conversationManager.getOneConversation(
+        sourceID: customerServiceID,
+        sessionType: ConversationType.single,
+      );
+
+      // 跳转到聊天页面
+      AppNavigator.startChat(
+        conversationInfo: conversationInfo,
+        offUntilHome: false,
+      );
+    } catch (e) {
+      Get.snackbar('错误', '无法连接到客服: ${e.toString()}');
+    }
   }
 
 }
