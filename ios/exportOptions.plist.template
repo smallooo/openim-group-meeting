@@ -9,9 +9,9 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>io.toklink.trunk</key>
-        <string>3311108f-0490-452c-acf0-233913bdecde</string>
+        <string>43786434-da28-4e9f-bb7c-5772d08a78cd</string>
         <key>io.toklink.trunk.NotificationService</key>
-        <string>6e485537-fb72-4f25-9a58-958c725d8457</string>
+        <string>568c4918-d1bd-4725-a1c7-9fef9ed367d1</string>
     </dict>
     <key>signingStyle</key>
     <string>manual</string>

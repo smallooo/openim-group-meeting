@@ -165,12 +165,6 @@ class TKOrderToPayLogic extends GetxController {
       if (!success) {
         Get.snackbar('错误', '创建支付失败');
         return;
-      }else {
-        // final paymentInfo = state.paymentInfo.value;
-        // if (paymentInfo.thirdPartyOrderNo  == '') {
-        //
-        // }
-
       }
     }
 
@@ -277,6 +271,11 @@ class TKOrderToPayLogic extends GetxController {
     if (paymentInfo == null) {
       Get.snackbar('错误', '支付信息不完整');
       return;
+    }
+
+    if (paymentInfo.thirdPartyOrderNo  == '') {
+       Get.snackbar('已支付', "当前订单已支付");
+       return;
     }
     
     final paymentData = {
