@@ -74,6 +74,8 @@ abstract class AppRoutes {
   static const tkChannelHome = _Paths.tkChannelHome;
   static const tkChannelContent = _Paths.tkChannelContent;
   static const tkProductDetail = _Paths.tkProductDetail;
+  static const redPacket = '/red_packet';
+  static const favoriteManage = '/favorite_manage';
 }
 
 abstract class _Paths {

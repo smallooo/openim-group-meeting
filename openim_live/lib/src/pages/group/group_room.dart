@@ -26,8 +26,10 @@ class GroupRoomView extends GroupSignalView {
     required super.autoPickup,
     super.roomID,
     required super.groupID,
+    required super.inviterUserID,
     required super.inviteeUserIDList,
-    required super.groupMembersList,
+    required super.inviteeMemberList,
+    required super.onSyncGroupMemberInfo,
 
     super.onClose,
     super.onBindRoomID,

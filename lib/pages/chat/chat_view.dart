@@ -3,6 +3,8 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:toklink/pages/chat/chat_emoji_view.dart';
+import 'package:toklink/pages/chat/chat_voice_record_layout.dart';
 
 import 'chat_logic.dart';
 import 'order_widget/order_custom_widgets.dart';
@@ -216,7 +218,9 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: logic.willPop(),
-      child: Obx(() {
+      child:  ChatVoiceRecordLayout(
+        onCompleted: logic.sendVoice,
+        builder: (bar) => Obx(() {
         return Scaffold(
             backgroundColor: Styles.c_F0F2F6,
             appBar: TitleBar.chat(
@@ -248,8 +252,18 @@ class ChatPage extends StatelessWidget {
                     onTapAlbum: logic.onTapAlbum,
                     onTapCall: logic.isGroupChat ? null : logic.call,
                     onTapCreateOrder: logic.isGroupChat ? null : logic.createOrder,
+                    onTapCamera: logic.onTapCamera,
+                    onTapLocation: logic.onTapLocation,
+                    onTapRedPacket: logic.onTapRedPacket,
+                    onTapVoiceInput: logic.onTapVoiceInput,
                   ),
-                  voiceRecordBar: const SizedBox(),
+                  voiceRecordBar: bar,
+                  emojiView: ChatEmojiView(
+                    textEditingController: logic.inputCtrl,
+                    favoriteList: logic.cacheLogic.urlList,
+                    onAddFavorite: logic.favoriteManage,
+                    onSelectedFavorite: logic.sendFavoritePic,
+                  ),
                 ),
                 child: ChatListView(
                   onTouch: () => logic.closeToolbox(),
@@ -265,6 +279,7 @@ class ChatPage extends StatelessWidget {
               ),
             ));
       }),
+    )
     );
   }
 

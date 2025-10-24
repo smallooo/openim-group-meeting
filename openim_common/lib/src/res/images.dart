@@ -97,6 +97,7 @@ class ImageRes {
   static const mineCopy = "$_dir/ic_mine_copy.webp";
   static const mineQr = "$_dir/ic_mine_qr.webp";
   static const rightArrow = "$_dir/ic_right_arrow.webp";
+  static const downExpand = "$_dir/ic_down_expand.png";
   static const myInfo = "$_dir/ic_mine_my_info.webp";
   static const workingCircle = "$_dir/ic_working_circle.webp";
   static const accountSetup = "$_dir/ic_mine_account_setup.webp";
@@ -218,6 +219,7 @@ class ImageRes {
   static const tiktok_icon = "$_dir/tiktok_icon.png";
   static const ydyx_icon = "$_dir/ydyx_icon.png";
   static const yx_icon = "$_dir/yx_icon.png";
+  static const redPacketIcon = '$_dir/ic_red_packet_icon.png';
 
   static const tkStrategyHomeNotice = "$_dir/tk_strategy_home_notice.png";
   static const tkStrategyHomeV = "$_dir/tk_strategy_home_v.png";

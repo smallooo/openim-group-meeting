@@ -113,13 +113,25 @@ mixin OpenIMLive {
                 return;
               }
             }
+
+            // get group members list for group call
+            List<GroupMembersInfo>? inviteeMembersList;
+            if (callObj == CallObj.group && event.data.invitation!.groupID != null) {
+              inviteeMembersList = await OpenIM.iMManager.groupManager.getGroupMemberList(
+                groupID: event.data.invitation!.groupID!,
+              );
+            }
+
+
+
             _beCalledEvent = null;
             OpenIMLiveClient().start(
               Get.overlayContext!,
               callEventSubject: signalingSubject,
               roomID: event.data.invitation!.roomID!,
-              inviteeUserIDList: event.data.invitation!.inviteeUserIDList!,
               inviterUserID: event.data.invitation!.inviterUserID!,
+              inviteeUserIDList: event.data.invitation!.inviteeUserIDList!,
+              inviteeMembersList: inviteeMembersList,
               groupID: event.data.invitation!.groupID,
               callType: callType,
               callObj: callObj,
@@ -213,7 +225,7 @@ mixin OpenIMLive {
       inviterUserID: inviterUserID,
       groupID: groupID,
       inviteeUserIDList: inviteeUserIDList,
-      groupMembersList: groupMembersList,
+      inviteeMembersList: groupMembersList,
       callObj: callObj,
       callType: callType,
       initState: callState,

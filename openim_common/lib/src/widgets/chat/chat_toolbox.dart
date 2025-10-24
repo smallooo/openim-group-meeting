@@ -45,11 +45,13 @@ class ChatToolBox extends StatelessWidget {
         ToolboxItemInfo(
           text: StrRes.toolboxCall,
           icon: ImageRes.toolboxCall,
+          onTap: () => Permissions.microphone(onTapCall),
          
         ),
       ToolboxItemInfo(
         text: '位置',
         icon: ImageRes.toolboxLocation2,
+        onTap: () => Permissions.location(onTapLocation),
 
       ),
       ToolboxItemInfo(

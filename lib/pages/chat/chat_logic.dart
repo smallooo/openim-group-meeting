@@ -13,6 +13,7 @@ import 'package:openim_common/openim_common.dart';
 import 'package:pull_to_refresh_new/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:toklink/pages/chat/chat_webview_map.dart';
 import 'package:toklink/tk_app/core/utils/access_token_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -610,6 +611,68 @@ class ChatLogic extends SuperController {
 
       tempMessages.clear();
     }
+  }
+
+  void onTapCamera() async {
+    final AssetEntity? entity = await CameraPicker.pickFromCamera(
+      Get.context!,
+      locale: Get.locale,
+      pickerConfig: CameraPickerConfig(
+        enableRecording: true,
+        maximumRecordingDuration: 60.seconds,
+        onMinimumRecordDurationNotMet: () {
+          IMViews.showToast(StrRes.tapTooShort);
+        },
+      ),
+    );
+    _handleAssets(entity);
+  }
+
+  void onTapLocation() async {
+    final location = await Get.to(
+      const ChatWebViewMap(host: Config.locationHost, webKey: Config.webKey, webServerKey: Config.webServerKey),
+      transition: Transition.cupertino,
+      popGesture: true,
+    );
+    if (null != location) {
+      Logger.print(location);
+      sendLocation(location: location);
+    }
+  }
+
+  void onTapRedPacket() {AppNavigator.startRedPacket();}
+
+  void onTapVoiceInput() {
+
+  }
+
+  void sendLocation({
+    required dynamic location,
+  }) async {
+    final message = await OpenIM.iMManager.messageManager.createLocationMessage(
+      latitude: location['latitude'],
+      longitude: location['longitude'],
+      description: location['description'],
+    );
+    _sendMessage(message);
+  }
+
+  void sendVoice(int duration, String path) async {
+    var message = await OpenIM.iMManager.messageManager.createSoundMessageFromFullPath(
+      soundPath: path,
+      duration: duration,
+    );
+    _sendMessage(message);
+  }
+
+  void favoriteManage() => AppNavigator.favoriteManage();
+
+  void sendFavoritePic(int index, String url) async {
+    final emoji = cacheLogic.favoriteList.elementAt(index);
+    final message = await OpenIM.iMManager.messageManager.createFaceMessage(
+      data: json.encode({'url': emoji.url, 'width': emoji.width, 'height': emoji.height}),
+    );
+    _sendMessage(message);
   }
 
   Future<bool> allowSendImageType(AssetEntity entity) async {
@@ -1517,7 +1580,7 @@ class ChatLogic extends SuperController {
     Logger.print('💬 商品咨询卡片被点击');
     Logger.print('📱 消息ID: ${message.clientMsgID}');
     Logger.print('📝 消息内容: ${message.customElem?.data}');
-    
+
     try {
       final data = IMUtils.parseCustomMessage(message);
       if (data != null) {
