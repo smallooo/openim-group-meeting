@@ -613,6 +613,68 @@ class ChatLogic extends SuperController {
     }
   }
 
+  void onTapCamera() async {
+    final AssetEntity? entity = await CameraPicker.pickFromCamera(
+      Get.context!,
+      locale: Get.locale,
+      pickerConfig: CameraPickerConfig(
+        enableRecording: true,
+        maximumRecordingDuration: 60.seconds,
+        onMinimumRecordDurationNotMet: () {
+          IMViews.showToast(StrRes.tapTooShort);
+        },
+      ),
+    );
+    _handleAssets(entity);
+  }
+
+  void onTapLocation() async {
+    final location = await Get.to(
+      const ChatWebViewMap(host: Config.locationHost, webKey: Config.webKey, webServerKey: Config.webServerKey),
+      transition: Transition.cupertino,
+      popGesture: true,
+    );
+    if (null != location) {
+      Logger.print(location);
+      sendLocation(location: location);
+    }
+  }
+
+  void onTapRedPacket() {AppNavigator.startRedPacket();}
+
+  void onTapVoiceInput() {
+
+  }
+
+  void sendLocation({
+    required dynamic location,
+  }) async {
+    final message = await OpenIM.iMManager.messageManager.createLocationMessage(
+      latitude: location['latitude'],
+      longitude: location['longitude'],
+      description: location['description'],
+    );
+    _sendMessage(message);
+  }
+
+  void sendVoice(int duration, String path) async {
+    var message = await OpenIM.iMManager.messageManager.createSoundMessageFromFullPath(
+      soundPath: path,
+      duration: duration,
+    );
+    _sendMessage(message);
+  }
+
+  void favoriteManage() => AppNavigator.favoriteManage();
+
+  void sendFavoritePic(int index, String url) async {
+    final emoji = cacheLogic.favoriteList.elementAt(index);
+    final message = await OpenIM.iMManager.messageManager.createFaceMessage(
+      data: json.encode({'url': emoji.url, 'width': emoji.width, 'height': emoji.height}),
+    );
+    _sendMessage(message);
+  }
+
   Future<bool> allowSendImageType(AssetEntity entity) async {
     final mimeType = await entity.mimeTypeAsync;
 
