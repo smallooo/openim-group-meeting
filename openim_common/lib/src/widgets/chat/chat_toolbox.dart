@@ -33,7 +33,7 @@ class ChatToolBox extends StatelessWidget {
       ToolboxItemInfo(
         text: '照片',
         icon: ImageRes.toolboxPhoto,
-        onTap: () => Permissions.photos(onTapAlbum),
+        onTap: () => Permissions.camera(onTapAlbum),
       ),
     
       ToolboxItemInfo(
@@ -54,20 +54,20 @@ class ChatToolBox extends StatelessWidget {
         onTap: () => Permissions.location(onTapLocation),
 
       ),
-      ToolboxItemInfo(
-        text: '红包',
-        icon: ImageRes.toolboxRedPacket,
-        // onTap: () => Permissions.redPacket(onTapRedPacket),
-        onTap: () => onTapRedPacket?.call(),
-      ),
+      // ToolboxItemInfo(
+      //   text: '红包',
+      //   icon: ImageRes.toolboxRedPacket,
+      //   // onTap: () => Permissions.redPacket(onTapRedPacket),
+      //   onTap: () => onTapRedPacket?.call(),
+      // ),
       ToolboxItemInfo(
         text: '转账',
         icon: ImageRes.toolboxTransfer,
       ),
-      ToolboxItemInfo(
-        text: '语音输入',
-        icon: ImageRes.toolboxVoiceInput,
-      ),
+      // ToolboxItemInfo(
+      //   text: '语音输入',
+      //   icon: ImageRes.toolboxVoiceInput,
+      // ),
       if (onTapCreateOrder != null)
         ToolboxItemInfo(
           text: '担保订单',
