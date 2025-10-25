@@ -595,7 +595,8 @@ class ChatLogic extends SuperController {
               }
 
               if (entity.videoDuration > const Duration(seconds: 5 * 60)) {
-                IMViews.showToast(sprintf(StrRes.selectVideoLimit, [5]) + StrRes.minute);
+                IMViews.showToast(
+                    sprintf(StrRes.selectVideoLimit, [5]) + StrRes.minute);
                 return false;
               }
               return true;

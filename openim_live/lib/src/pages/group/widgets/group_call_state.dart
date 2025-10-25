@@ -83,16 +83,9 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
   bool enabledMicrophone = true;
   bool enabledSpeaker = true;
 
-  // ...existing code...
-  // 原先仅支持单一远端/本地：
-  // GroupParticipantTrack? remoteParticipantTrack;
-  // GroupParticipantTrack? localParticipantTrack;
-
-  // 修改：支持多个远端参与者
   final List<GroupParticipantTrack> remoteParticipantTracks = [];
   GroupParticipantTrack? localParticipantTrack;
 
-  // 兼容：保留 remoteParticipantTrack 用于既有逻辑（取列表第一个）
   GroupParticipantTrack? get remoteParticipantTrack =>
       remoteParticipantTracks.isNotEmpty ? remoteParticipantTracks.first : null;
 
@@ -124,8 +117,6 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
     });
   }
 
-  // ...existing code...
-
   _onStateDidUpdate(CallEvent event) {
     Logger.print("CallEvent current：$callState  event：$event");
     if (!mounted) return;
@@ -140,7 +131,6 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
     if (event.state == CallState.beRejected || event.state == CallState.beCanceled) {
       widget.onClose?.call();
     } else if (event.state == CallState.otherReject || event.state == CallState.otherAccepted) {
-      // 群聊：若仍有远端参与者存在，则不关闭
       if (existParticipants()) {
         return;
       }
@@ -150,7 +140,6 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
     } else if (event.state == CallState.timeout) {
       widget.onClose?.call();
     } else if (event.state == CallState.beAccepted) {
-      // 群聊：任意远端加入即算已连接
       if (remoteParticipantTracks.isNotEmpty) {
         onParticipantConnected();
       }
@@ -163,7 +152,6 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
   }
 
   onParticipantDisconnected() {
-    // 只在没有任何远端参与者时才自动挂断
     if (!existParticipants()) {
       onTapHangup(false);
     }
@@ -233,9 +221,6 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
     enabledSpeaker = enabled;
   }
 
-  // ...existing code...
-
-  // 网格列数根据人数自适应
   int _gridCountFor(int n) {
     if (n <= 1) return 1;
     if (n <= 4) return 2;
@@ -244,7 +229,6 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
   }
 
 Widget _buildRemoteGrid() {
-  // 获取已接入的 userID
   final connectedUserIDs = [
     if (localParticipantTrack != null) localParticipantTrack!.participant.identity,
     ...remoteParticipantTracks.map((e) => e.participant.identity),
@@ -262,14 +246,13 @@ Widget _buildRemoteGrid() {
       }
       final members = snapshot.data!;
 
-       List<GroupMembersInfo> sortedMembers = [];
-      // 构建一个新的列表，把自己放在第一个
+      List<GroupMembersInfo> sortedMembers = [];
+  
       final selfIndex = members.indexWhere((m) => m.userID == widget.userID);
       if (selfIndex != -1) {
         sortedMembers.add(members[selfIndex]);
         sortedMembers.addAll(members.where((m) => m.userID != widget.userID));
       } else if (localParticipantTrack != null) {
-        // 如果成员列表没有自己，但 localParticipantTrack 有，手动添加
         sortedMembers.add(GroupMembersInfo(
           userID: localParticipantTrack!.participant.identity,
           nickname: OpenIM.iMManager.userInfo.nickname,
@@ -288,7 +271,7 @@ Widget _buildRemoteGrid() {
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: 16.h,
           crossAxisSpacing: 16.w,
-          childAspectRatio: 12 / 16,
+          childAspectRatio: 12 / 12,
         ),
         itemCount: sortedMembers.length,
         itemBuilder: (context, index) {
@@ -308,38 +291,67 @@ Widget _buildRemoteGrid() {
               aspectRatio: 12 / 16, 
               child: Container(
                 color: Colors.black,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 28.w,
-                      backgroundImage: member.faceURL != null && member.faceURL!.isNotEmpty
-                          ? NetworkImage(member.faceURL!)
-                          : null,
-                      backgroundColor: Colors.grey[300],
-                      child: member.faceURL == null || member.faceURL!.isEmpty
-                          ? Icon(Icons.person, size: 32.w, color: Colors.white)
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(8), 
+                        border: Border.all(color: Colors.white, width: 2), 
+                        image: (member.faceURL != null && member.faceURL!.isNotEmpty)
+                            ? DecorationImage(
+                                image: NetworkImage(member.faceURL!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      alignment: Alignment.center,
+                      child: (member.faceURL == null || member.faceURL!.isEmpty)
+                          ? Icon(Icons.person, size: 64.w, color: Colors.white.withOpacity(0.7))
                           : null,
                     ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      nickname,
-                      style: const TextStyle(color: Colors.white, fontSize: 14),
-                      overflow: TextOverflow.ellipsis,
+                    Positioned(
+                      left: 8.w,
+                      right: 8.w,
+                      bottom: 8.h,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.black54,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            nickname,
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // 遮盖层，表示未接入
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.4),
+                        alignment: Alignment.center,
+                        child: _ConnectingDots(),
+                      ),
                     ),
                   ],
                 ),
               ),
             );
           }
-
         },
       );
     },
   );
 }
 
-  //Alignment(0.9, -0.9),
   double alignX = 0.9;
   double alignY = -0.9;
 
@@ -358,7 +370,6 @@ Widget _buildRemoteGrid() {
 
   bool existParticipants();
 
-  // 群聊不再需要小窗切换远端/本地，保留变量以兼容但不使用
   bool smallScreenIsRemote = true;
 
   @override
@@ -373,12 +384,8 @@ Widget _buildRemoteGrid() {
           color: Styles.c_000000,
           child: Stack(
             children: [
-              // 背景
-              // ImageRes.liveBg...
-
-              // 网格展示所有远端参与者
               Positioned(
-                top: 80.h,
+                top: 138.h,
                 left: 0,
                 right: 0,
                 bottom: 0,
@@ -477,11 +484,11 @@ Widget _buildRemoteGrid() {
 
 
 
-  Widget buildGroupMembersGrid() {
+Widget buildGroupMembersGrid() {
   final members = widget.inviteeMemberList;
   return GridView.builder(
     shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
+    physics: const NeverScrollableScrollPhysics(),
     padding: EdgeInsets.all(16.w),
     itemCount: members.length,
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -504,13 +511,69 @@ Widget _buildRemoteGrid() {
           SizedBox(height: 8.h),
           Text(
             nickname,
-            style: TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
           ),
         ],
       );
     },
   );
 }
+
 }
 
+
+class _ConnectingDots extends StatefulWidget {
+  @override
+  State<_ConnectingDots> createState() => _ConnectingDotsState();
+}
+
+class _ConnectingDotsState extends State<_ConnectingDots> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 2800),
+      vsync: this,
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        // 计算当前高亮的点
+        int active = (_controller.value * 3).floor() % 3;
+        List<Color> colors = List.generate(3, (i) {
+          return i == active
+              ? Colors.white
+              : Colors.white.withOpacity(0.4);
+        });
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(3, (i) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 2),
+            child: Text(
+              '.',
+              style: TextStyle(
+                color: colors[i],
+                fontSize: 28.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )),
+        );
+      },
+    );
+  }
+}

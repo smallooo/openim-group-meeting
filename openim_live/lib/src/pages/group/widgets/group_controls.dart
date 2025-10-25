@@ -123,20 +123,9 @@ class _GroupControlsViewState extends State<GroupControlsView> {
 
     _callStateChangedSub = widget.callStateStream.listen(_onChangedCallState);
     _roomDidUpdateSub = widget.roomDidUpdateStream.listen(_roomDidUpdate);
-    // _queryUserInfo();
 
     _deviceChangeSub = Hardware.instance.onDeviceChange.stream.listen(_loadDevices);
     Hardware.instance.enumerateDevices().then(_loadDevices);
-
-
-
-    // // 2. 获取群成员并处理
-    // _getGroupMembers().then((members) {
-    //   groupMembersList = members; // 保存群成员信息
-    //   // 你可以在这里做后续处理，比如 setState 或业务逻辑
-    //   setState(() {});
-    // });
-
 
     super.initState();
   }

@@ -56,7 +56,6 @@ class _GroupRoomViewState extends GroupSignalState<GroupRoomView> {
   EventsListener<RoomEvent>? _listener;
   Room? _room;
 
-  // 额外：维护所有远端参与者的轨道列表
   final List<GroupParticipantTrack> remoteParticipantTracks = [];
 
   @override
@@ -65,7 +64,6 @@ class _GroupRoomViewState extends GroupSignalState<GroupRoomView> {
       _room?.removeListener(_onRoomDidUpdate);
       await _listener?.dispose();
 
-      // 清理所有远端参与者
       final remotes = _room?.remoteParticipants.values.toList() ?? const [];
       for (final p in remotes) {
         await p.dispose();
@@ -209,9 +207,6 @@ class _GroupRoomViewState extends GroupSignalState<GroupRoomView> {
         ),
       );
     }
-
-    // 为兼容原有仅单人视图的逻辑，仍设置第一个远端参与者
-    // remoteParticipantTrack = remoteParticipantTracks.firstOrNull;
 
     if (remoteParticipantTracks.isNotEmpty) {
       onParticipantConnected();

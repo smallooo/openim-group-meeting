@@ -14,7 +14,7 @@ class GroupParticipantTrack {
 abstract class ParticipantWidget extends StatefulWidget {
   final String? nickname;
   final String? faceURL;
-  // Convenience method to return relevant widget for participant
+  
   static ParticipantWidget widgetFor(
     GroupParticipantTrack participantTrack,
     String? nickname,
@@ -168,45 +168,51 @@ class _LocalParticipantWidgetState extends _ParticipantWidgetState<LocalParticip
     final isVideo = widget.videoTrack != null && !(widget.videoTrack?.muted ?? true);
     return Stack(
       children: [
-        // Text( "111", style: TextStyle(color: Colors.white)),
         isVideo
-            ? VideoTrackRenderer(
-                widget.videoTrack!,
-                fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-              )
-            : Container(
-                color: Colors.black,
+          ? VideoTrackRenderer(
+              widget.videoTrack!,
+              fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+            )
+          : Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8), 
+                border: Border.all(color: Colors.white, width: 2), 
+                image: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
+                    ? DecorationImage(
+                        image: NetworkImage(widget.faceURL!),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
+              ),
+              alignment: Alignment.center,
+              child: (widget.faceURL == null || widget.faceURL!.isEmpty)
+                  ? const Icon(Icons.person, size: 36, color: Colors.white)
+                  : null,
+            ),
+            Positioned(
+              left: 8,
+              right: 8,
+              bottom: 8,
+              child: Align(
                 alignment: Alignment.center,
-                child: CircleAvatar(
-                  radius: 32,
-                  backgroundImage: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
-                      ? NetworkImage(widget.faceURL!)
-                      : null,
-                  backgroundColor: Colors.grey[300],
-                  child: (widget.faceURL == null || widget.faceURL!.isEmpty)
-                      ? Icon(Icons.person, size: 36, color: Colors.white)
-                      : null,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    widget.nickname ?? widget.participant.identity,
+                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
-        Positioned(
-          left: 8,
-          right: 8,
-          bottom: 8,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.black54,
-              borderRadius: BorderRadius.circular(8),
             ),
-            child: Text(
-              widget is LocalParticipantWidget
-                  ? '${widget.nickname ?? widget.participant.identity} (You)'
-                  : widget.nickname ?? widget.participant.identity,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -234,33 +240,40 @@ class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemotePartic
                 fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
               )
             : Container(
-                color: Colors.black,
-                alignment: Alignment.center,
-                child: CircleAvatar(
-                  radius: 32,
-                  backgroundImage: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
-                      ? NetworkImage(widget.faceURL!)
-                      : null,
-                  backgroundColor: Colors.grey[300],
-                  child: (widget.faceURL == null || widget.faceURL!.isEmpty)
-                      ? Icon(Icons.person, size: 36, color: Colors.white)
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  image: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
+                      ? DecorationImage(
+                          image: NetworkImage(widget.faceURL!),
+                          fit: BoxFit.cover,
+                        )
                       : null,
                 ),
+                alignment: Alignment.center,
+                child: (widget.faceURL == null || widget.faceURL!.isEmpty)
+                    ? const Icon(Icons.person, size: 64, color: Colors.white)
+                    : null,
               ),
         Positioned(
           left: 8,
           right: 8,
           bottom: 8,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.black54,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              widget.nickname ?? widget.participant.identity,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              overflow: TextOverflow.ellipsis,
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                widget.nickname ?? widget.participant.identity,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
