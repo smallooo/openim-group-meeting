@@ -178,6 +178,7 @@ class OpenIMLiveClient implements RTCBridge {
           onTapPickup: onTapPickup,
           autoPickup: false,
           // onSyncGroupInfo: onSyncGroupInfo,
+          onSyncUserInfo: onSyncUserInfo,
           onSyncGroupMemberInfo: onSyncGroupMemberInfo,
           // autoPickup: autoPickup,
           

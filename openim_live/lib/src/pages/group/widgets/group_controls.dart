@@ -147,7 +147,7 @@ class _GroupControlsViewState extends State<GroupControlsView> {
       _callState = state;
       if (_callState == CallState.calling) {
         _startCallingTimer();
-      }
+      } 
     });
   }
 
@@ -294,12 +294,12 @@ class _GroupControlsViewState extends State<GroupControlsView> {
           ),
 
 
-        if (null != widget.userInfo)
-          Positioned(
-            top: 166.h,
-            width: 1.sw,
-            child: _userInfoView,
-          ),
+        // if (null != widget.userInfo)
+        //   Positioned(
+        //     top: 566.h,
+        //     width: 1.sw,
+        //     child: _userInfoView,
+        //   ),
 
         Positioned(
           bottom: 32.h,
@@ -347,7 +347,7 @@ class _GroupControlsViewState extends State<GroupControlsView> {
   bool get isCalling => _callState == CallState.calling;
 
   Widget get _videoCallingDurationView => Visibility(
-    visible: isVideo && isCalling,
+    visible:  isCalling,
     child: _callingDurationStr.toText..style = Styles.ts_FFFFFF_opacity70_17sp,
   );
 

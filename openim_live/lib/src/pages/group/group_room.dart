@@ -93,15 +93,15 @@ class _GroupRoomViewState extends GroupSignalState<GroupRoomView> {
       await _room?.connect(
         url,
         token,
-        roomOptions: RoomOptions(
+        roomOptions: const RoomOptions(
           dynacast: true,
           adaptiveStream: true,
           defaultCameraCaptureOptions:
-          const CameraCaptureOptions(params: VideoParametersPresets.h720_169),
+          CameraCaptureOptions(params: VideoParametersPresets.h720_169),
           defaultVideoPublishOptions: VideoPublishOptions(
             simulcast: true,
             videoCodec: 'VP9',
-            videoEncoding: const VideoEncoding(
+            videoEncoding: VideoEncoding(
               maxBitrate: 5 * 1000 * 1000,
               maxFramerate: 15,
             ),

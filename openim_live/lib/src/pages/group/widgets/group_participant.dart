@@ -40,7 +40,6 @@ abstract class ParticipantWidget extends StatefulWidget {
     throw UnimplementedError('Unknown participant type');
   }
 
-  // Must be implemented by child class
   abstract final Participant participant;
   abstract final VideoTrack? videoTrack;
   abstract final bool isScreenShare;
@@ -235,15 +234,26 @@ class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemotePartic
     return Stack(
       children: [
         isVideo
-            ? VideoTrackRenderer(
-                widget.videoTrack!,
-                fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+            ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: VideoTrackRenderer(
+                    widget.videoTrack!,
+                    fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+                  ),
+                ),
               )
             : Container(
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(8), 
+                  border: Border.all(color: Colors.white, width: 2), 
                   image: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
                       ? DecorationImage(
                           image: NetworkImage(widget.faceURL!),

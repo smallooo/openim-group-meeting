@@ -5,6 +5,7 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:openim_live/src/pages/group/widgets/silver_grid_with_custom_geometry_layout.dart';
 import 'package:openim_live/src/utils/live_utils.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprintf/sprintf.dart';
@@ -92,12 +93,22 @@ abstract class GroupSignalState<T extends GroupSignalView> extends State<T> {
   Stream<CallEvent> get sameRoomSignalStream =>
       widget.callEventSubject.stream.where((event) => LiveUtils.isSameRoom(event, roomID));
 
+  UserInfo? inviterUserInfo;
+
   @override
   void initState() {
     roomID ??= widget.roomID;
     callState = widget.initState;
     callEventSub = sameRoomSignalStream.listen(_onStateDidUpdate);
     widget.onSyncUserInfo?.call(widget.userID).then(_onUpdateUserInfo);
+
+    widget.onSyncUserInfo?.call(widget.inviterUserID).then((info) {
+      if (mounted && info != null) {
+        setState(() {
+          inviterUserInfo = info;
+        });
+      }
+  });
     onDail();
     autoPickup();
     super.initState();
@@ -267,10 +278,11 @@ Widget _buildRemoteGrid() {
 
       return GridView.builder(
         padding: EdgeInsets.fromLTRB(8.w, 24.h, 8.w, 220.h),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
+          itemCount: sortedMembers.length,
           crossAxisCount: crossAxisCount,
-          mainAxisSpacing: 16.h,
-          crossAxisSpacing: 16.w,
+          mainAxisSpacing: 0.h,
+          crossAxisSpacing: 0.w,
           childAspectRatio: 12 / 12,
         ),
         itemCount: sortedMembers.length,
@@ -333,7 +345,6 @@ Widget _buildRemoteGrid() {
                         ),
                       ),
                     ),
-                    // 遮盖层，表示未接入
                     Positioned.fill(
                       child: Container(
                         color: Colors.black.withOpacity(0.4),
@@ -384,6 +395,7 @@ Widget _buildRemoteGrid() {
           color: Styles.c_000000,
           child: Stack(
             children: [
+
               Positioned(
                 top: 138.h,
                 left: 0,
@@ -392,13 +404,50 @@ Widget _buildRemoteGrid() {
                 child: _buildRemoteGrid(),
               ),
 
+
+              if(widget.inviterUserID == OpenIM.iMManager.userID && callState != CallState.calling)
+                Positioned(
+                  top: 616.h,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      "等待对方接听...",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+
+              if(widget.inviterUserID != OpenIM.iMManager.userID  && callState != CallState.calling)
+                Positioned(
+                  top: 616.h,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Text(
+                      '${inviterUserInfo?.nickname ?? inviterUserInfo?.userID ?? ""}对你发起了通话邀请',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+
               GroupControlsView(
                 callStateStream: callStateSubject.stream,
                 roomDidUpdateStream: roomDidUpdateSubject.stream,
                 initState: widget.initState,
                 callType: widget.callType,
                 groupID: widget.groupID,
-                userInfo: userInfo,
+                userInfo: inviterUserInfo,
                 onMinimize: onTapMinimize,
                 onCallingDuration: callingDuration,
                 onEnabledMicrophone: onChangedMicStatus,
@@ -411,6 +460,7 @@ Widget _buildRemoteGrid() {
                 onCancel: onTapCancel,
                 onChangedCallState: (state) => callState = state,
               ),
+
             ],
           ),
         ),
@@ -423,7 +473,7 @@ Widget _buildRemoteGrid() {
             duration: const Duration(milliseconds: 200),
             child: SmallWindowView(
               opacity: minimize ? 1 : 0,
-              userInfo: userInfo,
+              userInfo: inviterUserInfo,
               callState: callState,
               onTapMaximize: onTapMaximize,
               onPanUpdate: onMoveSmallWindow,
@@ -534,6 +584,7 @@ class _ConnectingDotsState extends State<_ConnectingDots> with SingleTickerProvi
 
   @override
   void initState() {
+    
     super.initState();
     _controller = AnimationController(
       duration: const Duration(milliseconds: 2800),
