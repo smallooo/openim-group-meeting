@@ -91,9 +91,13 @@ class _GroupControlsViewState extends State<GroupControlsView> {
 
   bool _enabledMicrophone = true;
   bool _enabledSpeaker = true;
+  bool _enabledCamera = true;
 
   final _lockAudio = Lock();
   final _lockSpeaker = Lock();
+
+
+  bool expandControlArea = false;
 
   // List<GroupMembersInfo> groupMembersList = [];
 
@@ -101,13 +105,9 @@ class _GroupControlsViewState extends State<GroupControlsView> {
     final result = OpenIM.iMManager.groupManager.getGroupMemberList(
       groupID: widget.groupID,
       count: 20,
-      // offset: memberList.length,
-      // filter: isDelMember ? (isOwner ? 4 : (isAdmin ? 3 : 0)) : 0,
     );
-
     return result;
   }
-
 
   @override
   void dispose() {
@@ -130,7 +130,6 @@ class _GroupControlsViewState extends State<GroupControlsView> {
     super.initState();
   }
 
-
   _roomDidUpdate(Room room) {
     _room ??= room;
     if (room.localParticipant != null && _participant == null) {
@@ -138,7 +137,6 @@ class _GroupControlsViewState extends State<GroupControlsView> {
       _participant?.addListener(_onChange);
     }
   }
-
 
   _onChangedCallState(CallState state) {
     if (!mounted) return;
@@ -150,8 +148,6 @@ class _GroupControlsViewState extends State<GroupControlsView> {
       } 
     });
   }
-
-
 
   void _startCallingTimer() {
     _callingTimer ??= Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -171,7 +167,12 @@ class _GroupControlsViewState extends State<GroupControlsView> {
   }
 
   void _onChange() {
-    // trigger refresh
+    setState(() {});
+  }
+
+
+  void _toggleUI() {
+    expandControlArea = !expandControlArea;
     setState(() {});
   }
 
@@ -198,6 +199,16 @@ class _GroupControlsViewState extends State<GroupControlsView> {
       }
       setState(() {});
     });
+  }
+
+  void _toggleCamera() async {
+    _enabledCamera = !_enabledCamera;
+    if (_enabledCamera) {
+      await _enableVideo();
+    } else {
+      await _disableVideo();
+    }
+    setState(() {});
   }
 
   Future<void> _disableAudio() async {
@@ -239,26 +250,30 @@ class _GroupControlsViewState extends State<GroupControlsView> {
     setState(() {});
   }
 
-  void _toggleCamera() async {
-    //
-    final track = _participant?.videoTrackPublications.firstOrNull?.track;
-    if (track == null) return;
-    Helper.switchCamera(track.mediaStreamTrack);
-    // try {
-    //   final newPosition = position.switched();
-    //   await track.setCameraPosition(newPosition);
-    //   // setState(() {
-    //   //   position = newPosition;
-    //   // });
-    // } catch (error, stack) {
-    //   Logger.print('could not restart track: $error $stack');
-    //   return;
-    // }
-  }
+  // void _toggleCamera() async {
+  //   //
+  //   final track = _participant?.videoTrackPublications.firstOrNull?.track;
+  //   if (track == null) return;
+  //   Helper.switchCamera(track.mediaStreamTrack);
+  //   // try {
+  //   //   final newPosition = position.switched();
+  //   //   await track.setCameraPosition(newPosition);
+  //   //   // setState(() {
+  //   //   //   position = newPosition;
+  //   //   // });
+  //   // } catch (error, stack) {
+  //   //   Logger.print('could not restart track: $error $stack');
+  //   //   return;
+  //   // }
+  // }
 
   @override
   Widget build(BuildContext context) => SafeArea(
-    child: Stack(
+    bottom: false,
+    child: 
+    
+    
+    Stack(
       children: [
         Positioned(
           left: 16.w,
@@ -279,10 +294,7 @@ class _GroupControlsViewState extends State<GroupControlsView> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  (_participant!.isCameraEnabled() ? ImageRes.liveCameraOff : ImageRes.liveCameraOn).toImage
-                    ..width = 30.w
-                    ..height = 30.h
-                    ..onTap = (_participant!.isCameraEnabled() ? _disableVideo : _enableVideo),
+                  
                   16.horizontalSpace,
                   ImageRes.liveSwitchCamera.toImage
                     ..width = 30.w
@@ -302,16 +314,27 @@ class _GroupControlsViewState extends State<GroupControlsView> {
         //   ),
 
         Positioned(
-          bottom: 32.h,
+          bottom: 0.h,
           width: 1.sw,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: _buttonGroup,
+          child: Container(
+            width: 1.sw,
+            padding: EdgeInsets.only(top: 24.h, bottom:16.h),
+            decoration: BoxDecoration(
+              color: expandControlArea ? Colors.transparent : Colors.white.withOpacity(0.16),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _buttonGroup,
+            ),
           ),
         ),
 
         Positioned(
-          bottom: 156.h,
+          bottom: 188.h,
           width: 1.sw,
           child: Center(child: _videoCallingDurationView),
         ),
@@ -334,11 +357,46 @@ class _GroupControlsViewState extends State<GroupControlsView> {
         LiveButton.pickUp(onTap: widget.onPickUp),
       ];
     } else if (_callState == CallState.calling) {
-      return [
-        LiveButton.microphone(on: _enabledMicrophone, onTap: _toggleAudio),
-        LiveButton.hungUp(onTap: () => widget.onHangUp?.call(true)),
-        LiveButton.speaker(on: _enabledSpeaker, onTap: _toggleSpeaker),
-      ];
+      if (expandControlArea && isVideo) {
+        return [
+          Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  LiveButton.cameraBig(on: _enabledCamera, onTap: _toggleCamera),
+                  64.horizontalSpace,
+                  LiveButton.speakerBig(
+                      on: _enabledMicrophone, onTap: _toggleAudio),
+                  64.horizontalSpace,
+                  LiveButton.microphoneBig(
+                      on: _enabledSpeaker, onTap: _toggleSpeaker),
+                ],
+              ),
+              16.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LiveButton.uiSwitch(onTap: _toggleUI),
+                  64.horizontalSpace,
+                  LiveButton.hungUpBig(onTap: () => widget.onHangUp?.call(true)),
+                ],
+              )
+            ],
+          ),
+        ];
+      } else {  
+      
+        return [
+          if(isVideo) LiveButton.uiSwitch(onTap: _toggleUI),
+          LiveButton.microphone(on: _enabledMicrophone, onTap: _toggleAudio),
+          LiveButton.speaker(on: _enabledSpeaker, onTap: _toggleSpeaker),
+          
+          if(isVideo) LiveButton.camera(on: _enabledCamera, onTap: _toggleCamera),
+
+          LiveButton.hungUp(onTap: () => widget.onHangUp?.call(true)),
+        ];
+      }
     }
     return [];
   }
@@ -347,7 +405,7 @@ class _GroupControlsViewState extends State<GroupControlsView> {
   bool get isCalling => _callState == CallState.calling;
 
   Widget get _videoCallingDurationView => Visibility(
-    visible:  isCalling,
+    visible: isVideo && isCalling,
     child: _callingDurationStr.toText..style = Styles.ts_FFFFFF_opacity70_17sp,
   );
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -110,6 +112,9 @@ abstract class _ParticipantWidgetState<T extends ParticipantWidget> extends Stat
 
   TrackPublication? get firstAudioPublication;
 
+  int _notSpeakingSeconds = 3;
+  Timer? _notSpeakingTimer;
+
   @override
   void initState() {
     super.initState();
@@ -121,6 +126,23 @@ abstract class _ParticipantWidgetState<T extends ParticipantWidget> extends Stat
   void dispose() {
     widget.participant.removeListener(_onParticipantChanged);
     super.dispose();
+  }
+
+    void _handleSpeakingState() {
+    _notSpeakingTimer?.cancel();
+    if (!widget.participant.isSpeaking) {
+      _notSpeakingSeconds = 3;
+      _notSpeakingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (mounted) {
+          setState(() {
+            _notSpeakingSeconds--;
+            if (_notSpeakingSeconds <= 0 || widget.participant.isSpeaking) {
+              timer.cancel();
+            }
+          });
+        }
+      });
+    }
   }
 
   @override
@@ -178,7 +200,7 @@ class _LocalParticipantWidgetState extends _ParticipantWidgetState<LocalParticip
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8), 
-                border: Border.all(color: Colors.white, width: 2), 
+                border: Border.all(color: Colors.white, width: 1), 
                 image: (widget.faceURL != null && widget.faceURL!.isNotEmpty)
                     ? DecorationImage(
                         image: NetworkImage(widget.faceURL!),
@@ -203,11 +225,22 @@ class _LocalParticipantWidgetState extends _ParticipantWidgetState<LocalParticip
                     color: Colors.black54,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(
-                    widget.nickname ?? widget.participant.identity,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          widget.nickname ?? widget.participant.identity,
+                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      if (widget.participant.isSpeaking && _notSpeakingSeconds >= 0)
+                        const Icon(Icons.volume_up, color: Colors.orangeAccent, size: 18)
+                      
+                    ],
                   ),
                 ),
               ),
@@ -237,7 +270,7 @@ class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemotePartic
             ? Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.white, width: 2),
+                  border: Border.all(color: Colors.white, width: 1),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
@@ -278,11 +311,21 @@ class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemotePartic
                 color: Colors.black54,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(
-                widget.nickname ?? widget.participant.identity,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Text(
+                      widget.nickname ?? widget.participant.identity,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  if (widget.participant.isSpeaking && _notSpeakingSeconds >= 0)
+                    const Icon(Icons.volume_up, color: Colors.orangeAccent, size: 18)
+                ],
               ),
             ),
           ),

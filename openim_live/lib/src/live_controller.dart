@@ -219,6 +219,10 @@ mixin OpenIMLive {
       ),
     );
 
+    if(groupMembersList != null && callObj == CallObj.group && groupID != null){
+      _playSound();
+    }
+
     OpenIMLiveClient().start(
       Get.overlayContext!,
       callEventSubject: signalingSubject,

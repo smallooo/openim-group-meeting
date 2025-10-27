@@ -398,8 +398,8 @@ Widget _buildRemoteGrid() {
 
               Positioned(
                 top: 138.h,
-                left: 0,
-                right: 0,
+                left: 16,
+                right: 16,
                 bottom: 0,
                 child: _buildRemoteGrid(),
               ),
@@ -430,7 +430,7 @@ Widget _buildRemoteGrid() {
                   right: 0,
                   child: Center(
                     child: Text(
-                      '${inviterUserInfo?.nickname ?? inviterUserInfo?.userID ?? ""}对你发起了通话邀请',
+                      '${inviterUserInfo?.nickname ?? inviterUserInfo?.userID ?? ""}对你发起了多人通话邀请',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,
@@ -460,6 +460,12 @@ Widget _buildRemoteGrid() {
                 onCancel: onTapCancel,
                 onChangedCallState: (state) => callState = state,
               ),
+
+
+            
+
+
+              
 
             ],
           ),
