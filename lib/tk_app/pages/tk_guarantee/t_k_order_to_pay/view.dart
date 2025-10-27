@@ -210,6 +210,11 @@ class TKOrderToPayPage extends StatelessWidget {
           _buildPaymentRow('支付币种：', state.currency.value),
           SizedBox(height: 12.h),
           Obx(() => _buildPaymentRow(
+            '支付状态：',
+            state.paymentStatusText.value,
+          )),
+          SizedBox(height: 12.h),
+          Obx(() => _buildPaymentRow(
             '手续费：',
             '${state.feeAmount.value}${state.currency.value}(${state.feeRate.value}%)',
           )),
@@ -282,24 +287,31 @@ class TKOrderToPayPage extends StatelessWidget {
         child: SizedBox(
           width: double.infinity,
           height: 48.h,
-          child: ElevatedButton(
-            onPressed: () async => await logic.processPay(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF9E13F7),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24.r),
+          child: Obx(() {
+            final isCompleted = state.isPaymentCompleted.value;
+            final statusText = state.paymentStatusText.value;
+            
+            return ElevatedButton(
+              onPressed: isCompleted ? null : () async => await logic.processPay(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isCompleted 
+                    ? Colors.grey.withOpacity(0.3)
+                    : const Color(0xFF9E13F7),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24.r),
+                ),
+                elevation: 0,
               ),
-              elevation: 0,
-            ),
-            child: Text(
-              '继续支付',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+              child: Text(
+                isCompleted ? statusText : '继续支付',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: isCompleted ? Colors.grey : Colors.white,
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
       ),
     );
