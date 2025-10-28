@@ -19,6 +19,7 @@ class TkGuaranteeOrderPage extends StatelessWidget {
     OrderStatusFilter.pendingPay,
     OrderStatusFilter.pendingShip,
     OrderStatusFilter.completed,
+    OrderStatusFilter.afterSales,
   ];
 
   @override
@@ -74,11 +75,11 @@ class TkGuaranteeOrderPage extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                     onPressed: () => Get.back(),
                   ),
-                  SizedBox(width: 4.w),
-                  // IconButton(
-                  //   icon: const Icon(Icons.more_horiz, color: Colors.white),
-                  //   onPressed: () {},
-                  // ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.receipt_long, color: Colors.white),
+                    onPressed: () => Get.toNamed(AppRoutes.tkGuaranteeRefundOrder),
+                  ),
                 ],
               ),
               // SizedBox(height: 8.h),
@@ -235,8 +236,9 @@ class _OrderCard extends StatelessWidget {
         return const Color(0xFFCFF7E9);
       case OrderStatus.completed:
         return const Color(0xFFE5F2FF);
-      case OrderStatus.cancelled:
       case OrderStatus.refunded:
+        return const Color(0xFFFFE4E1); // 售后状态颜色
+      case OrderStatus.cancelled:
         return const Color(0xFFF2F2F2);
     }
   }
@@ -252,8 +254,11 @@ class _OrderCard extends StatelessWidget {
         return ImageRes.tkGuarantee3.toImage;
       case OrderStatus.completed:
         return ImageRes.tkGuarantee6.toImage;
-      case OrderStatus.cancelled:
       case OrderStatus.refunded:
+        // 如果需要售后状态的特殊图片，可以在这里添加
+        // 暂时使用和退款相同的处理
+        return const SizedBox.shrink();
+      case OrderStatus.cancelled:
         return const SizedBox.shrink();
     }
   }

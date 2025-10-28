@@ -94,7 +94,8 @@ enum OrderStatusFilter {
   inProgress('进行中'),
   pendingPay('待付款'),
   pendingShip('待发货'),
-  completed('已完成');
+  completed('已完成'),
+  afterSales('售后');
 
   const OrderStatusFilter(this.text);
   final String text;
@@ -112,6 +113,8 @@ enum OrderStatusFilter {
         return [2]; // 待发货
       case OrderStatusFilter.completed:
         return [4]; // 已完成
+      case OrderStatusFilter.afterSales:
+        return [6]; // 售后
     }
   }
 }
