@@ -90,3 +90,4 @@ export 'src/widgets/views.dart';
 export 'src/widgets/overlay_widget.dart';
 export 'src/widgets/photo_browser.dart';
 export 'src/controller/push_controller.dart';
+export 'src/widgets/chat/chat_voice_view.dart';

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:toklink/pages/chat/chat_red_packet/chat_red_package_binding.dart';
+import 'package:toklink/pages/chat/chat_red_packet/chat_red_package_page.dart';
 import 'package:toklink/pages/contacts/select_contacts/group_member_list/select_group_members_binding.dart';
 import 'package:toklink/pages/contacts/select_contacts/group_member_list/select_group_members_view.dart';
 
@@ -504,6 +506,11 @@ class AppPages {
       name: AppRoutes.tkProductDetail,
       page: () => TkProductDetailPage(),
       binding: TkProductDetailBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.redPacket,
+      page: () => ChatRedPacketPage(),
+      binding: ChatRedPacketBinding(),
     ),
   ];
 }

@@ -48,26 +48,27 @@ class ChatToolBox extends StatelessWidget {
           onTap: () => Permissions.microphone(onTapCall),
          
         ),
-      ToolboxItemInfo(
-        text: '位置',
-        icon: ImageRes.toolboxLocation2,
-        onTap: () => Permissions.location(onTapLocation),
+      // ToolboxItemInfo(
+      //   text: '位置',
+      //   icon: ImageRes.toolboxLocation2,
+      //   onTap: () => Permissions.location(onTapLocation),
 
-      ),
+      // ),
       // ToolboxItemInfo(
       //   text: '红包',
       //   icon: ImageRes.toolboxRedPacket,
       //   // onTap: () => Permissions.redPacket(onTapRedPacket),
       //   onTap: () => onTapRedPacket?.call(),
       // ),
-      ToolboxItemInfo(
-        text: '转账',
-        icon: ImageRes.toolboxTransfer,
-      ),
       // ToolboxItemInfo(
-      //   text: '语音输入',
-      //   icon: ImageRes.toolboxVoiceInput,
+      //   text: '转账',
+      //   icon: ImageRes.toolboxTransfer,
       // ),
+      ToolboxItemInfo(
+        text: '语音输入',
+        icon: ImageRes.toolboxVoiceInput,
+        onTap: () => Permissions.microphone(onTapVoiceInput),
+      ),
       if (onTapCreateOrder != null)
         ToolboxItemInfo(
           text: '担保订单',

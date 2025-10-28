@@ -5,6 +5,9 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:openim_common/src/widgets/chat/chat_pop_menu.dart';
+import 'package:openim_common/src/widgets/chat/chat_revoke_view.dart';
+import 'package:openim_common/src/widgets/chat/chat_voice_view.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'chat_notice_view.dart';
@@ -78,7 +81,14 @@ class ChatItemView extends StatefulWidget {
     this.rightFaceUrl,
     required this.message,
     this.textScaleFactor = 1.0,
+    this.showLongPressMenu = true,
+    this.isPlayingSound = false,
     this.ignorePointer = false,
+    this.enabledCopyMenu = true,
+    this.enabledDelMenu = true,
+    this.enabledForwardMenu = true,
+    this.enabledReplyMenu = true,
+    this.enabledRevokeMenu = true,
     this.showLeftNickname = true,
     this.showRightNickname = false,
     this.highlightColor,
@@ -88,6 +98,11 @@ class ChatItemView extends StatefulWidget {
     this.onTapRightAvatar,
     this.onLongPressRightAvatar,
     this.onLongPressLeftAvatar,
+    this.onTapCopyMenu,
+    this.onTapDelMenu,
+    this.onTapForwardMenu,
+ 
+    this.onTapRevokeMenu,
     this.onVisibleTrulyText,
     this.onFailedToResend,
     this.onClickItemView,
@@ -109,9 +124,23 @@ class ChatItemView extends StatefulWidget {
   final Message message;
 
   final double textScaleFactor;
+
+  final bool showLongPressMenu;
+
+  final bool isPlayingSound;
+
+
   final bool ignorePointer;
   final bool showLeftNickname;
   final bool showRightNickname;
+
+
+  final bool enabledCopyMenu;
+  final bool enabledDelMenu;
+  final bool enabledForwardMenu;
+  final bool enabledReplyMenu;
+  final bool enabledRevokeMenu;
+
 
   final Color? highlightColor;
   final Map<String, String> allAtMap;
@@ -120,6 +149,10 @@ class ChatItemView extends StatefulWidget {
   final Function()? onTapRightAvatar;
   final Function()? onLongPressRightAvatar;
   final Function()? onLongPressLeftAvatar;
+  final Function()? onTapCopyMenu;
+  final Function()? onTapDelMenu;
+  final Function()? onTapForwardMenu;
+  final Function()? onTapRevokeMenu;
   final Function(String? text)? onVisibleTrulyText;
   final Function()? onClickItemView;
   final ValueChanged<({String userID, String name, String? faceURL, String? groupID})> onTapUserProfile;
@@ -180,7 +213,21 @@ class _ChatItemViewState extends State<ChatItemView> {
             isISend: _isISend,
             message: _message,
           );
-    } else if (_message.isNotificationType) {
+     } else if (_message.isVoiceType) {
+      isBubbleBg = true;
+      final sound = _message.soundElem;
+      child = ChatVoiceView(
+        isISend: _isISend,
+        soundPath: sound?.soundPath,
+        soundUrl: sound?.sourceUrl,
+        duration: sound?.duration,
+        isPlaying: widget.isPlayingSound,
+      );
+    } else if (_message.isRevokeType) {
+      return child = ChatRevokeView(
+        message: _message,
+      );
+    }  else if (_message.isNotificationType) {
       if (_message.contentType == MessageType.groupInfoSetAnnouncementNotification) {
         final map = json.decode(_message.notificationElem!.detail!);
         final ntf = GroupNotification.fromJson(map);
@@ -225,6 +272,7 @@ class _ChatItemViewState extends State<ChatItemView> {
       isSending: _message.isVideoType ? false : _message.status == MessageStatus.sending,
       isSendFailed: _message.status == MessageStatus.failed,
       isBubbleBg: child == null ? true : isBubbleBg,
+      menus: widget.showLongPressMenu ? _menusItem : [],
       ignorePointer: widget.ignorePointer,
       sendStatusStream: widget.sendStatusSubject,
       onFailedToResend: widget.onFailedToResend,
@@ -239,4 +287,37 @@ class _ChatItemViewState extends State<ChatItemView> {
       ),
     );
   }
+
+  List<MenuInfo> get _menusItem => [
+        if (widget.enabledCopyMenu)
+          MenuInfo(
+            icon: ImageRes.menuCopy,
+            text: StrRes.menuCopy,
+            enabled: widget.enabledCopyMenu,
+            onTap: widget.onTapCopyMenu,
+          ),
+        if (widget.enabledDelMenu)
+          MenuInfo(
+            icon: ImageRes.menuDel,
+            text: StrRes.menuDel,
+            enabled: widget.enabledDelMenu,
+            onTap: widget.onTapDelMenu,
+          ),
+        if (widget.enabledForwardMenu)
+          MenuInfo(
+            icon: ImageRes.menuForward,
+            text: StrRes.menuForward,
+            enabled: widget.enabledForwardMenu,
+            onTap: widget.onTapForwardMenu,
+          ),
+        if (widget.enabledRevokeMenu)
+          MenuInfo(
+            icon: ImageRes.menuRevoke,
+            text: StrRes.menuRevoke,
+            enabled: widget.enabledRevokeMenu,
+            onTap: widget.onTapRevokeMenu,
+          ),
+  
+      ];
+      
 }

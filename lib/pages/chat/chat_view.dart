@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +10,16 @@ import 'package:toklink/pages/chat/chat_voice_record_layout.dart';
 import 'chat_logic.dart';
 import 'order_widget/order_custom_widgets.dart';
 
+
+
+
 class ChatPage extends StatelessWidget {
   final logic = Get.find<ChatLogic>(tag: GetTags.chat);
+
+   // 新增：控制器
+  final ChatInputController _inputController = ChatInputController();
+  
+
 
   ChatPage({super.key});
 
@@ -21,14 +30,28 @@ class ChatPage extends StatelessWidget {
         allAtMap: logic.getAtMapping(message),
         timelineStr: logic.getShowTime(message),
         sendStatusSubject: logic.sendStatusSub,
+        isPlayingSound: logic.isPlaySound(message),
         leftNickname: logic.getNewestNickname(message),
         leftFaceUrl: logic.getNewestFaceURL(message),
         rightNickname: logic.senderName,
         rightFaceUrl: OpenIM.iMManager.userInfo.faceURL,
         showLeftNickname: !logic.isSingleChat,
         showRightNickname: !logic.isSingleChat,
+        enabledCopyMenu: logic.showCopyMenu(message),
+        enabledRevokeMenu: logic.showRevokeMenu(message),
+        enabledReplyMenu: logic.showReplyMenu(message),
+        enabledForwardMenu: logic.showForwardMenu(message),
+        enabledDelMenu: logic.showDelMenu(message),
         onFailedToResend: () => logic.failedResend(message),
         onClickItemView: () => logic.parseClickEvent(message),
+        onTapCopyMenu: () => logic.copy(message),
+        onTapDelMenu: () => logic.deleteMsg(message),
+        onTapForwardMenu: () => logic.forward(message),
+        onTapRevokeMenu: () {
+          logic.markRevokedMessage(message);
+          logic.revokeMsgV2(message);
+        },
+
         visibilityChange: (msg, visible) {
           logic.markMessageAsRead(message, visible);
         },
@@ -80,6 +103,8 @@ class ChatPage extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         try {
+          logic.stopVoice();
+
           IMUtils.previewMediaFile(
               context: context,
               message: message,
@@ -155,6 +180,29 @@ class ChatPage extends StatelessWidget {
           false,
           false,
         );
+      } else if (viewType == CustomMessageType.tag) {
+        final isISend = message.sendID == OpenIM.iMManager.userID;
+        if (null != data['textElem']) {
+          final textElem = TextElem.fromJson(data['textElem']);
+          return CustomTypeInfo(
+            ChatText(
+              text: textElem.content ?? '',
+              textScaleFactor: logic.scaleFactor.value,
+              model: TextModel.normal,
+            ),
+          );
+        }  else if (null != data['soundElem']) {
+          final soundElem = SoundElem.fromJson(data['soundElem']);
+          return CustomTypeInfo(
+            ChatVoiceView(
+              isISend: isISend,
+              soundPath: soundElem.soundPath,
+              soundUrl: soundElem.sourceUrl,
+              duration: soundElem.duration,
+              isPlaying: logic.isPlaySound(message),
+            ),
+          );
+        }
       } else if (viewType == CustomMessageType.groupDisbanded) {
         return CustomTypeInfo(
           StrRes.groupDisbanded.toText..style = Styles.ts_8E9AB0_12sp,
@@ -239,11 +287,13 @@ class ChatPage extends StatelessWidget {
                 bottomView: ChatInputBox(
                   forceCloseToolboxSub: logic.forceCloseToolbox,
                   controller: logic.inputCtrl,
+                  voiceInputController: _inputController,
                   focusNode: logic.focusNode,
                   isNotInGroup: logic.isInvalidGroup,
                   directionalText: logic.directionalText(),
                   onCloseDirectional: logic.onClearDirectional,
                   onSend: (v) => logic.sendTextMsg(),
+                  onTapVoiceInput: (text) => logic.onTapVoiceInput(),
                   // @功能相关配置
                   onAt: logic.isGroupChat ? logic.handleAtInput : null,
                   onTapAt: logic.isGroupChat ? logic.handleAtTap : null,
@@ -255,7 +305,7 @@ class ChatPage extends StatelessWidget {
                     onTapCamera: logic.onTapCamera,
                     onTapLocation: logic.onTapLocation,
                     onTapRedPacket: logic.onTapRedPacket,
-                    onTapVoiceInput: logic.onTapVoiceInput,
+                    onTapVoiceInput: () => _inputController.triggerVoiceInput(),
                   ),
                   voiceRecordBar: bar,
                   emojiView: ChatEmojiView(

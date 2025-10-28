@@ -6,6 +6,22 @@ import 'package:openim_common/openim_common.dart';
 
 double kInputBoxMinHeight = 56.h;
 
+
+class ChatInputController {
+  _ChatInputBoxState? _state;
+
+  void _attach(_ChatInputBoxState state) => _state = state;
+  void _detach(_ChatInputBoxState state) {
+    if (_state == state) _state = null;
+  }
+
+  // 外部调用的方法：触发 ChatInputBox 的语音输入处理
+  void triggerVoiceInput() {
+    _state?._handleVoiceInput();
+  }
+}
+
+
 class ChatInputBox extends StatefulWidget {
   const ChatInputBox({
     Key? key,
@@ -13,6 +29,7 @@ class ChatInputBox extends StatefulWidget {
     required this.voiceRecordBar,
     required this.emojiView,
     this.controller,
+    this.voiceInputController,
     this.focusNode,
     this.style,
     this.atStyle,
@@ -28,9 +45,11 @@ class ChatInputBox extends StatefulWidget {
     this.onAt,
     this.onTapAt,
     this.atUserMap,
+    this.onTapVoiceInput,
   }) : super(key: key);
   final FocusNode? focusNode;
   final TextEditingController? controller;
+  final ChatInputController? voiceInputController;
   final TextStyle? style;
   final TextStyle? atStyle;
   final bool enabled;
@@ -45,6 +64,7 @@ class ChatInputBox extends StatefulWidget {
   final ValueChanged<String>? onSend;
   final TextSpan? directionalText;
   final VoidCallback? onCloseDirectional;
+  final Function(String)? onTapVoiceInput;
   
   // @功能相关回调
   final Function(String)? onAt;
@@ -67,6 +87,8 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
   double get _opacity => (widget.enabled ? 1 : .4);
 
   bool get _showDirectionalView => widget.directionalText != null;
+
+  final TextEditingController _textCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -93,11 +115,19 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
     });
 
     super.initState();
+    widget.voiceInputController?._attach(this);
   }
 
   @override
   void dispose() {
+     widget.voiceInputController?._detach(this);
+    _textCtrl.dispose();
     super.dispose();
+  }
+
+    // ChatInputBox 内部实际要执行的方法
+  void _handleVoiceInput() {
+   onTapSpeak();
   }
 
   @override
@@ -246,6 +276,17 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
           _rightKeyboardButton = false;
           _toolsVisible = false;
           _emojiVisible = false;
+          unfocus();
+        }));
+  }
+
+  void onTapVoiceInput() {
+    if (!widget.enabled) return;
+    Permissions.microphone(() => setState(() {
+          _leftKeyboardButton = false;
+          _rightKeyboardButton = true;
+          _emojiVisible = false;
+          _toolsVisible = false;
           unfocus();
         }));
   }

@@ -720,6 +720,43 @@ class IMUtils {
         case MessageType.quote:
           content = message.quoteElem!.text!;
           break;
+      
+        
+        case MessageType.revokeMessageNotification:
+          var isSelf = message.sendID == OpenIM.iMManager.userID;
+          var map = json.decode(message.notificationElem!.detail!);
+          var info = RevokedInfo.fromJson(map);
+          if (message.isSingleChat) {
+            if (isSelf) {
+              content = '${StrRes.you} ${StrRes.revokeMsg}';
+            } else {
+              content = '${message.senderNickname} ${StrRes.revokeMsg}';
+            }
+          } else {
+            if (info.revokerID == info.sourceMessageSendID) {
+              if (isSelf) {
+                content = '${StrRes.you} ${StrRes.revokeMsg}';
+              } else {
+                content = '${message.senderNickname} ${StrRes.revokeMsg}';
+              }
+            } else {
+              late String revoker;
+              late String sender;
+              if (info.revokerID == OpenIM.iMManager.userID) {
+                revoker = StrRes.you;
+              } else {
+                revoker = info.revokerNickname!;
+              }
+              if (info.sourceMessageSendID == OpenIM.iMManager.userID) {
+                sender = StrRes.you;
+              } else {
+                sender = info.sourceMessageSenderNickname!;
+              }
+
+              content = sprintf(StrRes.aRevokeBMsg, [revoker, sender]);
+            }
+          }
+          break;
         // case MessageType.emoji:
         //   content = '[${StrRes.emoji}]';
         //   break;

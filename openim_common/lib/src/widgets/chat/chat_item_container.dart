@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:openim_common/src/widgets/chat/chat_pop_menu.dart';
 
 class ChatItemContainer extends StatelessWidget {
   const ChatItemContainer({
@@ -20,7 +21,9 @@ class ChatItemContainer extends StatelessWidget {
     this.ignorePointer = false,
     this.showLeftNickname = true,
     this.showRightNickname = false,
+    this.menus,
     required this.child,
+    this.popupMenuController,
     this.sendStatusStream,
     this.onTapLeftAvatar,
     this.onTapRightAvatar,
@@ -43,7 +46,9 @@ class ChatItemContainer extends StatelessWidget {
   final bool ignorePointer;
   final bool showLeftNickname;
   final bool showRightNickname;
+  final List<MenuInfo>? menus;
   final Widget child;
+  final CustomPopupMenuController? popupMenuController;
   final Stream<MsgStreamEv<bool>>? sendStatusStream;
   final Function()? onTapLeftAvatar;
   final Function()? onTapRightAvatar;
@@ -73,7 +78,24 @@ class ChatItemContainer extends StatelessWidget {
     );
   }
 
-  Widget _buildChildView(BubbleType type) => isBubbleBg ? ChatBubble(bubbleType: type, child: child) : child;
+  // Widget _buildChildView(BubbleType type) => isBubbleBg ? ChatBubble(bubbleType: type, child: child) : child;
+
+    Widget _buildChildView(BubbleType type) => (null != menus && menus!.isEmpty)
+      ? isBubbleBg
+          ? ChatBubble(bubbleType: type, child: child)
+          : child
+      : CopyCustomPopupMenu(
+          controller: popupMenuController,
+          menuBuilder: () => ChatLongPressMenu(
+            popupMenuController: popupMenuController,
+            menus: menus ?? allMenus,
+          ),
+          pressType: PressType.longPress,
+          arrowColor: Styles.c_0C1C33_opacity85,
+          barrierColor: Colors.transparent,
+          verticalMargin: 0,
+          child: isBubbleBg ? ChatBubble(bubbleType: type, child: child) : child,
+        );
 
   Widget _buildLeftView() => Row(
         crossAxisAlignment: CrossAxisAlignment.start,

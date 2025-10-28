@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:pull_to_refresh_new/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
@@ -67,6 +68,10 @@ class ChatLogic extends SuperController {
   final privateMessageList = <Message>[];
   final isInBlacklist = false.obs;
 
+
+  final _audioPlayer = AudioPlayer();
+  final _currentPlayClientMsgID = ''.obs;
+
   final scrollingCacheMessageList = <Message>[];
   final announcement = ''.obs;
   late StreamSubscription conversationSub;
@@ -91,6 +96,7 @@ class ChatLogic extends SuperController {
   bool _isFirstLoad = true;
 
   final copyTextMap = <String?, String?>{};
+  final revokedTextMessage = <String, String>{};
 
   String? groupOwnerID;
   
@@ -166,6 +172,7 @@ class ChatLogic extends SuperController {
     nickname.value = conversationInfo.showName ?? '';
     faceUrl.value = conversationInfo.faceURL ?? '';
     _initChatConfig();
+    _initPlayListener();
     _setSdkSyncDataListener();
 
     conversationSub = imLogic.conversationChangedSubject.listen((value) {
@@ -539,6 +546,48 @@ class ChatLogic extends SuperController {
     messageList.refresh();
   }
 
+   void deleteMsg(Message message) async {
+    LoadingView.singleton.wrap(asyncFunction: () => _deleteMessage(message));
+  }
+
+    _deleteMessage(Message message) async {
+    try {
+      await OpenIM.iMManager.messageManager
+          .deleteMessageFromLocalAndSvr(
+        conversationID: conversationInfo.conversationID,
+        clientMsgID: message.clientMsgID!,
+      )
+          .then((value) => privateMessageList.remove(message))
+          .then((value) => messageList.remove(message));
+    } catch (e) {
+      await OpenIM.iMManager.messageManager
+          .deleteMessageFromLocalStorage(
+        conversationID: conversationInfo.conversationID,
+        clientMsgID: message.clientMsgID!,
+      )
+          .then((value) => privateMessageList.remove(message))
+          .then((value) => messageList.remove(message));
+    }
+  }
+
+    void forward(Message? message) async {
+    final result = await AppNavigator.startSelectContacts(
+      action: SelAction.forward,
+      ex: null != message ? IMUtils.parseMsg(message) : null,
+    );
+    if (null != result) {
+      final checkedList = result['checkedList'];
+      for (var info in checkedList) {
+        final userID = IMUtils.convertCheckedToUserID(info);
+        final groupID = IMUtils.convertCheckedToGroupID(info);
+
+        if (null != message) {
+          sendForwardMsg(message, userId: userID, groupId: groupID);
+        }
+      }
+    }
+  }
+
   void markMessageAsRead(Message message, bool visible) async {
     Logger.print('markMessageAsRead: ${message.textElem?.content}, $visible');
     if (visible && message.contentType! < 1000 && message.contentType! != MessageType.voice) {
@@ -641,11 +690,11 @@ class ChatLogic extends SuperController {
     }
   }
 
-  void onTapRedPacket() {AppNavigator.startRedPacket();}
-
-  void onTapVoiceInput() {
-
+  void onTapRedPacket() {
+    AppNavigator.startRedPacket();
   }
+
+ 
 
   void sendLocation({
     required dynamic location,
@@ -747,8 +796,22 @@ class ChatLogic extends SuperController {
       var data = msg.customElem!.data;
       var map = json.decode(data!);
       var customType = map['customType'];
-      if (CustomMessageType.call == customType && !isInBlacklist.value) {}
+      if (CustomMessageType.call == customType && !isInBlacklist.value) {} 
+      else if (CustomMessageType.tag == customType) {
+        final data = map['data'];
+        if (null != data['soundElem']) {
+          final soundElem = SoundElem.fromJson(data['soundElem']);
+          msg.soundElem = soundElem;
+          _playVoiceMessage(msg);
+        }
+      }
 
+      return;
+    } 
+
+     if (msg.contentType == MessageType.voice) {
+      _playVoiceMessage(msg);
+      // _markMessageAsRead(msg);
       return;
     }
 
@@ -758,6 +821,10 @@ class ChatLogic extends SuperController {
         viewUserInfo(userInfo, isCard: msg.isCardType);
       },
     );
+  }
+
+  void onTapVoiceInput() {
+   
   }
 
   void onTapLeftAvatar(Message message) {
@@ -860,6 +927,14 @@ class ChatLogic extends SuperController {
     if (hasFocus) {
       Logger.print('focus:$hasFocus');
       scrollBottom();
+    }
+  }
+
+   void copy(Message message) {
+    final content = copyTextMap[message.clientMsgID] ?? message.textElem?.content;
+
+    if (null != content) {
+      IMUtils.copy(text: content.replaceAll('\u200B', ''));
     }
   }
 
@@ -1019,6 +1094,76 @@ class ChatLogic extends SuperController {
     return !DateUtil.isToday(milliseconds);
   }
 
+   bool isPlaySound(Message message) {
+    return _currentPlayClientMsgID.value == message.clientMsgID!;
+  }
+
+    void _initPlayListener() {
+    _audioPlayer.playerStateStream.listen((state) {
+      switch (state.processingState) {
+        case ProcessingState.idle:
+        case ProcessingState.loading:
+        case ProcessingState.buffering:
+        case ProcessingState.ready:
+          break;
+        case ProcessingState.completed:
+          _currentPlayClientMsgID.value = '';
+          break;
+      }
+    });
+  }
+
+  void _playVoiceMessage(Message message) async {
+    final isClickSame = _currentPlayClientMsgID.value == message.clientMsgID;
+    if (_audioPlayer.playerState.playing) {
+      _currentPlayClientMsgID.value = '';
+      await _audioPlayer.stop();
+    }
+    if (!isClickSame) {
+      final bool isValid = await _initVoiceSource(message);
+      if (isValid) {
+        _audioPlayer.setVolume(rtcIsBusy ? 0 : 1.0);
+        await _audioPlayer.seek(Duration.zero);
+        await _audioPlayer.play();
+        _currentPlayClientMsgID.value = message.clientMsgID!;
+      }
+    }
+  }
+
+  void stopVoice() {
+    if (_audioPlayer.playerState.playing) {
+      _currentPlayClientMsgID.value = '';
+      _audioPlayer.stop();
+    }
+  }
+
+  Future<bool> _initVoiceSource(Message message) async {
+    final bool isReceived = message.sendID != OpenIM.iMManager.userID;
+    final String? path = message.soundElem?.soundPath;
+    final String? url = message.soundElem?.sourceUrl;
+    bool isExistSource = false;
+    if (isReceived) {
+      if (null != url && url.trim().isNotEmpty) {
+        isExistSource = true;
+        await _audioPlayer.setUrl(url);
+      }
+    } else {
+      bool existFile = false;
+      if (path != null && path.trim().isNotEmpty) {
+        var file = File(path);
+        existFile = await file.exists();
+      }
+      if (existFile) {
+        isExistSource = true;
+        await _audioPlayer.setFilePath(path!);
+      } else if (null != url && url.trim().isNotEmpty) {
+        isExistSource = true;
+        await _audioPlayer.setUrl(url);
+      }
+    }
+    return isExistSource;
+  }
+
   String? getNewestNickname(Message message) {
     if (isSingleChat) null;
 
@@ -1037,6 +1182,123 @@ class ChatLogic extends SuperController {
         conversationID: conversationInfo.conversationID,
       );
     }
+  }
+
+  void revokeMsgV2(Message message) async {
+    late bool canRevoke;
+    if (isGroupChat) {
+      if (message.sendID == OpenIM.iMManager.userID) {
+        canRevoke = true;
+      } else {
+        final list = await LoadingView.singleton
+            .wrap(asyncFunction: () => OpenIM.iMManager.groupManager.getGroupOwnerAndAdmin(groupID: groupID!));
+        final sender = list.firstWhereOrNull((e) => e.userID == message.sendID);
+        final revoker = list.firstWhereOrNull((e) => e.userID == OpenIM.iMManager.userID);
+
+        if (revoker != null && sender == null) {
+          canRevoke = true;
+        } else if (revoker == null && sender != null) {
+          canRevoke = false;
+        } else if (revoker != null && sender != null) {
+          if (revoker.roleLevel == sender.roleLevel) {
+            canRevoke = false;
+          } else if (revoker.roleLevel == GroupRoleLevel.owner) {
+            canRevoke = true;
+          } else {
+            canRevoke = false;
+          }
+        } else {
+          canRevoke = false;
+        }
+      }
+    } else {
+      if (message.sendID == OpenIM.iMManager.userID) {
+        canRevoke = true;
+      }
+    }
+    if (canRevoke) {
+      try {
+        await LoadingView.singleton.wrap(
+          asyncFunction: () => OpenIM.iMManager.messageManager.revokeMessage(
+            conversationID: conversationInfo.conversationID,
+            clientMsgID: message.clientMsgID!,
+          ),
+        );
+        message.contentType = MessageType.revokeMessageNotification;
+        message.notificationElem = NotificationElem(detail: jsonEncode(_buildRevokeInfo(message)));
+        messageList.refresh();
+      } catch (e) {
+        IMViews.showToast(e.toString());
+      }
+    } else {
+      IMViews.showToast('no permission');
+    }
+  }
+
+  RevokedInfo _buildRevokeInfo(Message message) {
+    return RevokedInfo.fromJson({
+      'revokerID': OpenIM.iMManager.userInfo.userID,
+      'revokerRole': 0,
+      'revokerNickname': OpenIM.iMManager.userInfo.nickname,
+      'clientMsgID': message.clientMsgID,
+      'revokeTime': 0,
+      'sourceMessageSendTime': 0,
+      'sourceMessageSendID': message.sendID,
+      'sourceMessageSenderNickname': message.senderNickname,
+      'sessionType': message.sessionType,
+    });
+  }
+
+  bool showCopyMenu(Message message) {
+    return message.isTextType;
+  }
+
+  bool showDelMenu(Message message) {
+    return true;
+  }
+
+  bool showForwardMenu(Message message) {
+    if (message.status != MessageStatus.succeeded) {
+      return false;
+    }
+    if (message.isNotificationType) {
+      return false;
+    }
+    return true;
+  }
+
+  bool showReplyMenu(Message message) {
+    if (message.status != MessageStatus.succeeded) {
+      return false;
+    }
+    return message.isTextType ||
+        message.isVideoType ||
+        message.isPictureType ||
+        message.isLocationType ||
+        message.isFileType ||
+        message.isCardType ||
+        message.isCustomFaceType;
+  }
+
+  bool showRevokeMenu(Message message) {
+    if (message.status != MessageStatus.succeeded ||
+        message.isNotificationType ||
+        isExceed24H(message) && isSingleChat) {
+      return false;
+    }
+    if (isGroupChat) {
+      if (groupMemberRoleLevel.value == GroupRoleLevel.owner ||
+          (groupMemberRoleLevel.value == GroupRoleLevel.admin &&
+              ownerAndAdmin.firstWhereOrNull((element) => element.userID == message.sendID) == null)) {
+        return true;
+      }
+    }
+    if (message.sendID == OpenIM.iMManager.userID) {
+      if (DateTime.now().millisecondsSinceEpoch - (message.sendTime ??= 0) < (1000 * 60 * 5)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   WillPopCallback? willPop() {
@@ -1250,6 +1512,16 @@ class ChatLogic extends SuperController {
 
   bool showBubbleBg(Message message) {
     return !isNotificationType(message) && !isFailedHintMessage(message);
+  }
+
+    bool isRevokeMessage(Message message) {
+    return message.contentType == MessageType.revokeMessageNotification;
+  }
+
+  void markRevokedMessage(Message message) {
+    if (message.contentType == MessageType.text) {
+      revokedTextMessage[message.clientMsgID!] = jsonEncode(message);
+    }
   }
 
   Future<AdvancedMessage> _fetchHistoryMessages() {
