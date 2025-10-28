@@ -82,4 +82,31 @@ class ProductRepository {
       rethrow;
     }
   }
+  
+  /// 获取退款列表
+  /// 
+  /// 调用 /order/app/refund/list 接口
+  /// 获取退款订单列表
+  /// 
+  /// 返回值说明：
+  /// - code: 0表示成功，其他值表示错误
+  /// - message: 错误信息，成功时为"success"
+  /// - data: 退款列表数据，包含退款信息和分页信息
+  Future<Map<String, dynamic>> getRefundList() async {
+    print('ProductRepository: 开始调用API获取退款列表...'); // 调试信息
+    
+    try {
+      // 获取原始JSON数据
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(
+        ApiConstants.refundList,
+      );
+      
+      print('ProductRepository: 原始API响应: $rawResponse'); // 调试信息
+      
+      return rawResponse;
+    } catch (e) {
+      print('ProductRepository: 获取退款列表失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
 }
