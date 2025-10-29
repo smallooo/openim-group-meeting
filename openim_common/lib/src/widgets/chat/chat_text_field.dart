@@ -1,9 +1,7 @@
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:openim_common/openim_common.dart';
-import 'at_text_span_builder.dart';
 
 class ChatTextField extends StatefulWidget {
   final FocusNode? focusNode;

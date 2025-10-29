@@ -99,6 +99,8 @@ class ChatLogic extends SuperController {
   final revokedTextMessage = <String, String>{};
 
   String? groupOwnerID;
+
+  final Rxn<Message> quoteMessage = Rxn<Message>();
   
   // @功能相关
   final atUserMap = <String, String>{}.obs; // userID -> nickname 映射
@@ -367,6 +369,17 @@ class ChatLogic extends SuperController {
       text: content,
     );
 
+    if(quoteMessage.value != null){
+      message = await OpenIM.iMManager.messageManager.createQuoteMessage(
+        text: content,
+        quoteMsg: quoteMessage.value!,
+      );
+      quoteMessage.value = null;
+    } 
+
+
+    
+    
     _sendMessage(message);
   }
 
@@ -475,6 +488,59 @@ class ChatLogic extends SuperController {
         .catchError((error, _) => _senFailed(message, groupId, userId, error, _))
         .whenComplete(() => _completed());
   }
+
+
+  void clearQuote() {
+    // 清除引用内容的逻辑
+    quoteMessage.value = null;
+
+
+  }
+
+  /// 发送引用（回复）消息
+  Future<void> _sendQuoteMessage(
+    Message replyMsg,
+    {
+      required Message originMsg,
+      String? userId,
+      String? groupId,
+      bool addToUI = true,
+    }) async {
+    // var content = IMUtils.safeTrim(inputCtrl.text);
+    // if (content.isEmpty) return;
+     log('send : ${json.encode(replyMsg)}');
+      userId = IMUtils.emptyStrToNull(userId);
+      groupId = IMUtils.emptyStrToNull(groupId);
+      if (null == userId && null == groupId ||
+          userId == userID && userId != null ||
+          groupId == groupID && groupId != null) {
+        if (addToUI) {
+          messageList.add(originMsg);
+          scrollBottom();
+        }
+      }
+      Logger.print('uid:$userID userId:$userId gid:$groupID groupId:$groupId');
+      _reset(replyMsg);
+      bool useOuterValue = null != userId || null != groupId;
+
+      final recvUserID = useOuterValue ? userId : userID;
+      replyMsg.recvID = recvUserID;
+
+    // // 创建引用消息（回复消息）
+    // final replyMsg = await OpenIM.iMManager.messageManager.createQuoteMessage(
+    //   text: "这是回复内容",
+    //   quoteMsg: originMsg,
+    // );
+    // 发送引用消息
+    await _sendMessage(
+      replyMsg,
+      userId: userId,
+      groupId: groupId,
+      addToUI: addToUI,
+    );
+  }
+
+
 
   void _sendSucceeded(Message oldMsg, Message newMsg) {
     Logger.print('message send success----');
@@ -1233,6 +1299,16 @@ class ChatLogic extends SuperController {
     } else {
       IMViews.showToast('no permission');
     }
+  }
+
+  Future<void> onQuoteMessage(
+    Message originMsg,
+  ) async {
+    quoteMessage.value = originMsg;
+    
+      
+    Logger.print('quoteMessage: ${jsonEncode(quoteMessage)}');
+    
   }
 
   RevokedInfo _buildRevokeInfo(Message message) {

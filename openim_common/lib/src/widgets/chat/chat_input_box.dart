@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:openim_common/openim_common.dart';
 
@@ -37,7 +37,7 @@ class ChatInputBox extends StatefulWidget {
     this.isNotInGroup = false,
     this.hintText,
     this.forceCloseToolboxSub,
-    this.quoteContent,
+    this.quoteMessage,
     this.onClearQuote,
     this.onSend,
     this.directionalText,
@@ -59,7 +59,7 @@ class ChatInputBox extends StatefulWidget {
   final Widget emojiView;
   final Widget voiceRecordBar;
   final Stream? forceCloseToolboxSub;
-  final String? quoteContent;
+  final Message? quoteMessage;
   final Function()? onClearQuote;
   final ValueChanged<String>? onSend;
   final TextSpan? directionalText;
@@ -82,7 +82,7 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
   bool _rightKeyboardButton = false;
   bool _sendButtonVisible = false;
 
-  bool get _showQuoteView => IMUtils.isNotNullEmptyStr(widget.quoteContent);
+  bool get _showQuoteView => IMUtils.isNotNullEmptyStr(widget.quoteMessage?.textElem?.content);
 
   double get _opacity => (widget.enabled ? 1 : .4);
 
@@ -181,6 +181,15 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
                   ],
                 ),
               ),
+
+              // 新增：显示引用内容（在输入条下方）
+              if (_showQuoteView)
+                _SubView(
+                  title: '${widget.quoteMessage?.senderNickname ?? ''} : ',
+                  content: widget.quoteMessage?.textElem?.content,
+                  onClose: widget.onClearQuote,
+                ),
+                
               if (_showDirectionalView)
                 _SubView(
                   textSpan: widget.directionalText,
@@ -348,7 +357,7 @@ class _SubView extends StatelessWidget {
                       ),
                     if (content != null)
                       Text(
-                        title!,
+                        content!,
                         style: Styles.ts_8E9AB0_14sp,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,

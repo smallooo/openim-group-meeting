@@ -93,6 +93,8 @@ extension MessageExt on Message {
 
   bool get isRevokeType => contentType == MessageType.revokeMessageNotification;
 
+  bool get isQuoteType => contentType == MessageType.quote;
+
   bool get isNotificationType => contentType! >= 1000;
 }
 

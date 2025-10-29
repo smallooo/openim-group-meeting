@@ -16,7 +16,6 @@ import 'order_widget/order_custom_widgets.dart';
 class ChatPage extends StatelessWidget {
   final logic = Get.find<ChatLogic>(tag: GetTags.chat);
 
-   // 新增：控制器
   final ChatInputController _inputController = ChatInputController();
   
 
@@ -51,6 +50,7 @@ class ChatPage extends StatelessWidget {
           logic.markRevokedMessage(message);
           logic.revokeMsgV2(message);
         },
+        onTapQuoteMenu: () => logic.onQuoteMessage( message),
 
         visibilityChange: (msg, visible) {
           logic.markMessageAsRead(message, visible);
@@ -280,11 +280,13 @@ class ChatPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: WaterMarkBgView(
-                text: '',
+                text: logic.quoteMessage.value?.textElem?.content ?? "",
                 path: logic.background.value,
                 backgroundColor: Styles.c_FFFFFF,
                 floatView: _groupCallHintView,
-                bottomView: ChatInputBox(
+                bottomView: Obx(() => ChatInputBox(
+                  quoteMessage: logic.quoteMessage.value,
+                  onClearQuote: logic.clearQuote,
                   forceCloseToolboxSub: logic.forceCloseToolbox,
                   controller: logic.inputCtrl,
                   voiceInputController: _inputController,
@@ -294,7 +296,6 @@ class ChatPage extends StatelessWidget {
                   onCloseDirectional: logic.onClearDirectional,
                   onSend: (v) => logic.sendTextMsg(),
                   onTapVoiceInput: (text) => logic.onTapVoiceInput(),
-                  // @功能相关配置
                   onAt: logic.isGroupChat ? logic.handleAtInput : null,
                   onTapAt: logic.isGroupChat ? logic.handleAtTap : null,
                   atUserMap: logic.isGroupChat ? logic.atUserMap : null,
@@ -314,7 +315,7 @@ class ChatPage extends StatelessWidget {
                     onAddFavorite: logic.favoriteManage,
                     onSelectedFavorite: logic.sendFavoritePic,
                   ),
-                ),
+                ),),
                 child: ChatListView(
                   onTouch: () => logic.closeToolbox(),
                   itemCount: logic.messageList.length,
