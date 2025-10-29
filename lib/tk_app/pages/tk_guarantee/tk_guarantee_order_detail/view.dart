@@ -135,11 +135,12 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16.w),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            Expanded(
-              child: Obx(() => Text('订单#${state.orderId.value}', style: TextStyle(fontSize: 13.sp, color: const Color(0xFF333333))))
-            ),
-            _statusTag(state.status.value),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Obx(() => Text('订单#${state.orderId.value}', style: TextStyle(fontSize: 13.sp, color: const Color(0xFF333333)))),
+            SizedBox(height: 10.h),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              _statusTag(state.status.value),
+            ]),
           ]),
           SizedBox(height: 10.h),
           Obx(() => Text('¥ ${state.totalAmount.value.toStringAsFixed(2)}', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: const Color(0xFFEB2F2F)))),
@@ -392,11 +393,15 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
 
   Widget _statusTag(String text) {
     return Container(
-      width: 64.w,
-      height: 28.h,
+      constraints: BoxConstraints(minHeight: 28.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(color: const Color(0xFF3DF7CF).withOpacity(0.3), borderRadius: BorderRadius.circular(15.r)),
-      child: Text(text, style: TextStyle(fontSize: 12.sp, color: const Color(0xFF0AC7BF))),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 12.sp, color: const Color(0xFF0AC7BF)),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 

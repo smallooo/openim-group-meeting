@@ -226,6 +226,11 @@ class _OrderCard extends StatelessWidget {
   const _OrderCard({required this.order});
 
   Color get statusColor {
+    // 先判断特殊状态：12 = 交易关闭-完成退款   8 = 交易中-待寄送退货商品
+    if (order.orderStatus == 12 || order.orderStatus == 8) {
+      return const Color(0xFFFFE4E1); // 使用售后/退款状态颜色
+    }
+    
     final status = OrderStatus.fromValue(order.orderStatus);
     switch (status) {
       case OrderStatus.pendingPayment:
@@ -240,10 +245,18 @@ class _OrderCard extends StatelessWidget {
         return const Color(0xFFFFE4E1); // 售后状态颜色
       case OrderStatus.cancelled:
         return const Color(0xFFF2F2F2);
+      default:
+        return const Color(0xFFF2F2F2); // 默认灰色
     }
   }
 
-  Widget get statusImage {   
+  Widget get statusImage {
+    // 先判断特殊状态：12 = 交易关闭-完成退款   8 = 交易中-待寄送退货商品
+    if (order.orderStatus == 12 || order.orderStatus == 8) {
+      return const SizedBox.shrink();
+    }
+
+
     final status = OrderStatus.fromValue(order.orderStatus);
     switch (status) {
       case OrderStatus.pendingPayment:
@@ -259,6 +272,8 @@ class _OrderCard extends StatelessWidget {
         // 暂时使用和退款相同的处理
         return const SizedBox.shrink();
       case OrderStatus.cancelled:
+        return const SizedBox.shrink();
+      default:
         return const SizedBox.shrink();
     }
   }
