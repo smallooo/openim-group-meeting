@@ -263,6 +263,8 @@ mixin _$RefundDetailData {
   String get completeTime => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _sellerIdFromJson)
+  int get sellerId => throw _privateConstructorUsedError;
 
   /// Serializes this RefundDetailData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -300,7 +302,8 @@ abstract class $RefundDetailDataCopyWith<$Res> {
       String reviewComment,
       String completeTime,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      @JsonKey(fromJson: _sellerIdFromJson) int sellerId});
 }
 
 /// @nodoc
@@ -338,6 +341,7 @@ class _$RefundDetailDataCopyWithImpl<$Res, $Val extends RefundDetailData>
     Object? completeTime = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? sellerId = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -420,6 +424,10 @@ class _$RefundDetailDataCopyWithImpl<$Res, $Val extends RefundDetailData>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      sellerId: null == sellerId
+          ? _value.sellerId
+          : sellerId // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -452,7 +460,8 @@ abstract class _$$RefundDetailDataImplCopyWith<$Res>
       String reviewComment,
       String completeTime,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      @JsonKey(fromJson: _sellerIdFromJson) int sellerId});
 }
 
 /// @nodoc
@@ -488,6 +497,7 @@ class __$$RefundDetailDataImplCopyWithImpl<$Res>
     Object? completeTime = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? sellerId = null,
   }) {
     return _then(_$RefundDetailDataImpl(
       id: null == id
@@ -570,6 +580,10 @@ class __$$RefundDetailDataImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      sellerId: null == sellerId
+          ? _value.sellerId
+          : sellerId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -597,7 +611,8 @@ class _$RefundDetailDataImpl implements _RefundDetailData {
       this.reviewComment = '',
       this.completeTime = '',
       this.createdAt = '',
-      this.updatedAt = ''});
+      this.updatedAt = '',
+      @JsonKey(fromJson: _sellerIdFromJson) this.sellerId = 0});
 
   factory _$RefundDetailDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$RefundDetailDataImplFromJson(json);
@@ -657,10 +672,13 @@ class _$RefundDetailDataImpl implements _RefundDetailData {
   @override
   @JsonKey()
   final String updatedAt;
+  @override
+  @JsonKey(fromJson: _sellerIdFromJson)
+  final int sellerId;
 
   @override
   String toString() {
-    return 'RefundDetailData(id: $id, refundNo: $refundNo, orderId: $orderId, orderNo: $orderNo, refundType: $refundType, refundAmount: $refundAmount, refundReason: $refundReason, description: $description, evidenceImages: $evidenceImages, evidenceVideos: $evidenceVideos, evidenceFiles: $evidenceFiles, status: $status, statusText: $statusText, reviewTime: $reviewTime, reviewerName: $reviewerName, reviewRemark: $reviewRemark, reviewComment: $reviewComment, completeTime: $completeTime, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'RefundDetailData(id: $id, refundNo: $refundNo, orderId: $orderId, orderNo: $orderNo, refundType: $refundType, refundAmount: $refundAmount, refundReason: $refundReason, description: $description, evidenceImages: $evidenceImages, evidenceVideos: $evidenceVideos, evidenceFiles: $evidenceFiles, status: $status, statusText: $statusText, reviewTime: $reviewTime, reviewerName: $reviewerName, reviewRemark: $reviewRemark, reviewComment: $reviewComment, completeTime: $completeTime, createdAt: $createdAt, updatedAt: $updatedAt, sellerId: $sellerId)';
   }
 
   @override
@@ -703,7 +721,9 @@ class _$RefundDetailDataImpl implements _RefundDetailData {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.sellerId, sellerId) ||
+                other.sellerId == sellerId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -729,7 +749,8 @@ class _$RefundDetailDataImpl implements _RefundDetailData {
         reviewComment,
         completeTime,
         createdAt,
-        updatedAt
+        updatedAt,
+        sellerId
       ]);
 
   /// Create a copy of RefundDetailData
@@ -751,26 +772,28 @@ class _$RefundDetailDataImpl implements _RefundDetailData {
 
 abstract class _RefundDetailData implements RefundDetailData {
   const factory _RefundDetailData(
-      {required final String id,
-      required final String refundNo,
-      required final String orderId,
-      required final String orderNo,
-      required final String refundType,
-      final double refundAmount,
-      final String refundReason,
-      final String description,
-      final String evidenceImages,
-      final String evidenceVideos,
-      final String evidenceFiles,
-      final String status,
-      final String statusText,
-      final String reviewTime,
-      final String reviewerName,
-      final String reviewRemark,
-      final String reviewComment,
-      final String completeTime,
-      final String createdAt,
-      final String updatedAt}) = _$RefundDetailDataImpl;
+          {required final String id,
+          required final String refundNo,
+          required final String orderId,
+          required final String orderNo,
+          required final String refundType,
+          final double refundAmount,
+          final String refundReason,
+          final String description,
+          final String evidenceImages,
+          final String evidenceVideos,
+          final String evidenceFiles,
+          final String status,
+          final String statusText,
+          final String reviewTime,
+          final String reviewerName,
+          final String reviewRemark,
+          final String reviewComment,
+          final String completeTime,
+          final String createdAt,
+          final String updatedAt,
+          @JsonKey(fromJson: _sellerIdFromJson) final int sellerId}) =
+      _$RefundDetailDataImpl;
 
   factory _RefundDetailData.fromJson(Map<String, dynamic> json) =
       _$RefundDetailDataImpl.fromJson;
@@ -815,6 +838,9 @@ abstract class _RefundDetailData implements RefundDetailData {
   String get createdAt;
   @override
   String get updatedAt;
+  @override
+  @JsonKey(fromJson: _sellerIdFromJson)
+  int get sellerId;
 
   /// Create a copy of RefundDetailData
   /// with the given fields replaced by the non-null parameter values.

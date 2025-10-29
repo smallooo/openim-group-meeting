@@ -16,6 +16,17 @@ class RefundDetailResponse with _$RefundDetailResponse {
       _$RefundDetailResponseFromJson(json);
 }
 
+/// 将 sellerId 从字符串或数字转换为 int
+int _sellerIdFromJson(dynamic json) {
+  if (json == null) return 0;
+  if (json is int) return json;
+  if (json is num) return json.toInt();
+  if (json is String) {
+    return int.tryParse(json) ?? 0;
+  }
+  return 0;
+}
+
 @freezed
 class RefundDetailData with _$RefundDetailData {
   const factory RefundDetailData({
@@ -39,6 +50,7 @@ class RefundDetailData with _$RefundDetailData {
     @Default('') String completeTime,
     @Default('') String createdAt,
     @Default('') String updatedAt,
+    @JsonKey(fromJson: _sellerIdFromJson) @Default(0) int sellerId,
   }) = _RefundDetailData;
 
   factory RefundDetailData.fromJson(Map<String, dynamic> json) =>

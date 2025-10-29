@@ -18,6 +18,7 @@ import '../../../core/utils/access_token_helper.dart';
 import 'state.dart';
 import 'model/guarantee_refund_order_detail_model.dart';
 import 'model/review_order_model.dart';
+import 'model/guarantee_refund_confirm_model.dart';
 
 class TkGuaranteeRefundOrderDetailLogic extends GetxController {
   final TkGuaranteeRefundOrderDetailState state = TkGuaranteeRefundOrderDetailState();
@@ -338,6 +339,99 @@ class TkGuaranteeRefundOrderDetailLogic extends GetxController {
       }
     } catch (e) {
       Get.snackbar('错误', '审核失败: $e');
+    }
+  }
+
+  /// 确认退款
+  Future<void> confirmRefund() async {
+    final current = state.detail.value;
+    if (current == null) {
+      Get.snackbar('提示', '未获取到退款详情');
+      return;
+    }
+    final refundNo = current.refundNo;
+    if (refundNo.isEmpty) {
+      Get.snackbar('提示', '未获取到退款单号');
+      return;
+    }
+    final refundAmount = current.refundAmount;
+    final sellerId = current.sellerId;
+    
+    if (sellerId == 0) {
+      Get.snackbar('错误', '无法获取商家ID，请重新加载详情');
+      return;
+    }
+    
+    if (refundAmount <= 0) {
+      Get.snackbar('错误', '退款金额无效');
+      return;
+    }
+
+    try {
+      state.isLoading.value = true;
+      if (Get.isRegistered<TokenStorageService>() &&
+          Get.isRegistered<TokenManager>() &&
+          Get.isRegistered<AuthStateManager>() &&
+          (_productRepository != null)) {
+        final raw = await _productRepository!.confirmRefund(
+          refundNo: refundNo,
+          sellerId: sellerId,
+          refundAmount: refundAmount,
+        );
+        final resp = ConfirmRefundResponse.fromJson(raw);
+        if (resp.code == 0 && resp.ok) {
+          Get.snackbar('成功', resp.data?.message.isNotEmpty == true ? resp.data!.message : '确认退款成功');
+          await loadRefundDetail(refundNo);
+        } else {
+          Get.snackbar('错误', resp.message.isNotEmpty ? resp.message : '确认退款失败');
+        }
+      } else {
+        // 兜底直连
+        await _confirmDirect(refundNo, sellerId, refundAmount);
+      }
+    } catch (e) {
+      Get.snackbar('错误', '确认退款失败: $e');
+    } finally {
+      state.isLoading.value = false;
+    }
+  }
+
+  Future<void> _confirmDirect(String refundNo, int sellerId, double refundAmount) async {
+    try {
+      final tokenHeaders = await TokenAccessHelper.buildAccessTokenHeader();
+      if (tokenHeaders.isEmpty) {
+        Get.snackbar('错误', '请先登录');
+        return;
+      }
+      final dio = Dio(BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        headers: {
+          ...tokenHeaders,
+          'Content-Type': Headers.jsonContentType,
+          'Accept': 'application/json',
+        },
+      ));
+      final requestData = {
+        'refundNo': refundNo,
+        'sellerId': sellerId,
+        'confirmRemark': '商家确认退款，已向用户转账',
+        'refundAmount': refundAmount,
+        'refundMethod': '原路退回',
+      };
+      final response = await dio.post(ApiConstants.refundConfirm, data: requestData);
+      if (response.statusCode == 200) {
+        final resp = ConfirmRefundResponse.fromJson(response.data as Map<String, dynamic>);
+        if (resp.code == 0 && resp.ok) {
+          Get.snackbar('成功', resp.data?.message.isNotEmpty == true ? resp.data!.message : '确认退款成功');
+          await loadRefundDetail(refundNo);
+        } else {
+          Get.snackbar('错误', resp.message.isNotEmpty ? resp.message : '确认退款失败');
+        }
+      } else {
+        Get.snackbar('错误', '请求失败: ${response.statusCode}');
+      }
+    } catch (e) {
+      Get.snackbar('错误', '确认退款失败: $e');
     }
   }
 }

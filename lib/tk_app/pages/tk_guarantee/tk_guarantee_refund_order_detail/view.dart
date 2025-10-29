@@ -74,7 +74,7 @@ class TkGuaranteeRefundOrderDetailPage extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () => logic.confirmRefund(),
                         child: const Text('确认退款'),
                       ),
                     ),

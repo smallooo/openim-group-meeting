@@ -125,6 +125,9 @@ class ApiConstants {
   // 审核退款接口（需要登录）
   static const String refundApprove = '/order/app/refund/approve';
 
+  // 确认退款接口（需要登录）
+  static const String refundConfirm = '/order/app/refund/confirm';
+
   // 默认分页大小
   static const int defaultPageSize = 10;
   static const int defaultPageNum = 1;

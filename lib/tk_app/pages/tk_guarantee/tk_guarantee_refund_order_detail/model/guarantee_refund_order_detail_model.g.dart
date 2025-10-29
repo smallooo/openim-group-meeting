@@ -47,6 +47,8 @@ _$RefundDetailDataImpl _$$RefundDetailDataImplFromJson(
       completeTime: json['completeTime'] as String? ?? '',
       createdAt: json['createdAt'] as String? ?? '',
       updatedAt: json['updatedAt'] as String? ?? '',
+      sellerId:
+          json['sellerId'] == null ? 0 : _sellerIdFromJson(json['sellerId']),
     );
 
 Map<String, dynamic> _$$RefundDetailDataImplToJson(
@@ -72,6 +74,7 @@ Map<String, dynamic> _$$RefundDetailDataImplToJson(
       'completeTime': instance.completeTime,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'sellerId': instance.sellerId,
     };
 
 _$CancelRefundResponseImpl _$$CancelRefundResponseImplFromJson(

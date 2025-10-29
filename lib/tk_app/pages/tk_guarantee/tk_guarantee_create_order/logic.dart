@@ -2,12 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
 import 'package:openim_common/openim_common.dart';
 
-// import '../../core/constants/api_constants.dart';
-// import '../../core/utils/access_token_helper.dart';
 import '../../../core/constants/api_constants.dart';
 import '../../../core/utils/access_token_helper.dart';
 import 'model/order_models.dart';
@@ -130,6 +127,8 @@ class TkGuaranteeCreateOrderLogic extends GetxController {
         sellerId: sellerId,
         memberId: memberId,
         buyerId: buyerId,
+        shippingFee: 0,
+        discountAmount: 0,
 
       );
 

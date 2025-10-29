@@ -173,4 +173,35 @@ class ProductRepository {
       rethrow;
     }
   }
+
+  /// 确认退款接口（需要登录）
+  /// 使用 JSON 数据格式 (raw JSON)
+  Future<Map<String, dynamic>> confirmRefund({
+    required String refundNo,
+    required int sellerId,
+    required double refundAmount,
+    String confirmRemark = '商家确认退款，已向用户转账',
+    String refundMethod = '原路退回',
+  }) async {
+    print('ProductRepository: 确认退款: $refundNo, sellerId: $sellerId, refundAmount: $refundAmount');
+    try {
+      final requestData = {
+        'refundNo': refundNo,
+        'sellerId': sellerId,
+        'confirmRemark': confirmRemark,
+        'refundAmount': refundAmount,
+        'refundMethod': refundMethod,
+      };
+      final rawResponse = await _apiClient.post<Map<String, dynamic>>(
+        ApiConstants.refundConfirm,
+        data: requestData,
+        options: Options(contentType: Headers.jsonContentType),
+      );
+      print('ProductRepository: 确认退款响应: $rawResponse');
+      return rawResponse;
+    } catch (e) {
+      print('ProductRepository: 确认退款失败: $e');
+      rethrow;
+    }
+  }
 }

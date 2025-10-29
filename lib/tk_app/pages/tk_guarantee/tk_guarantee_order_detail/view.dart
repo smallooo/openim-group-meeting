@@ -142,7 +142,7 @@ class TkGuaranteeOrderDetailPage extends StatelessWidget {
             _statusTag(state.status.value),
           ]),
           SizedBox(height: 10.h),
-          Obx(() => Text('¥ ${state.amountCNY.value.toStringAsFixed(2)}', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: const Color(0xFFEB2F2F)))),
+          Obx(() => Text('¥ ${state.totalAmount.value.toStringAsFixed(2)}', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: const Color(0xFFEB2F2F)))),
           SizedBox(height: 12.h),
           Row(children: [
             CircleAvatar(radius: 16.r, backgroundColor: const Color(0xFFECECEC), backgroundImage: state.participantAvatarUrl.value.isEmpty ? null : NetworkImage(state.participantAvatarUrl.value)),

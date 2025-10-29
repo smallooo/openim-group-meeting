@@ -346,7 +346,7 @@ class _OrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('实付金额', style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
-                        Text('¥ ${order.payAmount.toStringAsFixed(2)}', 
+                        Text('¥ ${order.totalAmount.toStringAsFixed(2)}',
                              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: const Color(0xFFEB2F2F))),
                       ],
                     ),
