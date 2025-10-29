@@ -71,6 +71,7 @@ abstract class AppRoutes {
   static const tkGuaranteeOrderDetail = _Paths.tkGuaranteeOrderDetail;
   static const tkGuaranteeCreateOrder = _Paths.tkGuaranteeCreateOrder;
   static const tkGuaranteeRefundOrder = _Paths.tkGuaranteeRefundOrder;
+  static const tkGuaranteeRefundOrderDetail = _Paths.tkGuaranteeRefundOrderDetail;
   static const tkOrderToPay = _Paths.tkOrderToPay;
   static const tkChannelHome = _Paths.tkChannelHome;
   static const tkChannelContent = _Paths.tkChannelContent;
@@ -150,6 +151,7 @@ abstract class _Paths {
   static const tkGuaranteeOrderDetail = '/tk_guarantee_order_detail';
   static const tkGuaranteeCreateOrder = '/tk_guarantee_create_order';
   static const tkGuaranteeRefundOrder = '/tk_guarantee_refund_order';
+  static const tkGuaranteeRefundOrderDetail = '/tk_guarantee_refund_order_detail';
   static const tkOrderToPay = '/tk_order_to_pay';
   static const tkChannelHome = '/tk_channel_home';
   static const tkChannelContent = '/tk_channel_content';

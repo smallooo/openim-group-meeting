@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../routes/app_pages.dart';
 import 'logic.dart';
 import 'model/guarantee_refund_order_model.dart';
 
@@ -122,7 +123,16 @@ class TkGuaranteeRefundOrderPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           itemCount: state.refundRecords.length,
           itemBuilder: (context, index) {
-            return _RefundCard(refund: state.refundRecords[index]);
+            final item = state.refundRecords[index];
+            return GestureDetector(
+              onTap: () {
+                Get.toNamed(
+                  AppRoutes.tkGuaranteeRefundOrderDetail,
+                  arguments: {'refundNo': item.refundNo},
+                );
+              },
+              child: _RefundCard(refund: item),
+            );
           },
         ),
       );

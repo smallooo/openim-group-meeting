@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../../core/network/api_client.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../models/product_models.dart';
@@ -106,6 +108,68 @@ class ProductRepository {
       return rawResponse;
     } catch (e) {
       print('ProductRepository: 获取退款列表失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
+
+  /// 获取退款详情
+  ///
+  /// 调用 /order/app/refund/{refundNo} 接口（需要登录）
+  /// 使用 x-www-form-urlencoded 数据格式
+  Future<Map<String, dynamic>> getRefundDetail(String refundNo) async {
+    print('ProductRepository: 开始调用API获取退款详情: $refundNo');
+    try {
+      final path = ApiConstants.refundDetail.replaceAll('{refundNo}', refundNo);
+      final rawResponse = await _apiClient.get<Map<String, dynamic>>(
+        path,
+        options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
+      print('ProductRepository: 退款详情原始API响应: $rawResponse');
+      return rawResponse;
+    } catch (e) {
+      print('ProductRepository: 获取退款详情失败: $e');
+      rethrow;
+    }
+  }
+
+  /// 撤销退款申请（需要登录）
+  /// 使用 x-www-form-urlencoded 数据格式
+  Future<Map<String, dynamic>> cancelRefund(String refundNo) async {
+    print('ProductRepository: 撤销退款申请: $refundNo');
+    try {
+      final path = ApiConstants.refundCancel.replaceAll('{refundNo}', refundNo);
+      final rawResponse = await _apiClient.post<Map<String, dynamic>>(
+        path,
+        // 无请求体，显式使用 <String,dynamic>{} 以满足 Dio 编码要求
+        data: const <String, dynamic>{},
+        options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
+      print('ProductRepository: 撤销退款响应: $rawResponse');
+      return rawResponse;
+    } catch (e) {
+      print('ProductRepository: 撤销退款失败: $e');
+      rethrow;
+    }
+  }
+
+  /// 审核退款接口（需要登录）
+  /// 使用 JSON 数据格式
+  Future<Map<String, dynamic>> approveRefund(String refundNo, String result) async {
+    print('ProductRepository: 审核退款申请: $refundNo, result: $result');
+    try {
+      final requestData = {
+        'refundNo': refundNo,
+        'result': result,
+      };
+      final rawResponse = await _apiClient.post<Map<String, dynamic>>(
+        ApiConstants.refundApprove,
+        data: requestData,
+        options: Options(contentType: Headers.jsonContentType),
+      );
+      print('ProductRepository: 审核退款响应: $rawResponse');
+      return rawResponse;
+    } catch (e) {
+      print('ProductRepository: 审核退款失败: $e');
       rethrow;
     }
   }
