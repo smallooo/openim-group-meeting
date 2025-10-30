@@ -362,6 +362,8 @@ class AppNavigator {
     Get.toNamed(AppRoutes.tkGuaranteeCreateOrder);
   }
 
-   static startRedPacket() => Get.toNamed(AppRoutes.redPacket);
-   static favoriteManage() => Get.toNamed(AppRoutes.favoriteManage);
+  static startRedPacket({required bool isGroup,required String groupId})
+    => Get.toNamed(AppRoutes.redPacket, arguments: {'isGroup': isGroup,'groupId':groupId});
+  static favoriteManage() => Get.toNamed(AppRoutes.favoriteManage);
+  static redPacketDetail() => Get.toNamed(AppRoutes.redPacketDetail);
 }

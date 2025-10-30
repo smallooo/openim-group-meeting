@@ -221,6 +221,12 @@ class ImageRes {
   static const ydyx_icon = "$_dir/ydyx_icon.png";
   static const yx_icon = "$_dir/yx_icon.png";
   static const redPacketIcon = '$_dir/ic_red_packet_icon.png';
+  static const redPacketIcon1 = '$_dir/red_packet_icon1.png';
+  static const redPacketIcon2 = '$_dir/red_packet_icon2.png';
+  static const redPacketIcon3 = '$_dir/red_packet_icon3.png';
+  static const redPacketIcon4 = '$_dir/red_packet_icon4.png';
+  static const redPacketCloseIcon = '$_dir/red_packet_close_icon.png';
+  static const redPacketReciveIcon = '$_dir/red_packet_receive_icon.png';
 
   static const tkStrategyHomeNotice = "$_dir/tk_strategy_home_notice.png";
   static const tkStrategyHomeV = "$_dir/tk_strategy_home_v.png";
@@ -247,5 +253,6 @@ class ImageRes {
   static const tkGuaranteeOrder2 = "$_dir/tk_guarantee_order_2.png";
   static const tkGuaranteeOrder3 = "$_dir/tk_guarantee_order_3.png";
 
+    static const scanIcon = "$_dir/scan_icon.png";
 
 }

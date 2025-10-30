@@ -77,6 +77,7 @@ abstract class AppRoutes {
   static const tkProductDetail = _Paths.tkProductDetail;
   static const redPacket = '/red_packet';
   static const favoriteManage = '/favorite_manage';
+  static const redPacketDetail = '/red_packet_detail';
 }
 
 abstract class _Paths {

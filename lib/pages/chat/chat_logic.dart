@@ -45,6 +45,7 @@ class ChatLogic extends SuperController {
   bool playOnce = false;
 
   final forceCloseToolbox = PublishSubject<bool>();
+  final forceCloseMenuSub = PublishSubject<bool>();
   final sendStatusSub = PublishSubject<MsgStreamEv<bool>>();
 
   late ConversationInfo conversationInfo;
@@ -71,6 +72,7 @@ class ChatLogic extends SuperController {
 
   final _audioPlayer = AudioPlayer();
   final _currentPlayClientMsgID = ''.obs;
+  final isShowPopMenu = false.obs;
 
   final scrollingCacheMessageList = <Message>[];
   final announcement = ''.obs;
@@ -99,6 +101,8 @@ class ChatLogic extends SuperController {
   final revokedTextMessage = <String, String>{};
 
   String? groupOwnerID;
+   final amountCtrl = TextEditingController();
+  final addressCtrl = TextEditingController();
 
   final Rxn<Message> quoteMessage = Rxn<Message>();
   
@@ -191,7 +195,7 @@ class ChatLogic extends SuperController {
         } else {
           if (!messageList.contains(message) && !scrollingCacheMessageList.contains(message)) {
             _isReceivedMessageWhenSyncing = true;
-            if (scrollController.offset != 0) {
+            if (isShowPopMenu.value || scrollController.offset != 0) {
               scrollingCacheMessageList.add(message);
             } else {
               messageList.add(message);
@@ -378,7 +382,7 @@ class ChatLogic extends SuperController {
     } 
 
 
-    
+
     
     _sendMessage(message);
   }
@@ -756,9 +760,8 @@ class ChatLogic extends SuperController {
     }
   }
 
-  void onTapRedPacket() {
-    AppNavigator.startRedPacket();
-  }
+   void onTapRedPacket() {AppNavigator.startRedPacket(isGroup:isGroupChat,groupId: groupInfo?.groupID ?? '',);}
+
 
  
 
@@ -984,6 +987,10 @@ class ChatLogic extends SuperController {
   }
 
   exit() async {
+    if (isShowPopMenu.value) {
+      forceCloseMenuSub.add(true);
+      return false;
+    }
     Get.back();
 
     return true;
@@ -1027,6 +1034,7 @@ class ChatLogic extends SuperController {
     friendInfoChangedSub.cancel();
     userStatusChangedSub?.cancel();
     selfInfoUpdatedSub?.cancel();
+    forceCloseMenuSub.close();
     joinedGroupAddedSub.cancel();
     joinedGroupDeletedSub.cancel();
     connectionSub.cancel();
@@ -1230,6 +1238,14 @@ class ChatLogic extends SuperController {
     return isExistSource;
   }
 
+  void onPopMenuShowChanged(show) {
+    isShowPopMenu.value = show;
+    if (!show && scrollingCacheMessageList.isNotEmpty) {
+      messageList.addAll(scrollingCacheMessageList);
+      scrollingCacheMessageList.clear();
+    }
+  }
+
   String? getNewestNickname(Message message) {
     if (isSingleChat) null;
 
@@ -1378,7 +1394,7 @@ class ChatLogic extends SuperController {
   }
 
   WillPopCallback? willPop() {
-    return null;
+    return isShowPopMenu.value ? () async => exit() : null;
   }
 
   void call() {

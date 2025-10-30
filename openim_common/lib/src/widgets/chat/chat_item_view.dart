@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector_v2/focus_detector_v2.dart';
@@ -104,7 +106,9 @@ class ChatItemView extends StatefulWidget {
     this.onTapRevokeMenu,
     this.onTapQuoteMenu,
     this.onVisibleTrulyText,
+    this.onPopMenuShowChanged,
     this.onFailedToResend,
+    this.closePopMenuSubject,
     this.onClickItemView,
     required this.onTapUserProfile,
   }) : super(key: key);
@@ -155,18 +159,54 @@ class ChatItemView extends StatefulWidget {
   final Function()? onTapRevokeMenu;
   final Function()? onTapQuoteMenu;
   final Function(String? text)? onVisibleTrulyText;
+  final Function(bool show)? onPopMenuShowChanged;
   final Function()? onClickItemView;
   final ValueChanged<({String userID, String name, String? faceURL, String? groupID})> onTapUserProfile;
 
   final Function()? onFailedToResend;
+
+  final Subject<bool>? closePopMenuSubject;
+
   @override
   State<ChatItemView> createState() => _ChatItemViewState();
 }
 
 class _ChatItemViewState extends State<ChatItemView> {
+  final _popupCtrl = CustomPopupMenuController();
   Message get _message => widget.message;
 
   bool get _isISend => _message.sendID == OpenIM.iMManager.userID;
+
+  late StreamSubscription<bool> _keyboardSubs;
+  StreamSubscription<bool>? _closeMenuSubs;
+
+   @override
+  void dispose() {
+    _popupCtrl.dispose();
+    _keyboardSubs.cancel();
+    _closeMenuSubs?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    final keyboardVisibilityCtrl = KeyboardVisibilityController();
+
+    _keyboardSubs = keyboardVisibilityCtrl.onChange.listen((bool visible) {
+      _popupCtrl.hideMenu();
+    });
+
+    _popupCtrl.addListener(() {
+      widget.onPopMenuShowChanged?.call(_popupCtrl.menuIsShowing);
+    });
+
+    _closeMenuSubs = widget.closePopMenuSubject?.listen((value) {
+      if (value == true) {
+        _popupCtrl.hideMenu();
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -294,6 +334,7 @@ class _ChatItemViewState extends State<ChatItemView> {
       ignorePointer: widget.ignorePointer,
       sendStatusStream: widget.sendStatusSubject,
       onFailedToResend: widget.onFailedToResend,
+      popupMenuController: _popupCtrl,
       onLongPressRightAvatar: widget.onLongPressRightAvatar,
       onLongPressLeftAvatar: widget.onLongPressLeftAvatar,
       onTapLeftAvatar: widget.onTapLeftAvatar,
