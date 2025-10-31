@@ -131,4 +131,8 @@ class ApiConstants {
   // 默认分页大小
   static const int defaultPageSize = 10;
   static const int defaultPageNum = 1;
+
+  /// 应用版本检查 API（不需要登录）
+  // 检查应用更新接口
+  static const String checkAppUpdate = '/admin/app/version/check-update';
 }

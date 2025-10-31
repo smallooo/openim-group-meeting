@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../models/product_models.dart';
+import '../../../../shared/models/version/check_version.dart';
 
 /// 产品数据仓库
 /// 
@@ -201,6 +202,97 @@ class ProductRepository {
       return rawResponse;
     } catch (e) {
       print('ProductRepository: 确认退款失败: $e');
+      rethrow;
+    }
+  }
+
+  /// 检查应用更新接口（不需要登录）
+  /// 使用 raw JSON 数据格式
+  /// 
+  /// 参数说明：
+  /// - request: 检查更新请求参数，包含包名、平台、当前版本号
+  /// 
+  /// 返回值说明：
+  /// - code: 0表示成功，其他值表示错误
+  /// - message: 响应消息
+  /// - ok: 是否成功
+  /// - data: 更新信息，包含是否有更新、是否强制更新、最新版本号、下载地址等
+  Future<CheckUpdateResponse> checkAppUpdate(CheckUpdateRequest request) async {
+    print('ProductRepository: 开始调用API检查应用更新...');
+    print('ProductRepository: 请求URL: ${ApiConstants.baseUrl}${ApiConstants.checkAppUpdate}');
+    print('ProductRepository: 请求参数: ${request.toJson()}');
+    
+    try {
+      // 该接口不需要登录，使用 Dio 直接发送请求
+      final dio = Dio(BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ));
+
+      print('ProductRepository: 准备发送POST请求...');
+      
+      // 发送 POST 请求（使用 raw JSON）
+      final response = await dio.post<Map<String, dynamic>>(
+        ApiConstants.checkAppUpdate,
+        data: request.toJson(),
+        options: Options(contentType: Headers.jsonContentType),
+      );
+
+      print('ProductRepository: 收到API响应');
+      print('ProductRepository: 响应状态码: ${response.statusCode}');
+      print('ProductRepository: 检查更新原始API响应: ${response.data}');
+
+      if (response.data == null) {
+        print('ProductRepository: 错误 - 响应数据为空');
+        throw Exception('响应数据为空');
+      }
+
+      // 手动解析响应（因为响应格式是 { "code", "message", "ok", "data" }）
+      final rawResponse = response.data!;
+      print('ProductRepository: 原始响应数据: $rawResponse');
+      
+      // 检查业务错误码
+      final code = rawResponse['code'] as int? ?? -1;
+      print('ProductRepository: 响应code: $code');
+      
+      if (code != 0) {
+        final message = rawResponse['message'] ?? "Unknown error";
+        print('ProductRepository: 错误 - code不为0: $code, message: $message');
+        throw Exception('检查更新失败: $message');
+      }
+
+      print('ProductRepository: 开始解析响应数据...');
+      
+      // 解析响应
+      CheckUpdateResponse checkUpdateResponse;
+      try {
+        checkUpdateResponse = CheckUpdateResponse.fromJson(rawResponse);
+        print('ProductRepository: 解析成功');
+      } catch (e, stackTrace) {
+        print('ProductRepository: 解析失败: $e');
+        print('ProductRepository: 解析堆栈: $stackTrace');
+        rethrow;
+      }
+      
+      print('ProductRepository: 解析后的响应 - code: ${checkUpdateResponse.code}, hasUpdate: ${checkUpdateResponse.data.hasUpdate}');
+      print('ProductRepository: 准备返回响应对象...');
+      
+      return checkUpdateResponse;
+    } on DioException catch (e) {
+      print('ProductRepository: DioException - 检查应用更新失败');
+      print('ProductRepository: 错误类型: ${e.type}');
+      print('ProductRepository: 错误消息: ${e.message}');
+      print('ProductRepository: 响应数据: ${e.response?.data}');
+      print('ProductRepository: 状态码: ${e.response?.statusCode}');
+      rethrow;
+    } catch (e, stackTrace) {
+      print('ProductRepository: Exception - 检查应用更新失败: $e');
+      print('ProductRepository: 堆栈: $stackTrace');
       rethrow;
     }
   }

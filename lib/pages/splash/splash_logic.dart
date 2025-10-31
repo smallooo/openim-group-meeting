@@ -1,16 +1,23 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
 import 'package:toklink/pages/conversation/conversation_logic.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/controller/im_controller.dart';
 import '../../routes/app_navigator.dart';
 import '../../routes/app_pages.dart';
+import '../../tk_app/core/constants/api_constants.dart';
 import '../../tk_app/core/services/token_storage_service.dart';
 import '../../tk_app/core/services/token_init_service.dart';
+import '../../tk_app/core/network/api_client.dart';
+import '../../tk_app/features/product/data/repositories/product_repository.dart';
+import '../../tk_app/shared/models/version/check_version.dart';
+import '../../tk_app/shared/widgets/update_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../tk_app/core/utils/token_debug_helper.dart';
@@ -34,8 +41,15 @@ class SplashLogic extends GetxController {
   }
 
   Future<void> _decideStartup() async {
+    Logger.print('🚀 _decideStartup() 开始执行...');
+    
     // 测试缓存数据持久性
     _testCachePersistence();
+    
+    // 检查应用更新（在引导页检查之前）
+    Logger.print('📋 准备调用检查更新...');
+    await _checkAppUpdate();
+    Logger.print('✅ 检查更新调用完成');
     
     // 引导页优先
     final sp = await SharedPreferences.getInstance();
@@ -202,6 +216,83 @@ class SplashLogic extends GetxController {
     SpUtil().putString('test_key', 'test_value_${DateTime.now().millisecondsSinceEpoch}');
     final testValue = SpUtil().getString('test_key');
     Logger.print('  - 测试写入读取: $testValue');
+  }
+
+  /// 检查应用更新
+  Future<void> _checkAppUpdate() async {
+    try {
+      Logger.print('🔄 开始检查应用更新...');
+      
+      // 获取包信息
+      final packageInfo = await PackageInfo.fromPlatform();
+      final packageName = packageInfo.packageName;
+      final currentVersionName = packageInfo.version;
+      
+      // 判断平台
+      final platform = Platform.isAndroid ? 'android' : 'ios';
+      
+      Logger.print('📦 应用信息:');
+      Logger.print('  - 包名: $packageName');
+      Logger.print('  - 当前版本: $currentVersionName');
+      Logger.print('  - 平台: $platform');
+      
+      // 创建请求参数
+      final request = CheckUpdateRequest(
+        packageName: packageName,
+        platform: platform,
+        currentVersionName: currentVersionName,
+      );
+      
+      Logger.print('📤 准备调用检查更新接口...');
+      
+      // 创建 ProductRepository（该接口不需要登录，所以不需要 token）
+      final apiClient = ApiClient(baseUrl: ApiConstants.baseUrl);
+      final repository = ProductRepository(apiClient);
+      
+      // 调用检查更新接口
+      Logger.print('📡 正在调用检查更新接口...');
+      
+      CheckUpdateResponse? response;
+      try {
+        response = await repository.checkAppUpdate(request);
+        Logger.print('✅ repository.checkAppUpdate 调用成功，开始处理响应...');
+      } catch (e, stackTrace) {
+        Logger.print('❌ repository.checkAppUpdate 调用失败: $e');
+        Logger.print('   堆栈: $stackTrace');
+        rethrow;
+      }
+      
+      if (response == null) {
+        Logger.print('⚠️ 响应为空，无法继续');
+        return;
+      }
+      
+      Logger.print('✅ 检查更新完成:');
+      Logger.print('  - 是否有更新: ${response.data.hasUpdate}');
+      Logger.print('  - 是否强制更新: ${response.data.forceUpdate}');
+      Logger.print('  - 最新版本: ${response.data.latestVersionName}');
+      Logger.print('  - 下载地址: ${response.data.downloadUrl}');
+
+      // 如果有更新，显示更新弹框
+      if (response.data.hasUpdate) {
+        Logger.print('📱 检测到有新版本，准备显示更新弹框...');
+        if (Get.context != null) {
+          Logger.print('✅ Context 可用，显示更新弹框');
+          await UpdateDialog.show(
+            context: Get.context!,
+            updateData: response.data,
+          );
+        } else {
+          Logger.print('⚠️ Context 为空，无法显示更新弹框');
+        }
+      } else {
+        Logger.print('ℹ️ 当前已是最新版本，无需更新');
+      }
+    } catch (e, stackTrace) {
+      // 检查更新失败不影响应用启动
+      Logger.print('⚠️ 检查应用更新失败: $e');
+      Logger.print('  堆栈: $stackTrace');
+    }
   }
 
   _login() async {
