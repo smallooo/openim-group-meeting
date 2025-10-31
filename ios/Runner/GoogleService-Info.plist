@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyC0BhV-mo84LvOuqWf2bS966jlf0f8mh74</string>
+	<string>AIzaSyCD8rFvm2dV1Mk74SjpOFda4ERN0-sziuc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>299075855003</string>
+	<string>321532993673</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>io.openim.flutter.base</string>
+	<string>io.toklink.trunk</string>
 	<key>PROJECT_ID</key>
-	<string>im-fer-c3347</string>
+	<string>toklink-3e197</string>
 	<key>STORAGE_BUCKET</key>
-	<string>im-fer-c3347.firebasestorage.app</string>
+	<string>toklink-3e197.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:299075855003:ios:23b06300e33d984309dc3e</string>
+	<string>1:321532993673:ios:01e241eb6d3486f9d02658</string>
 </dict>
 </plist>

@@ -66,9 +66,9 @@ class Config {
   // static const _host = "your-server-ip or your-domain";
   // static const _host = "115.159.110.145";
   // static const _host = "47.83.161.8";
-  // static const _host = "115.159.110.145"; // xw
+  static const _host = "115.159.110.145"; // xw
 
-  static const _host = "47.76.136.240";  // tk
+  // static const _host = "47.76.136.240";  // tk
   // static const _host = "https://openimtest.56wap.com/";  // tk
 
 

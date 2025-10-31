@@ -95,6 +95,7 @@ class SplashLogic extends GetxController {
         PushController.login(
           cachedData.userID,
           onTokenRefresh: (token) {
+            print('---------onTokenRefresh: $token');
             OpenIM.iMManager.updateFcmToken(
                 fcmToken: token, expireTime: DateTime.now().add(Duration(days: 90)).millisecondsSinceEpoch);
           },
