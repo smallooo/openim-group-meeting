@@ -125,7 +125,8 @@ class UpdateDialog extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () async {
                         // 跳转到外部浏览器打开下载链接
-                        final url = Uri.parse(updateData.downloadUrl);
+                        final downloadUrl = updateData.downloadUrl.trim();
+                        final url = Uri.parse(downloadUrl);
                         if (await canLaunchUrl(url)) {
                           await launchUrl(url, mode: LaunchMode.externalApplication);
                           // 如果是强制更新，不关闭弹框（用户无法取消）
