@@ -85,13 +85,19 @@ class GroupListPage extends StatelessWidget {
                   isGroup: true,
                 ),
                 10.horizontalSpace,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    (info.groupName ?? '').toText..style = Styles.ts_0C1C33_17sp,
-                    sprintf(StrRes.nPerson, [info.memberCount]).toText..style = Styles.ts_8E9AB0_14sp,
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (info.groupName ?? '').toText
+                        ..style = Styles.ts_0C1C33_17sp
+                        ..overflow = TextOverflow.ellipsis,
+                      sprintf(StrRes.nPerson, [info.memberCount]).toText
+                        ..style = Styles.ts_8E9AB0_14sp
+                        ..overflow = TextOverflow.ellipsis,
+                    ],
+                  ),
                 ),
               ],
             ),

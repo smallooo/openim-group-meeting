@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:openim_common/openim_common.dart';
+import '../../../routes/app_pages.dart';
 import 'token_storage_service.dart';
 import 'token_manager.dart';
 
@@ -70,10 +73,32 @@ class AuthStateManager {
 
   /// 执行登出
   Future<void> logout() async {
-    debugPrint('[AuthStateManager] 执行登出');
+    debugPrint('[AuthStateManager] 执行登出，开始清除所有登录数据');
     
-    // 清除本地token
-    await _tokenStorage.clearLoginInfo();
+    try {
+      // 1. 清除 IM 登录数据
+      await DataSp.removeLoginCertificate();
+      await DataSp.putLoginAccount({});
+      
+      // 2. 清除登录响应数据
+      SpUtil().remove('email_login_response');
+      SpUtil().remove('im_login_response');
+      
+      // 3. 清除邮箱登录 token 数据
+      await _tokenStorage.clearLoginInfo();
+      
+      // 4. 清除 IM SDK 登录状态（如果已登录）
+      try {
+        await OpenIM.iMManager.logout();
+        debugPrint('[AuthStateManager] IM SDK 已登出');
+      } catch (e) {
+        debugPrint('[AuthStateManager] IM SDK 登出失败（可能未登录）: $e');
+      }
+      
+      debugPrint('[AuthStateManager] ✅ 所有登录数据已清除');
+    } catch (e) {
+      debugPrint('[AuthStateManager] ❌ 清除登录数据时出错: $e');
+    }
     
     // 触发登出事件
     notifyLogout();
@@ -88,7 +113,7 @@ class AuthStateManager {
     
     // 使用GetX跳转到登录页
     // 清除所有页面栈，确保用户无法返回
-    Get.offAllNamed('/login');
+    Get.offAllNamed(AppRoutes.tk_login);
   }
 
   /// 获取当前用户信息
