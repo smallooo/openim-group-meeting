@@ -207,7 +207,7 @@ class ChatRedPacketPage extends StatelessWidget {
                           style: const TextStyle(fontSize: 19),
                         ),
                         16.verticalSpace,
-                        rowLabel('支付方式', '--余额'),
+                        rowLabel('支付方式',  '${logic.usdtAvailable.value}余额' ),
                         rowLabel('祝福语', logic.blessingCtrl.text, '恭喜发财，大吉大利'),
                         16.verticalSpace,
                         SizedBox(
@@ -216,13 +216,15 @@ class ChatRedPacketPage extends StatelessWidget {
                               text: '确定',
                               enabledColor: Colors.green,
                               onTap: () {
-                                CreateRedPacketDTO dto = CreateRedPacketDTO(
-                                  blessing: logic.blessingCtrl.text,
-                                  groupId: logic.groupId.isEmpty ? null : int.parse(logic.groupId),
-                                  packetType: 1,currencyId: 10,
-                                  totalCount: logic.isGroup ? int.parse(logic.numberCtrl.text) : 1,
-                                );
-                                RedPacketAppApi().createRedPacket(dto);         
+                                // CreateRedPacketDTO dto = CreateRedPacketDTO(
+                                //   blessing: logic.blessingCtrl.text,
+                                //   groupId: logic.groupId.isEmpty ? null : int.parse(logic.groupId),
+                                //   packetType: 1,currencyId: 10,
+                                //   totalCount: logic.isGroup ? int.parse(logic.numberCtrl.text) : 1,
+                                // );
+                                // RedPacketAppApi().createRedPacket(dto);  
+
+                                logic.createSingleRedPacket();       
                             },)
                         ),
                       ],

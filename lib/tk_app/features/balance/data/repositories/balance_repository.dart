@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:toklink/tk_app/shared/models/balance/wallet_fund_summary_response.dart' as summary;
+import 'package:toklink_balance_sdk/api.dart' as api;
+
 import '../../../../core/network/api_client.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../../../shared/models/wallet/wallet_password_status_response.dart';
@@ -12,7 +15,7 @@ class BalanceRepository {
   BalanceRepository(this._apiClient);
 
   //
-  Future<WalletPasswordStatusData> getBalanceWalletFundSummary() async {
+  Future<List<summary.WalletFundCurrencyItem>> getBalanceWalletFundSummary() async {
     print('WalletRepository: 开始调用API获取钱包密码状态...'); // 调试信息
     
     try {
@@ -24,10 +27,9 @@ class BalanceRepository {
       print('WalletRepository: 原始API响应: $rawResponse'); // 调试信息
       
       // 手动解析响应
-      final response = WalletPasswordStatusResponse.fromJson(rawResponse);
+      final response = await summary.WalletFundCurrencyResponse.fromJson(rawResponse);
       
       print('WalletRepository: 解析后的响应: ${response.data}'); // 调试信息
-      print('WalletRepository: hasPassword: ${response.data.hasPassword}, isLocked: ${response.data.isLocked}'); // 调试信息
       
       return response.data;
     } catch (e) {
@@ -36,7 +38,16 @@ class BalanceRepository {
     }
   }
 
-
-
-
+  Future<void> createRedPacket(api.CreateRedPacketDTO dto) async {
+    try {
+      final response = await _apiClient.post<Map<String, dynamic>>(
+        ApiConstants.createRedPacket,
+        data: dto.toJson(),
+      );
+      print('BalanceRepository: 创建红包响应: $response'); // 调试信息
+    } catch (e) {
+      print('BalanceRepository: 创建红包失败: $e'); // 调试信息
+      rethrow;
+    }
+  }
 }

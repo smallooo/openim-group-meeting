@@ -94,6 +94,9 @@ class ApiConstants {
   // 钱包资金查询
   static const String walletFundSummary = '/balance/app/wallet-fund/summary';
 
+  // 创建红包
+  static const String createRedPacket = '/balance/app/wallet-red-packet/create';
+
   // 商家列表
   static const String sellerList = '/product/app/product/seller/list';
 

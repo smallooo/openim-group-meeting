@@ -6,6 +6,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import 'package:toklink/tk_app/features/balance/data/repositories/balance_repository.dart';
 import 'package:toklink/tk_app/core/network/api_client.dart';
+import 'package:decimal/decimal.dart';
+import 'package:toklink_balance_sdk/api.dart' as api;
 
 class ChatRedPacketLogic extends GetxController{
   var amount = 0.0.obs;
@@ -17,6 +19,8 @@ class ChatRedPacketLogic extends GetxController{
 
   // 余额仓库实例，用于API调用
   BalanceRepository? _balanceRepository;
+
+  final usdtAvailable = Rx<Decimal>(Decimal.zero);
 
   @override
   void onInit() {
@@ -65,9 +69,37 @@ class ChatRedPacketLogic extends GetxController{
   }
 
   /// 加载钱包资金
-  Future<void> loadWalletFundSummary() async {
-    await _balanceRepository!.getBalanceWalletFundSummary();
+   Future<void> loadWalletFundSummary() async {
+    try {
+      final list = await _balanceRepository!.getBalanceWalletFundSummary();
+      // 查找 USDT
+      Decimal found = Decimal.zero;
+      for (final item in list) {
+        if (item.currencyName.toUpperCase() == 'USDT') {
+          found = item.availableAmount;
+          break;
+        }
+      }
+      usdtAvailable.value = found;
+      debugPrint('USDT availableAmount: ${usdtAvailable.value}');
+    } catch (e) {
+      debugPrint('loadWalletFundSummary error: $e');
+    }
   }
+
+    void createSingleRedPacket() async {
+
+      var dto = api.CreateRedPacketDTO(
+        blessing: blessingCtrl.text,
+        groupId: groupId.isEmpty ? null : int.parse(groupId),
+        packetType: 1,
+        currencyId: 3,
+        totalCount: isGroup ? int.parse(numberCtrl.text) : 1,
+        totalAmount: double.parse(amountCtrl.text),
+      );
+
+      await _balanceRepository!.createRedPacket(dto);
+    }
 
 
 
@@ -91,27 +123,6 @@ class ChatRedPacketLogic extends GetxController{
     amountCtrl.dispose();
     blessingCtrl.dispose();
     super.onClose();
-  }
-
-
-  // void getBalance() async {
-    
-  //   final resp = 
-
-
-  // }
-
-  void generateRedPacket() {
-    // Logic to generate red packet
-    final amountValue = amount.value;
-    final blessingValue = blessingCtrl.text;
-
-    if (amountValue > 0) {
-      // Call API to generate red packet
-
-    } else {
-      // Show error message
-    } 
   }
   
 }
