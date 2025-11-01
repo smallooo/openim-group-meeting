@@ -122,7 +122,23 @@ class ApiConstants {
   // 退款列表
   static const String refundList = '/order/app/refund/list';
 
+  // 退款详情（需要登录）
+  static const String refundDetail = '/order/app/refund/{refundNo}';
+
+  // 撤销退款申请（需要登录）
+  static const String refundCancel = '/order/app/refund/{refundNo}/cancel';
+
+  // 审核退款接口（需要登录）
+  static const String refundApprove = '/order/app/refund/approve';
+
+  // 确认退款接口（需要登录）
+  static const String refundConfirm = '/order/app/refund/confirm';
+
   // 默认分页大小
   static const int defaultPageSize = 10;
   static const int defaultPageNum = 1;
+
+  /// 应用版本检查 API（不需要登录）
+  // 检查应用更新接口
+  static const String checkAppUpdate = '/admin/app/version/check-update';
 }

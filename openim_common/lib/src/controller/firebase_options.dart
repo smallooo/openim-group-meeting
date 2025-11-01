@@ -37,19 +37,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCw-ohvxFisvm3Yrb4kCzPBuL0YfZkzI9Q',
-    appId: '1:299075855003:android:292449dc34ad498109dc3e',
-    messagingSenderId: '299075855003',
-    projectId: 'im-fer-c3347',
-    storageBucket: 'im-fer-c3347.firebasestorage.app',
+    apiKey: 'AIzaSyA--O3kxk6tALXI8unHbFdq0xpSs1pxyA4',
+    appId: '1:321532993673:android:f049c7d6038e4ba5d02658',
+    messagingSenderId: '321532993673',
+    projectId: 'toklink-3e197',
+    storageBucket: 'toklink-3e197.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC0BhV-mo84LvOuqWf2bS966jlf0f8mh74',
-    appId: '1:299075855003:ios:23b06300e33d984309dc3e',
-    messagingSenderId: '299075855003',
-    projectId: 'im-fer-c3347',
-    storageBucket: 'im-fer-c3347.firebasestorage.app',
-    iosBundleId: 'io.openim.flutter.full.NotificationService',
+    apiKey: 'AIzaSyCD8rFvm2dV1Mk74SjpOFda4ERN0-sziuc',
+    appId: '1:321532993673:ios:01e241eb6d3486f9d02658',
+    messagingSenderId: '321532993673',
+    projectId: 'toklink-3e197',
+    storageBucket: 'toklink-3e197.firebasestorage.app',
+    iosBundleId: 'io.toklink.trunk',
   );
 }

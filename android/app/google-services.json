@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "299075855003",
-    "project_id": "im-fer-c3347",
-    "storage_bucket": "im-fer-c3347.firebasestorage.app"
+    "project_number": "321532993673",
+    "project_id": "toklink-3e197",
+    "storage_bucket": "toklink-3e197.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:299075855003:android:292449dc34ad498109dc3e",
+        "mobilesdk_app_id": "1:321532993673:android:f049c7d6038e4ba5d02658",
         "android_client_info": {
           "package_name": "io.toklink.trunk"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCw-ohvxFisvm3Yrb4kCzPBuL0YfZkzI9Q"
+          "current_key": "AIzaSyA--O3kxk6tALXI8unHbFdq0xpSs1pxyA4"
         }
       ],
       "services": {

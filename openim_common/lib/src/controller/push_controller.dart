@@ -16,7 +16,7 @@ const appKey = 'your-app-key';
 const appSecret = 'your-app-secret';
 
 class PushController extends GetxService {
-  PushType pushType = PushType.none;
+  PushType pushType = PushType.FCM;
 
   /// Logs in the user with the specified alias to the push notification service.
   ///

@@ -134,6 +134,8 @@ import '../tk_app/pages/tk_guarantee/tk_guarantee_create_order/binding.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_create_order/view.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order/binding.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order/view.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order_detail/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order_detail/view.dart';
 import '../tk_app/pages/tk_guarantee/t_k_order_to_pay/binding.dart';
 import '../tk_app/pages/tk_guarantee/t_k_order_to_pay/view.dart';
 import '../tk_app/pages/tk_channel/tk_channel_home/binding.dart';
@@ -494,6 +496,11 @@ class AppPages {
       name: AppRoutes.tkGuaranteeRefundOrder,
       page: () => TkGuaranteeRefundOrderPage(),
       binding: TkGuaranteeRefundOrderBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeRefundOrderDetail,
+      page: () => TkGuaranteeRefundOrderDetailPage(),
+      binding: TkGuaranteeRefundOrderDetailBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.tkOrderToPay,

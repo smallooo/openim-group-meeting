@@ -126,8 +126,8 @@ class TKOrderToPayLogic extends GetxController {
           }
           
           // 计算费用和总金额
-          _calculateAmounts();
-          
+          // _calculateAmounts();
+          state.totalAmount.value = orderData.totalAmount;
           debugPrint('[TKOrderToPay] 订单详情加载成功');
         } else {
           Get.snackbar('错误', orderDetailResponse.errMsg);
@@ -154,11 +154,11 @@ class TKOrderToPayLogic extends GetxController {
     // 计算手续费 (假设0.2%)
     final feeAmount = subtotal * (state.feeRate.value / 100);
     state.feeAmount.value = double.parse(feeAmount.toStringAsFixed(2));
-    
+
     // 计算总计支付金额
     final total = subtotal + feeAmount;
     state.totalAmount.value = double.parse(total.toStringAsFixed(2));
-    
+
     debugPrint('[TKOrderToPay] 商品总价: $subtotal, 手续费: ${state.feeAmount.value}, 总计: ${state.totalAmount.value}');
   }
 
