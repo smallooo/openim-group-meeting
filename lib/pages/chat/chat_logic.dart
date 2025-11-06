@@ -45,6 +45,7 @@ class ChatLogic extends SuperController {
   bool playOnce = false;
 
   final forceCloseToolbox = PublishSubject<bool>();
+  final forceCloseMenuSub = PublishSubject<bool>();
   final sendStatusSub = PublishSubject<MsgStreamEv<bool>>();
 
   late ConversationInfo conversationInfo;
@@ -71,6 +72,7 @@ class ChatLogic extends SuperController {
 
   final _audioPlayer = AudioPlayer();
   final _currentPlayClientMsgID = ''.obs;
+  final isShowPopMenu = false.obs;
 
   final scrollingCacheMessageList = <Message>[];
   final announcement = ''.obs;
@@ -99,6 +101,10 @@ class ChatLogic extends SuperController {
   final revokedTextMessage = <String, String>{};
 
   String? groupOwnerID;
+   final amountCtrl = TextEditingController();
+  final addressCtrl = TextEditingController();
+
+  final Rxn<Message> quoteMessage = Rxn<Message>();
   
   // @功能相关
   final atUserMap = <String, String>{}.obs; // userID -> nickname 映射
@@ -189,7 +195,7 @@ class ChatLogic extends SuperController {
         } else {
           if (!messageList.contains(message) && !scrollingCacheMessageList.contains(message)) {
             _isReceivedMessageWhenSyncing = true;
-            if (scrollController.offset != 0) {
+            if (isShowPopMenu.value || scrollController.offset != 0) {
               scrollingCacheMessageList.add(message);
             } else {
               messageList.add(message);
@@ -367,6 +373,17 @@ class ChatLogic extends SuperController {
       text: content,
     );
 
+    if(quoteMessage.value != null){
+      message = await OpenIM.iMManager.messageManager.createQuoteMessage(
+        text: content,
+        quoteMsg: quoteMessage.value!,
+      );
+      quoteMessage.value = null;
+    } 
+
+
+
+    
     _sendMessage(message);
   }
 
@@ -475,6 +492,59 @@ class ChatLogic extends SuperController {
         .catchError((error, _) => _senFailed(message, groupId, userId, error, _))
         .whenComplete(() => _completed());
   }
+
+
+  void clearQuote() {
+    // 清除引用内容的逻辑
+    quoteMessage.value = null;
+
+
+  }
+
+  /// 发送引用（回复）消息
+  Future<void> _sendQuoteMessage(
+    Message replyMsg,
+    {
+      required Message originMsg,
+      String? userId,
+      String? groupId,
+      bool addToUI = true,
+    }) async {
+    // var content = IMUtils.safeTrim(inputCtrl.text);
+    // if (content.isEmpty) return;
+     log('send : ${json.encode(replyMsg)}');
+      userId = IMUtils.emptyStrToNull(userId);
+      groupId = IMUtils.emptyStrToNull(groupId);
+      if (null == userId && null == groupId ||
+          userId == userID && userId != null ||
+          groupId == groupID && groupId != null) {
+        if (addToUI) {
+          messageList.add(originMsg);
+          scrollBottom();
+        }
+      }
+      Logger.print('uid:$userID userId:$userId gid:$groupID groupId:$groupId');
+      _reset(replyMsg);
+      bool useOuterValue = null != userId || null != groupId;
+
+      final recvUserID = useOuterValue ? userId : userID;
+      replyMsg.recvID = recvUserID;
+
+    // // 创建引用消息（回复消息）
+    // final replyMsg = await OpenIM.iMManager.messageManager.createQuoteMessage(
+    //   text: "这是回复内容",
+    //   quoteMsg: originMsg,
+    // );
+    // 发送引用消息
+    await _sendMessage(
+      replyMsg,
+      userId: userId,
+      groupId: groupId,
+      addToUI: addToUI,
+    );
+  }
+
+
 
   void _sendSucceeded(Message oldMsg, Message newMsg) {
     Logger.print('message send success----');
@@ -690,9 +760,8 @@ class ChatLogic extends SuperController {
     }
   }
 
-  void onTapRedPacket() {
-    AppNavigator.startRedPacket();
-  }
+   void onTapRedPacket() {AppNavigator.startRedPacket(isGroup:isGroupChat,groupId: groupInfo?.groupID ?? '',);}
+
 
  
 
@@ -918,6 +987,10 @@ class ChatLogic extends SuperController {
   }
 
   exit() async {
+    if (isShowPopMenu.value) {
+      forceCloseMenuSub.add(true);
+      return false;
+    }
     Get.back();
 
     return true;
@@ -961,6 +1034,7 @@ class ChatLogic extends SuperController {
     friendInfoChangedSub.cancel();
     userStatusChangedSub?.cancel();
     selfInfoUpdatedSub?.cancel();
+    forceCloseMenuSub.close();
     joinedGroupAddedSub.cancel();
     joinedGroupDeletedSub.cancel();
     connectionSub.cancel();
@@ -1164,6 +1238,14 @@ class ChatLogic extends SuperController {
     return isExistSource;
   }
 
+  void onPopMenuShowChanged(show) {
+    isShowPopMenu.value = show;
+    if (!show && scrollingCacheMessageList.isNotEmpty) {
+      messageList.addAll(scrollingCacheMessageList);
+      scrollingCacheMessageList.clear();
+    }
+  }
+
   String? getNewestNickname(Message message) {
     if (isSingleChat) null;
 
@@ -1235,6 +1317,16 @@ class ChatLogic extends SuperController {
     }
   }
 
+  Future<void> onQuoteMessage(
+    Message originMsg,
+  ) async {
+    quoteMessage.value = originMsg;
+    
+      
+    Logger.print('quoteMessage: ${jsonEncode(quoteMessage)}');
+    
+  }
+
   RevokedInfo _buildRevokeInfo(Message message) {
     return RevokedInfo.fromJson({
       'revokerID': OpenIM.iMManager.userInfo.userID,
@@ -1302,7 +1394,7 @@ class ChatLogic extends SuperController {
   }
 
   WillPopCallback? willPop() {
-    return null;
+    return isShowPopMenu.value ? () async => exit() : null;
   }
 
   void call() {

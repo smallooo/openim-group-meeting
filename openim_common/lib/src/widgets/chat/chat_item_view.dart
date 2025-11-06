@@ -1,13 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:openim_common/src/widgets/chat/chat_pop_menu.dart';
 import 'package:openim_common/src/widgets/chat/chat_revoke_view.dart';
-import 'package:openim_common/src/widgets/chat/chat_voice_view.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'chat_notice_view.dart';
@@ -103,8 +104,11 @@ class ChatItemView extends StatefulWidget {
     this.onTapForwardMenu,
  
     this.onTapRevokeMenu,
+    this.onTapQuoteMenu,
     this.onVisibleTrulyText,
+    this.onPopMenuShowChanged,
     this.onFailedToResend,
+    this.closePopMenuSubject,
     this.onClickItemView,
     required this.onTapUserProfile,
   }) : super(key: key);
@@ -153,19 +157,56 @@ class ChatItemView extends StatefulWidget {
   final Function()? onTapDelMenu;
   final Function()? onTapForwardMenu;
   final Function()? onTapRevokeMenu;
+  final Function()? onTapQuoteMenu;
   final Function(String? text)? onVisibleTrulyText;
+  final Function(bool show)? onPopMenuShowChanged;
   final Function()? onClickItemView;
   final ValueChanged<({String userID, String name, String? faceURL, String? groupID})> onTapUserProfile;
 
   final Function()? onFailedToResend;
+
+  final Subject<bool>? closePopMenuSubject;
+
   @override
   State<ChatItemView> createState() => _ChatItemViewState();
 }
 
 class _ChatItemViewState extends State<ChatItemView> {
+  final _popupCtrl = CustomPopupMenuController();
   Message get _message => widget.message;
 
   bool get _isISend => _message.sendID == OpenIM.iMManager.userID;
+
+  late StreamSubscription<bool> _keyboardSubs;
+  StreamSubscription<bool>? _closeMenuSubs;
+
+   @override
+  void dispose() {
+    _popupCtrl.dispose();
+    _keyboardSubs.cancel();
+    _closeMenuSubs?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    final keyboardVisibilityCtrl = KeyboardVisibilityController();
+
+    _keyboardSubs = keyboardVisibilityCtrl.onChange.listen((bool visible) {
+      _popupCtrl.hideMenu();
+    });
+
+    _popupCtrl.addListener(() {
+      widget.onPopMenuShowChanged?.call(_popupCtrl.menuIsShowing);
+    });
+
+    _closeMenuSubs = widget.closePopMenuSubject?.listen((value) {
+      if (value == true) {
+        _popupCtrl.hideMenu();
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +268,24 @@ class _ChatItemViewState extends State<ChatItemView> {
       return child = ChatRevokeView(
         message: _message,
       );
-    }  else if (_message.isNotificationType) {
+    } else if (_message.isQuoteType) {
+      // 是否显示气泡背景：这里整体保持气泡，视觉更统一
+      isBubbleBg = true;
+
+      // 上方：当前发送的消息体（回复内容）
+      final replyBody = _buildReplyBodyForQuote(_message);
+
+      child = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          replyBody,
+          SizedBox(height: 6.h),
+          // 下方：被引用的消息预览
+          ChatQuoteView(message: _message),
+        ],
+      );
+    } else if (_message.isNotificationType) {
       if (_message.contentType == MessageType.groupInfoSetAnnouncementNotification) {
         final map = json.decode(_message.notificationElem!.detail!);
         final ntf = GroupNotification.fromJson(map);
@@ -276,6 +334,7 @@ class _ChatItemViewState extends State<ChatItemView> {
       ignorePointer: widget.ignorePointer,
       sendStatusStream: widget.sendStatusSubject,
       onFailedToResend: widget.onFailedToResend,
+      popupMenuController: _popupCtrl,
       onLongPressRightAvatar: widget.onLongPressRightAvatar,
       onLongPressLeftAvatar: widget.onLongPressLeftAvatar,
       onTapLeftAvatar: widget.onTapLeftAvatar,
@@ -317,7 +376,59 @@ class _ChatItemViewState extends State<ChatItemView> {
             enabled: widget.enabledRevokeMenu,
             onTap: widget.onTapRevokeMenu,
           ),
+
+        if (widget.enabledReplyMenu)
+          MenuInfo(
+            icon: ImageRes.menuReply,
+            text: StrRes.menuReply,
+            enabled: widget.enabledReplyMenu,
+            onTap: widget.onTapQuoteMenu,
+          ),
   
       ];
+
+
+  Widget _buildReplyBodyForQuote(Message msg) {
+    if (msg.quoteElem != null) {
+      return ChatText(
+        text: msg.quoteElem?.text ?? '',
+        patterns: widget.patterns,
+        textScaleFactor: widget.textScaleFactor,
+        onVisibleTrulyText: widget.onVisibleTrulyText,
+      );
+    }
+
+    if (msg.pictureElem != null) {
+      // 优先交给外部自定义构建（如需要自定义缩放/长按保存等）
+      final built = widget.mediaItemBuilder?.call(context, msg);
+      if (built != null) return built;
+
+      return ChatPictureView(
+        isISend: _isISend,
+        message: msg,
+      );
+    }
+
+    if (msg.soundElem != null) {
+      final sound = msg.soundElem;
+      return ChatVoiceView(
+        isISend: _isISend,
+        soundPath: sound?.soundPath,
+        soundUrl: sound?.sourceUrl,
+        duration: sound?.duration,
+        isPlaying: widget.isPlayingSound,
+      );
+    }
+
+    // 其他类型兜底
+    return ChatText(
+      text: StrRes.unsupportedMessage,
+      patterns: widget.patterns,
+      textScaleFactor: widget.textScaleFactor,
+    );
+  }
       
 }
+
+
+

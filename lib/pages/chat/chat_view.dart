@@ -1,25 +1,22 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:toklink/pages/chat/chat_emoji_view.dart';
+import 'package:toklink/pages/chat/chat_red_packet/item_view.dart';
 import 'package:toklink/pages/chat/chat_voice_record_layout.dart';
 
 import 'chat_logic.dart';
 import 'order_widget/order_custom_widgets.dart';
 
 
-
-
 class ChatPage extends StatelessWidget {
   final logic = Get.find<ChatLogic>(tag: GetTags.chat);
 
-   // 新增：控制器
   final ChatInputController _inputController = ChatInputController();
   
-
 
   ChatPage({super.key});
 
@@ -30,7 +27,9 @@ class ChatPage extends StatelessWidget {
         allAtMap: logic.getAtMapping(message),
         timelineStr: logic.getShowTime(message),
         sendStatusSubject: logic.sendStatusSub,
+        closePopMenuSubject: logic.forceCloseMenuSub,
         isPlayingSound: logic.isPlaySound(message),
+        showLongPressMenu: !logic.isInvalidGroup,
         leftNickname: logic.getNewestNickname(message),
         leftFaceUrl: logic.getNewestFaceURL(message),
         rightNickname: logic.senderName,
@@ -43,6 +42,7 @@ class ChatPage extends StatelessWidget {
         enabledForwardMenu: logic.showForwardMenu(message),
         enabledDelMenu: logic.showDelMenu(message),
         onFailedToResend: () => logic.failedResend(message),
+        onPopMenuShowChanged: logic.onPopMenuShowChanged,
         onClickItemView: () => logic.parseClickEvent(message),
         onTapCopyMenu: () => logic.copy(message),
         onTapDelMenu: () => logic.deleteMsg(message),
@@ -51,6 +51,7 @@ class ChatPage extends StatelessWidget {
           logic.markRevokedMessage(message);
           logic.revokeMsgV2(message);
         },
+        onTapQuoteMenu: () => logic.onQuoteMessage( message),
 
         visibilityChange: (msg, visible) {
           logic.markMessageAsRead(message, visible);
@@ -280,11 +281,13 @@ class ChatPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: WaterMarkBgView(
-                text: '',
+                text: logic.quoteMessage.value?.textElem?.content ?? "",
                 path: logic.background.value,
                 backgroundColor: Styles.c_FFFFFF,
                 floatView: _groupCallHintView,
-                bottomView: ChatInputBox(
+                bottomView: Obx(() => ChatInputBox(
+                  quoteMessage: logic.quoteMessage.value,
+                  onClearQuote: logic.clearQuote,
                   forceCloseToolboxSub: logic.forceCloseToolbox,
                   controller: logic.inputCtrl,
                   voiceInputController: _inputController,
@@ -294,7 +297,6 @@ class ChatPage extends StatelessWidget {
                   onCloseDirectional: logic.onClearDirectional,
                   onSend: (v) => logic.sendTextMsg(),
                   onTapVoiceInput: (text) => logic.onTapVoiceInput(),
-                  // @功能相关配置
                   onAt: logic.isGroupChat ? logic.handleAtInput : null,
                   onTapAt: logic.isGroupChat ? logic.handleAtTap : null,
                   atUserMap: logic.isGroupChat ? logic.atUserMap : null,
@@ -305,6 +307,7 @@ class ChatPage extends StatelessWidget {
                     onTapCamera: logic.onTapCamera,
                     onTapLocation: logic.onTapLocation,
                     onTapRedPacket: logic.onTapRedPacket,
+                    onTapTransfer: () => _showWeightBottomSheet(context),
                     onTapVoiceInput: () => _inputController.triggerVoiceInput(),
                   ),
                   voiceRecordBar: bar,
@@ -314,7 +317,7 @@ class ChatPage extends StatelessWidget {
                     onAddFavorite: logic.favoriteManage,
                     onSelectedFavorite: logic.sendFavoritePic,
                   ),
-                ),
+                ),),
                 child: ChatListView(
                   onTouch: () => logic.closeToolbox(),
                   itemCount: logic.messageList.length,
@@ -333,4 +336,158 @@ class ChatPage extends StatelessWidget {
     );
   }
 
+
+
+
+  void _showWeightBottomSheet(BuildContext context) {
+        showModalBottomSheet(
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          builder: (context) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        '转账',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(
+                          Icons.close,
+                          size: 24,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  ),
+                  Divider(
+                    thickness: 0.2,
+                    color: Colors.grey,
+                    height: 24.h,
+                  ),
+                  8.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.only(left: 16.w, right: 16.w),
+                    child: Column(
+                      children: [
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '币种',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        buildItemView(
+                          showRightArrow: true,
+                          icon: SizedBox(
+                            width: 21.w, 
+                            height: 21.h, 
+                            child: ImageRes.redPacketIcon.toImage,
+                          ),
+                          label: 'USDT',
+                          color: Colors.grey.shade200,
+                        ),
+                        18.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              '收款地址',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                             ImageRes.scanIcon.toImage
+                              ..width = 24.w
+                              ..height = 20.h,
+                          ],
+                        ),
+                        buildItemView(
+                          leftHintText: '请输入收款地址          ',
+                          leftController: logic.addressCtrl,
+                          color:  Colors.grey.shade200,
+                        ),
+                        18.verticalSpace,
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '转账数量',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        buildItemView(
+                          leftHintText: '请输入转账数量         ',
+                          widget: Button(
+                              text: '全部',textStyle: const TextStyle(color: Colors.green), 
+                              enabledColor: Colors.transparent,
+                              onTap: () {},
+                            ),
+                          leftController: logic.amountCtrl,
+                          color: Colors.grey.shade200,
+                        ),
+                        16.verticalSpace,
+                        SizedBox(
+                          width: 300.w,                          
+                            child: Button(
+                              text: '确 认',
+                              enabledColor: Colors.green,
+                              onTap: () {},
+                            ),
+                        ),
+                      ],
+                    ).marginOnly(bottom: 30.h),
+                  ),
+                ],
+              );
+          },
+        );
+      }
+
+      void _showRedPacketDialog() {
+      showDialog(
+        context: Get.context!,
+        builder: (ctx) {
+          return Stack(
+            children: [         
+              Positioned(
+            left: (MediaQuery.of(ctx).size.width - 280.w) / 2,
+            top: 147.h,
+            child: ImageRes.redPacketIcon1.toImage
+              ..width = 280.w
+              ..height = 437.h,
+          ),
+          Positioned(
+            left: (MediaQuery.of(ctx).size.width - 39.w) / 2,
+            top: 640.h,
+            child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: ImageRes.redPacketCloseIcon.toImage
+                    ..width = 39.w
+                    ..height = 39.h,
+                  onPressed: () => Navigator.of(ctx).pop(),
+                ),
+          ),
+              Center(
+                child: CupertinoButton(
+                  padding: EdgeInsets.only(top: 228.h),
+                  child: Container(
+                    width: 100.w,
+                    height: 100.h,
+                    color: Colors.transparent,
+                  ),
+                  onPressed: () => Navigator.of(ctx).pop(),
+                ),
+              )
+            ],
+          );
+        },
+      );
+    }
 }

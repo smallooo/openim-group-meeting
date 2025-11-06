@@ -12,6 +12,7 @@ class ChatToolBox extends StatelessWidget {
     this.onTapVoiceInput,
     this.onTapRedPacket,
     this.onTapCreateOrder,
+    this.onTapTransfer,
   });
   final Function()? onTapAlbum;
   final Function()? onTapCall;
@@ -20,6 +21,7 @@ class ChatToolBox extends StatelessWidget {
   final Function()? onTapVoiceInput;
   final Function()? onTapRedPacket;
   final Function()? onTapCreateOrder;
+  final Function()? onTapTransfer;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class ChatToolBox extends StatelessWidget {
       ToolboxItemInfo(
         text: '照片',
         icon: ImageRes.toolboxPhoto,
-        onTap: () => Permissions.camera(onTapAlbum),
+        onTap: () => Permissions.photos(onTapAlbum),
       ),
     
       ToolboxItemInfo(
@@ -46,29 +48,28 @@ class ChatToolBox extends StatelessWidget {
           text: StrRes.toolboxCall,
           icon: ImageRes.toolboxCall,
           onTap: () => Permissions.microphone(onTapCall),
-         
         ),
-      // ToolboxItemInfo(
-      //   text: '位置',
-      //   icon: ImageRes.toolboxLocation2,
-      //   onTap: () => Permissions.location(onTapLocation),
-
-      // ),
-      // ToolboxItemInfo(
-      //   text: '红包',
-      //   icon: ImageRes.toolboxRedPacket,
-      //   // onTap: () => Permissions.redPacket(onTapRedPacket),
-      //   onTap: () => onTapRedPacket?.call(),
-      // ),
-      // ToolboxItemInfo(
-      //   text: '转账',
-      //   icon: ImageRes.toolboxTransfer,
-      // ),
       ToolboxItemInfo(
-        text: '语音输入',
-        icon: ImageRes.toolboxVoiceInput,
-        onTap: () => Permissions.microphone(onTapVoiceInput),
+        text: '位置',
+        icon: ImageRes.toolboxLocation2,
+        onTap: () => Permissions.location(onTapLocation),
       ),
+      ToolboxItemInfo(
+        text: '红包',
+        icon: ImageRes.toolboxRedPacket,
+        // onTap: () => Permissions.redPacket(onTapRedPacket),
+        onTap: () => onTapRedPacket?.call(),
+      ),
+      ToolboxItemInfo(
+        text: '转账',
+        icon: ImageRes.toolboxTransfer,
+        onTap: () => onTapTransfer?.call(),
+      ),
+      // ToolboxItemInfo(
+      //   text: '语音输入',
+      //   icon: ImageRes.toolboxVoiceInput,
+      //   onTap: onTapVoiceInput,
+      // ),
       if (onTapCreateOrder != null)
         ToolboxItemInfo(
           text: '担保订单',

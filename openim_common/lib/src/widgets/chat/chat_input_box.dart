@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:openim_common/openim_common.dart';
 
@@ -37,7 +37,7 @@ class ChatInputBox extends StatefulWidget {
     this.isNotInGroup = false,
     this.hintText,
     this.forceCloseToolboxSub,
-    this.quoteContent,
+    this.quoteMessage,
     this.onClearQuote,
     this.onSend,
     this.directionalText,
@@ -59,7 +59,7 @@ class ChatInputBox extends StatefulWidget {
   final Widget emojiView;
   final Widget voiceRecordBar;
   final Stream? forceCloseToolboxSub;
-  final String? quoteContent;
+  final Message? quoteMessage;
   final Function()? onClearQuote;
   final ValueChanged<String>? onSend;
   final TextSpan? directionalText;
@@ -82,7 +82,7 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
   bool _rightKeyboardButton = false;
   bool _sendButtonVisible = false;
 
-  bool get _showQuoteView => IMUtils.isNotNullEmptyStr(widget.quoteContent);
+  bool get _showQuoteView => IMUtils.isNotNullEmptyStr(widget.quoteMessage?.textElem?.content);
 
   double get _opacity => (widget.enabled ? 1 : .4);
 
@@ -181,6 +181,15 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
                   ],
                 ),
               ),
+
+              // 新增：显示引用内容（在输入条下方）
+              if (_showQuoteView)
+                _QuoteView(
+                  title: '${widget.quoteMessage?.senderNickname ?? ''} : ',
+                  content: widget.quoteMessage?.textElem?.content,
+                  onClose: widget.onClearQuote,
+                ),
+                
               if (_showDirectionalView)
                 _SubView(
                   textSpan: widget.directionalText,
@@ -307,6 +316,79 @@ class _ChatInputBoxState extends State<ChatInputBox> /*with TickerProviderStateM
   unfocus() => FocusScope.of(context).requestFocus(FocusNode());
 }
 
+
+class _QuoteView extends StatelessWidget {
+  const _QuoteView({
+    this.onClose,
+    this.title,
+    this.content,
+    this.textSpan,
+  }) : assert(content != null || textSpan != null, 'Either content or textSpan must be provided.');
+
+  final VoidCallback? onClose;
+  final String? title;       // 用于展示昵称（前缀）
+  final String? content;     // 引用的文本内容
+  final InlineSpan? textSpan;
+
+  @override
+  Widget build(BuildContext context) {
+    final nick = (title ?? '').trim();
+    final body = (content ?? '').trim();
+    // 如果都为空则不显示
+    if (nick.isEmpty && body.isEmpty) return const SizedBox.shrink();
+
+    return Container(
+      padding: EdgeInsets.only(bottom: 10.h, left: 56.w, right: 80.w),
+      color: Styles.c_F0F2F6,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: onClose,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
+          decoration: BoxDecoration(
+            color: Styles.c_FFFFFF,
+            borderRadius: BorderRadius.circular(4.r),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      if (nick.isNotEmpty)
+                        TextSpan(
+                          text: nick, // 这里传入的 title 已经包含 " : "
+                          style: Styles.ts_8E9AB0_14sp,
+                        ),
+                      if (body.isNotEmpty)
+                        TextSpan(
+                          text: body,
+                          style: Styles.ts_8E9AB0_14sp,
+                        ),
+                    ],
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                ),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: onClose,
+                child: ImageRes.delQuote.toImage
+                  ..width = 14.w
+                  ..height = 14.h,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 class _SubView extends StatelessWidget {
   const _SubView({
     this.onClose,
@@ -348,7 +430,7 @@ class _SubView extends StatelessWidget {
                       ),
                     if (content != null)
                       Text(
-                        title!,
+                        content!,
                         style: Styles.ts_8E9AB0_14sp,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,

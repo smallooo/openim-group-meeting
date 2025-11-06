@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +7,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:toklink/pages/chat/chat_red_packet/chat_red_package_logic.dart';
-
+import 'package:toklink/pages/chat/chat_red_packet/item_view.dart';
+import 'package:toklink_balance_sdk/api.dart';
 
 class ChatRedPacketPage extends StatelessWidget {
   final logic = Get.find<ChatRedPacketLogic>();
@@ -40,6 +42,7 @@ class ChatRedPacketPage extends StatelessWidget {
           child: Column(
             children: [
               14.verticalSpace,
+              if (!logic.isGroup) ...[
               Padding(
                 padding: EdgeInsets.only(left: 10.w),
                 child: const Align(
@@ -51,26 +54,66 @@ class ChatRedPacketPage extends StatelessWidget {
                 ),
               ),
               8.verticalSpace,
-              _buildItemView(
-                showRightArrow: true,
-                icon: SizedBox(
-                  width: 21.w, 
-                  height: 21.h, 
-                  child: ImageRes.redPacketIcon.toImage,
+              Padding(
+                padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                child:buildItemView(
+                  showRightArrow: true,
+                  icon: SizedBox(
+                    width: 21.w, 
+                    height: 21.h, 
+                    child: ImageRes.redPacketIcon.toImage,
+                  ),
+                  label: 'USDT',
+                ),),]
+                else...[
+                Padding(
+                padding: EdgeInsets.only(left: 10.w,bottom:5.h),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      const Text(
+                        '拼手气红包',
+                        style: TextStyle(fontSize: 14),
+                      ).marginOnly(right: 4.w),
+                      ImageRes.downExpand.toImage..width = 10.w..height = 5.h,
+                    ],
+                  ),
                 ),
-                label: '--',
               ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.w, right: 10.w,top: 5.h,bottom: 5.h),
+                child:buildItemView(
+                  label: '红包个数',
+                  rightHintText: '填写红包个数',
+                  rightController: logic.numberCtrl,
+                ),),
+              Padding(
+                padding: EdgeInsets.only(left: 10.w),
+                child: const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '本群共5人',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              ),],
               18.verticalSpace,
-              _buildItemView(
-                label: '金额',
-                rightHintText: '0.00',
-                rightController: logic.amountCtrl,
-              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                child:buildItemView(
+                  label: '金额',
+                  rightHintText: '0.00',
+                  rightController: logic.amountCtrl,
+                  inputFormatters:[FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$|^\d+\.?$|^\d*$'))],
+                ),),
               18.verticalSpace,
-              _buildItemView(
-                leftHintText: '恭喜发财，大吉大利',
-                leftController: logic.blessingCtrl,
-              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                child:buildItemView(
+                  leftHintText: '恭喜发财，大吉大利',
+                  leftController: logic.blessingCtrl,
+                ),),
               60.verticalSpace,
               Obx(() => Text(
                 '${logic.amount.value.toStringAsFixed(2)}--',
@@ -80,9 +123,13 @@ class ChatRedPacketPage extends StatelessWidget {
               SizedBox(
                 width: 180.w,
                 child: Button(
-                  text: '生成红包',
+                  text: '生成红包2',
                   enabledColor: Colors.green,
-                  onTap: () {_showWeightBottomSheet(context);},
+                  onTap: () async{
+                    var amount = await logic.loadWalletFundSummary();
+                    _showWeightBottomSheet(context);
+                    
+                    },
                 ),
               )
             ],
@@ -91,75 +138,6 @@ class ChatRedPacketPage extends StatelessWidget {
     
     );
   }
-  Widget _buildItemView({
-    String? label,
-    Widget? icon,
-    bool showRightArrow = false,
-    String? leftHintText,
-    String? rightHintText,
-    double? height,
-    Function()? onTap,
-    TextEditingController? leftController,
-    TextEditingController? rightController,
-  }) => Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child:
-      Ink(
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Styles.c_FFFFFF,
-              borderRadius: BorderRadius.circular(5), 
-            ),
-            height: height ?? 60.h,
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Row(
-              children: [
-                if (icon != null) ...[
-                  icon,
-                  8.horizontalSpace,
-                ],
-                if (label != null) ...[
-                label.toText..style = Styles.ts_0C1C33_17sp,],
-                if (leftHintText != null) ...[
-                  IntrinsicWidth(
-                    child: TextField(
-                      controller: leftController,
-                      decoration: InputDecoration(
-                        hintText: leftHintText,
-                        border: InputBorder.none,
-                        isDense: true, 
-                        contentPadding: EdgeInsets.zero, 
-                      ),
-                      style: Styles.ts_0C1C33_17sp,
-                    ),
-                  ),
-                ],
-                const Spacer(),
-                if (showRightArrow)
-                  ImageRes.downExpand.toImage
-                    ..width = 12.w
-                    ..height = 12.h,
-                if (rightHintText!=null) ...[
-                  IntrinsicWidth(
-                    child: TextField(
-                      controller: rightController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$|^\d+\.?$|^\d*$')),
-                      ],
-                      decoration: InputDecoration(
-                      hintText: rightHintText ,
-                      border: InputBorder.none,
-                    ),
-                    style: Styles.ts_0C1C33_17sp,
-                    ),
-                  ),
-            ],
-              ],
-            ),
-          ),
-        ),
-      ));
 
   Widget rowLabel(String label, String content, [String? contentHint]) {
     return Column(
@@ -190,18 +168,23 @@ class ChatRedPacketPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 16.h),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '生成红包',
-                            style: TextStyle(fontSize: 18),
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        '生成红包1',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(
+                          Icons.close,
+                          size: 24,
+                          color: Colors.grey,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
                   ),
                   Divider(
                     thickness: 0.2,
@@ -224,7 +207,7 @@ class ChatRedPacketPage extends StatelessWidget {
                           style: const TextStyle(fontSize: 19),
                         ),
                         16.verticalSpace,
-                        rowLabel('支付方式', '--余额'),
+                        rowLabel('支付方式',  '${logic.usdtAvailable.value}余额' ),
                         rowLabel('祝福语', logic.blessingCtrl.text, '恭喜发财，大吉大利'),
                         16.verticalSpace,
                         SizedBox(
@@ -232,8 +215,17 @@ class ChatRedPacketPage extends StatelessWidget {
                             child: Button(
                               text: '确定',
                               enabledColor: Colors.green,
-                              onTap: () {},
-                            ),
+                              onTap: () {
+                                // CreateRedPacketDTO dto = CreateRedPacketDTO(
+                                //   blessing: logic.blessingCtrl.text,
+                                //   groupId: logic.groupId.isEmpty ? null : int.parse(logic.groupId),
+                                //   packetType: 1,currencyId: 10,
+                                //   totalCount: logic.isGroup ? int.parse(logic.numberCtrl.text) : 1,
+                                // );
+                                // RedPacketAppApi().createRedPacket(dto);  
+
+                                logic.createSingleRedPacket();       
+                            },)
                         ),
                       ],
                     ).marginOnly(bottom: 30.h),
