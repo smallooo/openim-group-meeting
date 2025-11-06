@@ -82,25 +82,76 @@ class FCMPushController {
 
   Future<void> _requestPermission() async {
     NotificationSettings settings = await FirebaseMessaging.instance.requestPermission();
-    print('User granted permission: ${settings.authorizationStatus}');
+    Logger.print('📱 FCM 通知权限状态: ${settings.authorizationStatus}');
+    Logger.print('  - 提醒权限: ${settings.alert}');
+    Logger.print('  - 徽章权限: ${settings.badge}');
+    Logger.print('  - 声音权限: ${settings.sound}');
   }
 
-  void _configureForegroundNotification() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      print('Foreground notification received: ${message.notification?.title}');
+  StreamSubscription<RemoteMessage>? _fcmForegroundSubscription;
 
-      if (message.notification != null) {}
-    });
+  void _configureForegroundNotification() {
+    Logger.print('🔧 PushController: 开始设置 FCM 前台消息监听器...');
+    
+    // 先取消之前的订阅
+    _fcmForegroundSubscription?.cancel();
+    
+    try {
+      _fcmForegroundSubscription = FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+        Logger.print('📬 PushController 收到前台 FCM 消息:');
+        Logger.print('  - 消息ID: ${message.messageId}');
+        Logger.print('  - 标题: ${message.notification?.title ?? "无"}');
+        Logger.print('  - 内容: ${message.notification?.body ?? "无"}');
+        Logger.print('  - 数据: ${message.data}');
+        Logger.print('  - 来自: ${message.from}');
+
+        if (message.notification != null) {
+          await _showForegroundNotification(message);
+        }
+      }, onError: (error) {
+        Logger.print('❌ PushController FCM 监听器出错: $error');
+      }, cancelOnError: false);
+      
+      Logger.print('✅ PushController: FCM 前台消息监听器已设置成功');
+    } catch (e) {
+      Logger.print('❌ PushController: 设置 FCM 监听器失败: $e');
+    }
+  }
+
+  Future<void> _showForegroundNotification(RemoteMessage message) async {
+    try {
+      // 通过动态查找避免直接依赖主项目的类
+      // 使用 Get 查找可能存在的 AppController（如果已注册）
+      final notification = message.notification;
+      if (notification == null) return;
+
+      // 尝试通过反射或动态查找来显示通知
+      // 这里我们先只记录日志，实际通知显示可以在主项目中处理
+      Logger.print('💡 提示: 应用在前台收到通知，如需显示可在主项目中监听并显示本地通知');
+      Logger.print('   通知标题: ${notification.title}');
+      Logger.print('   通知内容: ${notification.body}');
+      
+      // TODO: 如果需要在前台显示通知，可以在主项目的 AppController 中
+      // 监听 FCM 消息并显示本地通知，或者通过事件总线通知主项目
+    } catch (e) {
+      Logger.print('❌ 处理前台通知失败: $e');
+    }
   }
 
   void _configureBackgroundNotification() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('App opened from background: ${message.notification?.title}');
+      Logger.print('📱 从后台通知打开应用:');
+      Logger.print('  - 标题: ${message.notification?.title ?? "无"}');
+      Logger.print('  - 内容: ${message.notification?.body ?? "无"}');
+      Logger.print('  - 数据: ${message.data}');
     });
 
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        print('App opened from terminated state: ${message.notification?.title}');
+        Logger.print('📱 从终止状态通过通知打开应用:');
+        Logger.print('  - 标题: ${message.notification?.title ?? "无"}');
+        Logger.print('  - 内容: ${message.notification?.body ?? "无"}');
+        Logger.print('  - 数据: ${message.data}');
       }
     });
   }

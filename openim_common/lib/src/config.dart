@@ -1,3 +1,148 @@
+// import 'dart:io';
+//
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:media_kit/media_kit.dart';
+// import 'package:openim_common/openim_common.dart';
+// import 'package:package_info_plus/package_info_plus.dart';
+// import 'package:path_provider/path_provider.dart';
+//
+// class Config {
+//   static Future init(Function() runApp) async {
+//     WidgetsFlutterBinding.ensureInitialized();
+//     try {
+//       final path = (await getApplicationDocumentsDirectory()).path;
+//       cachePath = '$path/';
+//       await DataSp.init();
+//       await Hive.initFlutter(path);
+//       MediaKit.ensureInitialized();
+//       HttpUtil.init();
+//     } catch (_) {}
+//
+//     runApp();
+//
+//     SystemChrome.setPreferredOrientations([
+//       DeviceOrientation.portraitUp,
+//       DeviceOrientation.portraitDown,
+//     ]);
+//
+//     var brightness = Platform.isAndroid ? Brightness.dark : Brightness.light;
+//     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+//       statusBarColor: Colors.transparent,
+//       statusBarBrightness: brightness,
+//       statusBarIconBrightness: brightness,
+//     ));
+//
+//     final packageInfo = await PackageInfo.fromPlatform();
+//     _appName = packageInfo.appName;
+//   }
+//
+//   static late String _appName;
+//
+//   static late String cachePath;
+//   static const uiW = 375.0;
+//   static const uiH = 812.0;
+//
+//   static const double textScaleFactor = 1.0;
+//
+//   static const discoverPageURL = 'https://docs.openim.io/';
+//   static const allowSendMsgNotFriend = '1';
+//   // amap key
+//   static const webKey = 'webKey';
+//   static const webServerKey = 'webServerKey';
+//   static const locationHost = 'http://location.your-domain';
+//
+//   static OfflinePushInfo get offlinePushInfo => OfflinePushInfo(
+//     title: _appName,
+//     desc: StrRes.offlineMessage,
+//     iOSBadgeCount: true,
+//   );
+//
+//   static const friendScheme = "io.openim.app/addFriend/";
+//   static const groupScheme = "io.openim.app/joinGroup/";
+//   // XWXWXW
+//   // static const _host = "your-server-ip or your-domain";
+//   // static const _host = "115.159.110.145";
+//   // static const _host = "47.83.161.8";
+//   // static const _host = "115.159.110.145"; // xw
+//   // static const _host = "192.168.1.56";  // xw local
+//   // static const _host = "47.242.117.206";  // xw local
+//
+//   // static const _host = "47.76.136.240";  // tk
+//   // static const _host = "https://openimtest.56wap.com/";  // tk
+//
+//   static const _host = "gateway.trunk.toklink.io";  // tk (只包含域名，不包含协议)
+//
+//   static const _ipRegex = '((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)';
+//
+//   static bool get _isIP => RegExp(_ipRegex).hasMatch(_host);
+//
+//   static String get serverIp {
+//     String? ip;
+//     var server = DataSp.getServerConfig();
+//     if (null != server) {
+//       ip = server['serverIP'];
+//     }
+//     return ip ?? _host;
+//   }
+//
+//   static String get chatTokenUrl {
+//     String? url;
+//     var server = DataSp.getServerConfig();
+//     if (null != server) {
+//       url = server['chatTokenUrl'];
+//     }
+//     // return url ?? (_isIP ? "http://$_host:10009" : "https://$_host/chat");
+//     return url ?? (_isIP ? "http://$_host:10009" : "https://$_host/admin/im-chat");
+//
+//   }
+//
+//   static String get appAuthUrl {
+//     String? url;
+//     var server = DataSp.getServerConfig();
+//     if (null != server) {
+//       url = server['authUrl'];
+//     }
+//     // return url ?? (_isIP ? "http://$_host:10008" : "https://$_host/chat");
+//     return url ?? (_isIP ? "http://$_host:10008" : "https://$_host/app/im-chat");
+//
+//   }
+//
+//   static String get imApiUrl {
+//     String? url;
+//     var server = DataSp.getServerConfig();
+//     if (null != server) {
+//       url = server['apiUrl'];
+//     }
+//     // return url ?? (_isIP ? 'http://$_host:10002' : "https://$_host/api");
+//     return url ?? (_isIP ? 'http://$_host:10002' : "https://$_host/app/im-server");
+//
+//   }
+//   static String get imWsUrl {
+//     String? url;
+//     var server = DataSp.getServerConfig();
+//     if (null != server) {
+//       url = server['wsUrl'];
+//     }
+//     // return url ?? (_isIP ? "ws://$_host:10001" : "wss://$_host/msg_gateway");
+//     return url ?? (_isIP ? "ws://$_host:10001" : "wss://$_host/app/im-server/ws");
+//
+//
+//   }
+//
+//   static int get logLevel {
+//     String? level;
+//     var server = DataSp.getServerConfig();
+//     if (null != server) {
+//       level = server['logLevel'];
+//     }
+//     return level == null ? 5 : int.parse(level);
+//   }
+// }
+//
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -55,10 +200,10 @@ class Config {
   static const locationHost = 'http://location.your-domain';
 
   static OfflinePushInfo get offlinePushInfo => OfflinePushInfo(
-        title: _appName,
-        desc: StrRes.offlineMessage,
-        iOSBadgeCount: true,
-      );
+    title: _appName,
+    desc: StrRes.offlineMessage,
+    iOSBadgeCount: true,
+  );
 
   static const friendScheme = "io.openim.app/addFriend/";
   static const groupScheme = "io.openim.app/joinGroup/";
@@ -67,6 +212,8 @@ class Config {
   // static const _host = "115.159.110.145";
   // static const _host = "47.83.161.8";
   // static const _host = "115.159.110.145"; // xw
+  // static const _host = "192.168.1.56";  // xw local
+  // static const _host = "47.242.117.206";  // xw local
 
   static const _host = "47.76.136.240";  // tk
   // static const _host = "https://openimtest.56wap.com/";  // tk
@@ -111,7 +258,6 @@ class Config {
     }
     return url ?? (_isIP ? 'http://$_host:10002' : "https://$_host/api");
   }
-
   static String get imWsUrl {
     String? url;
     var server = DataSp.getServerConfig();
@@ -130,3 +276,5 @@ class Config {
     return level == null ? 5 : int.parse(level);
   }
 }
+
+

@@ -2,39 +2,14 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:openim_common/openim_common.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'token_storage_service.dart';
 import '../constants/api_constants.dart';
+import '../../shared/models/auth/token_refresh_response.dart';
 
 
 part 'token_manager.g.dart';
-
-/// Token刷新响应模型
-class TokenRefreshResponse {
-  final String accessToken;
-  final String refreshToken;
-  final String tokenType;
-  final String expiresIn;
-  final String message;
-
-  TokenRefreshResponse({
-    required this.accessToken,
-    required this.refreshToken,
-    required this.tokenType,
-    required this.expiresIn,
-    required this.message,
-  });
-
-  factory TokenRefreshResponse.fromJson(Map<String, dynamic> json) {
-    return TokenRefreshResponse(
-      accessToken: json['accessToken'] ?? '',
-      refreshToken: json['refreshToken'] ?? '',
-      tokenType: json['tokenType'] ?? 'Bearer',
-      expiresIn: json['expiresIn'] ?? '',
-      message: json['message'] ?? '',
-    );
-  }
-}
 
 /// Token管理器
 /// 
@@ -170,9 +145,19 @@ class TokenManager {
             expiresIn: refreshResponse.expiresIn,
           );
           
+          // 更新 IM Token 和 IM UID 到 LoginCertificate
+          final loginCertificate = LoginCertificate.fromJson({
+            'userID': refreshResponse.imUid,
+            'imToken': refreshResponse.imToken,
+            'chatToken': refreshResponse.chatToken,
+          });
+          await DataSp.putLoginCertificate(loginCertificate);
+          
           debugPrint('[TokenManager] Token刷新成功');
           debugPrint('[TokenManager] 新AccessToken: ${refreshResponse.accessToken}');
           debugPrint('[TokenManager] 新ExpiresIn: ${refreshResponse.expiresIn}');
+          debugPrint('[TokenManager] 新IMToken: ${refreshResponse.imToken}');
+          debugPrint('[TokenManager] 新IMUid: ${refreshResponse.imUid}');
           
           // 通知等待的请求
           _notifyRefreshCompleters(true);

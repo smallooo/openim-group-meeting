@@ -24,8 +24,12 @@ class CodeLoginResponse with _$CodeLoginResponse {
     @JsonKey(name: 'expiresIn') required String expiresIn,
     
     /// 用户ID
-    /// 系统内部用户唯一标识
-    @JsonKey(name: 'userId') required String userId,
+    /// 系统内部用户唯一标识（已废弃，使用 memberId）
+    @JsonKey(name: 'userId') String? userId,
+    
+    /// 会员ID
+    /// 系统内部会员唯一标识
+    @JsonKey(name: 'memberId') required String memberId,
     
     /// 邮箱地址
     @JsonKey(name: 'email') required String email,
@@ -49,6 +53,18 @@ class CodeLoginResponse with _$CodeLoginResponse {
     /// PHONE_CODE: 手机验证码登录
     /// THIRD_PARTY: 第三方登录
     @JsonKey(name: 'loginType') required String loginType,
+    
+    /// IM Token
+    /// 用于 IM 系统的身份验证
+    @JsonKey(name: 'imToken') required String imToken,
+    
+    /// IM 用户ID
+    /// IM 系统中的用户唯一标识
+    @JsonKey(name: 'imUid') required String imUid,
+    
+    /// 聊天 Token
+    /// 用于聊天系统的身份验证
+    @JsonKey(name: 'chatToken') required String chatToken,
   }) = _CodeLoginResponse;
 
   factory CodeLoginResponse.fromJson(Map<String, dynamic> json) => 

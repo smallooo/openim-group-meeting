@@ -41,9 +41,14 @@ mixin _$CodeLoginResponse {
   String get expiresIn => throw _privateConstructorUsedError;
 
   /// 用户ID
-  /// 系统内部用户唯一标识
+  /// 系统内部用户唯一标识（已废弃，使用 memberId）
   @JsonKey(name: 'userId')
-  String get userId => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+
+  /// 会员ID
+  /// 系统内部会员唯一标识
+  @JsonKey(name: 'memberId')
+  String get memberId => throw _privateConstructorUsedError;
 
   /// 邮箱地址
   @JsonKey(name: 'email')
@@ -73,6 +78,21 @@ mixin _$CodeLoginResponse {
   @JsonKey(name: 'loginType')
   String get loginType => throw _privateConstructorUsedError;
 
+  /// IM Token
+  /// 用于 IM 系统的身份验证
+  @JsonKey(name: 'imToken')
+  String get imToken => throw _privateConstructorUsedError;
+
+  /// IM 用户ID
+  /// IM 系统中的用户唯一标识
+  @JsonKey(name: 'imUid')
+  String get imUid => throw _privateConstructorUsedError;
+
+  /// 聊天 Token
+  /// 用于聊天系统的身份验证
+  @JsonKey(name: 'chatToken')
+  String get chatToken => throw _privateConstructorUsedError;
+
   /// Serializes this CodeLoginResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
@@ -94,12 +114,16 @@ abstract class $CodeLoginResponseCopyWith<$Res> {
       @JsonKey(name: 'refreshToken') String refreshToken,
       @JsonKey(name: 'tokenType') String tokenType,
       @JsonKey(name: 'expiresIn') String expiresIn,
-      @JsonKey(name: 'userId') String userId,
+      @JsonKey(name: 'userId') String? userId,
+      @JsonKey(name: 'memberId') String memberId,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'nickname') String nickname,
       @JsonKey(name: 'avatar') String avatar,
       @JsonKey(name: 'isNewUser') bool isNewUser,
-      @JsonKey(name: 'loginType') String loginType});
+      @JsonKey(name: 'loginType') String loginType,
+      @JsonKey(name: 'imToken') String imToken,
+      @JsonKey(name: 'imUid') String imUid,
+      @JsonKey(name: 'chatToken') String chatToken});
 }
 
 /// @nodoc
@@ -121,12 +145,16 @@ class _$CodeLoginResponseCopyWithImpl<$Res, $Val extends CodeLoginResponse>
     Object? refreshToken = null,
     Object? tokenType = null,
     Object? expiresIn = null,
-    Object? userId = null,
+    Object? userId = freezed,
+    Object? memberId = null,
     Object? email = null,
     Object? nickname = null,
     Object? avatar = null,
     Object? isNewUser = null,
     Object? loginType = null,
+    Object? imToken = null,
+    Object? imUid = null,
+    Object? chatToken = null,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -145,9 +173,13 @@ class _$CodeLoginResponseCopyWithImpl<$Res, $Val extends CodeLoginResponse>
           ? _value.expiresIn
           : expiresIn // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _value.email
@@ -169,6 +201,18 @@ class _$CodeLoginResponseCopyWithImpl<$Res, $Val extends CodeLoginResponse>
           ? _value.loginType
           : loginType // ignore: cast_nullable_to_non_nullable
               as String,
+      imToken: null == imToken
+          ? _value.imToken
+          : imToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      imUid: null == imUid
+          ? _value.imUid
+          : imUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      chatToken: null == chatToken
+          ? _value.chatToken
+          : chatToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -186,12 +230,16 @@ abstract class _$$CodeLoginResponseImplCopyWith<$Res>
       @JsonKey(name: 'refreshToken') String refreshToken,
       @JsonKey(name: 'tokenType') String tokenType,
       @JsonKey(name: 'expiresIn') String expiresIn,
-      @JsonKey(name: 'userId') String userId,
+      @JsonKey(name: 'userId') String? userId,
+      @JsonKey(name: 'memberId') String memberId,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'nickname') String nickname,
       @JsonKey(name: 'avatar') String avatar,
       @JsonKey(name: 'isNewUser') bool isNewUser,
-      @JsonKey(name: 'loginType') String loginType});
+      @JsonKey(name: 'loginType') String loginType,
+      @JsonKey(name: 'imToken') String imToken,
+      @JsonKey(name: 'imUid') String imUid,
+      @JsonKey(name: 'chatToken') String chatToken});
 }
 
 /// @nodoc
@@ -211,12 +259,16 @@ class __$$CodeLoginResponseImplCopyWithImpl<$Res>
     Object? refreshToken = null,
     Object? tokenType = null,
     Object? expiresIn = null,
-    Object? userId = null,
+    Object? userId = freezed,
+    Object? memberId = null,
     Object? email = null,
     Object? nickname = null,
     Object? avatar = null,
     Object? isNewUser = null,
     Object? loginType = null,
+    Object? imToken = null,
+    Object? imUid = null,
+    Object? chatToken = null,
   }) {
     return _then(_$CodeLoginResponseImpl(
       accessToken: null == accessToken
@@ -235,9 +287,13 @@ class __$$CodeLoginResponseImplCopyWithImpl<$Res>
           ? _value.expiresIn
           : expiresIn // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
               as String,
       email: null == email
           ? _value.email
@@ -259,6 +315,18 @@ class __$$CodeLoginResponseImplCopyWithImpl<$Res>
           ? _value.loginType
           : loginType // ignore: cast_nullable_to_non_nullable
               as String,
+      imToken: null == imToken
+          ? _value.imToken
+          : imToken // ignore: cast_nullable_to_non_nullable
+              as String,
+      imUid: null == imUid
+          ? _value.imUid
+          : imUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      chatToken: null == chatToken
+          ? _value.chatToken
+          : chatToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -271,12 +339,16 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
       @JsonKey(name: 'refreshToken') required this.refreshToken,
       @JsonKey(name: 'tokenType') required this.tokenType,
       @JsonKey(name: 'expiresIn') required this.expiresIn,
-      @JsonKey(name: 'userId') required this.userId,
+      @JsonKey(name: 'userId') this.userId,
+      @JsonKey(name: 'memberId') required this.memberId,
       @JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'nickname') required this.nickname,
       @JsonKey(name: 'avatar') required this.avatar,
       @JsonKey(name: 'isNewUser') required this.isNewUser,
-      @JsonKey(name: 'loginType') required this.loginType});
+      @JsonKey(name: 'loginType') required this.loginType,
+      @JsonKey(name: 'imToken') required this.imToken,
+      @JsonKey(name: 'imUid') required this.imUid,
+      @JsonKey(name: 'chatToken') required this.chatToken});
 
   factory _$CodeLoginResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$CodeLoginResponseImplFromJson(json);
@@ -306,10 +378,16 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
   final String expiresIn;
 
   /// 用户ID
-  /// 系统内部用户唯一标识
+  /// 系统内部用户唯一标识（已废弃，使用 memberId）
   @override
   @JsonKey(name: 'userId')
-  final String userId;
+  final String? userId;
+
+  /// 会员ID
+  /// 系统内部会员唯一标识
+  @override
+  @JsonKey(name: 'memberId')
+  final String memberId;
 
   /// 邮箱地址
   @override
@@ -344,9 +422,27 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
   @JsonKey(name: 'loginType')
   final String loginType;
 
+  /// IM Token
+  /// 用于 IM 系统的身份验证
+  @override
+  @JsonKey(name: 'imToken')
+  final String imToken;
+
+  /// IM 用户ID
+  /// IM 系统中的用户唯一标识
+  @override
+  @JsonKey(name: 'imUid')
+  final String imUid;
+
+  /// 聊天 Token
+  /// 用于聊天系统的身份验证
+  @override
+  @JsonKey(name: 'chatToken')
+  final String chatToken;
+
   @override
   String toString() {
-    return 'CodeLoginResponse(accessToken: $accessToken, refreshToken: $refreshToken, tokenType: $tokenType, expiresIn: $expiresIn, userId: $userId, email: $email, nickname: $nickname, avatar: $avatar, isNewUser: $isNewUser, loginType: $loginType)';
+    return 'CodeLoginResponse(accessToken: $accessToken, refreshToken: $refreshToken, tokenType: $tokenType, expiresIn: $expiresIn, userId: $userId, memberId: $memberId, email: $email, nickname: $nickname, avatar: $avatar, isNewUser: $isNewUser, loginType: $loginType, imToken: $imToken, imUid: $imUid, chatToken: $chatToken)';
   }
 
   @override
@@ -363,6 +459,8 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
             (identical(other.expiresIn, expiresIn) ||
                 other.expiresIn == expiresIn) &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
@@ -370,7 +468,11 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
             (identical(other.isNewUser, isNewUser) ||
                 other.isNewUser == isNewUser) &&
             (identical(other.loginType, loginType) ||
-                other.loginType == loginType));
+                other.loginType == loginType) &&
+            (identical(other.imToken, imToken) || other.imToken == imToken) &&
+            (identical(other.imUid, imUid) || other.imUid == imUid) &&
+            (identical(other.chatToken, chatToken) ||
+                other.chatToken == chatToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -382,11 +484,15 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
       tokenType,
       expiresIn,
       userId,
+      memberId,
       email,
       nickname,
       avatar,
       isNewUser,
-      loginType);
+      loginType,
+      imToken,
+      imUid,
+      chatToken);
 
   /// Create a copy of CodeLoginResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -411,12 +517,16 @@ abstract class _CodeLoginResponse implements CodeLoginResponse {
           @JsonKey(name: 'refreshToken') required final String refreshToken,
           @JsonKey(name: 'tokenType') required final String tokenType,
           @JsonKey(name: 'expiresIn') required final String expiresIn,
-          @JsonKey(name: 'userId') required final String userId,
+          @JsonKey(name: 'userId') final String? userId,
+          @JsonKey(name: 'memberId') required final String memberId,
           @JsonKey(name: 'email') required final String email,
           @JsonKey(name: 'nickname') required final String nickname,
           @JsonKey(name: 'avatar') required final String avatar,
           @JsonKey(name: 'isNewUser') required final bool isNewUser,
-          @JsonKey(name: 'loginType') required final String loginType}) =
+          @JsonKey(name: 'loginType') required final String loginType,
+          @JsonKey(name: 'imToken') required final String imToken,
+          @JsonKey(name: 'imUid') required final String imUid,
+          @JsonKey(name: 'chatToken') required final String chatToken}) =
       _$CodeLoginResponseImpl;
 
   factory _CodeLoginResponse.fromJson(Map<String, dynamic> json) =
@@ -447,10 +557,16 @@ abstract class _CodeLoginResponse implements CodeLoginResponse {
   String get expiresIn;
 
   /// 用户ID
-  /// 系统内部用户唯一标识
+  /// 系统内部用户唯一标识（已废弃，使用 memberId）
   @override
   @JsonKey(name: 'userId')
-  String get userId;
+  String? get userId;
+
+  /// 会员ID
+  /// 系统内部会员唯一标识
+  @override
+  @JsonKey(name: 'memberId')
+  String get memberId;
 
   /// 邮箱地址
   @override
@@ -484,6 +600,24 @@ abstract class _CodeLoginResponse implements CodeLoginResponse {
   @override
   @JsonKey(name: 'loginType')
   String get loginType;
+
+  /// IM Token
+  /// 用于 IM 系统的身份验证
+  @override
+  @JsonKey(name: 'imToken')
+  String get imToken;
+
+  /// IM 用户ID
+  /// IM 系统中的用户唯一标识
+  @override
+  @JsonKey(name: 'imUid')
+  String get imUid;
+
+  /// 聊天 Token
+  /// 用于聊天系统的身份验证
+  @override
+  @JsonKey(name: 'chatToken')
+  String get chatToken;
 
   /// Create a copy of CodeLoginResponse
   /// with the given fields replaced by the non-null parameter values.

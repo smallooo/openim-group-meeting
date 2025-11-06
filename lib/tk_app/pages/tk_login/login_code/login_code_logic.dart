@@ -10,6 +10,7 @@ import '../../../../routes/app_navigator.dart';
 import '../../../features/auth/data/repositories/auth_repository.dart';
 import '../../../core/exceptions/api_exception.dart';
 import '../../../core/services/token_storage_service.dart';
+import '../../../shared/models/auth/code_login_response.dart';
 
 class LoginCodeLogic extends GetxController {
   // 验证码输入
@@ -102,28 +103,53 @@ class LoginCodeLogic extends GetxController {
       if ((resp['errCode'] ?? -1) == 0) {
         verified.value = true;
         
-        // 缓存邮箱登录返回的完整数据
+        // 将响应数据转换为 CodeLoginResponse 对象
         final loginData = resp['data'];
         if (loginData != null) {
+          final loginResponse = CodeLoginResponse.fromJson(loginData);
+          
           // 使用新的 TokenStorageService 保存登录信息
           final tokenStorage = await ref.read(tokenStorageServiceProvider.future);
           await tokenStorage.saveLoginInfo(
-            accessToken: loginData['accessToken'] ?? '',
-            refreshToken: loginData['refreshToken'] ?? '',
-            tokenType: loginData['tokenType'] ?? 'Bearer',
-            expiresIn: loginData['expiresIn'] ?? '',
-            userId: loginData['userId'] ?? '',
-            email: loginData['email'] ?? email,
-            nickname: loginData['nickname'] ?? '',
-            avatar: loginData['avatar'] ?? '',
+            accessToken: loginResponse.accessToken,
+            refreshToken: loginResponse.refreshToken,
+            tokenType: loginResponse.tokenType,
+            expiresIn: loginResponse.expiresIn,
+            userId: loginResponse.memberId, // 使用 memberId 替代 userId
+            email: loginResponse.email,
+            nickname: loginResponse.nickname,
+            avatar: loginResponse.avatar,
           );
           
           // 打印登录成功后的 accessToken
-          debugPrint('[LoginCodeLogic] 登录成功，保存的 accessToken: ${loginData['accessToken']}');
+          debugPrint('[LoginCodeLogic] 登录成功，保存的 accessToken: ${loginResponse.accessToken}');
+          debugPrint('[LoginCodeLogic] IM Token: ${loginResponse.imToken}');
+          debugPrint('[LoginCodeLogic] IM UID: ${loginResponse.imUid}');
+
+
+          // 创建 LoginCertificate 并保存
+          final loginCertificate = LoginCertificate.fromJson({
+            'userID': loginResponse.imUid,
+            'imToken': loginResponse.imToken,
+            'chatToken': loginResponse.chatToken,
+          });
+
+          await DataSp.putLoginCertificate(loginCertificate);
           
-          // 注意：这里不保存 IM 相关的 token，因为邮箱登录的 token 和 IM token 是不同的
-          // IM 登录会在 completeLogin() 方法中单独处理
-          debugPrint('[LoginCodeLogic] 邮箱登录成功，但 IM 登录需要单独处理');
+          // 使用接口返回的 imToken 和 imUid 直接登录 IM SDK
+          final imLogic = Get.find<IMController>();
+          await imLogic.login(loginResponse.imUid, loginResponse.imToken);
+          // await imLogic.login("3574611276", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiIzNTc0NjExMjc2IiwiUGxhdGZvcm1JRCI6MiwiZXhwIjoxNzcwMTc0MjE3LCJpYXQiOjE3NjIzOTgyMTJ9.EgXxMOcH_Ve0nExfaq9xclq470X7HV5Pi8w_UqBHbRM");
+
+
+          // 设置推送控制器
+          PushController.login(
+            loginResponse.imUid,
+            onTokenRefresh: (token) {
+              OpenIM.iMManager.updateFcmToken(
+                  fcmToken: token, expireTime: DateTime.now().add(Duration(days: 90)).millisecondsSinceEpoch);
+            },
+          );
           
           // 保存账户信息
           await DataSp.putLoginAccount({'email': email});
@@ -131,10 +157,14 @@ class LoginCodeLogic extends GetxController {
           // 缓存邮箱登录的完整响应数据
           await SpUtil().putObject('email_login_response', loginData);
           
-          print('✅ 邮箱登录数据已缓存: $loginData');
+          print('✅ 邮箱登录和 IM 登录成功，数据已缓存');
+          
+          // 验证成功后自动完成登录流程，直接跳转到主页
+          await _autoCompleteLogin();
         }
       } else {
-        throw Exception(resp['errMsg'] ?? 'login failed');
+        // throw Exception(resp['errMsg'] ?? 'login failed');
+        throw Exception('verify failed');
       }
     } on ApiException catch (e) {
       error.value = e.message;
@@ -159,142 +189,29 @@ class LoginCodeLogic extends GetxController {
     }
   }
 
-  /// 完成登录流程
-  Future<void> completeLogin() async {
+  /// 自动完成登录流程（验证成功后自动调用）
+  Future<void> _autoCompleteLogin() async {
     isLoading.value = true;
     
     try {
-      // 验证码验证成功后，先尝试用邮箱+默认密码登录IM
-      try {
-        // 调用后台登录接口获取用户信息和 token
-        final data = await Apis.login(
-          email: email,
-          password: '123456abc',
-        );
-        
-        // 保存登录凭证和账户信息
-        await DataSp.putLoginCertificate(data);
-        await DataSp.putLoginAccount({'email': email});
-        
-        // 缓存IM登录返回的完整数据
-        await SpUtil().putObject('im_login_response', data.toJson());
-        
-        // 使用获取到的 userID 和 imToken 登录 IM SDK
-        final imLogic = Get.find<IMController>();
-        await imLogic.login(data.userID, data.imToken);
-        
-        // 设置推送控制器
-        PushController.login(
-          data.userID,
-          onTokenRefresh: (token) {
-            OpenIM.iMManager.updateFcmToken(
-                fcmToken: token, expireTime: DateTime.now().add(Duration(days: 90)).millisecondsSinceEpoch);
-          },
-        );
-        
-        // 获取会话列表并跳转到主页面
-        final result = await ConversationLogic.getConversationFirstPage();
-        Get.find<CacheController>().resetCache();
-        AppNavigator.startMain(conversations: result);
-        return; // 登录成功，直接返回
-        
-      } catch (loginError) {
-        // IM 登录失败，静默处理，不显示错误提示，尝试注册
-        print('IM登录失败，尝试注册: $loginError');
-      }
-      
-      // 尝试注册
-      try {
-        // 使用邮箱@之前的部分作为用户名进行注册
-        final username = email.split('@').first; // 提取邮箱@之前的字符串
-        final registerData = await Apis.register(
-          nickname: username, // 用户名为邮箱@之前的部分
-          password: '123456abc',
-          email: email,
-          verificationCode: '666666', // IM 注册使用固定验证码
-        );
-        
-        // 保存注册后的登录凭证（仅保存必要的登录信息，不保存完整返回数据）
-        await DataSp.putLoginCertificate(registerData);
-        await DataSp.putLoginAccount({'email': email});
-        
-        // 注意：IM注册后不保存返回信息，只保存必要的登录凭证
-        print('✅ IM注册成功，仅保存登录凭证，不缓存完整返回数据');
-        
-        // 使用注册返回的信息登录 IM SDK
-        final imLogic = Get.find<IMController>();
-        await imLogic.login(registerData.userID, registerData.imToken);
-        
-        // 设置推送控制器
-        PushController.login(
-          registerData.userID,
-          onTokenRefresh: (token) {
-            OpenIM.iMManager.updateFcmToken(
-                fcmToken: token, expireTime: DateTime.now().add(Duration(days: 90)).millisecondsSinceEpoch);
-          },
-        );
-        
-        // 获取会话列表并跳转到主页面
-        final result = await ConversationLogic.getConversationFirstPage();
-        Get.find<CacheController>().resetCache();
-        AppNavigator.startMain(conversations: result);
-        
-      } catch (registerError) {
-        // 注册也失败，显示错误信息
-        error.value = '登录和注册都失败了，请重试';
-        verified.value = false;
-      }
-      
+      // IM 登录已经在 verify() 方法中使用接口返回的 imToken 和 imUid 完成
+      // 这里只需要获取会话列表并跳转到主页面
+      final result = await ConversationLogic.getConversationFirstPage();
+      Get.find<CacheController>().resetCache();
+      AppNavigator.startMain(conversations: result);
     } catch (e) {
-      error.value = '登录失败: ${e.toString()}';
+      error.value = '获取会话列表失败: ${e.toString()}';
       verified.value = false;
+      // 如果自动登录失败，显示错误，让用户可以选择重试
     } finally {
       isLoading.value = false;
     }
   }
 
-  /// 尝试注册流程
-  Future<void> _tryRegisterFlow() async {
-    try {
-      // 使用邮箱@之前的部分作为用户名进行注册
-      final username = email.split('@').first;
-      final registerData = await Apis.register(
-        nickname: username,
-        password: '123456abc',
-        email: email,
-        verificationCode: '666666',
-      );
-      
-      // 保存注册后的登录凭证（仅保存必要的登录信息，不保存完整返回数据）
-      await DataSp.putLoginCertificate(registerData);
-      await DataSp.putLoginAccount({'email': email});
-      
-      // 注意：IM注册后不保存返回信息，只保存必要的登录凭证
-      print('✅ IM注册成功，仅保存登录凭证，不缓存完整返回数据');
-      
-      // 使用注册返回的信息登录 IM SDK
-      final imLogic = Get.find<IMController>();
-      await imLogic.login(registerData.userID, registerData.imToken);
-      
-      // 设置推送控制器
-      PushController.login(
-        registerData.userID,
-        onTokenRefresh: (token) {
-          OpenIM.iMManager.updateFcmToken(
-              fcmToken: token, 
-              expireTime: DateTime.now().add(Duration(days: 90)).millisecondsSinceEpoch);
-        },
-      );
-      
-      // 获取会话列表并跳转到主页面
-      final result = await ConversationLogic.getConversationFirstPage();
-      Get.find<CacheController>().resetCache();
-      AppNavigator.startMain(conversations: result);
-      
-    } catch (registerError) {
-      // 注册也失败，显示错误信息
-      error.value = '登录和注册都失败了，请重试';
-      verified.value = false;
-    }
+  /// 完成登录流程（手动点击按钮时调用，作为自动登录失败的重试机制）
+  /// 注意：正常情况下验证成功后会自动调用 _autoCompleteLogin()，这里作为备用方案
+  Future<void> completeLogin() async {
+    await _autoCompleteLogin();
   }
+
 }
