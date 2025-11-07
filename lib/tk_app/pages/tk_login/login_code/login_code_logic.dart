@@ -173,7 +173,8 @@ class LoginCodeLogic extends GetxController {
         throw Exception('verify failed');
       }
     } on ApiException catch (e) {
-      error.value = e.message;
+      // error.value = e.message;
+      error.value = "Wrong verify code";
       verified.value = false;
     } catch (e) {
       error.value = e.toString();
