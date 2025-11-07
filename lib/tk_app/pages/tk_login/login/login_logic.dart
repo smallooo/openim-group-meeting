@@ -3,6 +3,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:openim_common/openim_common.dart';
+import '../../../../routes/app_pages.dart';
 import '../../../features/auth/data/repositories/auth_repository.dart';
 import '../../../core/exceptions/api_exception.dart';
 // 移除了直接导入，现在使用命名路由
@@ -23,6 +24,9 @@ class LoginLogic extends GetxController {
 
   /// 发送验证码
   Future<void> sendCode() async {
+
+    // Get.toNamed(AppRoutes.tkGuaranteeKeys);
+    // return;
     if (emailStr.value.isEmpty) {
       IMViews.showToast('Please_Enter_Your_Email'.tr);
       return;
@@ -34,11 +38,15 @@ class LoginLogic extends GetxController {
       // 获取设备ID
       final deviceID = await _getDeviceId();
       
+      // 获取平台ID：iOS为"1"，Android为"2"
+      final platformId = Platform.isIOS ? '1' : '2';
+      
       // 使用新的 AuthRepository
       final authRepo = await ref.read(authRepositoryProvider.future);
       final resp = await authRepo.emailLoginSendCodeReq(
         email: emailStr.value, 
         deviceId: deviceID,
+        platformId: platformId,
       );
       
       final errCode = resp['errCode'] ?? -1;

@@ -50,8 +50,12 @@ mixin _$WalletFundCurrencyItem {
   @JsonKey(name: 'isDeleted')
   int get isDeleted => throw _privateConstructorUsedError;
 
+  /// Serializes this WalletFundCurrencyItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WalletFundCurrencyItem
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WalletFundCurrencyItemCopyWith<WalletFundCurrencyItem> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -90,6 +94,8 @@ class _$WalletFundCurrencyItemCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WalletFundCurrencyItem
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -195,6 +201,8 @@ class __$$WalletFundCurrencyItemImplCopyWithImpl<$Res>
       $Res Function(_$WalletFundCurrencyItemImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WalletFundCurrencyItem
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -364,7 +372,7 @@ class _$WalletFundCurrencyItemImpl implements _WalletFundCurrencyItem {
                 other.isDeleted == isDeleted));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -381,7 +389,9 @@ class _$WalletFundCurrencyItemImpl implements _WalletFundCurrencyItem {
       updatedAt,
       isDeleted);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WalletFundCurrencyItem
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WalletFundCurrencyItemImplCopyWith<_$WalletFundCurrencyItemImpl>
@@ -450,8 +460,8 @@ abstract class _WalletFundCurrencyItem implements WalletFundCurrencyItem {
   int get version;
   @override
   @JsonKey(name: 'status')
-  int get status;
-  @override // 时间格式为 "yyyy-MM-dd HH:mm:ss"，这里先按字符串保存
+  int get status; // 时间格式为 "yyyy-MM-dd HH:mm:ss"，这里先按字符串保存
+  @override
   @JsonKey(name: 'createdAt')
   String get createdAt;
   @override
@@ -460,8 +470,11 @@ abstract class _WalletFundCurrencyItem implements WalletFundCurrencyItem {
   @override
   @JsonKey(name: 'isDeleted')
   int get isDeleted;
+
+  /// Create a copy of WalletFundCurrencyItem
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WalletFundCurrencyItemImplCopyWith<_$WalletFundCurrencyItemImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -480,8 +493,12 @@ mixin _$WalletFundCurrencyResponse {
   @JsonKey(name: 'data')
   List<WalletFundCurrencyItem> get data => throw _privateConstructorUsedError;
 
+  /// Serializes this WalletFundCurrencyResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WalletFundCurrencyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WalletFundCurrencyResponseCopyWith<WalletFundCurrencyResponse>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -510,6 +527,8 @@ class _$WalletFundCurrencyResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WalletFundCurrencyResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -559,6 +578,8 @@ class __$$WalletFundCurrencyResponseImplCopyWithImpl<$Res>
       $Res Function(_$WalletFundCurrencyResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WalletFundCurrencyResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -626,12 +647,14 @@ class _$WalletFundCurrencyResponseImpl implements _WalletFundCurrencyResponse {
             const DeepCollectionEquality().equals(other._data, _data));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, errCode, errMsg, const DeepCollectionEquality().hash(_data));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WalletFundCurrencyResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WalletFundCurrencyResponseImplCopyWith<_$WalletFundCurrencyResponseImpl>
@@ -667,8 +690,11 @@ abstract class _WalletFundCurrencyResponse
   @override
   @JsonKey(name: 'data')
   List<WalletFundCurrencyItem> get data;
+
+  /// Create a copy of WalletFundCurrencyResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WalletFundCurrencyResponseImplCopyWith<_$WalletFundCurrencyResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

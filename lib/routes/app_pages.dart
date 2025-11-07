@@ -136,6 +136,12 @@ import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order/binding.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order/view.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order_detail/binding.dart';
 import '../tk_app/pages/tk_guarantee/tk_guarantee_refund_order_detail/view.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_keys/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_keys/view.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_generate_key/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_generate_key/view.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_profit/binding.dart';
+import '../tk_app/pages/tk_guarantee/tk_guarantee_profit/view.dart';
 import '../tk_app/pages/tk_guarantee/t_k_order_to_pay/binding.dart';
 import '../tk_app/pages/tk_guarantee/t_k_order_to_pay/view.dart';
 import '../tk_app/pages/tk_channel/tk_channel_home/binding.dart';
@@ -506,6 +512,21 @@ class AppPages {
       name: AppRoutes.tkOrderToPay,
       page: () => TKOrderToPayPage(),
       binding: TKOrderToPayBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeKeys,
+      page: () => TkGuaranteeKeysPage(),
+      binding: TkGuaranteeKeysBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeGenerateKey,
+      page: () => TkGuaranteeGenerateKeyPage(),
+      binding: TkGuaranteeGenerateKeyBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tkGuaranteeProfit,
+      page: () => TkGuaranteeProfitPage(),
+      binding: TkGuaranteeProfitBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.tkChannelHome,

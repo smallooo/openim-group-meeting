@@ -12,8 +12,8 @@ _$SendCodeRequestImpl _$$SendCodeRequestImplFromJson(
       email: json['email'] as String,
       purpose: json['purpose'] as String? ?? 'LOGIN',
       deviceId: json['deviceId'] as String? ?? '',
-      userAgent: json['userAgent'] as String? ?? '',
       ipAddress: json['ipAddress'] as String? ?? '',
+      platformId: json['platformId'] as String,
     );
 
 Map<String, dynamic> _$$SendCodeRequestImplToJson(
@@ -22,6 +22,6 @@ Map<String, dynamic> _$$SendCodeRequestImplToJson(
       'email': instance.email,
       'purpose': instance.purpose,
       'deviceId': instance.deviceId,
-      'userAgent': instance.userAgent,
       'ipAddress': instance.ipAddress,
+      'platformId': instance.platformId,
     };

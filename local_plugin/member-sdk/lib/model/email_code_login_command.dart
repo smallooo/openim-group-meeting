@@ -16,7 +16,7 @@ class EmailCodeLoginCommand {
     required this.email,
     required this.code,
     this.deviceId,
-    this.userAgent,
+    this.platformId,
     this.ipAddress,
   });
 
@@ -35,14 +35,14 @@ class EmailCodeLoginCommand {
   ///
   String? deviceId;
 
-  /// 用户代理信息
+  /// 平台ID，iOS为"1"，Android为"2"
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  String? userAgent;
+  String? platformId;
 
   /// IP地址
   ///
@@ -60,7 +60,7 @@ class EmailCodeLoginCommand {
           other.email == email &&
           other.code == code &&
           other.deviceId == deviceId &&
-          other.userAgent == userAgent &&
+          other.platformId == platformId &&
           other.ipAddress == ipAddress;
 
   @override
@@ -69,12 +69,12 @@ class EmailCodeLoginCommand {
       (email.hashCode) +
       (code.hashCode) +
       (deviceId == null ? 0 : deviceId!.hashCode) +
-      (userAgent == null ? 0 : userAgent!.hashCode) +
+      (platformId == null ? 0 : platformId!.hashCode) +
       (ipAddress == null ? 0 : ipAddress!.hashCode);
 
   @override
   String toString() =>
-      'EmailCodeLoginCommand[email=$email, code=$code, deviceId=$deviceId, userAgent=$userAgent, ipAddress=$ipAddress]';
+      'EmailCodeLoginCommand[email=$email, code=$code, deviceId=$deviceId, platformId=$platformId, ipAddress=$ipAddress]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -85,10 +85,10 @@ class EmailCodeLoginCommand {
     } else {
       json[r'deviceId'] = null;
     }
-    if (this.userAgent != null) {
-      json[r'userAgent'] = this.userAgent;
+    if (this.platformId != null) {
+      json[r'platformId'] = this.platformId;
     } else {
-      json[r'userAgent'] = null;
+      json[r'platformId'] = null;
     }
     if (this.ipAddress != null) {
       json[r'ipAddress'] = this.ipAddress;
@@ -122,7 +122,7 @@ class EmailCodeLoginCommand {
         email: mapValueOfType<String>(json, r'email')!,
         code: mapValueOfType<String>(json, r'code')!,
         deviceId: mapValueOfType<String>(json, r'deviceId'),
-        userAgent: mapValueOfType<String>(json, r'userAgent'),
+        platformId: mapValueOfType<String>(json, r'platformId'),
         ipAddress: mapValueOfType<String>(json, r'ipAddress'),
       );
     }

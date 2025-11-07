@@ -18,13 +18,12 @@ class CodeLoginRequest with _$CodeLoginRequest {
     /// 用于设备管理和安全验证
     @JsonKey(name: 'deviceId') @Default('') String deviceId,
     
-    /// 用户代理（可选）
-    /// 浏览器或客户端信息
-    @JsonKey(name: 'userAgent') @Default('') String userAgent,
-    
     /// IP地址（可选）
     /// 用于安全审计
     @JsonKey(name: 'ipAddress') @Default('') String ipAddress,
+    
+    /// 平台ID，iOS为"1"，Android为"2"
+    @JsonKey(name: 'platformId') required String platformId,
   }) = _CodeLoginRequest;
 
   factory CodeLoginRequest.fromJson(Map<String, dynamic> json) => 

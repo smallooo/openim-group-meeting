@@ -41,6 +41,7 @@ class HttpUtil {
 
   static String get operationID => DateTime.now().millisecondsSinceEpoch.toString();
 
+
   static Future post(
     String path, {
     dynamic data,
@@ -106,6 +107,7 @@ class HttpUtil {
     var formData =
         FormData.fromMap({'operationID': '${DateTime.now().millisecondsSinceEpoch}', 'fileType': 1, 'file': mf});
 
+
     var resp = await dio.post<Map<String, dynamic>>(
       "${Config.imApiUrl}/third/minio_upload",
       data: formData,
@@ -113,7 +115,6 @@ class HttpUtil {
     );
     return resp.data?['data']['URL'];
   }
-
   static Future download(
     String url, {
     required String cachePath,

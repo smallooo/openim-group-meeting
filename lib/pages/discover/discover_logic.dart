@@ -62,6 +62,4 @@ class DiscoverLogic extends GetxController {
     Get.toNamed(AppRoutes.tkChannelHome);
   }
 
-
-
 }

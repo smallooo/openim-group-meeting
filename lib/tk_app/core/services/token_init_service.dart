@@ -22,37 +22,27 @@ class TokenInitService {
 
   /// 初始化token管理
   /// 
-  /// 在应用启动时调用，检查token状态并决定是否需要自动登录
+  /// 在应用启动时调用，检查缓存中是否有accessToken，有则使用，没有则需要登录
   Future<TokenInitResult> initialize() async {
     debugPrint('[TokenInitService] 开始初始化token管理');
 
     try {
-      // 检查是否有refreshToken
-      final refreshToken = _tokenStorage.getRefreshToken();
-      if (refreshToken == null || refreshToken.isEmpty) {
-        debugPrint('[TokenInitService] 没有refreshToken，需要登录');
+      // 检查缓存中是否有accessToken
+      final accessToken = _tokenStorage.getAccessToken();
+      if (accessToken == null || accessToken.isEmpty) {
+        debugPrint('[TokenInitService] 缓存中没有accessToken，需要登录');
         return TokenInitResult.needsLogin();
       }
 
-      debugPrint('[TokenInitService] 发现refreshToken，尝试自动刷新获取最新accessToken');
-      
-      // 只要有refreshToken，就强制刷新获取最新的accessToken
-      final refreshSuccess = await _tokenManager.forceRefreshToken();
-      if (!refreshSuccess) {
-        debugPrint('[TokenInitService] Token刷新失败，需要重新登录');
-        return TokenInitResult.needsLogin();
-      }
-      
-      final newAccessToken = _tokenStorage.getAccessToken();
-      if (newAccessToken == null || newAccessToken.isEmpty) {
-        debugPrint('[TokenInitService] 获取新accessToken失败，需要重新登录');
-        return TokenInitResult.needsLogin();
-      }
-
-      debugPrint('[TokenInitService] Token刷新成功，获取到最新的accessToken');
+      debugPrint('[TokenInitService] 缓存中存在accessToken，直接使用');
 
       // 获取用户信息
       final userInfo = _authStateManager.getCurrentUserInfo();
+      if (userInfo.isEmpty) {
+        debugPrint('[TokenInitService] 没有用户信息，需要登录');
+        return TokenInitResult.needsLogin();
+      }
+      
       debugPrint('[TokenInitService] 用户已登录: ${userInfo['email']}');
       
       return TokenInitResult.loggedIn(userInfo);

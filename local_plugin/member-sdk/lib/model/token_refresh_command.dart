@@ -14,27 +14,46 @@ class TokenRefreshCommand {
   /// Returns a new [TokenRefreshCommand] instance.
   TokenRefreshCommand({
     required this.refreshToken,
+    this.platformId,
   });
 
   /// 刷新令牌
   String refreshToken;
 
+  /// 平台ID，iOS为"1"，Android为"2"
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? platformId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TokenRefreshCommand && other.refreshToken == refreshToken;
+      other is TokenRefreshCommand &&
+          other.refreshToken == refreshToken &&
+          other.platformId == platformId;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (refreshToken.hashCode);
+      (refreshToken.hashCode) +
+      (platformId == null ? 0 : platformId!.hashCode);
 
   @override
-  String toString() => 'TokenRefreshCommand[refreshToken=$refreshToken]';
+  String toString() =>
+      'TokenRefreshCommand[refreshToken=$refreshToken, platformId=$platformId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json[r'refreshToken'] = this.refreshToken;
+    if (this.platformId != null) {
+      json[r'platformId'] = this.platformId;
+    } else {
+      json[r'platformId'] = null;
+    }
     return json;
   }
 
@@ -60,6 +79,7 @@ class TokenRefreshCommand {
 
       return TokenRefreshCommand(
         refreshToken: mapValueOfType<String>(json, r'refreshToken')!,
+        platformId: mapValueOfType<String>(json, r'platformId'),
       );
     }
     return null;

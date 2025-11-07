@@ -63,7 +63,7 @@ class Auth extends _$Auth {
         email: email,
         purpose: purpose,
         deviceId: deviceId ?? '',
-        userAgent: userAgent ?? '',
+        platformId: platformId ?? '',
         ipAddress: ipAddress ?? '',
       );
 

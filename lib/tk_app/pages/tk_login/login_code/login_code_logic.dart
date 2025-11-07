@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
@@ -92,12 +93,16 @@ class LoginCodeLogic extends GetxController {
     verified.value = false;
     
     try {
+      // 获取平台ID：iOS为"1"，Android为"2"
+      final platformId = Platform.isIOS ? '1' : '2';
+      
       // 使用新的 AuthRepository
       final authRepo = await ref.read(authRepositoryProvider.future);
       final resp = await authRepo.emailCodeLoginReq(
         email: email, 
         code: code.value, 
         deviceId: deviceId,
+        platformId: platformId,
       );
       
       if ((resp['errCode'] ?? -1) == 0) {
@@ -132,6 +137,7 @@ class LoginCodeLogic extends GetxController {
             'userID': loginResponse.imUid,
             'imToken': loginResponse.imToken,
             'chatToken': loginResponse.chatToken,
+
           });
 
           await DataSp.putLoginCertificate(loginCertificate);
@@ -178,9 +184,16 @@ class LoginCodeLogic extends GetxController {
   /// 重新发送验证码
   Future<void> resend() async {
     try {
+      // 获取平台ID：iOS为"1"，Android为"2"
+      final platformId = Platform.isIOS ? '1' : '2';
+      
       // 使用新的 AuthRepository
       final authRepo = await ref.read(authRepositoryProvider.future);
-      await authRepo.emailLoginSendCodeReq(email: email, deviceId: deviceId);
+      await authRepo.emailLoginSendCodeReq(
+        email: email, 
+        deviceId: deviceId,
+        platformId: platformId,
+      );
       _startCountdown();
     } on ApiException catch (e) {
       IMViews.showToast(e.message);

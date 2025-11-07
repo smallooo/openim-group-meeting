@@ -12,8 +12,8 @@ _$CodeLoginRequestImpl _$$CodeLoginRequestImplFromJson(
       email: json['email'] as String,
       code: json['code'] as String,
       deviceId: json['deviceId'] as String? ?? '',
-      userAgent: json['userAgent'] as String? ?? '',
       ipAddress: json['ipAddress'] as String? ?? '',
+      platformId: json['platformId'] as String,
     );
 
 Map<String, dynamic> _$$CodeLoginRequestImplToJson(
@@ -22,6 +22,6 @@ Map<String, dynamic> _$$CodeLoginRequestImplToJson(
       'email': instance.email,
       'code': instance.code,
       'deviceId': instance.deviceId,
-      'userAgent': instance.userAgent,
       'ipAddress': instance.ipAddress,
+      'platformId': instance.platformId,
     };

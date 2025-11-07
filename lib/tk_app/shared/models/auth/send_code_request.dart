@@ -18,12 +18,13 @@ class SendCodeRequest with _$SendCodeRequest {
     
     /// 设备ID（可选）
     @JsonKey(name: 'deviceId') @Default('') String deviceId,
-    
-    /// 用户代理（可选）
-    @JsonKey(name: 'userAgent') @Default('') String userAgent,
-    
+
     /// IP地址（可选）
     @JsonKey(name: 'ipAddress') @Default('') String ipAddress,
+
+    /// 平台ID，iOS为"1"，Android为"2"
+    @JsonKey(name: 'platformId') required String platformId,
+
   }) = _SendCodeRequest;
 
   factory SendCodeRequest.fromJson(Map<String, dynamic> json) => 

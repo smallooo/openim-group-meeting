@@ -156,7 +156,8 @@ class _TkLoginCodePageState extends ConsumerState<TkLoginCodePage> {
                 strokeWidth: 2,
               ),
             )
-          : Text('Log_in'.tr),
+          // : Text('Log_in'.tr),
+            : Text(''.tr),
       )),
     );
   }

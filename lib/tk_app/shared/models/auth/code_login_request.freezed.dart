@@ -34,15 +34,14 @@ mixin _$CodeLoginRequest {
   @JsonKey(name: 'deviceId')
   String get deviceId => throw _privateConstructorUsedError;
 
-  /// 用户代理（可选）
-  /// 浏览器或客户端信息
-  @JsonKey(name: 'userAgent')
-  String get userAgent => throw _privateConstructorUsedError;
-
   /// IP地址（可选）
   /// 用于安全审计
   @JsonKey(name: 'ipAddress')
   String get ipAddress => throw _privateConstructorUsedError;
+
+  /// 平台ID，iOS为"1"，Android为"2"
+  @JsonKey(name: 'platformId')
+  String get platformId => throw _privateConstructorUsedError;
 
   /// Serializes this CodeLoginRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -64,8 +63,8 @@ abstract class $CodeLoginRequestCopyWith<$Res> {
       {@JsonKey(name: 'email') String email,
       @JsonKey(name: 'code') String code,
       @JsonKey(name: 'deviceId') String deviceId,
-      @JsonKey(name: 'userAgent') String userAgent,
-      @JsonKey(name: 'ipAddress') String ipAddress});
+      @JsonKey(name: 'ipAddress') String ipAddress,
+      @JsonKey(name: 'platformId') String platformId});
 }
 
 /// @nodoc
@@ -86,8 +85,8 @@ class _$CodeLoginRequestCopyWithImpl<$Res, $Val extends CodeLoginRequest>
     Object? email = null,
     Object? code = null,
     Object? deviceId = null,
-    Object? userAgent = null,
     Object? ipAddress = null,
+    Object? platformId = null,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -102,13 +101,13 @@ class _$CodeLoginRequestCopyWithImpl<$Res, $Val extends CodeLoginRequest>
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      userAgent: null == userAgent
-          ? _value.userAgent
-          : userAgent // ignore: cast_nullable_to_non_nullable
-              as String,
       ipAddress: null == ipAddress
           ? _value.ipAddress
           : ipAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      platformId: null == platformId
+          ? _value.platformId
+          : platformId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -126,8 +125,8 @@ abstract class _$$CodeLoginRequestImplCopyWith<$Res>
       {@JsonKey(name: 'email') String email,
       @JsonKey(name: 'code') String code,
       @JsonKey(name: 'deviceId') String deviceId,
-      @JsonKey(name: 'userAgent') String userAgent,
-      @JsonKey(name: 'ipAddress') String ipAddress});
+      @JsonKey(name: 'ipAddress') String ipAddress,
+      @JsonKey(name: 'platformId') String platformId});
 }
 
 /// @nodoc
@@ -146,8 +145,8 @@ class __$$CodeLoginRequestImplCopyWithImpl<$Res>
     Object? email = null,
     Object? code = null,
     Object? deviceId = null,
-    Object? userAgent = null,
     Object? ipAddress = null,
+    Object? platformId = null,
   }) {
     return _then(_$CodeLoginRequestImpl(
       email: null == email
@@ -162,13 +161,13 @@ class __$$CodeLoginRequestImplCopyWithImpl<$Res>
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      userAgent: null == userAgent
-          ? _value.userAgent
-          : userAgent // ignore: cast_nullable_to_non_nullable
-              as String,
       ipAddress: null == ipAddress
           ? _value.ipAddress
           : ipAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      platformId: null == platformId
+          ? _value.platformId
+          : platformId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -181,8 +180,8 @@ class _$CodeLoginRequestImpl implements _CodeLoginRequest {
       {@JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'code') required this.code,
       @JsonKey(name: 'deviceId') this.deviceId = '',
-      @JsonKey(name: 'userAgent') this.userAgent = '',
-      @JsonKey(name: 'ipAddress') this.ipAddress = ''});
+      @JsonKey(name: 'ipAddress') this.ipAddress = '',
+      @JsonKey(name: 'platformId') required this.platformId});
 
   factory _$CodeLoginRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$CodeLoginRequestImplFromJson(json);
@@ -204,21 +203,20 @@ class _$CodeLoginRequestImpl implements _CodeLoginRequest {
   @JsonKey(name: 'deviceId')
   final String deviceId;
 
-  /// 用户代理（可选）
-  /// 浏览器或客户端信息
-  @override
-  @JsonKey(name: 'userAgent')
-  final String userAgent;
-
   /// IP地址（可选）
   /// 用于安全审计
   @override
   @JsonKey(name: 'ipAddress')
   final String ipAddress;
 
+  /// 平台ID，iOS为"1"，Android为"2"
+  @override
+  @JsonKey(name: 'platformId')
+  final String platformId;
+
   @override
   String toString() {
-    return 'CodeLoginRequest(email: $email, code: $code, deviceId: $deviceId, userAgent: $userAgent, ipAddress: $ipAddress)';
+    return 'CodeLoginRequest(email: $email, code: $code, deviceId: $deviceId, ipAddress: $ipAddress, platformId: $platformId)';
   }
 
   @override
@@ -230,16 +228,16 @@ class _$CodeLoginRequestImpl implements _CodeLoginRequest {
             (identical(other.code, code) || other.code == code) &&
             (identical(other.deviceId, deviceId) ||
                 other.deviceId == deviceId) &&
-            (identical(other.userAgent, userAgent) ||
-                other.userAgent == userAgent) &&
             (identical(other.ipAddress, ipAddress) ||
-                other.ipAddress == ipAddress));
+                other.ipAddress == ipAddress) &&
+            (identical(other.platformId, platformId) ||
+                other.platformId == platformId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, email, code, deviceId, userAgent, ipAddress);
+      Object.hash(runtimeType, email, code, deviceId, ipAddress, platformId);
 
   /// Create a copy of CodeLoginRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -263,8 +261,8 @@ abstract class _CodeLoginRequest implements CodeLoginRequest {
           {@JsonKey(name: 'email') required final String email,
           @JsonKey(name: 'code') required final String code,
           @JsonKey(name: 'deviceId') final String deviceId,
-          @JsonKey(name: 'userAgent') final String userAgent,
-          @JsonKey(name: 'ipAddress') final String ipAddress}) =
+          @JsonKey(name: 'ipAddress') final String ipAddress,
+          @JsonKey(name: 'platformId') required final String platformId}) =
       _$CodeLoginRequestImpl;
 
   factory _CodeLoginRequest.fromJson(Map<String, dynamic> json) =
@@ -287,17 +285,16 @@ abstract class _CodeLoginRequest implements CodeLoginRequest {
   @JsonKey(name: 'deviceId')
   String get deviceId;
 
-  /// 用户代理（可选）
-  /// 浏览器或客户端信息
-  @override
-  @JsonKey(name: 'userAgent')
-  String get userAgent;
-
   /// IP地址（可选）
   /// 用于安全审计
   @override
   @JsonKey(name: 'ipAddress')
   String get ipAddress;
+
+  /// 平台ID，iOS为"1"，Android为"2"
+  @override
+  @JsonKey(name: 'platformId')
+  String get platformId;
 
   /// Create a copy of CodeLoginRequest
   /// with the given fields replaced by the non-null parameter values.

@@ -90,15 +90,15 @@ class AuthRepository {
   Future<Map<String, dynamic>> emailLoginSendCodeReq({
     required String email, 
     String? deviceId, 
-    String? userAgent, 
     String? ipAddress,
+    String? platformId,
   }) async {
     final request = SendCodeRequest(
       email: email,
       purpose: 'LOGIN',
       deviceId: deviceId ?? "",
-      userAgent: userAgent ?? "",
       ipAddress: ipAddress ?? "",
+      platformId: platformId ?? "",
     );
     
     return await _apiClient.post<Map<String, dynamic>>(
@@ -115,15 +115,15 @@ class AuthRepository {
     required String email, 
     required String code, 
     String? deviceId, 
-    String? userAgent, 
     String? ipAddress,
+    String? platformId,
   }) async {
     final request = CodeLoginRequest(
       email: email,
       code: code,
       deviceId: deviceId ?? "",
-      userAgent: userAgent ?? "",
       ipAddress: ipAddress ?? "",
+      platformId: platformId ?? "",
     );
     
     return await _apiClient.post<Map<String, dynamic>>(

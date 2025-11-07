@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:openim_common/openim_common.dart';
 
@@ -83,22 +84,32 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Styles.c_FFFFFF,
-      body: Obx(
-        () => PersistentTabView(
-          tabs: _tabs(),
-          navBarBuilder: (navBarConfig) => Style1BottomNavBar(
-            navBarConfig: navBarConfig,
-            navBarDecoration: const NavBarDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(color: Colors.black12, blurRadius: 0.5, spreadRadius: 0.5),
-              ],
+    return WillPopScope(
+      onWillPop: () async {
+        // 在任何 tab 时，直接退出 app
+        SystemNavigator.pop();
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Styles.c_FFFFFF,
+        body: Obx(
+          () => PersistentTabView(
+            tabs: _tabs(),
+            onTabChanged: (index) {
+              logic.switchTab(index);
+            },
+            navBarBuilder: (navBarConfig) => Style1BottomNavBar(
+              navBarConfig: navBarConfig,
+              navBarDecoration: const NavBarDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(color: Colors.black12, blurRadius: 0.5, spreadRadius: 0.5),
+                ],
+              ),
             ),
+            navBarOverlap: const NavBarOverlap.none(),
+            screenTransitionAnimation: const ScreenTransitionAnimation.none(),
           ),
-          navBarOverlap: const NavBarOverlap.none(),
-          screenTransitionAnimation: const ScreenTransitionAnimation.none(),
         ),
       ),
     );

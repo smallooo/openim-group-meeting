@@ -56,14 +56,15 @@ class TkMineLogic extends GetxController {
     }
   }
 
+//  IM SDK 回调或 IM 接口错误码触发
   void kickedOffline({String? tips}) async {
-    if (EasyLoading.isShow) {
-      EasyLoading.dismiss();
-    }
-    Get.snackbar(StrRes.accountWarn, tips ?? StrRes.accountException);
-    await DataSp.removeLoginCertificate();
-    PushController.logout();
-    AppNavigator.startLogin();
+    // if (EasyLoading.isShow) {
+    //   EasyLoading.dismiss();
+    // }
+    // Get.snackbar(StrRes.accountWarn, tips ?? StrRes.accountException);
+    // await DataSp.removeLoginCertificate();
+    // PushController.logout();
+    // AppNavigator.startLogin();
   }
 
   void toPayPage() {

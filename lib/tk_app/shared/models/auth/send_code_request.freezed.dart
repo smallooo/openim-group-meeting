@@ -35,13 +35,13 @@ mixin _$SendCodeRequest {
   @JsonKey(name: 'deviceId')
   String get deviceId => throw _privateConstructorUsedError;
 
-  /// 用户代理（可选）
-  @JsonKey(name: 'userAgent')
-  String get userAgent => throw _privateConstructorUsedError;
-
   /// IP地址（可选）
   @JsonKey(name: 'ipAddress')
   String get ipAddress => throw _privateConstructorUsedError;
+
+  /// 平台ID，iOS为"1"，Android为"2"
+  @JsonKey(name: 'platformId')
+  String get platformId => throw _privateConstructorUsedError;
 
   /// Serializes this SendCodeRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -63,8 +63,8 @@ abstract class $SendCodeRequestCopyWith<$Res> {
       {@JsonKey(name: 'email') String email,
       @JsonKey(name: 'purpose') String purpose,
       @JsonKey(name: 'deviceId') String deviceId,
-      @JsonKey(name: 'userAgent') String userAgent,
-      @JsonKey(name: 'ipAddress') String ipAddress});
+      @JsonKey(name: 'ipAddress') String ipAddress,
+      @JsonKey(name: 'platformId') String platformId});
 }
 
 /// @nodoc
@@ -85,8 +85,8 @@ class _$SendCodeRequestCopyWithImpl<$Res, $Val extends SendCodeRequest>
     Object? email = null,
     Object? purpose = null,
     Object? deviceId = null,
-    Object? userAgent = null,
     Object? ipAddress = null,
+    Object? platformId = null,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -101,13 +101,13 @@ class _$SendCodeRequestCopyWithImpl<$Res, $Val extends SendCodeRequest>
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      userAgent: null == userAgent
-          ? _value.userAgent
-          : userAgent // ignore: cast_nullable_to_non_nullable
-              as String,
       ipAddress: null == ipAddress
           ? _value.ipAddress
           : ipAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      platformId: null == platformId
+          ? _value.platformId
+          : platformId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -125,8 +125,8 @@ abstract class _$$SendCodeRequestImplCopyWith<$Res>
       {@JsonKey(name: 'email') String email,
       @JsonKey(name: 'purpose') String purpose,
       @JsonKey(name: 'deviceId') String deviceId,
-      @JsonKey(name: 'userAgent') String userAgent,
-      @JsonKey(name: 'ipAddress') String ipAddress});
+      @JsonKey(name: 'ipAddress') String ipAddress,
+      @JsonKey(name: 'platformId') String platformId});
 }
 
 /// @nodoc
@@ -145,8 +145,8 @@ class __$$SendCodeRequestImplCopyWithImpl<$Res>
     Object? email = null,
     Object? purpose = null,
     Object? deviceId = null,
-    Object? userAgent = null,
     Object? ipAddress = null,
+    Object? platformId = null,
   }) {
     return _then(_$SendCodeRequestImpl(
       email: null == email
@@ -161,13 +161,13 @@ class __$$SendCodeRequestImplCopyWithImpl<$Res>
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      userAgent: null == userAgent
-          ? _value.userAgent
-          : userAgent // ignore: cast_nullable_to_non_nullable
-              as String,
       ipAddress: null == ipAddress
           ? _value.ipAddress
           : ipAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      platformId: null == platformId
+          ? _value.platformId
+          : platformId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -180,8 +180,8 @@ class _$SendCodeRequestImpl implements _SendCodeRequest {
       {@JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'purpose') this.purpose = 'LOGIN',
       @JsonKey(name: 'deviceId') this.deviceId = '',
-      @JsonKey(name: 'userAgent') this.userAgent = '',
-      @JsonKey(name: 'ipAddress') this.ipAddress = ''});
+      @JsonKey(name: 'ipAddress') this.ipAddress = '',
+      @JsonKey(name: 'platformId') required this.platformId});
 
   factory _$SendCodeRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$SendCodeRequestImplFromJson(json);
@@ -204,19 +204,19 @@ class _$SendCodeRequestImpl implements _SendCodeRequest {
   @JsonKey(name: 'deviceId')
   final String deviceId;
 
-  /// 用户代理（可选）
-  @override
-  @JsonKey(name: 'userAgent')
-  final String userAgent;
-
   /// IP地址（可选）
   @override
   @JsonKey(name: 'ipAddress')
   final String ipAddress;
 
+  /// 平台ID，iOS为"1"，Android为"2"
+  @override
+  @JsonKey(name: 'platformId')
+  final String platformId;
+
   @override
   String toString() {
-    return 'SendCodeRequest(email: $email, purpose: $purpose, deviceId: $deviceId, userAgent: $userAgent, ipAddress: $ipAddress)';
+    return 'SendCodeRequest(email: $email, purpose: $purpose, deviceId: $deviceId, ipAddress: $ipAddress, platformId: $platformId)';
   }
 
   @override
@@ -228,16 +228,16 @@ class _$SendCodeRequestImpl implements _SendCodeRequest {
             (identical(other.purpose, purpose) || other.purpose == purpose) &&
             (identical(other.deviceId, deviceId) ||
                 other.deviceId == deviceId) &&
-            (identical(other.userAgent, userAgent) ||
-                other.userAgent == userAgent) &&
             (identical(other.ipAddress, ipAddress) ||
-                other.ipAddress == ipAddress));
+                other.ipAddress == ipAddress) &&
+            (identical(other.platformId, platformId) ||
+                other.platformId == platformId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, email, purpose, deviceId, userAgent, ipAddress);
+      Object.hash(runtimeType, email, purpose, deviceId, ipAddress, platformId);
 
   /// Create a copy of SendCodeRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -261,8 +261,8 @@ abstract class _SendCodeRequest implements SendCodeRequest {
           {@JsonKey(name: 'email') required final String email,
           @JsonKey(name: 'purpose') final String purpose,
           @JsonKey(name: 'deviceId') final String deviceId,
-          @JsonKey(name: 'userAgent') final String userAgent,
-          @JsonKey(name: 'ipAddress') final String ipAddress}) =
+          @JsonKey(name: 'ipAddress') final String ipAddress,
+          @JsonKey(name: 'platformId') required final String platformId}) =
       _$SendCodeRequestImpl;
 
   factory _SendCodeRequest.fromJson(Map<String, dynamic> json) =
@@ -286,15 +286,15 @@ abstract class _SendCodeRequest implements SendCodeRequest {
   @JsonKey(name: 'deviceId')
   String get deviceId;
 
-  /// 用户代理（可选）
-  @override
-  @JsonKey(name: 'userAgent')
-  String get userAgent;
-
   /// IP地址（可选）
   @override
   @JsonKey(name: 'ipAddress')
   String get ipAddress;
+
+  /// 平台ID，iOS为"1"，Android为"2"
+  @override
+  @JsonKey(name: 'platformId')
+  String get platformId;
 
   /// Create a copy of SendCodeRequest
   /// with the given fields replaced by the non-null parameter values.
