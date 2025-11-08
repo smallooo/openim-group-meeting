@@ -8,14 +8,15 @@ help:
 	@echo "  make setup-jars    - 下载并设置 media_kit jar 包到本地"
 	@echo "  make check-jars    - 检查本地 jar 包是否存在"
 	@echo "  make copy-jars     - 复制本地 jar 包到构建目标目录"
-	@echo "  make build-apk     - 构建 Android APK (使用本地 jar)"
+	@echo "  make build-apk     - 构建 Android APK → target/toklink_版本号.apk"
 	@echo ""
 	@echo "iOS:"
 	@echo "  make setup-ios-certs - 配置 iOS 签名证书"
 	@echo "  make update-profiles - 更新 Provisioning Profile UUID"
-	@echo "  make build-ipa       - 构建 iOS IPA (自动配置证书)"
+	@echo "  make build-ipa       - 构建 iOS IPA → target/toklink_版本号.ipa"
 	@echo ""
 	@echo "通用:"
+	@echo "  make get-version   - 获取当前版本号"
 	@echo "  make clean         - 清理构建文件"
 	@echo "  make clean-gradle  - 清理 Gradle 缓存（解决 Kotlin 版本问题）"
 	@echo "  make flutter-clean - Flutter clean + 清理 jar 缓存"
@@ -64,10 +65,21 @@ copy-jars: check-jars
 	@echo "✅ 已复制 $$(ls build/media_kit_libs_android_video/v1.1.5/*.jar | wc -l | xargs) 个文件到 build/media_kit_libs_android_video/v1.1.5/"
 	@ls -lh build/media_kit_libs_android_video/v1.1.5/
 
+# 获取版本号
+get-version:
+	@grep '^version:' pubspec.yaml | sed 's/version: //' | tr -d ' '
+
 # 构建 Android APK（先清理、复制 jar，再构建）
 build-apk: clean copy-jars
 	@echo "构建 Android APK (使用本地 jar 包)..."
 	@flutter build apk --release
+	@echo "复制 APK 到 target 目录..."
+	@mkdir -p target
+	@VERSION=$$(make get-version); \
+	cp build/app/outputs/flutter-apk/app-release.apk target/toklink_$$VERSION.apk
+	@VERSION=$$(make get-version); \
+	echo "✅ APK 已生成: target/toklink_$$VERSION.apk"
+	@ls -lh target/toklink_*.apk
 
 # 更新 Provisioning Profile UUID
 update-profiles:
@@ -107,7 +119,13 @@ build-ipa: setup-ios-certs fix-ios-target
 		-archivePath build/ios/archive/Runner.xcarchive \
 		-exportPath build/ios/ipa \
 		-exportOptionsPlist build/ios/exportOptions.plist
-	@echo "✅ IPA 构建完成"
+	@echo "复制 IPA 到 target 目录..."
+	@mkdir -p target
+	@VERSION=$$(make get-version); \
+	cp build/ios/ipa/toklink.ipa target/toklink_$$VERSION.ipa
+	@VERSION=$$(make get-version); \
+	echo "✅ IPA 已生成: target/toklink_$$VERSION.ipa"
+	@ls -lh target/toklink_*.ipa
 
 
 
