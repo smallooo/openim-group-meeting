@@ -338,7 +338,7 @@ class _QuoteView extends StatelessWidget {
     if (nick.isEmpty && body.isEmpty) return const SizedBox.shrink();
 
     return Container(
-      padding: EdgeInsets.only(bottom: 10.h, left: 56.w, right: 80.w),
+      padding: EdgeInsets.only(bottom: 10.h, left: 44.w, right: 74.w),
       color: Styles.c_F0F2F6,
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
