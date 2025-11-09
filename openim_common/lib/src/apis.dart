@@ -386,7 +386,9 @@ class Apis {
 
       Logger.print('e:$errCode s:$errMsg');
     } else {
-      _catchError(e, s);
+      // 不自动强制退出,只显示错误信息
+      // 只有明确的认证错误才应该强制退出
+      _catchError(e, s, forceBack: false);
     }
   }
 

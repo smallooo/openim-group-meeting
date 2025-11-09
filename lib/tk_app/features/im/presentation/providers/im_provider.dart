@@ -13,19 +13,19 @@ class ImState with _$ImState {
   const factory ImState({
     /// 是否正在初始化
     @Default(false) bool isInitializing,
-    
+
     /// 是否已初始化
     @Default(false) bool isInitialized,
-    
+
     /// IM Token
     String? imToken,
-    
+
     /// IM 用户信息
     Map<String, dynamic>? imUserInfo,
-    
+
     /// 错误信息
     String? error,
-    
+
     /// 连接状态
     @Default(ImConnectionStatus.disconnected) ImConnectionStatus connectionStatus,
   }) = _ImState;
@@ -35,22 +35,22 @@ class ImState with _$ImState {
 enum ImConnectionStatus {
   /// 未连接
   disconnected,
-  
+
   /// 连接中
   connecting,
-  
+
   /// 已连接
   connected,
-  
+
   /// 连接失败
   failed,
-  
+
   /// 重连中
   reconnecting,
 }
 
 /// IM Provider
-/// 
+///
 /// 管理 IM 相关状态，与现有 IM 系统桥接
 @riverpod
 class Im extends _$Im {
@@ -91,7 +91,7 @@ class Im extends _$Im {
       final userId = authState.user!.userId;
 
       // 获取 IM Token
-      final imToken = await imRepo.getImToken(userId);
+      final imToken = await imRepo.getImToken(userId!);
 
       // 获取 IM 用户信息
       final imUserInfo = await imRepo.getImUserInfo(userId);
@@ -171,7 +171,7 @@ class Im extends _$Im {
   }
 
   /// 初始化现有的 IM 系统
-  /// 
+  ///
   /// 这里与现有的 IM 系统进行桥接
   Future<void> _initializeExistingImSystem(
     String imToken,
@@ -182,10 +182,10 @@ class Im extends _$Im {
       // 例如：
       // final imController = Get.find<IMController>();
       // await imController.initWithToken(imToken, imUserInfo);
-      
+
       // 模拟初始化过程
       await Future.delayed(const Duration(seconds: 1));
-      
+
       state = state.copyWith(
         connectionStatus: ImConnectionStatus.connected,
       );
