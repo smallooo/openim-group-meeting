@@ -144,8 +144,8 @@ class AddContactsBySearchLogic extends GetxController {
         content = userFullInfo.userID;
       }
     } else {
-      tips = StrRes.searchNicknameIs;
-      content = getShowName(info);
+      // 使用 sprintf 正确替换格式符 %s，避免显示 "s%" 的问题
+      return sprintf(StrRes.searchNicknameIs, [getShowName(info)]);
     }
     return "$tips:$content";
   }
