@@ -114,8 +114,32 @@ class AboutUsPage extends StatelessWidget {
             ),
             
             // 版本更新
-            ListItemWidget(
+            Obx(() => ListItemWidget(
               text: '版本更新',
+              rightIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // 红点提示（如果有更新）
+                  if (logic.hasUpdate.value)
+                    Container(
+                      width: 8.0,
+                      height: 8.0,
+                      margin: const EdgeInsets.only(right: 6.0),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  // 箭头图标
+                  const Icon(
+                    Icons.chevron_right,
+                    size: 16.0,
+                    color: Color(0xFF999999),
+                  ),
+                ],
+              ),
+              rightIconSize: 32.0, // 增加右侧图标区域大小以容纳红点和箭头
               onTap: logic.checkUpdate,
               backgroundColor: Colors.transparent,
               height: 50.0,
@@ -123,7 +147,7 @@ class AboutUsPage extends StatelessWidget {
               dividerLeftMargin: 24.0,
               dividerRightMargin: 24.0,
               showRippleEffect: false,
-            ),
+            )),
             
             // 底部分割线
             Container(

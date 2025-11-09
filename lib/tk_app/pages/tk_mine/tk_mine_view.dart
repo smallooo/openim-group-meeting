@@ -122,7 +122,7 @@ class TkMinePage extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     // borderRadius: 0.0,
                     showRippleEffect: false,
-                  ),
+                  )
                 ],
               ),
             ),

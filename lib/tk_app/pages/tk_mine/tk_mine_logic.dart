@@ -8,6 +8,7 @@ import 'package:openim_common/openim_common.dart';
 import 'package:toklink/tk_app/pages/tk_mine/tk_account_setup/tk_account_setup_binding.dart';
 import 'package:toklink/tk_app/pages/tk_mine/tk_account_setup/tk_account_setup_view.dart';
 
+import '../../../core/controller/app_controller.dart';
 import '../../../core/controller/im_controller.dart';
 import '../../../routes/app_navigator.dart';
 import '../../../routes/app_pages.dart';
@@ -106,6 +107,11 @@ class TkMineLogic extends GetxController {
       }
     }
   }
+
+
+
+
+
 
   @override
   void onClose() {

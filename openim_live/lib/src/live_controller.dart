@@ -280,6 +280,12 @@ mixin OpenIMLive {
     OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
+        // offlinePushInfo: OfflinePushInfo(
+        //   title: signaling.invitation!.mediaType == 'audio' ? '语音通话' : '视频通话',
+        //   desc: '${signaling.userID} 邀请你进行${signaling.invitation!.mediaType == 'audio' ? '语音' : '视频'}通话',
+        //   ex: jsonEncode({'roomID': signaling.invitation!.roomID, 'type': 'call'}),
+        //   iOSBadgeCount: true,
+        // ),
         userID: signaling.invitation!.inviteeUserIDList!.first,
         isOnlineOnly: true);
     final certificate = await Apis.getTokenForRTC(signaling.invitation!.roomID!, OpenIM.iMManager.userID);
@@ -308,6 +314,12 @@ mixin OpenIMLive {
       await OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
+        // offlinePushInfo: OfflinePushInfo(
+        //   title: signaling.invitation!.mediaType == 'audio' ? '语音通话' : '视频通话',
+        //   desc: '${signaling.userID} 邀请你进行${signaling.invitation!.mediaType == 'audio' ? '语音' : '视频'}通话',
+        //   ex: jsonEncode({'roomID': signaling.invitation!.roomID, 'type': 'call'}),
+        //   iOSBadgeCount: true,
+        // ),
         userID: userID,
         isOnlineOnly: true,
       );
