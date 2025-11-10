@@ -14557,6 +14557,8 @@ androidx.window.reflection.WindowExtensionsConstants
 ch.simonbraillard.flutter_new_badger.BuildConfig
 ch.simonbraillard.flutter_new_badger.R
 cn.rentsoft.flutter.toklink.business.BuildConfig
+cn.rentsoft.flutter.toklink.business.MainActivity:
+    private static final java.lang.String CHANNEL
 cn.rentsoft.flutter.toklink.business.R
 com.aaassseee.screen_brightness_android.BuildConfig
 com.aaassseee.screen_brightness_android.R

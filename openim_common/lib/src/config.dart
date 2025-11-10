@@ -249,7 +249,7 @@ class Config {
     if (null != server) {
       url = server['authUrl'];
     }
-    return url ?? (_isIP ? "http://$_host:10008" : "https://$_host/app/im-chat");
+    return url ?? (_isIP ? "http://$_host:10008" : "https://$_host/im-chat/app");
   }
 
   static String get imApiUrl {
@@ -258,7 +258,7 @@ class Config {
     if (null != server) {
       url = server['apiUrl'];
     }
-    return url ?? (_isIP ? 'http://$_host:10002' : "https://$_host/app/im-server");
+    return url ?? (_isIP ? 'http://$_host:10002' : "https://$_host/im-server/app");
   }
   static String get imWsUrl {
     String? url;
@@ -266,7 +266,7 @@ class Config {
     if (null != server) {
       url = server['wsUrl'];
     }
-    return url ?? (_isIP ? "ws://$_host:10001" : "wss://$_host/app/im-server/ws");
+    return url ?? (_isIP ? "ws://$_host:10001" : "wss://$_host/im-server/app/ws");
   }
 
   static int get logLevel {
