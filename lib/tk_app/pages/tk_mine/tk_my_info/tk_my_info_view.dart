@@ -11,7 +11,7 @@ import '../../../../core/controller/im_controller.dart';
 class TkMyInfoPage extends StatelessWidget {
   final logic = Get.find<TkMyInfoLogic>();
   final imLogic = Get.find<IMController>();
-
+  
   TkMyInfoPage({super.key});
 
   @override
@@ -54,41 +54,52 @@ class TkMyInfoPage extends StatelessWidget {
                           color: Color(0xFF333333),
                           fontWeight: FontWeight.normal,
                         ),
-                        avatarWidget: imLogic.userInfo.value.faceURL != null
-                            ? Image.network(
-                                imLogic.userInfo.value.faceURL!,
+                        avatarWidget: Obx(() {
+                          // 直接使用 app 登录后缓存的 tk_avatar
+                          final cachedAvatar = logic.avatarUrl.value;
+                          
+                          if (cachedAvatar.isNotEmpty) {
+                            // 使用 ImageUtil.networkImage 来支持 SVG
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: ImageUtil.networkImage(
+                                url: cachedAvatar,
                                 width: 40,
                                 height: 40,
                                 fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF9C27B0),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Icon(
-                                      Icons.person,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  );
-                                },
-                              )
-                            : Container(
-                                width: 40,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF9C27B0),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 24,
+                                loadProgress: false,
+                                errorWidget: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF9C27B0),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
                                 ),
                               ),
+                            );
+                          } else {
+                            // 如果缓存中没有头像，显示默认头像
+                            return Container(
+                              width: 40,
+                              height: 40,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF9C27B0),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            );
+                          }
+                        }),
                         avatarSize: 40.0,
                         avatarShape: BoxShape.rectangle,
                         onTap: logic.openPhotoSheet,

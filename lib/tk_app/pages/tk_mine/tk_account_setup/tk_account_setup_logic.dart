@@ -6,6 +6,7 @@ import 'package:toklink/routes/app_navigator.dart';
 import 'package:openim_common/openim_common.dart';
 import 'package:toklink/core/im_callback.dart';
 import 'package:toklink/pages/home/home_logic.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/controller/im_controller.dart';
 
@@ -80,6 +81,8 @@ class TkAccountSetupLogic extends GetxController {
   void logout() async {
     // 清除邮箱数据  和 登录数据
     await DataSp.putLoginAccount({});
+    // 清除头像缓存
+    await _clearAvatarCache();
     // await DataSp.putLoginCertificate({} as LoginCertificate);
 
     var confirm = await Get.dialog(CustomDialog(title: StrRes.logoutHint));
@@ -104,8 +107,21 @@ class TkAccountSetupLogic extends GetxController {
     }
     Get.snackbar(StrRes.accountWarn, tips ?? StrRes.accountException);
     await DataSp.removeLoginCertificate();
+    // 清除头像缓存
+    await _clearAvatarCache();
     PushController.logout();
     AppNavigator.startLogin();
+  }
+  
+  /// 清除头像缓存
+  Future<void> _clearAvatarCache() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('tk_avatar');
+      print('[TkAccountSetupLogic] 头像缓存已清除');
+    } catch (e) {
+      print('[TkAccountSetupLogic] 清除头像缓存失败: $e');
+    }
   }
 
   @override

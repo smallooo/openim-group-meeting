@@ -29,6 +29,7 @@ dependencies:
   wechat_assets_picker: ^9.5.0
   wechat_camera_picker: 
   extended_image: ^8.2.0
+  flutter_svg: ^2.0.9
   country_picker: ^2.0.20
   image_gallery_saver_plus: ^4.0.0-0.alpha
   file_picker: ^8.0.6

@@ -34,11 +34,16 @@ class TkMinePage extends StatelessWidget {
               child: Obx(() => InfoCardWidget(
                 imageWidget: _buildAvatarWidget(),
                 title: logic.userNickname.value.isNotEmpty ? logic.userNickname.value : 'Wait',
-                subtitle: logic.userAddress.value.isNotEmpty ? logic.userAddress.value : '地址: 加载中...',
-                onCopy: () => _showSnackBar(context, '复制了地址'),
-                onTopRightIconTap: () => _showSnackBar(context, '点击了二维码'),
-                onBottomRightIconTap: () => _showSnackBar(context, '点击了箭头'),
-                onTap: () => _showSnackBar(context, '点击了用户信息'),
+                subtitle: logic.imLogic.userInfo.value.userID != null 
+                    ? 'ID: ${logic.imLogic.userInfo.value.userID}' 
+                    : 'ID: 加载中...',
+                onCopy: () {
+                  logic.copyID();
+                  // _showSnackBar(context, '已复制ID');
+                },
+                // onTopRightIconTap: () => _showSnackBar(context, '点击了二维码'),
+                // onBottomRightIconTap: () => _showSnackBar(context, '点击了箭头'),
+                onTap: logic.viewMyInfo,
                 backgroundColor: Colors.white,
                 borderRadius: 12.0,
                 boxShadow: [
@@ -185,46 +190,30 @@ class TkMinePage extends StatelessWidget {
 
   /// 构建头像Widget
   Widget _buildAvatarWidget() {
-    final faceURL = logic.imLogic.userInfo.value.faceURL;
     final nickname = logic.imLogic.userInfo.value.nickname;
     
-    if (faceURL != null && faceURL.isNotEmpty) {
-      // 如果有头像URL，显示网络图片
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image.network(
-          faceURL,
-          width: 60.0,
-          height: 60.0,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            // 网络图片加载失败时显示默认头像
-            return _buildDefaultAvatar(nickname);
-          },
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            // 显示加载指示器
-            return Container(
-              width: 60.0,
-              height: 60.0,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: const Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-                ),
-              ),
-            );
-          },
-        ),
-      );
-    } else {
-      // 如果没有头像URL，显示默认头像
-      return _buildDefaultAvatar(nickname);
-    }
+    return Obx(() {
+      // 直接使用 app 登录后缓存的 tk_avatar
+      final cachedAvatar = logic.avatarUrl.value;
+      
+      if (cachedAvatar.isNotEmpty) {
+        // 使用 ImageUtil.networkImage 来支持 SVG
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: ImageUtil.networkImage(
+            url: cachedAvatar,
+            width: 60.0,
+            height: 60.0,
+            fit: BoxFit.cover,
+            loadProgress: true,
+            errorWidget: _buildDefaultAvatar(nickname),
+          ),
+        );
+      } else {
+        // 如果缓存中没有头像，显示默认头像
+        return _buildDefaultAvatar(nickname);
+      }
+    });
   }
 
   /// 构建默认头像

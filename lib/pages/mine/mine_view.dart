@@ -75,13 +75,20 @@ class MinePage extends StatelessWidget {
         ),
         child: Row(
           children: [
-            AvatarView(
-              url: logic.imLogic.userInfo.value.faceURL,
-              text: logic.imLogic.userInfo.value.nickname,
-              width: 48.w,
-              height: 48.h,
-              textStyle: Styles.ts_FFFFFF_14sp,
-            ),
+            Obx(() {
+              // final avatarUrl = logic.avatarUrl.value.isNotEmpty
+              //     ? logic.avatarUrl.value
+              //     : logic.imLogic.userInfo.value.faceURL;
+              final avatarUrl = logic.avatarUrl.value;
+              print('[MineView] 显示头像 URL: $avatarUrl');
+              return AvatarView(
+                url: avatarUrl,
+                text: logic.imLogic.userInfo.value.nickname,
+                width: 48.w,
+                height: 48.h,
+                textStyle: Styles.ts_FFFFFF_14sp,
+              );
+            }),
             10.horizontalSpace,
             Expanded(
               child: Column(

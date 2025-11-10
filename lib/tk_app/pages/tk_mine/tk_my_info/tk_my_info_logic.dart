@@ -5,12 +5,16 @@ import 'package:toklink/pages/login/login_logic.dart';
 import 'package:toklink/pages/mine/edit_my_info/edit_my_info_logic.dart';
 import 'package:toklink/routes/app_navigator.dart';
 import 'package:openim_common/openim_common.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/controller/im_controller.dart';
 
 class TkMyInfoLogic extends GetxController {
   final imLogic = Get.find<IMController>();
   final loginType = LoginType.fromRawValue(DataSp.getLoginType());
+  
+  /// 头像URL，优先使用缓存的avatar，如果没有则使用IM的faceURL
+  final RxString avatarUrl = ''.obs;
 
   void editMyName() => AppNavigator.startEditMyInfo();
 
@@ -102,7 +106,25 @@ class TkMyInfoLogic extends GetxController {
   @override
   void onReady() {
     _queryMyFullIno();
+    // 加载头像URL
+    loadAvatarUrl();
     super.onReady();
+  }
+  
+  /// 加载头像URL，优先使用缓存的avatar，如果没有则使用IM的faceURL
+  Future<void> loadAvatarUrl() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cachedAvatar = prefs.getString('tk_avatar');
+      if (cachedAvatar != null && cachedAvatar.isNotEmpty) {
+        avatarUrl.value = cachedAvatar;
+        return;
+      }
+    } catch (e) {
+      print('[TkMyInfoLogic] 获取缓存头像失败: $e');
+    }
+    // 如果没有缓存的avatar，则使用IM的faceURL
+    avatarUrl.value = imLogic.userInfo.value.faceURL ?? '';
   }
 
   @override

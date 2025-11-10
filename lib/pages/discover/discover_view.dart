@@ -78,11 +78,11 @@ class DiscoverPage extends StatelessWidget {
               //   },
               // ),
               // 分割线
-              Container(
-                height: 1.h,
-                margin: EdgeInsets.only(left: 52.w), // 左边空出图标+间距的位置
-                color: Styles.c_E8EAEF,
-              ),
+              // Container(
+              //   height: 1.h,
+              //   margin: EdgeInsets.only(left: 52.w), // 左边空出图标+间距的位置
+              //   color: Styles.c_E8EAEF,
+              // ),
               _buildMenuItemWithoutMargin(
                 icon: ImageRes.tkFind1,
                 title: '频道',
