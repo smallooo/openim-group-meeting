@@ -312,11 +312,7 @@ mixin UpgradeManger {
   }
 
   /// 下载功能
-  void testDownload(String testUrl,String buildVersion,String buildUpdateDescription) async {
-    if (!Platform.isAndroid) {
-      IMViews.showToast('此功能仅支持 Android 平台');
-      return;
-    }
+  void testDownload(String appUrl,String buildVersion,String buildUpdateDescription) async {
 
     try {
       // 确保 packageInfo 已初始化
@@ -331,8 +327,8 @@ mixin UpgradeManger {
         buildVersion: buildVersion,
         buildVersionNo: '1',
         needForceUpdate: false,
-        downloadURL: testUrl,
-        appURl: testUrl,
+        downloadURL: appUrl,
+        appURl: appUrl,
         buildUpdateDescription: buildUpdateDescription,
       );
 
@@ -350,7 +346,16 @@ mixin UpgradeManger {
           packageInfo: packageInfo!,
           onNow: () async {
             // 直接使用测试 URL 下载
-            await _downloadAndInstallApk(testUrl);
+            // await _downloadAndInstallApk(appUrl);
+            // Android 平台：应用内下载并安装
+            if (Platform.isAndroid) {
+              await _downloadAndInstallApk(appUrl);
+            } else {
+              // iOS 平台：跳转到 App Store
+              if (await canLaunchUrlString(appUrl)) {
+                launchUrlString(appUrl);
+              }
+            }
           },
           subject: subject,
         ),

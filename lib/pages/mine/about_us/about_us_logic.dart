@@ -38,6 +38,7 @@ class AboutUsLogic extends GetxController {
   void checkUpdate() {
     // 如果有更新且下载地址不为空，则调用下载
     if (hasUpdate.value && downloadUrl.isNotEmpty) {
+
       if (!Get.isRegistered<AppController>()) {
         IMViews.showToast('AppController 未初始化');
         return;
