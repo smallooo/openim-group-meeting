@@ -6,7 +6,7 @@ part of 'im_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$imHash() => r'22507d912ccf89fcea751ca2467fc54bb517ad5a';
+String _$imHash() => r'249d77a5d8089e4ee303efc2078f2342c7274007';
 
 /// IM Provider
 ///

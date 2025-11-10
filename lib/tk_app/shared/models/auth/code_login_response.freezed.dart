@@ -25,11 +25,6 @@ mixin _$CodeLoginResponse {
   @JsonKey(name: 'accessToken')
   String get accessToken => throw _privateConstructorUsedError;
 
-  /// 刷新令牌
-  /// 用于刷新访问令牌
-  @JsonKey(name: 'refreshToken')
-  String get refreshToken => throw _privateConstructorUsedError;
-
   /// 令牌类型
   /// 通常为 "Bearer"
   @JsonKey(name: 'tokenType')
@@ -111,7 +106,6 @@ abstract class $CodeLoginResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'accessToken') String accessToken,
-      @JsonKey(name: 'refreshToken') String refreshToken,
       @JsonKey(name: 'tokenType') String tokenType,
       @JsonKey(name: 'expiresIn') String expiresIn,
       @JsonKey(name: 'userId') String? userId,
@@ -142,7 +136,6 @@ class _$CodeLoginResponseCopyWithImpl<$Res, $Val extends CodeLoginResponse>
   @override
   $Res call({
     Object? accessToken = null,
-    Object? refreshToken = null,
     Object? tokenType = null,
     Object? expiresIn = null,
     Object? userId = freezed,
@@ -160,10 +153,6 @@ class _$CodeLoginResponseCopyWithImpl<$Res, $Val extends CodeLoginResponse>
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
       tokenType: null == tokenType
           ? _value.tokenType
@@ -227,7 +216,6 @@ abstract class _$$CodeLoginResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'accessToken') String accessToken,
-      @JsonKey(name: 'refreshToken') String refreshToken,
       @JsonKey(name: 'tokenType') String tokenType,
       @JsonKey(name: 'expiresIn') String expiresIn,
       @JsonKey(name: 'userId') String? userId,
@@ -256,7 +244,6 @@ class __$$CodeLoginResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? accessToken = null,
-    Object? refreshToken = null,
     Object? tokenType = null,
     Object? expiresIn = null,
     Object? userId = freezed,
@@ -274,10 +261,6 @@ class __$$CodeLoginResponseImplCopyWithImpl<$Res>
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
       tokenType: null == tokenType
           ? _value.tokenType
@@ -336,7 +319,6 @@ class __$$CodeLoginResponseImplCopyWithImpl<$Res>
 class _$CodeLoginResponseImpl implements _CodeLoginResponse {
   const _$CodeLoginResponseImpl(
       {@JsonKey(name: 'accessToken') required this.accessToken,
-      @JsonKey(name: 'refreshToken') required this.refreshToken,
       @JsonKey(name: 'tokenType') required this.tokenType,
       @JsonKey(name: 'expiresIn') required this.expiresIn,
       @JsonKey(name: 'userId') this.userId,
@@ -358,12 +340,6 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
   @override
   @JsonKey(name: 'accessToken')
   final String accessToken;
-
-  /// 刷新令牌
-  /// 用于刷新访问令牌
-  @override
-  @JsonKey(name: 'refreshToken')
-  final String refreshToken;
 
   /// 令牌类型
   /// 通常为 "Bearer"
@@ -442,7 +418,7 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
 
   @override
   String toString() {
-    return 'CodeLoginResponse(accessToken: $accessToken, refreshToken: $refreshToken, tokenType: $tokenType, expiresIn: $expiresIn, userId: $userId, memberId: $memberId, email: $email, nickname: $nickname, avatar: $avatar, isNewUser: $isNewUser, loginType: $loginType, imToken: $imToken, imUid: $imUid, chatToken: $chatToken)';
+    return 'CodeLoginResponse(accessToken: $accessToken, tokenType: $tokenType, expiresIn: $expiresIn, userId: $userId, memberId: $memberId, email: $email, nickname: $nickname, avatar: $avatar, isNewUser: $isNewUser, loginType: $loginType, imToken: $imToken, imUid: $imUid, chatToken: $chatToken)';
   }
 
   @override
@@ -452,8 +428,6 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
             other is _$CodeLoginResponseImpl &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
-            (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken) &&
             (identical(other.tokenType, tokenType) ||
                 other.tokenType == tokenType) &&
             (identical(other.expiresIn, expiresIn) ||
@@ -480,7 +454,6 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
   int get hashCode => Object.hash(
       runtimeType,
       accessToken,
-      refreshToken,
       tokenType,
       expiresIn,
       userId,
@@ -514,7 +487,6 @@ class _$CodeLoginResponseImpl implements _CodeLoginResponse {
 abstract class _CodeLoginResponse implements CodeLoginResponse {
   const factory _CodeLoginResponse(
           {@JsonKey(name: 'accessToken') required final String accessToken,
-          @JsonKey(name: 'refreshToken') required final String refreshToken,
           @JsonKey(name: 'tokenType') required final String tokenType,
           @JsonKey(name: 'expiresIn') required final String expiresIn,
           @JsonKey(name: 'userId') final String? userId,
@@ -537,12 +509,6 @@ abstract class _CodeLoginResponse implements CodeLoginResponse {
   @override
   @JsonKey(name: 'accessToken')
   String get accessToken;
-
-  /// 刷新令牌
-  /// 用于刷新访问令牌
-  @override
-  @JsonKey(name: 'refreshToken')
-  String get refreshToken;
 
   /// 令牌类型
   /// 通常为 "Bearer"

@@ -6,10 +6,9 @@ part 'token_storage_service.g.dart';
 
 /// Token存储服务
 /// 
-/// 负责管理accessToken和refreshToken的本地缓存
+/// 负责管理accessToken的本地缓存
 class TokenStorageService {
   static const String _accessTokenKey = 'tk_access_token';
-  static const String _refreshTokenKey = 'tk_refresh_token';
   static const String _tokenTypeKey = 'tk_token_type';
   static const String _expiresInKey = 'tk_expires_in';
   static const String _userIdKey = 'tk_user_id';
@@ -25,7 +24,6 @@ class TokenStorageService {
   /// 保存登录信息
   /// 
   /// [accessToken] 访问令牌
-  /// [refreshToken] 刷新令牌
   /// [tokenType] 令牌类型
   /// [expiresIn] 过期时间（秒）
   /// [userId] 用户ID
@@ -34,7 +32,6 @@ class TokenStorageService {
   /// [avatar] 头像URL
   Future<void> saveLoginInfo({
     required String accessToken,
-    required String refreshToken,
     required String tokenType,
     required String expiresIn,
     required String userId,
@@ -46,7 +43,6 @@ class TokenStorageService {
     
     await Future.wait([
       _prefs.setString(_accessTokenKey, accessToken),
-      _prefs.setString(_refreshTokenKey, refreshToken),
       _prefs.setString(_tokenTypeKey, tokenType),
       _prefs.setString(_expiresInKey, expiresIn),
       _prefs.setString(_userIdKey, userId),
@@ -58,7 +54,6 @@ class TokenStorageService {
 
     print('[TokenStorage] 登录信息已保存');
     print('[TokenStorage] AccessToken: $accessToken');
-    print('[TokenStorage] RefreshToken: $refreshToken');
     print('[TokenStorage] TokenType: $tokenType');
     print('[TokenStorage] ExpiresIn: $expiresIn');
     print('[TokenStorage] UserId: $userId');
@@ -73,13 +68,6 @@ class TokenStorageService {
     final token = _prefs.getString(_accessTokenKey);
     print('[TokenStorage] 获取AccessToken: $token');
     debugPrint('[TokenStorage] 当前存储的 accessToken: $token');
-    return token;
-  }
-
-  /// 获取刷新令牌
-  String? getRefreshToken() {
-    final token = _prefs.getString(_refreshTokenKey);
-    print('[TokenStorage] 获取RefreshToken: $token');
     return token;
   }
 
@@ -139,7 +127,6 @@ class TokenStorageService {
   Future<void> clearLoginInfo() async {
     await Future.wait([
       _prefs.remove(_accessTokenKey),
-      _prefs.remove(_refreshTokenKey),
       _prefs.remove(_tokenTypeKey),
       _prefs.remove(_expiresInKey),
       _prefs.remove(_userIdKey),
@@ -166,30 +153,21 @@ class TokenStorageService {
     print('[TokenStorage] ExpiresIn已更新: $expiresIn');
   }
 
-  /// 更新刷新令牌
-  Future<void> updateRefreshToken(String refreshToken) async {
-    await _prefs.setString(_refreshTokenKey, refreshToken);
-    print('[TokenStorage] RefreshToken已更新: $refreshToken');
-  }
-
   /// 更新令牌信息（用于刷新token后）
   Future<void> updateTokens({
     required String accessToken,
-    required String refreshToken,
     required String expiresIn,
   }) async {
     final currentTime = DateTime.now().millisecondsSinceEpoch;
     
     await Future.wait([
       _prefs.setString(_accessTokenKey, accessToken),
-      _prefs.setString(_refreshTokenKey, refreshToken),
       _prefs.setString(_expiresInKey, expiresIn),
       _prefs.setInt(_loginTimeKey, currentTime),
     ]);
 
     print('[TokenStorage] 令牌已更新');
     print('[TokenStorage] AccessToken: $accessToken');
-    print('[TokenStorage] RefreshToken: $refreshToken');
     print('[TokenStorage] ExpiresIn: $expiresIn');
   }
 

@@ -10,7 +10,6 @@ _$CodeLoginResponseImpl _$$CodeLoginResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$CodeLoginResponseImpl(
       accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
       tokenType: json['tokenType'] as String,
       expiresIn: json['expiresIn'] as String,
       userId: json['userId'] as String?,
@@ -29,7 +28,6 @@ Map<String, dynamic> _$$CodeLoginResponseImplToJson(
         _$CodeLoginResponseImpl instance) =>
     <String, dynamic>{
       'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
       'tokenType': instance.tokenType,
       'expiresIn': instance.expiresIn,
       'userId': instance.userId,

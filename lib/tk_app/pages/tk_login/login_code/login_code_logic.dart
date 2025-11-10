@@ -117,7 +117,6 @@ class LoginCodeLogic extends GetxController {
           final tokenStorage = await ref.read(tokenStorageServiceProvider.future);
           await tokenStorage.saveLoginInfo(
             accessToken: loginResponse.accessToken,
-            refreshToken: loginResponse.refreshToken,
             tokenType: loginResponse.tokenType,
             expiresIn: loginResponse.expiresIn,
             userId: loginResponse.memberId, // 使用 memberId 替代 userId

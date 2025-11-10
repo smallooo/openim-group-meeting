@@ -45,7 +45,6 @@ class TokenTestExample {
     // 保存测试数据
     await tokenStorage.saveLoginInfo(
       accessToken: 'test_access_token_123',
-      refreshToken: 'test_refresh_token_456',
       tokenType: 'Bearer',
       expiresIn: '3600', // 1小时
       userId: 'test_user_789',
@@ -56,11 +55,9 @@ class TokenTestExample {
     
     // 验证数据
     final accessToken = tokenStorage.getAccessToken();
-    final refreshToken = tokenStorage.getRefreshToken();
     final userId = tokenStorage.getUserId();
     
     assert(accessToken == 'test_access_token_123');
-    assert(refreshToken == 'test_refresh_token_456');
     assert(userId == 'test_user_789');
     
     // 测试过期检查

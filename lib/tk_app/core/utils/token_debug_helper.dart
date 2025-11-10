@@ -20,11 +20,9 @@ class TokenDebugHelper {
     
     // 打印存储的token
     final accessToken = _tokenStorage.getAccessToken();
-    final refreshToken = _tokenStorage.getRefreshToken();
     final tokenType = _tokenStorage.getTokenType();
     
     debugPrint('存储的 AccessToken: $accessToken');
-    debugPrint('存储的 RefreshToken: $refreshToken');
     debugPrint('Token类型: $tokenType');
     
     // 打印token状态

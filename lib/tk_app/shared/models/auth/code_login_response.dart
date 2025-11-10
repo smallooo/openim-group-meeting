@@ -11,10 +11,6 @@ class CodeLoginResponse with _$CodeLoginResponse {
     /// 用于API请求的身份验证
     @JsonKey(name: 'accessToken') required String accessToken,
     
-    /// 刷新令牌
-    /// 用于刷新访问令牌
-    @JsonKey(name: 'refreshToken') required String refreshToken,
-    
     /// 令牌类型
     /// 通常为 "Bearer"
     @JsonKey(name: 'tokenType') required String tokenType,
